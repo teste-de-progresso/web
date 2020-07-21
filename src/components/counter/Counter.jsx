@@ -1,6 +1,8 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {decreaseCounter, increaseCounter} from "../../store/ducks/example/actions";
+import {Card} from "../widgets/Card";
+import {Button} from "../widgets/Button";
 
 export const Counter = () => {
     const counter = useSelector(state => state.example)
@@ -15,10 +17,10 @@ export const Counter = () => {
     }
 
     return (
-        <div>
+        <Card title={"Contador"}>
             <p>Counter: {counter.counter}</p>
-            <button onClick={() => increase()}>Incrementar</button><br/>
-            <button onClick={() => decrease()}>Decrementar</button>
-        </div>
+            <Button onClick={() => increase()}>Incrementar</Button>
+            <Button onClick={() => decrease()}>Decrementar</Button>
+        </Card>
     )
 }

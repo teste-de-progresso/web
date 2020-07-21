@@ -17,6 +17,11 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
+      primary: {
+        light: '#4d9793',
+        normal: '#006b64',
+        dark: '#004b46'
+      },
 
       gray: {
         100: '#f7fafc',
@@ -179,6 +184,7 @@ module.exports = {
       default: '0.25rem',
       md: '0.375rem',
       lg: '0.5rem',
+      xlg: '0.75rem',
       full: '9999px',
     },
     borderWidth: {
