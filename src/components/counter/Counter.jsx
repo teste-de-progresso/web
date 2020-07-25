@@ -19,8 +19,8 @@ export const Counter = () => {
     return (
         <Card title={"Contador"}>
             <p>Counter: {counter.counter}</p>
-            <Button onClick={() => increase()}>Incrementar</Button>
-            <Button onClick={() => decrease()}>Decrementar</Button>
+            <Button className="my-2" onClick={() => increase()}>Incrementar</Button>
+            <Button className="my-2" onClick={() => decrease()}>Decrementar</Button>
         </Card>
     )
 }
