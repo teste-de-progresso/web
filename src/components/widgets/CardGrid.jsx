@@ -8,7 +8,6 @@ const Grid = styled.div`
 `
 
 export const CardGrid = ({children}) => {
-
     return (
         <Grid>
             {children}
