@@ -11,7 +11,7 @@ const Layout = styled.div`
 export const Login = () => {
     return (
         <Layout className="w-screen h-screen bg-primary-normal">
-            <Card title={"Entrar no Sistema"} className="w-full max-w-xl">
+            <Card title={"Entrar no Sistema"} className="w-full h-full md:max-w-xl md:h-auto">
                 <div>
                     <label>Email</label>
                     <input className="block bg-gray-200 rounded p-1 w-full border-gray-300 border shadow-sm"
