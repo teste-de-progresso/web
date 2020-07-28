@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Button = ({children, onClick}) => {
+export const Button = ({children, onClick, className}) => {
 
     const handleClick = () => {
         if(onClick) {
@@ -9,9 +9,11 @@ export const Button = ({children, onClick}) => {
     }
 
     return (
-        <button className="bg-primary-normal p-2 px-8 rounded text-white hover:bg-primary-dark shadow-lg m-2 hover:shadow-lg"
-                onClick={() => handleClick()}>
-            {children}
-        </button>
+        <div className={className}>
+            <button className="bg-primary-normal p-2 px-8 rounded text-white hover:bg-primary-dark shadow-lg hover:shadow-lg w-full"
+                    onClick={() => handleClick()}>
+                {children}
+            </button>
+        </div>
     )
 }
