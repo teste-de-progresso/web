@@ -1,15 +1,12 @@
 import React from "react";
-import {MyIp} from "../myip/myip";
-import {Counter} from "../counter/Counter";
-import {CardGrid} from "../widgets/CardGrid";
-import {Home} from "../screens/Home";
+import { Form } from "../screens/questions/Form";
 
 export const Page = () => {
-    return (
-        <div className="bg-primary-normal w-full h-full">
-            <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-                <Home/>
-            </main>
-        </div>
-    )
-}
+  return (
+    <div className="bg-primary-normal w-full h-full">
+      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
+        <Form data="" />
+      </main>
+    </div>
+  );
+};
