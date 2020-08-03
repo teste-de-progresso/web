@@ -19,6 +19,10 @@ const toolbarOptions = [
 ];
 
 export const TextEditor = (props) => {
+  const inputHandler = (_, editor) => {
+    props.setCkData(editor.getData());
+  };
+
   return (
     <CKEditor
       editor={ClassicEditor}
@@ -26,9 +30,11 @@ export const TextEditor = (props) => {
       config={{
         toolbar: toolbarOptions,
         ckfinder: {
-          uploadUrl: process.env.UPLOAD_SEVER_URL,
+          uploadUrl:
+            "https://progress-test-backend.herokuapp.com/picture/upload",
         },
       }}
+      onChange={inputHandler}
     />
   );
 };

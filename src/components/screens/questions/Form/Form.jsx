@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { TextEditor } from "./TextEditor";
-import { Button } from "../../../widgets/Button";
 import { useForm } from "react-hook-form";
+import { Button } from "../../../widgets/Button";
+import { TextEditor } from "./TextEditor";
+import { Alternatives } from "./Alternatives";
 
-export const Form = (props) => {
+export const Form = ({ questionData }) => {
   const { register, handleSubmit } = useForm();
 
   const [ckData, setCkData] = useState();
@@ -15,7 +16,9 @@ export const Form = (props) => {
   return (
     <form className="bg-gray-100 py-4 px-8" onSubmit={handleSubmit(onSubmit)}>
       <input name="body" ref={register} value={ckData} hidden={true} />
-      <TextEditor data={props.data} setCkData={setCkData} />
+      <TextEditor data={questionData.body} setCkData={setCkData} />
+
+      <Alternatives register={register}/>
 
       <Button>Salvar</Button>
     </form>
