@@ -1,32 +1,22 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { store } from "./store";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { ApolloProvider } from "@apollo/client";
-import styled from "styled-components";
-
-import { Navbar } from "./components/layout/Navbar";
-import { Page } from "./components/layout/Page";
-import { Footer } from "./components/layout/Footer";
-import { Login } from "./components/screens/Login";
-
-import React from 'react';
-import {Provider} from "react-redux";
-
+import {Provider, useSelector} from "react-redux";
+import {store} from "./store";
+import {ApolloClient, InMemoryCache} from "@apollo/client";
+import {ApolloProvider} from "@apollo/client";
 import {Navbar} from "./components/layout/Navbar";
-import styled from 'styled-components'
 import {Page} from "./components/layout/Page";
 import {Footer} from "./components/layout/Footer";
-import {Login} from "./components/screens/Login";
-
+import styled from 'styled-components'
 import {
-  BrowserRouter as Router, Link, Route, Switch
+    BrowserRouter as Router, Switch
 } from "react-router-dom";
+import {Loading} from "./components/screens/Loading";
+import {PrivateRoute} from "./components/utils/PrivateRoute";
+import {AuthenticationContext} from "./context/Authentication";
 
 const client = new ApolloClient({
-  uri: process.env.BACKEND_URL,
-  cache: new InMemoryCache(),
+    uri: process.env.BACKEND_URL,
+    cache: new InMemoryCache(),
 });
 
 const Layout = styled.div`
@@ -35,29 +25,31 @@ const Layout = styled.div`
 `;
 
 function App() {
-  const authenticationState = useSelector(state => state.auth);
+    const authenticationState = useSelector(state => state.auth);
 
-  if (authenticationState.isLoading) {
-      return <Loading/>
-  }
+    if (authenticationState.isLoading) {
+        return <Loading/>
+    }
 
-  return (
-    <Provider store={store}>
-      <ApolloProvider client={client}>
-            <Router>
-                <Switch>
-                    <PrivateRoute exact path={"/"}>
-                        <Layout className="h-screen">
-                            <Navbar/>
-                            <Page/>
-                            <Footer/>
-                        </Layout>
-                    </PrivateRoute>
-                </Switch>
-            </Router>
-      </ApolloProvider>
-    </Provider>
-  );
+    return (
+        <Provider store={store}>
+            <AuthenticationContext.Provider value={authenticationState}>
+                <ApolloProvider client={client}>
+                    <Router>
+                        <Switch>
+                            <PrivateRoute exact path={"/"}>
+                                <Layout className="h-screen">
+                                    <Navbar/>
+                                    <Page/>
+                                    <Footer/>
+                                </Layout>
+                            </PrivateRoute>
+                        </Switch>
+                    </Router>
+                </ApolloProvider>
+            </AuthenticationContext.Provider>
+        </Provider>
+    );
 }
 
 export default App;
