@@ -7,9 +7,9 @@ const Grid = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 `
 
-export const CardGrid = ({children}) => {
+export const CardGrid = ({children, className}) => {
     return (
-        <Grid>
+        <Grid className={className}>
             {children}
         </Grid>
     )
