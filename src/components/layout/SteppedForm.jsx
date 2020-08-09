@@ -18,13 +18,13 @@ export const SteppedForm = ({children}) => {
     }
 
     return (
-        <div>
+        <form className="h-full flex flex-col space-y-4">
             {children.map(x => x.props['step'] === currentStep ? x : null)}
 
             <div className="flex justify-end space-x-2">
                 <Button className={minStep === currentStep ? "hidden" : ""} onClick={() => handleBack()}>Retornar</Button>
                 <Button onClick={() => handleNext()}>{maxStep === currentStep ? "Finalizar" : "Prosseguir"}</Button>
             </div>
-        </div>
+        </form>
     )
 }

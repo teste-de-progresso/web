@@ -10,10 +10,10 @@ export const Button = ({children, onClick, className}) => {
 
     return (
         <div className={className}>
-            <button className="bg-primary-normal p-2 px-8 rounded text-white hover:bg-primary-dark shadow-lg hover:shadow-lg w-full"
+            <a className="block text-center cursor-pointer bg-primary-normal p-2 px-8 rounded text-white hover:bg-primary-dark shadow-lg hover:shadow-lg w-full"
                     onClick={() => handleClick()}>
                 {children}
-            </button>
+            </a>
         </div>
     )
 }

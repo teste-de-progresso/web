@@ -2,6 +2,9 @@ import React from "react";
 import { Form } from "../screens/questions/form";
 import {SteppedForm} from "./SteppedForm";
 import {Step} from "./Step";
+import {EnunciadoForm} from "../screens/questions/form/EnunciadoForm";
+import {AlternativesForm} from "../screens/questions/form/AlternativesForm";
+import {FeaturesForm} from "../screens/questions/form/FeaturesForm";
 
 export const Page = () => {
 
@@ -14,10 +17,13 @@ export const Page = () => {
             <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
                 <SteppedForm>
                     <Step step={0}>
-                        <Form questionData={questionData} />
+                        <EnunciadoForm/>
                     </Step>
                     <Step step={1}>
-                        LOL IT WORKS
+                        <AlternativesForm/>
+                    </Step>
+                    <Step step={2}>
+                        <FeaturesForm/>
                     </Step>
                 </SteppedForm>
             </main>
