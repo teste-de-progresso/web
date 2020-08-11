@@ -1,6 +1,6 @@
 import {
     AUTHENTICATION_FAILURE,
-    AUTHENTICATION_LOAD,
+    AUTHENTICATION_LOAD, AUTHENTICATION_LOAD_FAILURE,
     AUTHENTICATION_REQUEST,
     AUTHENTICATION_SUCCESS,
     LOGOUT
@@ -42,5 +42,11 @@ export const logout = () => {
 export const loadAuthentication = () => {
     return {
         type: AUTHENTICATION_LOAD
+    };
+}
+
+export const failedLoadAuthentication = () => {
+    return {
+        type: AUTHENTICATION_LOAD_FAILURE
     };
 }
