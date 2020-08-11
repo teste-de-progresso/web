@@ -1,5 +1,4 @@
 import React from "react";
-import { Form } from "../screens/questions/form";
 import {SteppedForm} from "./SteppedForm";
 import {Step} from "./Step";
 import {EnunciadoForm} from "../screens/questions/form/EnunciadoForm";

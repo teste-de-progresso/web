@@ -13,7 +13,7 @@ export const Navbar = () => {
     }
 
     return (
-        <nav className="h-16 bg-primary-normal w-full flex items-center px-8">
+        <nav className="h-16 bg-primary-normal w-full flex items-center px-8 z-50">
             <div className="flex-grow">
                 <h1 className="text-white font-medium text-lg">UNIFESO</h1>
             </div>
