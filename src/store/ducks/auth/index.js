@@ -6,7 +6,7 @@ const initialState = {
     user: undefined,
     isLoggedIn: false,
     error: undefined,
-    isLoading: false
+    isLoading: true
 }
 
 export const reducer = (state = initialState, action) => {
@@ -39,6 +39,7 @@ export const reducer = (state = initialState, action) => {
                 isLoading: false
             }
         case LOGOUT:
+            localStorage.removeItem("auth");
             return {
                 ...state,
                 token: undefined,

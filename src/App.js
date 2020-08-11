@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Provider, useSelector} from "react-redux";
 import {store} from "./store";
 import {ApolloClient, InMemoryCache} from "@apollo/client";
@@ -13,6 +13,7 @@ import {
 import {Loading} from "./components/screens/Loading";
 import {PrivateRoute} from "./components/utils/PrivateRoute";
 import {AuthenticationContext} from "./context/Authentication";
+import {loadAuthentication} from "./store/ducks/auth/actions";
 
 const client = new ApolloClient({
     uri: process.env.BACKEND_URL,
@@ -26,6 +27,10 @@ const Layout = styled.div`
 
 function App() {
     const authenticationState = useSelector(state => state.auth);
+
+    useEffect(() => {
+        store.dispatch(loadAuthentication())
+    }, []);
 
     if (authenticationState.isLoading) {
         return <Loading/>
