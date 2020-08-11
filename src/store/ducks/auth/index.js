@@ -1,4 +1,10 @@
-import {AUTHENTICATION_FAILURE, AUTHENTICATION_REQUEST, AUTHENTICATION_SUCCESS, LOGOUT} from "./types";
+import {
+    AUTHENTICATION_FAILURE,
+    AUTHENTICATION_LOAD, AUTHENTICATION_LOAD_FAILURE,
+    AUTHENTICATION_REQUEST,
+    AUTHENTICATION_SUCCESS,
+    LOGOUT
+} from "./types";
 import * as jwt from "jsonwebtoken";
 
 const initialState = {
@@ -6,7 +12,7 @@ const initialState = {
     user: undefined,
     isLoggedIn: false,
     error: undefined,
-    isLoading: true
+    isLoading: false
 }
 
 export const reducer = (state = initialState, action) => {
@@ -36,6 +42,16 @@ export const reducer = (state = initialState, action) => {
                 user: undefined,
                 isLoggedIn: false,
                 error: action.payload.error,
+                isLoading: false
+            }
+        case AUTHENTICATION_LOAD:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case AUTHENTICATION_LOAD_FAILURE:
+            return {
+                ...state,
                 isLoading: false
             }
         case LOGOUT:
