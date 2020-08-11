@@ -1,9 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Card} from "../../../widgets/Card";
 import {TextEditor} from "./TextEditor";
 import {Input} from "../../../widgets/Input";
+import {FormContext} from "../../../layout/SteppedForm";
 
 export const AlternativesForm = () => {
+    const formContext = useContext(FormContext);
 
     return (
         <Card title={"Alternativas"}>
@@ -20,7 +22,7 @@ export const AlternativesForm = () => {
                         </div>
                         <div>
                             <h2 className="text-xl font-medium">Referência</h2>
-                            <Input/>
+                            <Input name={"correctAlternativeExplanationReference"} ref={formContext.register}/>
                         </div>
                     </div>
                 </div>
