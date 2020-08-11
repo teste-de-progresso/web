@@ -1,29 +1,53 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button} from "../widgets/Button";
+import {useForm} from "react-hook-form";
+
+export const FormContext = React.createContext({
+    register: undefined,
+    control: undefined
+});
 
 export const SteppedForm = ({children}) => {
-
     const allSteps = children.map(x => x.props['step']);
     const minStep = Math.min(...allSteps);
     const maxStep = Math.max(...allSteps);
     const [currentStep, setCurrentStep] = useState(minStep);
+    const [submitNext, setSubmitNext] = useState(false);
 
 
     const handleNext = () => {
         setCurrentStep(Math.min(currentStep + 1, maxStep));
+        setSubmitNext(currentStep === maxStep);
     }
 
     const handleBack = () => {
         setCurrentStep(Math.max(currentStep - 1, minStep));
+        setSubmitNext(false);
     }
 
+    const { register, handleSubmit, control } = useForm();
+    const onSubmit = (data) => console.log(data);
+
     return (
-        <form className="h-full flex flex-col space-y-4">
-            {children.map(x => x.props['step'] === currentStep ? x : null)}
+        <form className="h-full flex flex-col space-y-4" onSubmit={handleSubmit(onSubmit)}>
+            <FormContext.Provider value={{register, control}}>
+                {children.map(x => {
+                    const visible = x.props['step'] === currentStep
+
+                    return (
+                        <div key={x.props['step']} className={visible ? "" : "hidden"}>
+                            {x}
+                        </div>
+                    )
+                })}
+            </FormContext.Provider>
 
             <div className="flex justify-end space-x-2">
                 <Button className={minStep === currentStep ? "hidden" : ""} onClick={() => handleBack()}>Retornar</Button>
-                <Button onClick={() => handleNext()}>{maxStep === currentStep ? "Finalizar" : "Prosseguir"}</Button>
+                <Button type={submitNext ? "submit" : "button"}
+                        onClick={() => handleNext()}>
+                    {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
+                </Button>
             </div>
         </form>
     )

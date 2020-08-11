@@ -11,12 +11,12 @@ export const AlternativesForm = () => {
                 <div className="flex space-x-4">
                     <div className="w-full">
                         <h2 className="text-xl font-medium">Alternativa Correta</h2>
-                        <TextEditor/>
+                        <TextEditor name={"correctAlternative"}/>
                     </div>
                     <div className="flex flex-col space-y-4 w-full">
                         <div>
                             <h2 className="text-xl font-medium">Explicação</h2>
-                            <TextEditor/>
+                            <TextEditor name={"correctAlternativeExplanation"}/>
                         </div>
                         <div>
                             <h2 className="text-xl font-medium">Referência</h2>
@@ -31,18 +31,18 @@ export const AlternativesForm = () => {
                 <div className="flex flex-col space-y-4">
                     <div className="flex space-x-4">
                         <div className="w-full">
-                            <TextEditor/>
+                            <TextEditor name={"incorrectAlternative1"}/>
                         </div>
                         <div className="w-full">
-                            <TextEditor/>
+                            <TextEditor name={"incorrectAlternative2"}/>
                         </div>
                     </div>
                     <div className="flex space-x-4">
                         <div className="w-full">
-                            <TextEditor/>
+                            <TextEditor name={"incorrectAlternative3"}/>
                         </div>
                         <div className="w-full">
-                            <TextEditor/>
+                            <TextEditor name={"incorrectAlternative4"}/>
                         </div>
                     </div>
                 </div>
