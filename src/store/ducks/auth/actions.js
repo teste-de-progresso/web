@@ -1,4 +1,10 @@
-import {AUTHENTICATION_FAILURE, AUTHENTICATION_REQUEST, AUTHENTICATION_SUCCESS, LOGOUT} from "./types";
+import {
+    AUTHENTICATION_FAILURE,
+    AUTHENTICATION_LOAD,
+    AUTHENTICATION_REQUEST,
+    AUTHENTICATION_SUCCESS,
+    LOGOUT
+} from "./types";
 
 export const requestAuthentication = (email, password) => {
     return {
@@ -31,4 +37,10 @@ export const logout = () => {
     return {
         type: LOGOUT
     }
+}
+
+export const loadAuthentication = () => {
+    return {
+        type: AUTHENTICATION_LOAD
+    };
 }
