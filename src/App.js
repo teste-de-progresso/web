@@ -16,7 +16,7 @@ import {AuthenticationContext} from "./context/Authentication";
 import {loadAuthentication} from "./store/ducks/auth/actions";
 
 const client = new ApolloClient({
-    uri: process.env.BACKEND_URL,
+    uri: 'http://localhost:3001',
     cache: new InMemoryCache(),
 });
 
@@ -32,7 +32,7 @@ function App() {
         store.dispatch(loadAuthentication())
     }, []);
 
-    if (authenticationState.isLoading) {
+    if (authenticationState.isLoading || !authenticationState.user) {
         return <Loading/>
     }
 

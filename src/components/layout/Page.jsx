@@ -6,11 +6,6 @@ import {AlternativesForm} from "../screens/questions/form/AlternativesForm";
 import {FeaturesForm} from "../screens/questions/form/FeaturesForm";
 
 export const Page = () => {
-
-    const questionData = {
-        body: "<p>fon</p>"
-    }
-
     return (
         <div className="bg-primary-normal h-full w-full">
             <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
