@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "ckeditor5-classic-with-mathtype";
 import { Controller } from "react-hook-form";
 import { FormContext } from "../../../layout/SteppedForm";
 
@@ -15,6 +15,9 @@ const toolbarOptions = [
   "tableColumn",
   "tableRow",
   "mergeTableCells",
+  "|",
+  "MathType",
+  "ChemType",
   "|",
   "undo",
   "redo",

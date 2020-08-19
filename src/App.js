@@ -32,7 +32,7 @@ function App() {
         store.dispatch(loadAuthentication())
     }, []);
 
-    if (authenticationState.isLoading || !authenticationState.user) {
+    if (authenticationState.isLoading) {
         return <Loading />
     }
 
