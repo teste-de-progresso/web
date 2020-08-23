@@ -4,7 +4,7 @@ import App from './App';
 import './styles/main.css';
 import {store} from "./store";
 import {Provider} from "react-redux";
-import {AuthenticationContext} from "./context/Authentication";
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>

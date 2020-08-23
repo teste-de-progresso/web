@@ -1,22 +1,22 @@
-import React, {useEffect} from "react";
-import {Provider, useSelector} from "react-redux";
-import {store} from "./store";
-import {ApolloClient, InMemoryCache} from "@apollo/client";
-import {ApolloProvider} from "@apollo/client";
-import {Navbar} from "./components/layout/Navbar";
-import {Page} from "./components/layout/Page";
-import {Footer} from "./components/layout/Footer";
+import React, { useEffect } from "react";
+import { Provider, useSelector } from "react-redux";
+import { store } from "./store";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
+import { Navbar } from "./components/layout/Navbar";
+import { Page } from "./components/layout/Page";
+import { Footer } from "./components/layout/Footer";
 import styled from 'styled-components'
 import {
     BrowserRouter as Router, Switch
 } from "react-router-dom";
-import {Loading} from "./components/screens/Loading";
-import {PrivateRoute} from "./components/utils/PrivateRoute";
-import {AuthenticationContext} from "./context/Authentication";
-import {loadAuthentication} from "./store/ducks/auth/actions";
+import { Loading } from "./components/screens/Loading";
+import { PrivateRoute } from "./components/utils/PrivateRoute";
+import { AuthenticationContext } from "./context/Authentication";
+import { loadAuthentication } from "./store/ducks/auth/actions";
 
 const client = new ApolloClient({
-    uri: process.env.BACKEND_URL,
+    uri: process.env.REACT_APP_BACKEND_URL,
     cache: new InMemoryCache(),
 });
 
@@ -33,7 +33,7 @@ function App() {
     }, []);
 
     if (authenticationState.isLoading) {
-        return <Loading/>
+        return <Loading />
     }
 
     return (
@@ -44,9 +44,9 @@ function App() {
                         <Switch>
                             <PrivateRoute exact path={"/"}>
                                 <Layout className="h-screen">
-                                    <Navbar/>
-                                    <Page/>
-                                    <Footer/>
+                                    <Navbar />
+                                    <Page />
+                                    <Footer />
                                 </Layout>
                             </PrivateRoute>
                         </Switch>
