@@ -3,7 +3,7 @@ import {useAuth} from "../../context/Authentication";
 import {useDispatch} from "react-redux";
 import {logout} from "../../store/ducks/auth/actions";
 import {Avatar} from "./Avatar";
-import unifesoLogo from "../../img/unifeso-logo-branco.png";
+import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
 export const Navbar = () => {
     const auth = useAuth();
