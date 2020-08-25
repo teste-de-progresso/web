@@ -1,4 +1,5 @@
 import React from "react";
+import { Home } from "../screens/home"
 import {SteppedForm} from "./SteppedForm";
 import {Step} from "./Step";
 import {EnunciadoForm} from "../screens/questions/form/EnunciadoForm";
@@ -9,7 +10,8 @@ export const Page = () => {
     return (
         <div className="bg-primary-normal h-full w-full">
             <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-                <SteppedForm>
+                <Home />
+                {/* <SteppedForm>
                     <Step step={0}>
                         <EnunciadoForm/>
                     </Step>
@@ -19,7 +21,7 @@ export const Page = () => {
                     <Step step={2}>
                         <FeaturesForm/>
                     </Step>
-                </SteppedForm>
+                </SteppedForm> */}
             </main>
         </div>
     );
