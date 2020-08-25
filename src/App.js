@@ -4,8 +4,9 @@ import { store } from "./store";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
 import { Navbar } from "./components/layout/Navbar";
-import { New } from "./components/screens/questions/form/New"
 import { Home } from "./components/screens/home"
+import { New } from "./components/screens/questions/form/New"
+import { Edit } from "./components/screens/questions/form/Edit"
 import { Footer } from "./components/layout/Footer";
 import styled from 'styled-components'
 import {
@@ -43,20 +44,11 @@ function App() {
                 <ApolloProvider client={client}>
                     <Router>
                         <Switch>
-                            <PrivateRoute exact path={"/"}>
-                                <Layout className="h-screen">
-                                    <Navbar />
-                                    <Home />
-                                    <Footer />
-                                </Layout>
-                            </PrivateRoute>
-                            <PrivateRoute exact path={"/question/new"}>
-                                <Layout className="h-screen">
-                                    <Navbar />
-                                    <New />
-                                    <Footer />
-                                </Layout>
-                            </PrivateRoute>
+                            <Layout className="h-screen">
+                                <PrivateRoute exact path={"/"} component={Home} />
+                                <PrivateRoute exact path={"/question/new"} component={New} />
+                                <PrivateRoute exact path={"/question/:id/edit"} component={Edit} />
+                            </Layout>
                         </Switch>
                     </Router>
                 </ApolloProvider>

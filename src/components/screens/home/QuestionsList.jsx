@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"
 import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
 
@@ -34,12 +35,20 @@ export const QuestionsList = () => {
     return new Date(stringDate).toLocaleDateString();
   }
 
+  const history = useHistory();
+
+  const handleEditQuestion = (id) => {
+    history.push(`/question/${id}/edit`);
+  };
+
+
   return (
     <div>
       {questions.map((question) => (
         <div
           key={question.id}
           className="border-l-8 border-green-400 mb-4 p-3 flex flex-col bg-gray-200 rounded max-w-xl shadow-lg hover:shadow-lg cursor-pointer"
+          onClick={() => handleEditQuestion(question.id)}
         >
           <h2>Introdução: {question.introduction}</h2>
 
