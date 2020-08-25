@@ -4,7 +4,8 @@ import { store } from "./store";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
 import { Navbar } from "./components/layout/Navbar";
-import { Page } from "./components/layout/Page";
+import { New } from "./components/screens/questions/form/New"
+import { Home } from "./components/screens/home"
 import { Footer } from "./components/layout/Footer";
 import styled from 'styled-components'
 import {
@@ -45,7 +46,14 @@ function App() {
                             <PrivateRoute exact path={"/"}>
                                 <Layout className="h-screen">
                                     <Navbar />
-                                    <Page />
+                                    <Home />
+                                    <Footer />
+                                </Layout>
+                            </PrivateRoute>
+                            <PrivateRoute exact path={"/question/new"}>
+                                <Layout className="h-screen">
+                                    <Navbar />
+                                    <New />
                                     <Footer />
                                 </Layout>
                             </PrivateRoute>

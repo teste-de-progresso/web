@@ -39,7 +39,7 @@ export const QuestionsList = () => {
       {questions.map((question) => (
         <div
           key={question.id}
-          className="border-l-8 border-green-400 mb-4 p-3 flex flex-col bg-gray-200 rounded max-w-xl shadow cursor-pointer"
+          className="border-l-8 border-green-400 mb-4 p-3 flex flex-col bg-gray-200 rounded max-w-xl shadow-lg hover:shadow-lg cursor-pointer"
         >
           <h2>Introdução: {question.introduction}</h2>
 
