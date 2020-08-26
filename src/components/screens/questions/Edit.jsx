@@ -3,14 +3,14 @@ import { useParams, useHistory } from "react-router-dom";
 
 import { gql, useQuery } from "@apollo/client";
 
-import { Navbar } from "../../../layout/Navbar";
-import { Footer } from "../../../layout/Footer";
+import { Navbar } from "../../layout/Navbar";
+import { Footer } from "../../layout/Footer";
 
-import { SteppedForm } from "../../../layout/SteppedForm";
-import { Step } from "../../../layout/Step";
-import { EnunciadoForm } from "./EnunciadoForm";
-import { AlternativesForm } from "./AlternativesForm";
-import { FeaturesForm } from "./FeaturesForm";
+import { SteppedForm } from "../../layout/SteppedForm";
+import { Step } from "../../layout/Step";
+import { EnunciadoForm } from "./form/EnunciadoForm";
+import { AlternativesForm } from "./form/AlternativesForm";
+import { FeaturesForm } from "./form/FeaturesForm";
 
 export const Edit = () => {
   const { id } = useParams();

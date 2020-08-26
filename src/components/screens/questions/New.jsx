@@ -1,12 +1,12 @@
 import React from "react";
-import { SteppedForm } from "../../../layout/SteppedForm";
-import { Step } from "../../../layout/Step";
-import { EnunciadoForm } from "./EnunciadoForm";
-import { AlternativesForm } from "./AlternativesForm";
-import { FeaturesForm } from "./FeaturesForm";
+import { SteppedForm } from "../../layout/SteppedForm";
+import { Step } from "../../layout/Step";
+import { EnunciadoForm } from "./form/EnunciadoForm";
+import { AlternativesForm } from "./form/AlternativesForm";
+import { FeaturesForm } from "./form/FeaturesForm";
 
-import { Navbar } from "../../../layout/Navbar";
-import { Footer } from "../../../layout/Footer";
+import { Navbar } from "../../layout/Navbar";
+import { Footer } from "../../layout/Footer";
 
 export const New = () => {
   return (

@@ -3,11 +3,8 @@ import { Provider, useSelector } from "react-redux";
 import { store } from "./store";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client";
-import { Navbar } from "./components/layout/Navbar";
 import { Home } from "./components/screens/home"
-import { New } from "./components/screens/questions/form/New"
-import { Edit } from "./components/screens/questions/form/Edit"
-import { Footer } from "./components/layout/Footer";
+import { New, Edit, Show } from "./components/screens/questions"
 import styled from 'styled-components'
 import {
     BrowserRouter as Router, Switch
@@ -48,6 +45,7 @@ function App() {
                                 <PrivateRoute exact path={"/"} component={Home} />
                                 <PrivateRoute exact path={"/question/new"} component={New} />
                                 <PrivateRoute exact path={"/question/:id/edit"} component={Edit} />
+                                <PrivateRoute exect path={"/question/:id/show"} component={Show} />
                             </Layout>
                         </Switch>
                     </Router>

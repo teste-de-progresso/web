@@ -1,14 +1,10 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Card} from "../../../widgets/Card";
 import {TextEditor} from "./TextEditor";
-import {Input} from "../../../widgets/Input";
-import {FormContext} from "../../../layout/SteppedForm";
 
 export const AlternativesForm = ({alternatives = [], explanation}) => {
-    const formContext = useContext(FormContext);
-
-    const correctAlternative = alternatives.find(alternative => alternative.correct == true)
-    const incorrectAnswers = alternatives.filter(alternative => alternative.correct == false)
+    const correctAlternative = alternatives.find(alternative => alternative.correct === true)
+    const incorrectAnswers = alternatives.filter(alternative => alternative.correct === false)
 
     return (
         <Card title={"Alternativas"}>
