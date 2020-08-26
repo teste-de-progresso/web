@@ -112,32 +112,35 @@ export const QuestionsList = () => {
         </div>
         <input readOnly hidden value={queryInput.page} />
       </div>
-      {questions.map((question) => (
-        <div
-          key={question.id}
-          className="border-l-8 border-green-400 mb-4 flex flex-row bg-gray-200 rounded max-w-xl shadow hover:shadow-lg cursor-pointer"
-        >
-          <div
-            className="flex flex-col w-full  p-3"
-            onClick={() => bandleShowQuestion(question.id)}
-          >
-            <h2>Introdução: {question.introduction}</h2>
+      <div className="grid grid-cols-5 space-x-8">
+        {questions.map((question) => (
+            <div
+                key={question.id}
+                className="border-l-8 border-primary-light mb-4 flex flex-row bg-white hover:bg-gray-200 rounded max-w-xl shadow hover:shadow-md cursor-pointer group transition-all duration-500"
+            >
+              <div
+                  className="flex flex-col w-full p-3"
+                  onClick={() => bandleShowQuestion(question.id)}
+              >
+                <h2>Introdução: {question.introduction}</h2>
 
-            <div className="text-sm text-gray-700 flex flex-wrap justify-between">
-              <span>ID: {question.id}</span>
-              <span>Registrado em: {formatDate(question.createdAt)}</span>
-              <span>Atualizado em: {formatDate(question.updatedAt)}</span>
+                <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
+                  <span>ID: {question.id}</span>
+                  <span>Registrado em: {formatDate(question.createdAt)}</span>
+                  <span>Atualizado em: {formatDate(question.updatedAt)}</span>
+                </div>
+              </div>
+
+              <div
+                  className="bg-red-300 flex flex-col relative flex-grow justify-center"
+                  onClick={() => handleEditQuestion(question.id)}>
+                <div className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500" style={{left: '-1.5rem'}}>
+                  <EditIcon />
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div
-            className="p-2 content-center bg-gray-300 rounded flex flex-col hover:shadow-2xl shadow-inner"
-            onClick={() => handleEditQuestion(question.id)}
-          >
-            <EditIcon />
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

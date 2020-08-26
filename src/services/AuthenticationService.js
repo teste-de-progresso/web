@@ -1,6 +1,6 @@
 class AuthenticationService {
     constructor() {
-        this.host = process.env.REACT_APP_BACKEND_URL;
+        this.host = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
     }
 
     async login(email, password) {
