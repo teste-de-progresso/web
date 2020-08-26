@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import {useSelector} from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Button } from "../widgets/Button";
 import { useForm } from "react-hook-form";
 
@@ -32,7 +33,7 @@ const SAVE_QUESTION = gql`
   }
 `;
 
-export const SteppedForm = ({ children }) => {
+export const SteppedForm = ({ children, questionId }) => {
   const allSteps = children.map((x) => x.props["step"]);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
@@ -52,47 +53,57 @@ export const SteppedForm = ({ children }) => {
   const { register, handleSubmit, control } = useForm();
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
-  const authenticationState = useSelector(state => state.auth);
+  const authenticationState = useSelector((state) => state.auth);
+
+  const history = useHistory();
 
   const onSubmit = async (inputs) => {
+    const objectiveQuestion = {
+      userId: authenticationState.user.user_id,
+      body: inputs.enunciado,
+      own: inputs.autoria === "Própia" ? true : false,
+      explanation: inputs.correctAlternativeExplanation,
+      status: "draft",
+      bloomTaxonomy: "remember",
+      difficulty: "easy",
+      authorshipYear: String(inputs.ano),
+      alternatives: [
+        {
+          correct: true,
+          text: inputs.correctAlternative || "",
+        },
+        {
+          correct: false,
+          text: inputs.incorrectAlternative1 || "",
+        },
+        {
+          correct: false,
+          text: inputs.incorrectAlternative2 || "",
+        },
+        {
+          correct: false,
+          text: inputs.incorrectAlternative3 || "",
+        },
+        {
+          correct: false,
+          text: inputs.incorrectAlternative4 || "",
+        }
+      ]
+    }
+
+    if (questionId) {
+      objectiveQuestion.id = questionId
+    }
+
     await saveQuestion({
       variables: {
         input: {
-          objectiveQuestion: {
-            userId: authenticationState.user.user_id,
-            body: inputs.enunciado,
-            own: inputs.autoria === "Própia" ? true : false,
-            explanation: inputs.correctAlternativeExplanation,
-            status: "draft",
-            bloomTaxonomy: "remember",
-            difficulty: "easy",
-            authorshipYear: String(inputs.ano),
-            alternatives: [
-              {
-                correct: true,
-                text: inputs.correctAlternative || "",
-              },
-              {
-                correct: false,
-                text: inputs.incorrectAlternative1 || "",
-              },
-              {
-                correct: false,
-                text: inputs.incorrectAlternative2 || "",
-              },
-              {
-                correct: false,
-                text: inputs.incorrectAlternative3 || "",
-              },
-              {
-                correct: false,
-                text: inputs.incorrectAlternative4 || "",
-              },
-            ],
-          },
+          objectiveQuestion: objectiveQuestion
         },
       },
     });
+
+    history.push("/");
   };
 
   return (
