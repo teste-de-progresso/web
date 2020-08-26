@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { useSelector } from "react-redux";
-import { useForm } from "react-hook-form";
 import { MdModeEdit, MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 const EditIcon = styled(MdModeEdit)`
@@ -15,7 +14,7 @@ export const QuestionsList = () => {
   const authenticationState = useSelector((state) => state.auth);
   const [queryInput, setQueryInput] = useState({
     page: 1,
-    limit: 10,
+    limit: 5,
   });
 
   const SEARCH_QUESTIONS = gql`
@@ -52,10 +51,8 @@ export const QuestionsList = () => {
     history.push(`/question/${id}/show`);
   };
 
-  const { handleSubmit, register } = useForm();
-
   const nextPage = () => {
-    if (questions.length == queryInput.limit) {
+    if (questions.length === queryInput.limit) {
       setQueryInput({
         limit: queryInput.limit,
         page: queryInput.page + 1,
@@ -72,10 +69,10 @@ export const QuestionsList = () => {
     }
   };
 
-  const updateLimit = (values) => {
+  const updateLimit = (value) => {
     setQueryInput({
-      limit: values.limit,
-      page: queryInput.page,
+      limit: Number(value),
+      page: 1,
     });
   };
 
@@ -100,23 +97,15 @@ export const QuestionsList = () => {
         <div>
           <select
             defaultValue={queryInput.limit}
-            name="limit"
-            ref={register}
-            onChange={handleSubmit(updateLimit)}
+            onChange={(e) => updateLimit(e.target.value)}
             className="block appearance-none w-full bg-gray-300 p-1 border border-gray-200 rounded"
           >
-            <option value={10}>Até 10 items</option>
-            <option value={25}>Até 25 items</option>
-            <option value={30}>Até 30 items</option>
+            <option value={10}>Até 5 items</option>
+            <option value={25}>Até 10 items</option>
+            <option value={30}>Até 20 items</option>
           </select>
         </div>
-        <input
-          readOnly
-          hidden
-          value={queryInput.page}
-          name="page"
-          ref={register}
-        />
+        <input readOnly hidden value={queryInput.page} />
       </div>
       {questions.map((question) => (
         <div

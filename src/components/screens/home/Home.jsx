@@ -19,10 +19,10 @@ export const Home = () => {
       <div className="bg-primary-normal h-full w-full">
         <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
           <div>
-            <div className="mb-3 max-w-xs">
+            <QuestionsList />
+            <div className="mb-3 max-w-xs ml-auto">
               <Button onClick={handleNewQuestion}>Registrar questão</Button>
             </div>
-            <QuestionsList />
           </div>
         </main>
       </div>
