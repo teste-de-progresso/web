@@ -18,8 +18,8 @@ export const QuestionsList = () => {
   });
 
   const SEARCH_QUESTIONS = gql`
-    query {
-      searchObjectiveQuestions(page: ${queryInput.page}, limit: ${queryInput.limit}, userId: ${authenticationState.user.user_id}) {
+    query($page: Int!, $limit: Int!, $userId: Int!) {
+      searchObjectiveQuestions(page: $page, limit: $limit, userId: $userId) {
         id
         introduction
         status
@@ -34,6 +34,11 @@ export const QuestionsList = () => {
   useQuery(SEARCH_QUESTIONS, {
     onCompleted: (data) => {
       setQuestions(data.searchObjectiveQuestions);
+    },
+    variables: {
+      page: queryInput.page,
+      limit: queryInput.limit,
+      userId: authenticationState.user.user_id,
     },
   });
 
