@@ -3,9 +3,6 @@ import { useParams, useHistory } from "react-router-dom";
 
 import { gql, useQuery } from "@apollo/client";
 
-import { Navbar } from "../../layout/Navbar";
-import { Footer } from "../../layout/Footer";
-
 import { SteppedForm } from "../../layout/SteppedForm";
 import { Step } from "../../layout/Step";
 import { EnunciadoForm } from "./form/EnunciadoForm";
@@ -47,33 +44,29 @@ export const Edit = () => {
   const questionData = data.getObjectiveQuestion;
 
   return (
-    <>
-      <Navbar />
-      <div className="bg-primary-normal h-full w-full">
-        <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-          <SteppedForm questionId={questionData.id}>
-            <Step step={0}>
-              <EnunciadoForm value={questionData.body} />
-            </Step>
-            <Step step={1}>
-              <AlternativesForm
-                alternatives={questionData.alternatives}
-                explanation={questionData.explanation}
-              />
-            </Step>
-            <Step step={2}>
-              <FeaturesForm
-                own={questionData.own}
-                source={questionData.source}
-                authorshipYear={questionData.authorshipYear}
-                difficulty={questionData.difficulty}
-                bloomTaxonomy={questionData.bloomTaxonomy}
-              />
-            </Step>
-          </SteppedForm>
-        </main>
-      </div>
-      <Footer />
-    </>
+    <div className="bg-primary-normal h-full w-full">
+      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
+        <SteppedForm questionId={questionData.id}>
+          <Step step={0}>
+            <EnunciadoForm value={questionData.body} />
+          </Step>
+          <Step step={1}>
+            <AlternativesForm
+              alternatives={questionData.alternatives}
+              explanation={questionData.explanation}
+            />
+          </Step>
+          <Step step={2}>
+            <FeaturesForm
+              own={questionData.own}
+              source={questionData.source}
+              authorshipYear={questionData.authorshipYear}
+              difficulty={questionData.difficulty}
+              bloomTaxonomy={questionData.bloomTaxonomy}
+            />
+          </Step>
+        </SteppedForm>
+      </main>
+    </div>
   );
 };

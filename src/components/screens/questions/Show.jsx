@@ -2,8 +2,6 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
-import { Navbar } from "../../layout/Navbar";
-import { Footer } from "../../layout/Footer";
 import { Card, CardGrid } from "../../widgets";
 
 const bloomTaxonomy = {
@@ -71,69 +69,53 @@ export const Show = () => {
 
   console.log(questionData);
   return (
-    <>
-      <Navbar />
-      <div className="bg-primary-normal h-full w-full">
-        <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-          <Card className="mb-3" title="Detalhes da questão">
-            <CardGrid>
-              <div>
-                <span class="text-gray-700">Dificuldade: </span>
-                {difficulty[questionData.difficulty]}
-              </div>
-              <div>
-                <span class="text-gray-700">Taxonomia de Bloom: </span>
-                {bloomTaxonomy[questionData.bloomTaxonomy]}
-              </div>
-              <div>
-                <span class="text-gray-700">Ano de autoria: </span>
-                {questionData.authorshipYear}
-              </div>
-              <div>
-                <span class="text-gray-700">Autoria: </span>
-                {questionData.own ? "Própria" : "Terceiros"}
-              </div>
-              <div>
-                <span class="text-gray-700">Atualizado em: </span>
-                {formatDate(questionData.updatedAt)}
-              </div>
-              <div>
-                <span class="text-gray-700">Registrada em: </span>
-                {formatDate(questionData.createdAt)}
-              </div>
-            </CardGrid>
-          </Card>
+    <div className="bg-primary-normal h-full w-full">
+      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
+        <Card className="mb-3" title="Detalhes da questão">
+          <CardGrid>
+            <div>
+              <span class="text-gray-700">Dificuldade: </span>
+              {difficulty[questionData.difficulty]}
+            </div>
+            <div>
+              <span class="text-gray-700">Taxonomia de Bloom: </span>
+              {bloomTaxonomy[questionData.bloomTaxonomy]}
+            </div>
+            <div>
+              <span class="text-gray-700">Ano de autoria: </span>
+              {questionData.authorshipYear}
+            </div>
+            <div>
+              <span class="text-gray-700">Autoria: </span>
+              {questionData.own ? "Própria" : "Terceiros"}
+            </div>
+            <div>
+              <span class="text-gray-700">Atualizado em: </span>
+              {formatDate(questionData.updatedAt)}
+            </div>
+            <div>
+              <span class="text-gray-700">Registrada em: </span>
+              {formatDate(questionData.createdAt)}
+            </div>
+          </CardGrid>
+        </Card>
 
-          <Card className="mb-3" title="Enunciado">
-            <div dangerouslySetInnerHTML={{ __html: questionData.body }} />
-          </Card>
-          <Card className="mb-3" title="Alternativa correta">
-            <div
-              dangerouslySetInnerHTML={{ __html: correctAlternative.text }}
-            />
-          </Card>
-          <Card className="mb-3" title="Explicação da alternativa correta">
-            <div
-              dangerouslySetInnerHTML={{ __html: questionData.explanation }}
-            />
-          </Card>
-          <Card className="mb-3" title="Alternativas incorretas">
-            <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[0].text }}
-            />
-            <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[1].text }}
-            />
-            <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[2].text }}
-            />
-            <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[3].text }}
-            />
-          </Card>
-        </main>
-      </div>
-      <Footer />
-    </>
+        <Card className="mb-3" title="Enunciado">
+          <div dangerouslySetInnerHTML={{ __html: questionData.body }} />
+        </Card>
+        <Card className="mb-3" title="Alternativa correta">
+          <div dangerouslySetInnerHTML={{ __html: correctAlternative.text }} />
+        </Card>
+        <Card className="mb-3" title="Explicação da alternativa correta">
+          <div dangerouslySetInnerHTML={{ __html: questionData.explanation }} />
+        </Card>
+        <Card className="mb-3" title="Alternativas incorretas">
+          <div dangerouslySetInnerHTML={{ __html: incorrectAnswers[0].text }} />
+          <div dangerouslySetInnerHTML={{ __html: incorrectAnswers[1].text }} />
+          <div dangerouslySetInnerHTML={{ __html: incorrectAnswers[2].text }} />
+          <div dangerouslySetInnerHTML={{ __html: incorrectAnswers[3].text }} />
+        </Card>
+      </main>
+    </div>
   );
 };
