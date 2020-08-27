@@ -87,18 +87,18 @@ export const SteppedForm = ({ children, questionId }) => {
         {
           correct: false,
           text: inputs.incorrectAlternative4 || "",
-        }
-      ]
-    }
+        },
+      ],
+    };
 
     if (questionId) {
-      objectiveQuestion.id = questionId
+      objectiveQuestion.id = questionId;
     }
 
     await saveQuestion({
       variables: {
         input: {
-          objectiveQuestion: objectiveQuestion
+          objectiveQuestion: objectiveQuestion,
         },
       },
     });
@@ -107,36 +107,38 @@ export const SteppedForm = ({ children, questionId }) => {
   };
 
   return (
-    <form
-      className="h-full flex flex-col space-y-4"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <FormContext.Provider value={{ register, control }}>
-        {children.map((x) => {
-          const visible = x.props["step"] === currentStep;
+    <div className="m-auto max-w-screen-md">
+      <form
+        className="h-full flex flex-col space-y-4"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <FormContext.Provider value={{ register, control }}>
+          {children.map((x) => {
+            const visible = x.props["step"] === currentStep;
 
-          return (
-            <div key={x.props["step"]} className={visible ? "" : "hidden"}>
-              {x}
-            </div>
-          );
-        })}
-      </FormContext.Provider>
+            return (
+              <div key={x.props["step"]} className={visible ? "" : "hidden"}>
+                {x}
+              </div>
+            );
+          })}
+        </FormContext.Provider>
 
-      <div className="flex justify-end space-x-2">
-        <Button
-          className={minStep === currentStep ? "hidden" : ""}
-          onClick={() => handleBack()}
-        >
-          Retornar
-        </Button>
-        <Button
-          type={submitNext ? "submit" : "button"}
-          onClick={() => handleNext()}
-        >
-          {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
-        </Button>
-      </div>
-    </form>
+        <div className="flex justify-end space-x-2">
+          <Button
+            className={minStep === currentStep ? "hidden" : ""}
+            onClick={() => handleBack()}
+          >
+            Retornar
+          </Button>
+          <Button
+            type={submitNext ? "submit" : "button"}
+            onClick={() => handleNext()}
+          >
+            {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
