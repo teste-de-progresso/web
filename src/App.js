@@ -16,7 +16,7 @@ import { loadAuthentication } from "./store/ducks/auth/actions";
 import { Login } from "./components/screens/Login"
 
 const client = new ApolloClient({
-    uri: process.env.REACT_APP_BACKEND_URL,
+    uri: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001',
     cache: new InMemoryCache(),
 });
 
