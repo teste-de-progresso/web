@@ -37,7 +37,6 @@ function App() {
     }
 
     if (!authenticationState.isLoggedIn) {
-        console.log(process.env)
         return <Login />
     }
 

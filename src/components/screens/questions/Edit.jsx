@@ -29,6 +29,8 @@ export const Edit = () => {
         explanation
         source
         bloomTaxonomy
+        references
+        checkType
         alternatives {
           correct
           text
@@ -54,6 +56,7 @@ export const Edit = () => {
             <AlternativesForm
               alternatives={questionData.alternatives}
               explanation={questionData.explanation}
+              references={questionData.references}
             />
           </Step>
           <Step step={2}>
@@ -63,6 +66,7 @@ export const Edit = () => {
               authorshipYear={questionData.authorshipYear}
               difficulty={questionData.difficulty}
               bloomTaxonomy={questionData.bloomTaxonomy}
+              checkType={questionData.checkType}
             />
           </Step>
         </SteppedForm>
