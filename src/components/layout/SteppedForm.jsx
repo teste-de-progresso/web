@@ -58,14 +58,17 @@ export const SteppedForm = ({ children, questionId }) => {
   const history = useHistory();
 
   const onSubmit = async (inputs) => {
+    debugger
     const objectiveQuestion = {
       userId: authenticationState.user.user_id,
       body: inputs.enunciado,
-      own: inputs.autoria === "Própia" ? true : false,
+      own: inputs.autoria === "true",
       explanation: inputs.correctAlternativeExplanation,
-      status: "draft",
-      bloomTaxonomy: "remember",
-      difficulty: "easy",
+      references: inputs.correctAlternativeExplanationReference,
+      bloomTaxonomy: inputs.bloomTaxonomy,
+      difficulty: inputs.difficulty,
+      source: inputs.source,
+      checkType: inputs.checkType,
       authorshipYear: String(inputs.ano),
       alternatives: [
         {

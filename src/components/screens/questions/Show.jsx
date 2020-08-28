@@ -75,27 +75,27 @@ export const Show = () => {
           <Card className="mb-3" title="Detalhes da questão">
             <CardGrid>
               <div>
-                <span class="text-gray-700">Dificuldade: </span>
+                <span className="text-gray-700">Dificuldade: </span>
                 {difficulty[questionData.difficulty]}
               </div>
               <div>
-                <span class="text-gray-700">Taxonomia de Bloom: </span>
+                <span className="text-gray-700">Taxonomia de Bloom: </span>
                 {bloomTaxonomy[questionData.bloomTaxonomy]}
               </div>
               <div>
-                <span class="text-gray-700">Ano de autoria: </span>
+                <span className="text-gray-700">Ano de autoria: </span>
                 {questionData.authorshipYear}
               </div>
               <div>
-                <span class="text-gray-700">Autoria: </span>
+                <span className="text-gray-700">Autoria: </span>
                 {questionData.own ? "Própria" : "Terceiros"}
               </div>
               <div>
-                <span class="text-gray-700">Atualizado em: </span>
+                <span className="text-gray-700">Atualizado em: </span>
                 {formatDate(questionData.updatedAt)}
               </div>
               <div>
-                <span class="text-gray-700">Registrada em: </span>
+                <span className="text-gray-700">Registrada em: </span>
                 {formatDate(questionData.createdAt)}
               </div>
             </CardGrid>

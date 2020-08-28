@@ -83,7 +83,7 @@ export const QuestionsList = () => {
 
   return (
     <div>
-      <div class="flex flex-row m-5 justify-between">
+      <div className="flex flex-row m-5 justify-between">
         <div className="bg-gray-200">
           <button
             onClick={() => returnPage()}

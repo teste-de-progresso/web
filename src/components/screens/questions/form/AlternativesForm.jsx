@@ -2,7 +2,11 @@ import React from "react";
 import { Card } from "../../../widgets/Card";
 import { TextEditor } from "./TextEditor";
 
-export const AlternativesForm = ({ alternatives = [], explanation }) => {
+export const AlternativesForm = ({
+  alternatives = [],
+  explanation,
+  references,
+}) => {
   const correctAlternative = alternatives.find(
     (alternative) => alternative.correct === true
   );
@@ -12,8 +16,8 @@ export const AlternativesForm = ({ alternatives = [], explanation }) => {
   );
 
   if (incorrectAnswers.length === 0) {
-    for (let index = 0; index < 4; index++) {
-      incorrectAnswers.push({ number: index + 1, text: "" });
+    for (const index = 0; index < 4; index++) {
+      incorrectAnswers.push({ index: index + 1, text: "" });
     }
   }
 
@@ -37,7 +41,10 @@ export const AlternativesForm = ({ alternatives = [], explanation }) => {
             </div>
             <div>
               <h2 className="text-xl font-medium">Referências</h2>
-              <TextEditor name={"correctAlternativeExplanationReference"} />
+              <TextEditor
+                defaultValue={references || ""}
+                name={"correctAlternativeExplanationReference"}
+              />
             </div>
           </div>
         </div>
@@ -45,11 +52,11 @@ export const AlternativesForm = ({ alternatives = [], explanation }) => {
       <Card title={"Alternativas incorretas"}>
         <div className="flex flex-col">
           <div className="">
-            {incorrectAnswers.map((answer) => {
+            {incorrectAnswers.map((answer, index) => {
               return (
-                <div className="w-full mb-3">
+                <div className="w-full mb-3" key={index}>
                   <TextEditor
-                    name={`incorrectAlternative${answer.index}`}
+                    name={`incorrectAlternative${index + 1}`}
                     defaultValue={answer.text}
                   />
                 </div>
