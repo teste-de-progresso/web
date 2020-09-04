@@ -13,6 +13,7 @@ export const Avatar = ({src}) => {
       className="rounded-full w-12 border-2 border-primary-light shadow"
       src={url()}
       alt="Avatar do usuário"
+      style={style}
     />
   );
 };
