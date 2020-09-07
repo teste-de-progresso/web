@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
 
 import { Button } from "../widgets";
@@ -53,8 +52,6 @@ export const SteppedForm = ({ children, questionId }) => {
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
 
-  const history = useHistory();
-
   const onSubmit = async (inputs) => {
     const objectiveQuestion = {
       body: inputs.enunciado,
@@ -102,7 +99,7 @@ export const SteppedForm = ({ children, questionId }) => {
       },
     });
 
-    history.push("/");
+    window.location = "/";
   };
 
   return (
