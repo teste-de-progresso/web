@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { QuestionsList } from "./QuestionsList";
-import { Button } from "../../widgets/Button";
+import { Button } from "../../widgets";
+import { QuestionsList } from "./";
 
 export const Home = () => {
   const history = useHistory();

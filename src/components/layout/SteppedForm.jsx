@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "../widgets/Button";
 import { useForm } from "react-hook-form";
-
+import { useHistory } from "react-router-dom";
 import { useMutation, gql } from "@apollo/client";
+
+import { Button } from "../widgets";
 
 export const FormContext = React.createContext({
   register: undefined,
