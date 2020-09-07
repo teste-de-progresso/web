@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import { Card } from "../widgets/Card";
 import styled from "styled-components";
-import { Button } from "../widgets/Button";
-import { Input } from "../widgets/Input";
-import { InputGroup } from "../widgets/InputGroup";
+import { Card, Button, Input, InputGroup, Alert } from "../widgets";
 import { useDispatch, useSelector } from "react-redux";
 import { requestAuthentication } from "../../store/ducks/auth/actions";
-import { Alert } from "../widgets/Alert";
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
 const Layout = styled.div`

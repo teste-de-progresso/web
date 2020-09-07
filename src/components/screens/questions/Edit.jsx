@@ -1,13 +1,9 @@
 import React from "react";
 import { useParams, useHistory } from "react-router-dom";
-
 import { gql, useQuery } from "@apollo/client";
 
-import { SteppedForm } from "../../layout/SteppedForm";
-import { Step } from "../../layout/Step";
-import { EnunciadoForm } from "./form/EnunciadoForm";
-import { AlternativesForm } from "./form/AlternativesForm";
-import { FeaturesForm } from "./form/FeaturesForm";
+import { SteppedForm, Step } from "../../layout";
+import { EnunciadoForm, AlternativesForm, FeaturesForm } from "./form";
 
 export const Edit = () => {
   const { id } = useParams();
