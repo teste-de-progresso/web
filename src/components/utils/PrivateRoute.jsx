@@ -7,7 +7,6 @@ export const PrivateRoute = (props) => {
   return (
     <AuthenticationContext.Consumer>
       {(value) => {
-        console.log(value);
         return value.isLoggedIn ? <Route {...props} /> : <Login />;
       }}
     </AuthenticationContext.Consumer>

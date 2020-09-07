@@ -1,4 +1,4 @@
-import { failedLoadAuthentication, failureAuthentication, successAuthentication } from "./actions";
+import { failedLoadAuthentication, failureAuthentication, successAuthentication,  } from "./actions";
 import { put } from "@redux-saga/core/effects";
 import AuthenticationService from "../../../services/AuthenticationService";
 import * as jwt from "jsonwebtoken";
@@ -21,8 +21,13 @@ export function* authentcationLoad() {
     const token = localStorage.getItem("auth");
     const guid = process.env.REACT_APP_JWT_SECRET_KEY || '1cb26f40-498b-4f72-a00a-e8633abc5957'
 
-    if (token && jwt.verify(token, guid)) {
-        yield put(successAuthentication(token));
+    if (token) {
+        try {
+            jwt.verify(token, guid)
+            yield put(successAuthentication(token));
+        } catch (error) {
+            yield put(failedLoadAuthentication());
+        }
     } else {
         yield put(failedLoadAuthentication());
     }

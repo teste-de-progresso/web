@@ -16,6 +16,8 @@ const initialState = {
 }
 
 export const reducer = (state = initialState, action) => {
+    const guid = process.env.REACT_APP_JWT_SECRET_KEY || '1cb26f40-498b-4f72-a00a-e8633abc5957'
+
     switch (action.type) {
         case AUTHENTICATION_REQUEST:
             return {
@@ -30,7 +32,7 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 token: action.payload.token,
-                user: jwt.verify(action.payload.token, '1cb26f40-498b-4f72-a00a-e8633abc5957'), //TODO: PARSE JWT
+                user: jwt.verify(action.payload.token, guid), //TODO: PARSE JWT
                 isLoggedIn: true,
                 error: undefined,
                 isLoading: false
