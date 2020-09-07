@@ -32,13 +32,9 @@ function App() {
         store.dispatch(loadAuthentication())
     }, []);
 
-    if (authenticationState.isLoading) {
-        return <Loading />
-    }
+    if (authenticationState.isLoading) return <Loading />
 
-    if (!authenticationState.isLoggedIn) {
-        return <Login />
-    }
+    if (!authenticationState.isLoggedIn) return <Login />
 
     return (
         <Provider store={store}>

@@ -67,7 +67,6 @@ export const Show = () => {
     return new Date(stringDate).toLocaleDateString();
   }
 
-  console.log(questionData);
   return (
     <div className="bg-primary-normal h-full w-full">
       <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">

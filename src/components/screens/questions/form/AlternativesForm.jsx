@@ -3,7 +3,13 @@ import { Card } from "../../../widgets/Card";
 import { TextEditor } from "./TextEditor";
 
 export const AlternativesForm = ({
-  alternatives = [],
+  alternatives = [
+    { text: "", correct: true },
+    { text: "", correct: false },
+    { text: "", correct: false },
+    { text: "", correct: false },
+    { text: "", correct: false },
+  ],
   explanation,
   references,
 }) => {
@@ -14,12 +20,6 @@ export const AlternativesForm = ({
   const incorrectAnswers = alternatives.filter(
     (alternative) => alternative.correct === false
   );
-
-  if (incorrectAnswers.length === 0) {
-    for (const index = 0; index < 4; index++) {
-      incorrectAnswers.push({ index: index + 1, text: "" });
-    }
-  }
 
   return (
     <>
