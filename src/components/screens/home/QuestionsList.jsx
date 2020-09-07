@@ -112,7 +112,7 @@ export const QuestionsList = () => {
         </div>
         <input readOnly hidden value={queryInput.page} />
       </div>
-      <div className="grid grid-cols-5 space-x-8">
+      <div className="grid gap-1 lg:space-x-8 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
         {questions.map((question) => (
             <div
                 key={question.id}

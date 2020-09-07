@@ -29,7 +29,6 @@ function App() {
     }, []);
 
     if (authenticationState.isLoading) return <Loading />
-
     if (!authenticationState.isLoggedIn) return <Login />
 
     return (
