@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { Button } from "../widgets/Button";
 import { useForm } from "react-hook-form";
 
@@ -53,14 +52,11 @@ export const SteppedForm = ({ children, questionId }) => {
   const { register, handleSubmit, control } = useForm();
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
-  const authenticationState = useSelector((state) => state.auth);
 
   const history = useHistory();
 
   const onSubmit = async (inputs) => {
-    debugger
     const objectiveQuestion = {
-      userId: authenticationState.user.user_id,
       body: inputs.enunciado,
       own: inputs.autoria === "true",
       explanation: inputs.correctAlternativeExplanation,
