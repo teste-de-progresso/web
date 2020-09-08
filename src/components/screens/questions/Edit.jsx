@@ -7,16 +7,13 @@ import { EnunciadoForm, AlternativesForm, FeaturesForm } from "./form";
 
 export const Edit = () => {
   const { id } = useParams();
-
   const history = useHistory();
 
-  if (!id) {
-    history.push("/");
-  }
+  if (!id) history.push("/");
 
   const GET_QUESTION = gql`
     query {
-      getObjectiveQuestion(id: ${id}) {
+      objectiveQuestion(id: ${id}) {
         id
         own
         authorshipYear
@@ -36,10 +33,9 @@ export const Edit = () => {
   `;
 
   const { loading, data } = useQuery(GET_QUESTION);
+  const questionData = data?.objectiveQuestion;
 
-  if (loading || !data.getObjectiveQuestion) return null;
-
-  const questionData = data.getObjectiveQuestion;
+  if (loading || !questionData) return null;
 
   return (
     <div className="bg-primary-normal h-full w-full">

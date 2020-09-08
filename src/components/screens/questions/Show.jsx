@@ -21,16 +21,13 @@ const difficulty = {
 
 export const Show = () => {
   const { id } = useParams();
-
   const history = useHistory();
 
-  if (!id) {
-    history.push("/");
-  }
+  if (!id) history.push("/");
 
   const GET_QUESTION = gql`
     query {
-      getObjectiveQuestion(id: ${id}) {
+      objectiveQuestion(id: ${id}) {
         id
         own
         authorshipYear
@@ -50,15 +47,16 @@ export const Show = () => {
   `;
 
   const { loading, data } = useQuery(GET_QUESTION);
+  const questionData = data?.objectiveQuestion;
 
-  if (loading || !data.getObjectiveQuestion) return null;
+  if (loading || !questionData) return null;
 
-  const questionData = data.getObjectiveQuestion;
   const alternatives = questionData.alternatives;
 
   const correctAlternative = alternatives.find(
     (alternative) => alternative.correct === true
   );
+
   const incorrectAnswers = alternatives.filter(
     (alternative) => alternative.correct === false
   );
