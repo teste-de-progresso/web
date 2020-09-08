@@ -6,7 +6,7 @@ import {
     BrowserRouter as Router, Switch, Route
 } from "react-router-dom";
 
-import { ApolloContext } from "./components/utils"
+import { ApolloContext, UserContextProvider } from "./components/utils"
 
 import { Footer, Navbar } from "./components/layout"
 import { Home } from "./components/screens/home"
@@ -35,18 +35,20 @@ function App() {
         <Provider store={store}>
             <AuthenticationContext.Provider value={authenticationState}>
                 <ApolloContext>
-                    <Router>
-                        <Switch>
-                            <Layout className="h-screen">
-                                <Navbar />
-                                <Route exact path={"/"} component={Home} />
-                                <Route exact path={"/question/new"} component={New} />
-                                <Route exact path={"/question/:id/edit"} component={Edit} />
-                                <Route exact path={"/question/:id/show"} component={Show} />
-                                <Footer />
-                            </Layout>
-                        </Switch>
-                    </Router>
+                    <UserContextProvider>
+                        <Router>
+                            <Switch>
+                                <Layout className="h-screen">
+                                    <Navbar />
+                                    <Route exact path={"/"} component={Home} />
+                                    <Route exact path={"/question/new"} component={New} />
+                                    <Route exact path={"/question/:id/edit"} component={Edit} />
+                                    <Route exact path={"/question/:id/show"} component={Show} />
+                                    <Footer />
+                                </Layout>
+                            </Switch>
+                        </Router>
+                    </UserContextProvider>
                 </ApolloContext>
             </AuthenticationContext.Provider>
         </Provider>

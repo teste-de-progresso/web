@@ -2,16 +2,20 @@ import React from "react";
 import { useAuth } from "../../context/Authentication";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/ducks/auth/actions";
+import { useUserContext } from "../utils";
+
 import { Avatar } from "./Avatar";
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
 export const Navbar = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
+  const userContextData = useUserContext();
+  const userInfo = userContextData?.userInfo;
 
-  const doLogout = () => {
-    dispatch(logout());
-  };
+  if (!userInfo) return null;
+
+  const doLogout = () => dispatch(logout());
 
   return (
     <nav className="h-16 bg-primary-normal w-full flex items-center px-8 z-50">
@@ -22,8 +26,8 @@ export const Navbar = () => {
       </div>
       <div className="group inline-block relative text-white font-medium hover:bg-primary-dark p-2 hover:shadow-lg cursor-pointer">
         <div className="flex flex-row items-center space-x-2">
-          <span>{auth.user.email}</span>
-          <Avatar />
+          <span>{userInfo.name || auth.user.email}</span>
+          <Avatar src={userInfo.avatarUrl}/>
         </div>
         <div className="absolute hidden pt-1 group-hover:block w-full right-0 text-black">
           <ul className="mt-2 bg-white rounded shadow-md border border-gray-300 font-light">
