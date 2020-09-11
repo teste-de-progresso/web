@@ -1,6 +1,8 @@
 import React, { createContext, useMemo, useContext, useState } from "react";
 import { useQuery, gql } from "@apollo/client";
 
+import { BadConnection } from "../screens";
+
 const Context = createContext(null);
 
 export const useUserContext = () => {
@@ -23,12 +25,21 @@ const MY_USER = gql`
 `;
 
 export const UserContextProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState();
+  const [userInfo, setUserInfo] = useState(true);
   const providerValue = useMemo(() => ({ userInfo }), [userInfo]);
 
   useQuery(MY_USER, {
-    onCompleted: (data) => setUserInfo(data?.myUser),
+    onCompleted: (data) => {
+      setUserInfo(data?.myUser);
+    },
+    onError: () => {
+      setUserInfo(false);
+    },
   });
 
-  return <Context.Provider value={providerValue}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={providerValue}>
+      {userInfo ? children : <BadConnection/>}
+    </Context.Provider>
+  );
 };
