@@ -4,16 +4,11 @@ import axios from "axios";
 import { Alert, Modal } from "..";
 import { PhotoCrop } from ".";
 
-export const AvatarEditor = ({ sucessCallback }) => {
+export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
   const { token } = useSelector((state) => state.auth);
 
   const [croppedImage, setCroppedImage] = useState();
-  const [showingModal, setShowingModal] = useState(true);
   const [alert, setAlert] = useState();
-
-  const onCloseModal = () => {
-    setShowingModal(false);
-  };
 
   const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -28,8 +23,9 @@ export const AvatarEditor = ({ sucessCallback }) => {
       })
       .then((res) => {
         if (res.status === 200) {
-          setShowingModal(false);
+          setAvatarEditorExhibition(false);
           if (sucessCallback) sucessCallback(true);
+          window.location = "/user/profile";
         } else {
           setAlert(true);
         }
@@ -39,13 +35,13 @@ export const AvatarEditor = ({ sucessCallback }) => {
       });
   };
 
-  if (!showingModal) return null;
-
   return (
     <Modal
       confirmButtonText="Enviar"
       closeButtonText="Cancelar"
-      onClose={onCloseModal}
+      onClose={() => {
+        setAvatarEditorExhibition(false);
+      }}
       onConfirm={onSubmit}
     >
       {alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
