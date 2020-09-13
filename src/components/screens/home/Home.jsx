@@ -16,7 +16,9 @@ export const Home = () => {
         <div>
           <QuestionsList />
           <div className="mb-3 lg:max-w-xs ml-auto flex justify-center">
-            <Button onClick={handleNewQuestion} className="w-full">Registrar questão</Button>
+            <Button onClick={handleNewQuestion} className="w-full">
+              Registrar questão
+            </Button>
           </div>
         </div>
       </main>
