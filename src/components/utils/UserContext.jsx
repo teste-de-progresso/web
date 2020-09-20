@@ -20,6 +20,7 @@ const MY_USER = gql`
     myUser {
       avatarUrl
       name
+      roles
     }
   }
 `;
