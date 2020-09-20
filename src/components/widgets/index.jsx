@@ -6,4 +6,5 @@ export * from "./Input";
 export * from "./InputGroup";
 export * from "./AvatarEditor";
 export * from "./Modal";
+export * from "./Navegator";
 export { AvatarEditor } from "./AvatarEditor";

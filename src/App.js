@@ -11,11 +11,10 @@ import { ApolloContext, UserContextProvider } from "./components/utils"
 import { Footer, Navbar } from "./components/layout"
 import { Home } from "./components/screens/home"
 import { New, Edit, Show } from "./components/screens/questions"
-import { UserProfile } from "./components/screens/user_profile"
 import { Loading } from "./components/screens/Loading";
 import { AuthenticationContext } from "./context/Authentication";
 import { loadAuthentication } from "./store/ducks/auth/actions";
-import { Login } from "./components/screens/Login"
+import { Login, UserProfile } from "./components/screens"
 
 const Layout = styled.div`
   display: grid;

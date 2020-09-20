@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, gql } from "@apollo/client";
 
-import { Button } from "../widgets";
+import { Button, Navigator } from "../widgets";
 
 export const FormContext = React.createContext({
   register: undefined,
@@ -14,18 +14,6 @@ const SAVE_QUESTION = gql`
     saveObjective(input: $input) {
       payload {
         id
-        introduction
-        body
-        explanation
-        authorshipYear
-        own
-        status
-        bloomTaxonomy
-        difficulty
-        alternatives {
-          correct
-          text
-        }
       }
     }
   }
@@ -103,38 +91,41 @@ export const SteppedForm = ({ children, questionId }) => {
   };
 
   return (
-    <div className="m-auto max-w-screen-md">
-      <form
-        className="h-full flex flex-col space-y-4"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <FormContext.Provider value={{ register, control }}>
-          {children.map((x) => {
-            const visible = x.props["step"] === currentStep;
+    <>
+      <Navigator needsConfirmation={true} />
+      <div className="m-auto max-w-screen-md">
+        <form
+          className="h-full flex flex-col space-y-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <FormContext.Provider value={{ register, control }}>
+            {children.map((x) => {
+              const visible = x.props["step"] === currentStep;
 
-            return (
-              <div key={x.props["step"]} className={visible ? "" : "hidden"}>
-                {x}
-              </div>
-            );
-          })}
-        </FormContext.Provider>
+              return (
+                <div key={x.props["step"]} className={visible ? "" : "hidden"}>
+                  {x}
+                </div>
+              );
+            })}
+          </FormContext.Provider>
 
-        <div className="flex justify-end space-x-2">
-          <Button
-            className={minStep === currentStep ? "hidden" : ""}
-            onClick={() => handleBack()}
-          >
-            Retornar
-          </Button>
-          <Button
-            type={submitNext ? "submit" : "button"}
-            onClick={() => handleNext()}
-          >
-            {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
-          </Button>
-        </div>
-      </form>
-    </div>
+          <div className="flex justify-end space-x-2">
+            <Button
+              className={minStep === currentStep ? "hidden" : ""}
+              onClick={() => handleBack()}
+            >
+              Retornar
+            </Button>
+            <Button
+              type={submitNext ? "submit" : "button"}
+              onClick={() => handleNext()}
+            >
+              {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };

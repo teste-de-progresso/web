@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useUserContext } from "../../utils";
-import { Avatar } from "../../layout/Avatar";
-import { AvatarEditor } from "../../widgets";
+import { AvatarEditor, Navigator } from "../../widgets";
+import { Avatar } from "../../layout";
 
 export const UserProfile = () => {
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
@@ -13,6 +13,7 @@ export const UserProfile = () => {
       {avatarEditorExhibit && <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />}
       <div className="bg-primary-normal h-full w-full">
         <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
+          <Navigator />
           <div className="flex items-center flex-col max-w-4xl m-auto">
             <div className="bg-white shadow border border-gray-100 flex flex-col items-center rounded p-4 w-full mt-12 mb-4 relative">
               <div
