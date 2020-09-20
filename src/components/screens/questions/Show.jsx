@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
-import { Card, CardGrid } from "../../widgets";
+import { Card, CardGrid, Navigator } from "../../widgets";
 
 const bloomTaxonomy = {
   remember: "Relembrar",
@@ -68,6 +68,7 @@ export const Show = () => {
   return (
     <div className="bg-primary-normal h-full w-full">
       <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
+        <Navigator />
         <div className="m-auto max-w-screen-md">
           <Card className="mb-3" title="Detalhes da questão">
             <CardGrid>
