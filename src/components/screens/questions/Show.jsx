@@ -100,30 +100,44 @@ export const Show = () => {
           </Card>
 
           <Card className="mb-3" title="Enunciado">
-            <div dangerouslySetInnerHTML={{ __html: questionData.body }} />
+            <div
+              dangerouslySetInnerHTML={{ __html: questionData.body || "" }}
+            />
           </Card>
           <Card className="mb-3" title="Alternativa correta">
             <div
-              dangerouslySetInnerHTML={{ __html: correctAlternative.text }}
+              dangerouslySetInnerHTML={{
+                __html: correctAlternative?.text || "",
+              }}
             />
           </Card>
           <Card className="mb-3" title="Explicação da alternativa correta">
             <div
-              dangerouslySetInnerHTML={{ __html: questionData.explanation }}
+              dangerouslySetInnerHTML={{
+                __html: questionData?.explanation || "",
+              }}
             />
           </Card>
           <Card className="mb-3" title="Alternativas incorretas">
             <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[0].text }}
+              dangerouslySetInnerHTML={{
+                __html: incorrectAnswers[0]?.text || "",
+              }}
             />
             <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[1].text }}
+              dangerouslySetInnerHTML={{
+                __html: incorrectAnswers[1]?.text || "",
+              }}
             />
             <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[2].text }}
+              dangerouslySetInnerHTML={{
+                __html: incorrectAnswers[2]?.text || "",
+              }}
             />
             <div
-              dangerouslySetInnerHTML={{ __html: incorrectAnswers[3].text }}
+              dangerouslySetInnerHTML={{
+                __html: incorrectAnswers[3]?.text || "",
+              }}
             />
           </Card>
         </div>
