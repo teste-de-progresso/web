@@ -3,12 +3,43 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { Button } from "../../widgets";
-import { QuestionsList } from "./";
+import { QuestionsList, Filter } from "./";
 import { useUserContext } from "../../utils";
 
 const RESULT_LIMIT = [5, 10, 15, 20, 30, 40, 50];
 
 export const Home = () => {
+  const [checkType, setCheckType] = useState();
+  const [bloomTaxonomy, setBloomTaxonomy] = useState();
+  const [difficulty, setDifficulty] = useState();
+  const [status, setStatus] = useState();
+
+  const where = (() => {
+    let params = {};
+    let empty = true;
+
+    if (checkType && checkType.length > 0) {
+      params.checkType = checkType;
+      empty = false;
+    }
+    if (bloomTaxonomy && bloomTaxonomy.length > 0) {
+      params.bloomTaxonomy = bloomTaxonomy;
+      empty = false;
+    }
+    if (difficulty && difficulty.length > 0) {
+      params.difficulty = difficulty;
+      empty = false;
+    }
+    if (status && status.length > 0) {
+      params.status = status;
+      empty = false;
+    }
+
+    if (!empty) return { where: params };
+  })();
+
+  console.log(where);
+
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
   const [isLastPage, setIsLastPage] = useState(false);
@@ -68,6 +99,12 @@ export const Home = () => {
             </div>
             <input readOnly hidden value={page} />
           </div>
+          <Filter
+            setCheckType={setCheckType}
+            setBloomTaxonomy={setBloomTaxonomy}
+            setDifficulty={setDifficulty}
+            setStatus={setStatus}
+          />
           <div className="flex">
             <div className="my-auto">
               <select
@@ -97,6 +134,7 @@ export const Home = () => {
           page={page}
           limit={limit}
           userId={userId}
+          where={where}
           setIsFirstPage={setIsFirstPage}
           setIsLastPage={setIsLastPage}
         />

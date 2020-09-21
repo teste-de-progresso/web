@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
-import { MdModeEdit } from "react-icons/md";
+import { MdModeEdit, MdContentPaste } from "react-icons/md";
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -10,8 +10,8 @@ const EditIcon = styled(MdModeEdit)`
 `;
 
 const SEARCH_QUESTIONS = gql`
-  query($page: Int!, $limit: Int!) {
-    objective {
+  query($where: OjectiveWhereInput, $page: Int!, $limit: Int!) {
+    objectives(where: $where) {
       payload(page: $page, limit: $limit) {
         nodes {
           id
@@ -34,21 +34,23 @@ export const QuestionsList = ({
   userId,
   page,
   limit,
+  where,
   setIsFirstPage,
   setIsLastPage,
 }) => {
   const [questions, setQuestions] = useState([]);
 
-  useQuery(SEARCH_QUESTIONS, {
-    onCompleted: ({ objective }) => {
-      setQuestions(objective.payload.nodes);
-      setIsFirstPage(objective.payload.pageInfo.firstPage);
-      setIsLastPage(objective.payload.pageInfo.lastPage);
+  const { loading } = useQuery(SEARCH_QUESTIONS, {
+    onCompleted: ({ objectives }) => {
+      setQuestions(objectives.payload.nodes);
+      setIsFirstPage(objectives.payload.pageInfo.firstPage);
+      setIsLastPage(objectives.payload.pageInfo.lastPage);
     },
     variables: {
       page: page,
       limit: limit,
       userId: userId,
+      ...where,
     },
   });
 
@@ -61,8 +63,38 @@ export const QuestionsList = ({
   const handleEditQuestion = (id) => history.push(`/question/${id}/edit`);
   const bandleShowQuestion = (id) => history.push(`/question/${id}/show`);
 
+  if (loading) {
+    return (
+      <div className="grid h-full" style={{ placeItems: "center" }}>
+        <div className="lds-roller">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (questions.length === 0){
+    return (
+      <div className="grid h-full text-gray-800" style={{ placeItems: "center" }}>
+        <div className="text-center">
+          <MdContentPaste className="text-6xl mx-auto"/>
+          <span className="text-lg">
+            Não existem questões registradas para esses parametros.
+          </span>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="grid gap-4 lg:space-x-8 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
+    <div className="grid gap-4 col-gap-8 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
       {questions.map((question) => (
         <div
           key={question.id}

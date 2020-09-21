@@ -2,6 +2,11 @@ import React, { useContext, useState } from "react";
 import { Card } from "../../../widgets/Card";
 import { Input } from "../../../widgets/Input";
 import { FormContext } from "../../../layout/SteppedForm";
+import {
+  BLOOM_TAXONOMY,
+  CHECK_TYPE,
+  DIFFICULTY,
+} from "../../../utils/types";
 
 export const FeaturesForm = ({
   own,
@@ -23,26 +28,17 @@ export const FeaturesForm = ({
             <h2>Tipo</h2>
             <select
               ref={formContext.register}
-              className="w-full rounded p-1 w-full border-gray-400 border shadow-sm"
+              className="w-full rounded p-1 border-gray-400 border shadow-sm"
               name={"checkType"}
               defaultValue={checkType}
             >
-              <option value="incomplete_affirmation">
-                Afirmação Incompleta
-              </option>
-              <option value="assertion_reason">Asserção-Razão</option>
-              <option value="column_association">Associação de Colunas</option>
-              <option value="gap_or_replacement_of_terms">
-                Lacuna ou Substituição de Termos
-              </option>
-              <option value="multiple_choice_complex">
-                Múltipla Escolha Complexa
-              </option>
-              <option value="sultiple_multiple_choice">
-                Múltipla Escolha Simples
-              </option>
-              <option value="serialization">Seriação</option>
-              <option value="true_or_false">Verdadeiro (V) ou Falso (F)</option>
+              {CHECK_TYPE.map((item, index) => {
+                return (
+                  <option key={index} value={item.key}>
+                    {item.value}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="w-full">
@@ -64,7 +60,7 @@ export const FeaturesForm = ({
               <h2>Autoria</h2>
               <select
                 ref={formContext.register}
-                className="w-full rounded p-1 w-full border-gray-400 border shadow-sm"
+                className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name={"autoria"}
                 defaultValue={own}
                 onChange={(e) => setOwnQuestion(e.target.value === "true")}
@@ -90,29 +86,34 @@ export const FeaturesForm = ({
             <h2>Taxonomia de Bloom</h2>
             <select
               ref={formContext.register}
-              className="w-full rounded p-1 w-full border-gray-400 border shadow-sm"
+              className="w-full rounded p-1 border-gray-400 border shadow-sm"
               name={"bloomTaxonomy"}
               defaultValue={bloomTaxonomy}
             >
-              <option value="remember">Relembrar</option>
-              <option value="understand">Entender</option>
-              <option value="apply">Aplicar</option>
-              <option value="analyze">Analizar</option>
-              <option value="evaluate">Avaliar</option>
-              <option value="create">Criar</option>
+              {BLOOM_TAXONOMY.map((item, index) => {
+                return (
+                  <option key={index} value={item.key}>
+                    {item.value}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="w-full">
             <h2>Dificuldade</h2>
             <select
               ref={formContext.register}
-              className="w-full rounded p-1 w-full border-gray-400 border shadow-sm"
+              className="w-full rounded p-1 border-gray-400 border shadow-sm"
               name={"difficulty"}
               defaultValue={difficulty}
             >
-              <option value="easy">Fácil</option>
-              <option value="medium">Moderada</option>
-              <option value="hard">Difícil</option>
+              {DIFFICULTY.map((item, index) => {
+                return (
+                  <option key={index} value={item.key}>
+                    {item.value}
+                  </option>
+                );
+              })}
             </select>
           </div>
         </div>
