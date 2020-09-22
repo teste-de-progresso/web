@@ -27,12 +27,16 @@ export const SubjectSelect = ({ defaultValue }) => {
     };
   });
 
-  const defaultSuject = [defaultValue].map((item) => {
-    return {
-      value: item.id,
-      label: item.name,
-    };
-  });
+  const defaultSuject = (() => {
+    if (!defaultValue) return undefined;
+
+    return [defaultValue].map((item) => {
+      return {
+        value: item.id,
+        label: item.name,
+      };
+    })[0];
+  })();
 
   return (
     <Controller
@@ -42,7 +46,7 @@ export const SubjectSelect = ({ defaultValue }) => {
         <Select
           className="basic-single w-full"
           classNamePrefix="select"
-          defaultValue={defaultSuject[0]}
+          defaultValue={defaultSuject}
           isLoading={loading}
           isClearable={true}
           isSearchable={true}
