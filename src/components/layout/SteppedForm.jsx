@@ -51,6 +51,7 @@ export const SteppedForm = ({ children, questionId }) => {
       source: inputs.source,
       checkType: inputs.checkType,
       authorshipYear: String(inputs.ano),
+      subjectId: inputs.subjectId,
       alternatives: [
         {
           correct: true,

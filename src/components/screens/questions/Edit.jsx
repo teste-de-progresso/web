@@ -24,6 +24,10 @@ export const Edit = () => {
         bloomTaxonomy
         references
         checkType
+        subject {
+          id
+          name
+        }
         alternatives {
           correct
           text
@@ -59,6 +63,7 @@ export const Edit = () => {
               difficulty={questionData.difficulty}
               bloomTaxonomy={questionData.bloomTaxonomy}
               checkType={questionData.checkType}
+              subject={questionData.subject}
             />
           </Step>
         </SteppedForm>

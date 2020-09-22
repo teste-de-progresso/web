@@ -1,12 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Card } from "../../../widgets/Card";
-import { Input } from "../../../widgets/Input";
+import { Card, Input } from "../../../widgets";
 import { FormContext } from "../../../layout/SteppedForm";
-import {
-  BLOOM_TAXONOMY,
-  CHECK_TYPE,
-  DIFFICULTY,
-} from "../../../utils/types";
+import { SubjectSelect } from "./";
+
+import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../utils/types";
 
 export const FeaturesForm = ({
   own,
@@ -15,6 +12,7 @@ export const FeaturesForm = ({
   difficulty,
   bloomTaxonomy,
   checkType,
+  subject,
 }) => {
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
@@ -116,6 +114,9 @@ export const FeaturesForm = ({
               })}
             </select>
           </div>
+        </div>
+        <div className={"flex space-x-2"}>
+          <SubjectSelect defaultValue={subject} />
         </div>
       </div>
     </Card>
