@@ -42,15 +42,16 @@ export const SteppedForm = ({ children, questionId }) => {
 
   const onSubmit = async (inputs) => {
     const objectiveQuestion = {
-      body: inputs.enunciado,
-      own: inputs.autoria === "true",
-      explanation: inputs.correctAlternativeExplanation,
-      references: inputs.correctAlternativeExplanationReference,
+      body: inputs.body,
+      own: inputs.own === "true",
+      explanation: inputs.explanation,
+      references: inputs.references,
       bloomTaxonomy: inputs.bloomTaxonomy,
       difficulty: inputs.difficulty,
       source: inputs.source,
       checkType: inputs.checkType,
       authorshipYear: String(inputs.ano),
+      subjectId: inputs.subjectId,
       alternatives: [
         {
           correct: true,
