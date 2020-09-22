@@ -38,8 +38,6 @@ export const Home = () => {
     if (!empty) return { where: params };
   })();
 
-  console.log(where);
-
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(20);
   const [isLastPage, setIsLastPage] = useState(false);

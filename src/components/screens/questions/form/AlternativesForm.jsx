@@ -35,7 +35,7 @@ export const AlternativesForm = ({
             <div>
               <h2 className="text-xl font-medium">Explicação</h2>
               <TextEditor
-                name={"correctAlternativeExplanation"}
+                name="explanation"
                 defaultValue={explanation}
               />
             </div>
@@ -43,7 +43,7 @@ export const AlternativesForm = ({
               <h2 className="text-xl font-medium">Referências</h2>
               <TextEditor
                 defaultValue={references || ""}
-                name={"correctAlternativeExplanationReference"}
+                name="references"
               />
             </div>
           </div>

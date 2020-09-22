@@ -61,7 +61,7 @@ export const FeaturesForm = ({
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
-                name={"autoria"}
+                name="own"
                 defaultValue={own}
                 onChange={(e) => setOwnQuestion(e.target.value === "true")}
               >
