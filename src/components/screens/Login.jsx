@@ -35,7 +35,7 @@ export const Login = () => {
     <Layout className="w-screen h-screen bg-primary-normal">
       <div>
         <img alt="Logo do Unifeso" src={unifesoLogo}></img>
-        <div className="w-full h-full md:max-w-xl md:h-auto">
+        <form onSubmit={() => handleLogin()} className="w-full h-full md:max-w-xl md:h-auto">
           {state.error ? <Alert>{state.error}</Alert> : null}
           <Card title={"Entrar no Sistema"}>
             <InputGroup>
@@ -58,10 +58,10 @@ export const Login = () => {
               />
             </InputGroup>
             <InputGroup className="mt-4">
-              <Button onClick={() => handleLogin()}>Login</Button>
+              <Button type="submit">Login</Button>
             </InputGroup>
           </Card>
-        </div>
+        </form>
       </div>
     </Layout>
   );
