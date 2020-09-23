@@ -16,12 +16,17 @@ export const FeaturesForm = ({
 }) => {
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
-  const [ownQuestion, setOwnQuestion] = useState(own);
+  const [ownQuestion, setOwnQuestion] = useState(!own);
+
+  const handleOwnCheck = (value) => {
+    setOwnQuestion(value);
+    formContext.setValue("source", value ? "UNIFESO" : "");
+  };
 
   return (
     <Card title={"Características"}>
       <div className="flex flex-col space-y-4">
-        <div className={"flex space-x-2"}>
+        <div className="flex space-x-2">
           <div className="w-full">
             <h2>Tipo</h2>
             <select
@@ -47,25 +52,23 @@ export const FeaturesForm = ({
               min="1999"
               max={currentYear}
               step="1"
-              name={"ano"}
+              name="authorshipYear"
               defaultValue={authorshipYear}
             />
           </div>
         </div>
         <div className={"border bg-white border-gray-300 rounded shadow-sm"}>
           <div className="p-4 flex space-x-2">
-            <div className="w-full">
-              <h2>Autoria</h2>
-              <select
-                ref={formContext.register}
-                className="w-full rounded p-1 border-gray-400 border shadow-sm"
+            <div className="w-full my-auto">
+              <input
+                type="checkbox"
+                id="own"
                 name="own"
-                defaultValue={own}
-                onChange={(e) => setOwnQuestion(e.target.value === "true")}
-              >
-                <option value={true}>Própria</option>
-                <option value={false}>Terceiros</option>
-              </select>
+                checked={ownQuestion}
+                ref={formContext.register}
+                onChange={(e) => handleOwnCheck(e.target.checked)}
+              />
+              <label htmlFor="own"> Autoria própria</label>
             </div>
             <div className="w-full">
               <h2>Origem</h2>
@@ -73,7 +76,7 @@ export const FeaturesForm = ({
                 ref={formContext.register}
                 className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                 name={"source"}
-                defaultValue={source}
+                defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
                 disabled={ownQuestion}
               />
             </div>
@@ -116,7 +119,10 @@ export const FeaturesForm = ({
           </div>
         </div>
         <div className={"flex space-x-2"}>
-          <SubjectSelect defaultValue={subject} />
+          <div className="w-full">
+            <h2>Assunto</h2>
+            <SubjectSelect defaultValue={subject} />
+          </div>
         </div>
       </div>
     </Card>

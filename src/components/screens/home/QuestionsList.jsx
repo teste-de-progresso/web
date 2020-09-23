@@ -15,7 +15,6 @@ const SEARCH_QUESTIONS = gql`
       payload(page: $page, limit: $limit) {
         nodes {
           id
-          introduction
           status
           updatedAt
           createdAt
@@ -104,10 +103,9 @@ export const QuestionsList = ({
             className="flex flex-col w-full p-3"
             onClick={() => bandleShowQuestion(question.id)}
           >
-            <h2>{question.introduction}</h2>
+            <h2># {question.id}</h2>
 
             <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
-              <span>ID: {question.id}</span>
               <span>Registrado em: {formatDate(question.createdAt)}</span>
               <span>Atualizado em: {formatDate(question.updatedAt)}</span>
             </div>

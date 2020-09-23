@@ -7,6 +7,7 @@ import { Button, Navigator } from "../widgets";
 export const FormContext = React.createContext({
   register: undefined,
   control: undefined,
+  setValue: undefined,
 });
 
 const SAVE_QUESTION = gql`
@@ -36,21 +37,23 @@ export const SteppedForm = ({ children, questionId }) => {
     setSubmitNext(false);
   };
 
-  const { register, handleSubmit, control } = useForm();
+  const { register, handleSubmit, control, setValue } = useForm();
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
 
   const onSubmit = async (inputs) => {
     const objectiveQuestion = {
+      instruction: inputs.instruction,
       body: inputs.body,
-      own: inputs.own === "true",
+      support: inputs.support,
+      own: inputs.own,
       explanation: inputs.explanation,
       references: inputs.references,
       bloomTaxonomy: inputs.bloomTaxonomy,
       difficulty: inputs.difficulty,
       source: inputs.source,
       checkType: inputs.checkType,
-      authorshipYear: String(inputs.ano),
+      authorshipYear: inputs.authorshipYear,
       subjectId: inputs.subjectId,
       alternatives: [
         {
@@ -99,7 +102,7 @@ export const SteppedForm = ({ children, questionId }) => {
           className="h-full flex flex-col space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <FormContext.Provider value={{ register, control }}>
+          <FormContext.Provider value={{ register, control, setValue }}>
             {children.map((x) => {
               const visible = x.props["step"] === currentStep;
 
