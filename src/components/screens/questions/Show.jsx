@@ -31,7 +31,9 @@ export const Show = () => {
         id
         own
         authorshipYear
+        instruction
         body
+        support
         difficulty
         explanation
         source
@@ -99,11 +101,22 @@ export const Show = () => {
             </CardGrid>
           </Card>
 
+          <Card className="mb-3" title="Instrução">
+            <div
+              dangerouslySetInnerHTML={{ __html: questionData.instruction || "" }}
+            />
+          </Card>
+          <Card className="mb-3" title="Suporte">
+            <div
+              dangerouslySetInnerHTML={{ __html: questionData.support || "" }}
+            />
+          </Card>
           <Card className="mb-3" title="Enunciado">
             <div
               dangerouslySetInnerHTML={{ __html: questionData.body || "" }}
             />
           </Card>
+
           <Card className="mb-3" title="Alternativa correta">
             <div
               dangerouslySetInnerHTML={{
@@ -119,26 +132,11 @@ export const Show = () => {
             />
           </Card>
           <Card className="mb-3" title="Alternativas incorretas">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: incorrectAnswers[0]?.text || "",
-              }}
-            />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: incorrectAnswers[1]?.text || "",
-              }}
-            />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: incorrectAnswers[2]?.text || "",
-              }}
-            />
-            <div
-              dangerouslySetInnerHTML={{
-                __html: incorrectAnswers[3]?.text || "",
-              }}
-            />
+            {incorrectAnswers.map(item => {
+              return (
+                <div dangerouslySetInnerHTML={{ __html: item?.text || "", }} />
+              )
+            })}
           </Card>
         </div>
       </main>

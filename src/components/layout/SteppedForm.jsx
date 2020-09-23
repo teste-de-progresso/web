@@ -42,7 +42,9 @@ export const SteppedForm = ({ children, questionId }) => {
 
   const onSubmit = async (inputs) => {
     const objectiveQuestion = {
+      instruction: inputs.instruction,
       body: inputs.body,
+      support: inputs.support,
       own: inputs.own === "true",
       explanation: inputs.explanation,
       references: inputs.references,
