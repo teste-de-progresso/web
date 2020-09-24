@@ -19,8 +19,6 @@ const MY_USER = gql`
   query {
     myUser {
       avatarUrl
-      name
-      roles
     }
   }
 `;

@@ -37,12 +37,12 @@ export const SteppedForm = ({ children, questionId }) => {
     setSubmitNext(false);
   };
 
-  const { register, handleSubmit, control, setValue } = useForm();
+  const { register, handleSubmit, control, setValue, getValues } = useForm();
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
 
-  const onSubmit = async (inputs) => {
-    const objectiveQuestion = {
+  const formatInput = (inputs) => {
+    return {
       instruction: inputs.instruction,
       body: inputs.body,
       support: inputs.support,
@@ -78,15 +78,39 @@ export const SteppedForm = ({ children, questionId }) => {
         },
       ],
     };
+  };
+
+  const onSubmit = async (inputs) => {
+    const inputValues = formatInput(inputs);
+    inputValues.status = "pending";
 
     if (questionId) {
-      objectiveQuestion.id = questionId;
+      inputValues.id = questionId;
     }
 
     await saveQuestion({
       variables: {
         input: {
-          objectiveQuestion: objectiveQuestion,
+          objectiveQuestion: inputValues,
+        },
+      },
+    });
+
+    window.location = "/";
+  };
+
+  const saveDraft = async () => {
+    const inputValues = formatInput(getValues());
+    inputValues.status = "draft";
+
+    if (questionId) {
+      inputValues.id = questionId;
+    }
+
+    await saveQuestion({
+      variables: {
+        input: {
+          objectiveQuestion: inputValues,
         },
       },
     });
@@ -121,9 +145,12 @@ export const SteppedForm = ({ children, questionId }) => {
             >
               Retornar
             </Button>
+            {maxStep === currentStep && (
+              <Button onClick={() => saveDraft()}>Salvar como rascunho</Button>
+            )}
             <Button
-              type={submitNext ? "submit" : "button"}
               onClick={() => handleNext()}
+              type={submitNext ? "submit" : "button"}
             >
               {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
             </Button>

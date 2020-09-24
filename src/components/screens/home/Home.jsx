@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { Button } from "../../widgets";
 import { QuestionsList, Filter } from "./";
-import { useUserContext } from "../../utils";
+import { useAuth } from "../../../context/Authentication";
 
 const RESULT_LIMIT = [5, 10, 15, 20, 30, 40, 50];
 
 export const Home = () => {
+  const auth = useAuth();
   const [checkType, setCheckType] = useState();
   const [bloomTaxonomy, setBloomTaxonomy] = useState();
   const [difficulty, setDifficulty] = useState();
@@ -53,16 +54,14 @@ export const Home = () => {
     setPage(1);
   };
 
-  const history = useHistory();
-
-  const user = useUserContext();
-
   const isTeacher = (() => {
-    if (user.userInfo !== true && user.userInfo.roles.length >= 1) {
-      return user.userInfo.roles[0] === "teacher";
+    if (auth.user.roles && auth.user.roles.length >= 1) {
+      return auth.user.roles.includes("teacher");
     }
     return false;
   })();
+
+  const history = useHistory();
 
   const handleNewQuestion = () => {
     if (!isTeacher) return;

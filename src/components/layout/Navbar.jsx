@@ -31,7 +31,7 @@ export const Navbar = () => {
       </div>
       <div className="group inline-block relative text-white font-medium hover:bg-primary-dark p-2 hover:shadow-lg cursor-pointer">
         <div className="flex flex-row items-center space-x-2">
-          <span>{userInfo.name || auth.user.email}</span>
+          <span>{auth.user.name || auth.user.email}</span>
           <Avatar src={userInfo.avatarUrl} className="w-12"/>
         </div>
         <div className="absolute hidden pt-1 group-hover:block w-full right-0 text-black">

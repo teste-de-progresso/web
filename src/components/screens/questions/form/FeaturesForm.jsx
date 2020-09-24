@@ -58,27 +58,29 @@ export const FeaturesForm = ({
           </div>
         </div>
         <div className={"border bg-white border-gray-300 rounded shadow-sm"}>
-          <div className="p-4 flex space-x-2">
-            <div className="w-full my-auto">
-              <input
-                type="checkbox"
-                id="own"
-                name="own"
-                checked={ownQuestion}
-                ref={formContext.register}
-                onChange={(e) => handleOwnCheck(e.target.checked)}
-              />
-              <label htmlFor="own"> Autoria própria</label>
-            </div>
-            <div className="w-full">
-              <h2>Origem</h2>
-              <Input
-                ref={formContext.register}
-                className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-                name={"source"}
-                defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
-                disabled={ownQuestion}
-              />
+          <div className="p-4">
+            <h2 className="mb-2">Origem</h2>
+            <div className="flex flex-row space-x-2">
+              <div className="pl-3 w-full my-auto">
+                <input
+                  type="checkbox"
+                  id="own"
+                  name="own"
+                  checked={ownQuestion}
+                  ref={formContext.register}
+                  onChange={(e) => handleOwnCheck(e.target.checked)}
+                />
+                <label htmlFor="own"> Autoria própria</label>
+              </div>
+              <div className="w-full">
+                <Input
+                  ref={formContext.register}
+                  className="block rounded p-1 w-full border-gray-400 border shadow-sm"
+                  name={"source"}
+                  defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
+                  disabled={ownQuestion}
+                />
+              </div>
             </div>
           </div>
         </div>
