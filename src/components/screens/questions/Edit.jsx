@@ -15,9 +15,11 @@ export const Edit = () => {
     query {
       objectiveQuestion(id: ${id}) {
         id
+        instruction
+        support
+        body
         own
         authorshipYear
-        body
         difficulty
         explanation
         source
@@ -46,7 +48,11 @@ export const Edit = () => {
       <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
         <SteppedForm questionId={questionData.id}>
           <Step step={0}>
-            <EnunciadoForm value={questionData.body} />
+            <EnunciadoForm
+              instruction={questionData.instruction}
+              support={questionData.support}
+              body={questionData.body}
+            />
           </Step>
           <Step step={1}>
             <AlternativesForm
