@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/Authentication";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/ducks/auth/actions";
@@ -25,14 +25,12 @@ export const Navbar = () => {
   return (
     <nav className="h-16 bg-primary-normal w-full flex items-center px-8 z-40">
       <div className="flex-grow">
-        <Link className="flex-start" to="/">
-          <img alt="Logo do Unifeso" className="h-16" src={unifesoLogo}></img>
-        </Link>
+        <img alt="Logo do Unifeso" className="h-16" src={unifesoLogo}></img>
       </div>
       <div className="group inline-block relative text-white font-medium hover:bg-primary-dark p-2 hover:shadow-lg cursor-pointer">
         <div className="flex flex-row items-center space-x-2">
           <span>{auth.user.name || auth.user.email}</span>
-          <Avatar src={userInfo.avatarUrl} className="w-12"/>
+          <Avatar src={userInfo.avatarUrl} className="w-12" />
         </div>
         <div className="absolute hidden pt-1 group-hover:block w-full right-0 text-black">
           <ul className="mt-2 bg-white rounded shadow-md border border-gray-300 font-light">

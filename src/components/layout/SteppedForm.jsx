@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, gql } from "@apollo/client";
 
+import { formatInput } from "../screens/questions";
 import { Button, Navigator } from "../widgets";
 
 export const FormContext = React.createContext({
@@ -40,45 +41,6 @@ export const SteppedForm = ({ children, questionId }) => {
   const { register, handleSubmit, control, setValue, getValues } = useForm();
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
-
-  const formatInput = (inputs) => {
-    return {
-      instruction: inputs.instruction,
-      body: inputs.body,
-      support: inputs.support,
-      own: inputs.own,
-      explanation: inputs.explanation,
-      references: inputs.references,
-      bloomTaxonomy: inputs.bloomTaxonomy,
-      difficulty: inputs.difficulty,
-      source: inputs.source,
-      checkType: inputs.checkType,
-      authorshipYear: inputs.authorshipYear,
-      subjectId: inputs.subjectId,
-      alternatives: [
-        {
-          correct: true,
-          text: inputs.correctAlternative || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative1 || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative2 || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative3 || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative4 || "",
-        },
-      ],
-    };
-  };
 
   const onSubmit = async (inputs) => {
     const inputValues = formatInput(inputs);

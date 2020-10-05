@@ -46,31 +46,15 @@ export const Edit = () => {
   return (
     <div className="bg-primary-normal h-full w-full">
       <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-        <SteppedForm questionId={questionData.id}>
+        <SteppedForm questionId={id}>
           <Step step={0}>
-            <EnunciadoForm
-              instruction={questionData.instruction}
-              support={questionData.support}
-              body={questionData.body}
-            />
+            <EnunciadoForm questionData={questionData} />
           </Step>
           <Step step={1}>
-            <AlternativesForm
-              alternatives={questionData.alternatives}
-              explanation={questionData.explanation}
-              references={questionData.references}
-            />
+            <AlternativesForm questionData={questionData} />
           </Step>
           <Step step={2}>
-            <FeaturesForm
-              own={questionData.own}
-              source={questionData.source}
-              authorshipYear={questionData.authorshipYear}
-              difficulty={questionData.difficulty}
-              bloomTaxonomy={questionData.bloomTaxonomy}
-              checkType={questionData.checkType}
-              subject={questionData.subject}
-            />
+            <FeaturesForm questionData={questionData} />
           </Step>
         </SteppedForm>
       </main>
