@@ -64,7 +64,10 @@ export const QuestionsList = ({
 
   if (loading) {
     return (
-      <div className="grid h-full" style={{ placeItems: "center" }}>
+      <div
+        className="grid"
+        style={{ placeItems: "center", height: "calc(100vh - 13rem)" }}
+      >
         <div className="lds-roller">
           <div></div>
           <div></div>
@@ -79,51 +82,56 @@ export const QuestionsList = ({
     );
   }
 
-  if (questions.length === 0){
+  if (questions.length === 0) {
     return (
-      <div className="grid h-full text-gray-800" style={{ placeItems: "center" }}>
+      <div
+        className="grid text-gray-800"
+        style={{ placeItems: "center", height: "calc(100vh - 13rem)" }}
+      >
         <div className="text-center">
-          <MdContentPaste className="text-6xl mx-auto"/>
+          <MdContentPaste className="text-6xl mx-auto" />
           <span className="text-lg">
             Não existem questões registradas para esses parametros.
           </span>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="grid gap-4 col-gap-8 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
-      {questions.map((question) => (
-        <div
-          key={question.id}
-          className="border-l-8 border-primary-light flex bg-white hover:bg-gray-200 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
-        >
+    <div style={{ minHeight: "calc(100vh - 13rem)" }}>
+      <div className="grid gap-4 col-gap-8 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
+        {questions.map((question) => (
           <div
-            className="flex flex-col w-full p-3"
-            onClick={() => bandleShowQuestion(question.id)}
-          >
-            <h2># {question.id}</h2>
-
-            <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
-              <span>Registrado em: {formatDate(question.createdAt)}</span>
-              <span>Atualizado em: {formatDate(question.updatedAt)}</span>
-            </div>
-          </div>
-
-          <div
-            className="bg-red-300 flex flex-col relative flex-grow justify-center"
-            onClick={() => handleEditQuestion(question.id)}
+            key={question.id}
+            className="border-l-8 border-primary-light flex bg-white hover:bg-gray-200 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
           >
             <div
-              className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
-              style={{ left: "-1.5rem" }}
+              className="flex flex-col w-full p-3"
+              onClick={() => bandleShowQuestion(question.id)}
             >
-              <EditIcon />
+              <h2># {question.id}</h2>
+
+              <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
+                <span>Registrado em: {formatDate(question.createdAt)}</span>
+                <span>Atualizado em: {formatDate(question.updatedAt)}</span>
+              </div>
+            </div>
+
+            <div
+              className="bg-red-300 flex flex-col relative flex-grow justify-center"
+              onClick={() => handleEditQuestion(question.id)}
+            >
+              <div
+                className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
+                style={{ left: "-1.5rem" }}
+              >
+                <EditIcon />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

@@ -23,7 +23,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="h-16 bg-primary-normal w-full flex items-center px-8 z-40">
+    <nav className="h-16 bg-primary-normal w-full flex items-center px-8 z-10">
       <div className="flex-grow">
         <img alt="Logo do Unifeso" className="h-16" src={unifesoLogo}></img>
       </div>
