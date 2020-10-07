@@ -8,7 +8,7 @@ import {
 
 import { ApolloContext, UserContextProvider } from "./components/utils"
 
-import { Footer, Navbar } from "./components/layout"
+import { Navbar } from "./components/layout"
 import { Home } from "./components/screens/home"
 import { New, Edit, Show } from "./components/screens/questions"
 import { Loading } from "./components/screens/Loading";
@@ -45,7 +45,6 @@ function App() {
                                     <Route exact path={"/question/:id/edit"} component={Edit} />
                                     <Route exact path={"/question/:id/show"} component={Show} />
                                     <Route exact path={"/user/profile"} component={UserProfile} />
-                                    <Footer />
                                 </Layout>
                             </Switch>
                         </Router>

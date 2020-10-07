@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, gql } from "@apollo/client";
 
+import { formatInput } from "../screens/questions";
 import { Button, Navigator } from "../widgets";
 
 export const FormContext = React.createContext({
@@ -37,56 +38,41 @@ export const SteppedForm = ({ children, questionId }) => {
     setSubmitNext(false);
   };
 
-  const { register, handleSubmit, control, setValue } = useForm();
+  const { register, handleSubmit, control, setValue, getValues } = useForm();
 
   const [saveQuestion] = useMutation(SAVE_QUESTION);
 
   const onSubmit = async (inputs) => {
-    const objectiveQuestion = {
-      instruction: inputs.instruction,
-      body: inputs.body,
-      support: inputs.support,
-      own: inputs.own,
-      explanation: inputs.explanation,
-      references: inputs.references,
-      bloomTaxonomy: inputs.bloomTaxonomy,
-      difficulty: inputs.difficulty,
-      source: inputs.source,
-      checkType: inputs.checkType,
-      authorshipYear: inputs.authorshipYear,
-      subjectId: inputs.subjectId,
-      alternatives: [
-        {
-          correct: true,
-          text: inputs.correctAlternative || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative1 || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative2 || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative3 || "",
-        },
-        {
-          correct: false,
-          text: inputs.incorrectAlternative4 || "",
-        },
-      ],
-    };
+    const inputValues = formatInput(inputs);
+    inputValues.status = "pending";
 
     if (questionId) {
-      objectiveQuestion.id = questionId;
+      inputValues.id = questionId;
     }
 
     await saveQuestion({
       variables: {
         input: {
-          objectiveQuestion: objectiveQuestion,
+          objectiveQuestion: inputValues,
+        },
+      },
+    });
+
+    window.location = "/";
+  };
+
+  const saveDraft = async () => {
+    const inputValues = formatInput(getValues());
+    inputValues.status = "draft";
+
+    if (questionId) {
+      inputValues.id = questionId;
+    }
+
+    await saveQuestion({
+      variables: {
+        input: {
+          objectiveQuestion: inputValues,
         },
       },
     });
@@ -121,9 +107,12 @@ export const SteppedForm = ({ children, questionId }) => {
             >
               Retornar
             </Button>
+            {maxStep === currentStep && (
+              <Button onClick={() => saveDraft()}>Salvar como rascunho</Button>
+            )}
             <Button
-              type={submitNext ? "submit" : "button"}
               onClick={() => handleNext()}
+              type={submitNext ? "submit" : "button"}
             >
               {maxStep === currentStep ? "Finalizar" : "Prosseguir"}
             </Button>

@@ -2,17 +2,18 @@ import React from "react";
 import { Card } from "../../../widgets/Card";
 import { TextEditor } from "./TextEditor";
 
-export const AlternativesForm = ({
-  alternatives = [
+export const AlternativesForm = ({ questionData }) => {
+  const explanation = questionData?.explanation;
+  const references = questionData?.references;
+
+  const alternatives = questionData?.alternatives || [
     { text: "", correct: true },
     { text: "", correct: false },
     { text: "", correct: false },
     { text: "", correct: false },
     { text: "", correct: false },
-  ],
-  explanation,
-  references,
-}) => {
+  ];
+
   const correctAlternative = alternatives.find(
     (alternative) => alternative.correct === true
   );
@@ -34,17 +35,11 @@ export const AlternativesForm = ({
           <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
             <div>
               <h2 className="text-xl font-medium">Explicação</h2>
-              <TextEditor
-                name="explanation"
-                defaultValue={explanation}
-              />
+              <TextEditor name="explanation" defaultValue={explanation} />
             </div>
             <div>
               <h2 className="text-xl font-medium">Referências</h2>
-              <TextEditor
-                defaultValue={references || ""}
-                name="references"
-              />
+              <TextEditor defaultValue={references || ""} name="references" />
             </div>
           </div>
         </div>

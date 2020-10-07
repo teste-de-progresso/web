@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useUserContext } from "../../utils";
 import { AvatarEditor, Navigator } from "../../widgets";
 import { Avatar } from "../../layout";
+import { useAuth } from "../../../context/Authentication"
 
 export const UserProfile = () => {
+  const auth = useAuth();
+
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
   const userContextData = useUserContext();
   const userInfo = userContextData?.userInfo;
@@ -24,7 +27,7 @@ export const UserProfile = () => {
                 <Avatar src={userInfo.avatarUrl} />
               </div>
               <div className="mt-8 text-center">
-                <h2 className="font-bold">{userInfo.name}</h2>
+                <h2 className="font-bold">{auth.user.name || auth.user.email}</h2>
                 <h2 className="py-4">TODO: Centro</h2>
                 <h2 className="">TODO: Cargo</h2>
               </div>
