@@ -5,10 +5,10 @@ import { gql, useQuery } from "@apollo/client";
 import { Card, CardGrid, Navigator } from "../../widgets";
 
 const bloomTaxonomy = {
-  remember: "Relembrar",
-  understand: "Entender",
+  remember: "Recordar",
+  understand: "Compreender",
   apply: "Aplicar",
-  analyze: "Analizar",
+  analyze: "Analisar",
   evaluate: "Avaliar",
   create: "Criar",
 };
