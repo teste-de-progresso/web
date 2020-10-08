@@ -20,7 +20,7 @@ export const STATUS = [
 
 export const DIFFICULTY = [
   { key: "easy", value: "Fácil" },
-  { key: "medium", value: "Medium" },
+  { key: "medium", value: "Média" },
   { key: "hard", value: "Difícil" },
 ];
 
