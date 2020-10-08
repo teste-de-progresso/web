@@ -131,7 +131,7 @@ export const Show = () => {
               }}
             />
           </Card>
-          <Card className="mb-3" title="Alternativas incorretas">
+          <Card className="mb-3" title="Distratores">
             {incorrectAnswers.map(item => {
               return (
                 <div dangerouslySetInnerHTML={{ __html: item?.text || "", }} />
