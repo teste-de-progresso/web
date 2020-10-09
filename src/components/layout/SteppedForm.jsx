@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { useMutation, gql } from "@apollo/client";
 
 import { formatInput } from "../screens/questions";
-import { Button, Navigator } from "../widgets";
+import { Button, Navigator, Modal, Alert } from "../widgets";
+import { validateQuestionInputs } from "../utils/validateQuestionInputs";
 
 export const FormContext = React.createContext({
   register: undefined,
@@ -27,6 +28,8 @@ export const SteppedForm = ({ children, questionId }) => {
   const maxStep = Math.max(...allSteps);
   const [currentStep, setCurrentStep] = useState(minStep);
   const [submitNext, setSubmitNext] = useState(false);
+  const [errorsModalShowing, setErrorsModalShowing] = useState(false);
+  const [errorsList, setErrorList] = useState([]);
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -50,15 +53,22 @@ export const SteppedForm = ({ children, questionId }) => {
       inputValues.id = questionId;
     }
 
-    await saveQuestion({
-      variables: {
-        input: {
-          objectiveQuestion: inputValues,
-        },
-      },
-    });
+    const errors = validateQuestionInputs(inputValues);
 
-    window.location = "/";
+    if (errors.length === 0) {
+      await saveQuestion({
+        variables: {
+          input: {
+            objectiveQuestion: inputValues,
+          },
+        },
+      });
+
+      window.location = "/";
+    } else {
+      setErrorsModalShowing(true);
+      setErrorList(errors);
+    }
   };
 
   const saveDraft = async () => {
@@ -82,6 +92,23 @@ export const SteppedForm = ({ children, questionId }) => {
 
   return (
     <>
+      {errorsModalShowing && (
+        <Modal>
+          <Alert>Algumas validações falharam.</Alert>
+          <ul>
+            {errorsList.map((item, index) => {
+              return <li key={index}>{item}</li>;
+            })}
+          </ul>
+
+          <Button
+            onClick={() => setErrorsModalShowing(false)}
+            className="mt-2 ml-auto"
+          >
+            OK!
+          </Button>
+        </Modal>
+      )}
       <Navigator needsConfirmation={true} />
       <div className="m-auto max-w-screen-md">
         <form
