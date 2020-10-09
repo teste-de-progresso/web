@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { Card, Button, Input, InputGroup, Alert } from "../widgets";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,48 +14,40 @@ const Layout = styled.div`
 export const Login = () => {
   const state = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [loginInputState, setLoginInputState] = useState({
-    email: "admin@example.com",
-    password: "password",
-  });
+  const { register, handleSubmit } = useForm();
 
-  const handleLogin = () => {
+  const handleLogin = (inputs) => {
     dispatch(
-      requestAuthentication(loginInputState.email, loginInputState.password)
+      requestAuthentication(inputs.email, inputs.password)
     );
-  };
-
-  const handleChange = (ev) => {
-    setLoginInputState({
-      ...loginInputState,
-      [ev.target.name]: ev.target.value,
-    });
   };
 
   return (
     <Layout className="w-screen h-screen bg-primary-normal">
       <div>
         <img alt="Logo do Unifeso" src={unifesoLogo}></img>
-        <form onSubmit={() => handleLogin()} className="w-full h-full md:max-w-xl md:h-auto">
+        <form
+          onSubmit={handleSubmit(handleLogin)}
+          className="w-full h-full md:max-w-xl md:h-auto"
+        >
           {state.error ? <Alert>{state.error}</Alert> : null}
           <Card title={"Entrar no Sistema"}>
             <InputGroup>
               <label>Email</label>
               <Input
-                autoComplete={"email"}
+                type="email"
+                autoComplete="email"
                 name={"email"}
-                value={loginInputState.email}
-                onChange={(ev) => handleChange(ev)}
+                ref={register}
               />
             </InputGroup>
             <InputGroup className="mt-4">
               <label>Senha</label>
               <Input
-                type={"password"}
-                autoComplete={"password"}
+                type="password"
+                autoComplete="password"
                 name={"password"}
-                value={loginInputState.password}
-                onChange={(ev) => handleChange(ev)}
+                ref={register}
               />
             </InputGroup>
             <InputGroup className="mt-4">
