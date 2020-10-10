@@ -5,10 +5,10 @@ import { gql, useQuery } from "@apollo/client";
 import { Card, CardGrid, Navigator } from "../../widgets";
 
 const bloomTaxonomy = {
-  remember: "Relembrar",
-  understand: "Entender",
+  remember: "Recordar",
+  understand: "Compreender",
   apply: "Aplicar",
-  analyze: "Analizar",
+  analyze: "Analisar",
   evaluate: "Avaliar",
   create: "Criar",
 };
@@ -131,7 +131,7 @@ export const Show = () => {
               }}
             />
           </Card>
-          <Card className="mb-3" title="Alternativas incorretas">
+          <Card className="mb-3" title="Distratores">
             {incorrectAnswers.map(item => {
               return (
                 <div dangerouslySetInnerHTML={{ __html: item?.text || "", }} />

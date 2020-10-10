@@ -1,15 +1,14 @@
 export const CHECK_TYPE = [
+  { key: "unique_answer", value: "Resposta Única"},
   { key: "incomplete_affirmation", value: "Afirmação Incompleta" },
-  { key: "assertion_reason", value: "Asserção-Razão" },
-  { key: "column_association", value: "Associação de Colunas" },
-  {
-    key: "gap_or_replacement_of_terms",
-    value: "Lacuna ou Substituição de Termos",
-  },
-  { key: "multiple_choice_complex", value: "Múltipla Escolha Complexa" },
-  { key: "sultiple_multiple_choice", value: "Múltipla Escolha Simples" },
-  { key: "serialization", value: "Seriação" },
-  { key: "true_or_false", value: "Verdadeiro (V) ou Falso (F)" },
+  { key: "multiple_answer", value: "Resposta Múltipla" },
+  { key: "negative_focus", value: "Foco Negativo" },
+  { key: "assertion_and_reason", value: "Asserção e Razão" },
+  { key: "gap", value: "Lacuna" },
+  { key: "interpretation", value: "Interpretação" },
+  { key: "association", value: "Associação" },
+  { key: "ordering_or_ranking", value: "Ordenação ou Seriação" },
+  { key: "constant_alternatives", value: "Alternativas Constantes" },
 ];
 
 export const STATUS = [
@@ -25,10 +24,10 @@ export const DIFFICULTY = [
 ];
 
 export const BLOOM_TAXONOMY = [
-  { key: "remember", value: "Relembrar" },
-  { key: "understand", value: "Entender" },
+  { key: "remember", value: "Recordar" },
+  { key: "understand", value: "Compreender" },
   { key: "apply", value: "Aplicar" },
-  { key: "analyze", value: "Analizar" },
+  { key: "analyze", value: "Analisar" },
   { key: "evaluate", value: "Avaliar" },
   { key: "create", value: "Criar" },
 ];

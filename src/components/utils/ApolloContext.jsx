@@ -12,7 +12,7 @@ export const ApolloContext = ({ children }) => {
   const authenticationState = useSelector((state) => state.auth);
 
   const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:4000",
+    uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:3001",
   });
 
   const authLink = setContext((_, { headers }) => {
