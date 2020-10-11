@@ -2,24 +2,16 @@ import React from "react";
 import { Card } from "../../../widgets/Card";
 import { TextEditor } from "./TextEditor";
 
-export const AlternativesForm = ({ questionData }) => {
+export const AnswerForm = ({ questionData }) => {
   const explanation = questionData?.explanation;
   const references = questionData?.references;
 
   const alternatives = questionData?.alternatives || [
     { text: "", correct: true },
-    { text: "", correct: false },
-    { text: "", correct: false },
-    { text: "", correct: false },
-    { text: "", correct: false },
   ];
 
   const correctAlternative = alternatives.find(
     (alternative) => alternative.correct === true
-  );
-
-  const incorrectAnswers = alternatives.filter(
-    (alternative) => alternative.correct === false
   );
 
   return (
@@ -41,22 +33,6 @@ export const AlternativesForm = ({ questionData }) => {
               <h2 className="text-xl font-medium">Referências</h2>
               <TextEditor defaultValue={references || ""} name="references" />
             </div>
-          </div>
-        </div>
-      </Card>
-      <Card title={"Alternativas incorretas"}>
-        <div className="flex flex-col">
-          <div className="">
-            {incorrectAnswers.map((answer, index) => {
-              return (
-                <div className="w-full mb-3" key={index}>
-                  <TextEditor
-                    name={`incorrectAlternative${index + 1}`}
-                    defaultValue={answer.text}
-                  />
-                </div>
-              );
-            })}
           </div>
         </div>
       </Card>

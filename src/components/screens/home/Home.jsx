@@ -134,12 +134,12 @@ export const Home = () => {
             <select
               defaultValue={limit}
               onChange={(e) => handleLimit(Number(e.target.value))}
-              className="block appearance-none w-full bg-gray-300 p-1 border border-gray-200 rounded"
+              className="w-full rounded p-1 border-gray-400 border shadow-sm"
             >
               {RESULT_LIMIT.map((item, index) => {
                 return (
                   <option key={index} value={item}>
-                    Até {item} items
+                    Até {item} exibições
                   </option>
                 );
               })}

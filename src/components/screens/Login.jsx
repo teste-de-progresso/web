@@ -17,15 +17,17 @@ export const Login = () => {
   const { register, handleSubmit } = useForm();
 
   const handleLogin = (inputs) => {
-    dispatch(
-      requestAuthentication(inputs.email, inputs.password)
-    );
+    dispatch(requestAuthentication(inputs.email, inputs.password));
   };
 
   return (
     <Layout className="w-screen h-screen bg-primary-normal">
       <div>
-        <img alt="Logo do Unifeso" src={unifesoLogo}></img>
+        <img
+          alt="Logo do Unifeso"
+          src={unifesoLogo}
+          style={{ width: "85%", margin: "auto" }}
+        ></img>
         <form
           onSubmit={handleSubmit(handleLogin)}
           className="w-full h-full md:max-w-xl md:h-auto"

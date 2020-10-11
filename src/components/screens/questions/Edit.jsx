@@ -3,7 +3,12 @@ import { useParams, useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
 import { SteppedForm, Step } from "../../layout";
-import { EnunciadoForm, AlternativesForm, FeaturesForm } from "./form";
+import {
+  EnunciadoForm,
+  AnswerForm,
+  DistractorsForm,
+  FeaturesForm,
+} from "./form";
 
 export const Edit = () => {
   const { id } = useParams();
@@ -26,6 +31,7 @@ export const Edit = () => {
         bloomTaxonomy
         references
         checkType
+        status
         subject {
           id
           name
@@ -46,14 +52,17 @@ export const Edit = () => {
   return (
     <div className="bg-primary-normal h-full w-full">
       <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-        <SteppedForm questionId={id}>
+        <SteppedForm questionId={id} status={questionData.status}>
           <Step step={0}>
             <EnunciadoForm questionData={questionData} />
           </Step>
           <Step step={1}>
-            <AlternativesForm questionData={questionData} />
+            <AnswerForm questionData={questionData} />
           </Step>
           <Step step={2}>
+            <DistractorsForm questionData={questionData} />
+          </Step>
+          <Step step={3}>
             <FeaturesForm questionData={questionData} />
           </Step>
         </SteppedForm>
