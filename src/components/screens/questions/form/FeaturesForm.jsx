@@ -20,7 +20,14 @@ export const FeaturesForm = ({ questionData }) => {
 
   const handleOwnCheck = (value) => {
     setOwnQuestion(value);
-    formContext.setValue("source", value ? "UNIFESO" : "");
+
+    if (value) {
+      formContext.setValue("source", value ? "UNIFESO" : "");
+      formContext.setValue(
+        "authorshipYear",
+        value ? String(new Date().getFullYear()) : ""
+      );
+    }
   };
 
   return (
@@ -64,6 +71,7 @@ export const FeaturesForm = ({ questionData }) => {
                 step="1"
                 name="authorshipYear"
                 defaultValue={authorshipYear}
+                disabled={ownQuestion}
               />
             </div>
           </div>

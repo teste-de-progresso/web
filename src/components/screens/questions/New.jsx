@@ -1,7 +1,12 @@
 import React from "react";
 
 import { SteppedForm, Step } from "../../layout";
-import { EnunciadoForm, AlternativesForm, FeaturesForm } from "./form";
+import {
+  EnunciadoForm,
+  AnswerForm,
+  DistractorsForm,
+  FeaturesForm,
+} from "./form";
 
 export const New = () => {
   return (
@@ -12,9 +17,12 @@ export const New = () => {
             <EnunciadoForm />
           </Step>
           <Step step={1}>
-            <AlternativesForm />
+            <AnswerForm />
           </Step>
           <Step step={2}>
+            <DistractorsForm />
+          </Step>
+          <Step step={3}>
             <FeaturesForm />
           </Step>
         </SteppedForm>

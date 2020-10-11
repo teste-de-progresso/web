@@ -22,7 +22,7 @@ const SAVE_QUESTION = gql`
   }
 `;
 
-export const SteppedForm = ({ children, questionId }) => {
+export const SteppedForm = ({ children, questionId, status }) => {
   const allSteps = children.map((x) => x.props["step"]);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
@@ -134,9 +134,12 @@ export const SteppedForm = ({ children, questionId }) => {
             >
               Retornar
             </Button>
-            {maxStep === currentStep && (
-              <Button onClick={() => saveDraft()}>Salvar como rascunho</Button>
-            )}
+            {maxStep === currentStep &&
+              (status === "draft" || status === undefined) && (
+                <Button onClick={() => saveDraft()}>
+                  Salvar como rascunho
+                </Button>
+              )}
             <Button
               onClick={() => handleNext()}
               type={submitNext ? "submit" : "button"}
