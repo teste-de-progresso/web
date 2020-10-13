@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Card, Input } from "../../../widgets";
 import { FormContext } from "../../../layout/SteppedForm";
-import { SubjectSelect } from "./";
+import { SubjectSelect, ReviewerSelect } from "./";
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../utils/types";
 
@@ -13,6 +13,7 @@ export const FeaturesForm = ({ questionData }) => {
   const bloomTaxonomy = questionData?.bloomTaxonomy;
   const checkType = questionData?.checkType;
   const subject = questionData?.subject;
+  const reviewer = questionData?.reviewer;
 
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
@@ -134,6 +135,10 @@ export const FeaturesForm = ({ questionData }) => {
           <div className="w-full">
             <SubjectSelect subjectId={subject?.id} />
           </div>
+        </div>
+        <div className="flex flex-col mt-4">
+          <h2>Revisor:</h2>
+          <ReviewerSelect reviewerId={reviewer?.id} />
         </div>
       </Card>
     </>

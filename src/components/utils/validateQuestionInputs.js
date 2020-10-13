@@ -9,6 +9,7 @@ export const validateQuestionInputs = (inputs) => {
     references,
     subjectId,
     source,
+    reviewerId,
   } = inputs
 
   alternatives.forEach(({ correct, text }, index) => {
@@ -19,19 +20,19 @@ export const validateQuestionInputs = (inputs) => {
     }
   })
 
-  if (!authorshipYear && authorshipYear.length === 0) {
+  if (!authorshipYear) {
     errors.push("O ano não está preenchido")
   }
 
-  if (!body && body.length <= 5) {
+  if (!body || body.length <= 5) {
     errors.push("O enunciado não está preenchido")
   }
 
-  if (!explanation && explanation.length <= 5) {
+  if (!explanation || explanation.length <= 5) {
     errors.push("A explicação da resposta não está preenchida")
   }
 
-  if (!references && references.length <= 5) {
+  if (!references || references.length <= 5) {
     errors.push("As referências da resposta não estão preenchidas")
   }
 
@@ -39,9 +40,14 @@ export const validateQuestionInputs = (inputs) => {
     errors.push("Nenhum assunto foi selecionado")
   }
 
-  if (!source && source.length === 0) {
+  if (!reviewerId) {
+    errors.push("Nenhum revisor foi selecionado")
+  }
+
+  if (!source || source.length === 0) {
     errors.push("Nenhuma fonte informada")
   }
 
+  debugger
   return errors
 }

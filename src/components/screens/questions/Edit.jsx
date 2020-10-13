@@ -32,6 +32,10 @@ export const Edit = () => {
         references
         checkType
         status
+        reviewer {
+          id
+          name
+        }
         subject {
           id
           name
