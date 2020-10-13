@@ -12,6 +12,7 @@ export const formatInput = (inputs) => {
     checkType: inputs.checkType,
     authorshipYear: inputs.authorshipYear,
     subjectId: inputs.subjectId,
+    reviewerId: inputs.reviewerId,
     alternatives: [
       {
         correct: true,

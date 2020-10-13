@@ -30,6 +30,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const [submitNext, setSubmitNext] = useState(false);
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
   const [errorsList, setErrorList] = useState([]);
+  const [confirmCompletion, setConfirmCompletion] = useState(false);
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -56,15 +57,17 @@ export const SteppedForm = ({ children, questionId, status }) => {
     const errors = validateQuestionInputs(inputValues);
 
     if (errors.length === 0) {
-      await saveQuestion({
-        variables: {
-          input: {
-            objectiveQuestion: inputValues,
+      setConfirmCompletion(async () => {
+        await saveQuestion({
+          variables: {
+            input: {
+              objectiveQuestion: inputValues,
+            },
           },
-        },
-      });
+        });
 
-      window.location = "/";
+        window.location = "/";
+      });
     } else {
       setErrorsModalShowing(true);
       setErrorList(errors);
@@ -107,6 +110,17 @@ export const SteppedForm = ({ children, questionId, status }) => {
           >
             OK!
           </Button>
+        </Modal>
+      )}
+      {confirmCompletion && (
+        <Modal
+          closeButtonText="Não, ainda não está pronto."
+          confirmButtonText="Sim, desejo finalizar."
+          onClose={() => setConfirmCompletion(false)}
+          onConfirm={confirmCompletion}
+        >
+          Ao finalizar uma questão o revisor selecionado será solicitado a
+          revisar a questão. Tem certeza que está tudo certo para finalizar?
         </Modal>
       )}
       <Navigator needsConfirmation={true} />
