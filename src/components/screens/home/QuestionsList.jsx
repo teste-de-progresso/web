@@ -10,7 +10,7 @@ const EditIcon = styled(MdModeEdit)`
 `;
 
 const SEARCH_QUESTIONS = gql`
-  query($where: OjectiveWhereInput, $page: Int!, $limit: Int!) {
+  query($where: Where, $page: Int!, $limit: Int!) {
     objectives(where: $where) {
       payload(page: $page, limit: $limit) {
         nodes {

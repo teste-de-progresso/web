@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import Select from "react-select";
-import { Controller } from "react-hook-form";
 import { gql, useQuery } from "@apollo/client";
 
 import { FormContext } from "../../../layout/SteppedForm";
@@ -10,6 +8,7 @@ const GET_REVIEWER = gql`
     reviewers {
       id
       name
+      email
     }
   }
 `;
@@ -24,34 +23,25 @@ export const ReviewerSelect = ({ reviewerId }) => {
   const reviewers = data.reviewers.map((item) => {
     return {
       value: item.id,
-      label: item.name,
+      label: item.name || item.email,
     };
   });
 
-  const defaultValue = reviewers.find((item) => {
-    return item.value === reviewerId;
-  });
-
   return (
-    <Controller
-      control={formContext.control}
+    <select
+      ref={formContext.register}
+      className="w-full rounded p-1 border-gray-400 border shadow-sm"
       name="reviewerId"
-      render={({ onChange }) => (
-        <Select
-          placeholder="..."
-          className="w-full"
-          classNamePrefix="select"
-          defaultValue={defaultValue}
-          isLoading={loading}
-          isClearable={true}
-          isSearchable={true}
-          onChange={(e) => {
-            onChange(e?.value);
-          }}
-          name="color"
-          options={reviewers}
-        />
-      )}
-    />
+      defaultValue={reviewerId}
+    >
+      <option></option>
+      {reviewers.map((item, index) => {
+        return (
+          <option key={index} value={item.value}>
+            {item.label}
+          </option>
+        );
+      })}
+    </select>
   );
 };

@@ -48,6 +48,5 @@ export const validateQuestionInputs = (inputs) => {
     errors.push("Nenhuma fonte informada")
   }
 
-  debugger
   return errors
 }

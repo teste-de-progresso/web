@@ -1,5 +1,6 @@
 export const formatInput = (inputs) => {
   return {
+    id: inputs.id,
     instruction: inputs.instruction,
     body: inputs.body,
     support: inputs.support,

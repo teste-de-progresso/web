@@ -10,7 +10,7 @@ import { ApolloContext, UserContextProvider } from "./components/utils"
 
 import { Navbar } from "./components/layout"
 import { Home } from "./components/screens/home"
-import { New, Edit, Show } from "./components/screens/questions"
+import { New, Edit, Show, Review } from "./components/screens/questions"
 import { Loading } from "./components/screens/Loading";
 import { AuthenticationContext } from "./context/Authentication";
 import { loadAuthentication } from "./store/ducks/auth/actions";
@@ -44,6 +44,7 @@ function App() {
                                     <Route exact path={"/question/new"} component={New} />
                                     <Route exact path={"/question/:id/edit"} component={Edit} />
                                     <Route exact path={"/question/:id/show"} component={Show} />
+                                    <Route exact path={"/question/:id/review"} component={Review} />
                                     <Route exact path={"/user/profile"} component={UserProfile} />
                                 </Layout>
                             </Switch>
