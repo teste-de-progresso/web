@@ -12,9 +12,19 @@ export const FormContext = React.createContext({
   setValue: undefined,
 });
 
-const SAVE_QUESTION = gql`
-  mutation($input: saveObjectiveInput!) {
-    saveObjective(input: $input) {
+const SAVE_DRAFT = gql`
+  mutation($input: SaveDraftInput!) {
+    saveQuestionDraft(input: $input) {
+      payload {
+        id
+      }
+    }
+  }
+`;
+
+const SAVE = gql`
+  mutation($input: SaveInput!) {
+    saveQuestion(input: $input) {
       payload {
         id
       }
@@ -30,7 +40,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const [submitNext, setSubmitNext] = useState(false);
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
   const [errorsList, setErrorList] = useState([]);
-  const [confirmCompletion, setConfirmCompletion] = useState(false);
+  const [confirmCompletionModal, setConfirmCompletionModal] = useState(false);
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -44,30 +54,20 @@ export const SteppedForm = ({ children, questionId, status }) => {
 
   const { register, handleSubmit, control, setValue, getValues } = useForm();
 
-  const [saveQuestion] = useMutation(SAVE_QUESTION);
+  const [saveMutation] = useMutation(SAVE);
+  const [saveDraftMutation] = useMutation(SAVE_DRAFT);
+
+  const formatedInputs = () => {
+    return formatInput(getValues());
+  };
 
   const onSubmit = async (inputs) => {
     const inputValues = formatInput(inputs);
-    inputValues.status = "pending";
-
-    if (questionId) {
-      inputValues.id = questionId;
-    }
 
     const errors = validateQuestionInputs(inputValues);
 
     if (errors.length === 0) {
-      setConfirmCompletion(async () => {
-        await saveQuestion({
-          variables: {
-            input: {
-              objectiveQuestion: inputValues,
-            },
-          },
-        });
-
-        window.location = "/";
-      });
+      setConfirmCompletionModal(true);
     } else {
       setErrorsModalShowing(true);
       setErrorList(errors);
@@ -76,16 +76,11 @@ export const SteppedForm = ({ children, questionId, status }) => {
 
   const saveDraft = async () => {
     const inputValues = formatInput(getValues());
-    inputValues.status = "draft";
 
-    if (questionId) {
-      inputValues.id = questionId;
-    }
-
-    await saveQuestion({
+    await saveDraftMutation({
       variables: {
         input: {
-          objectiveQuestion: inputValues,
+          question: inputValues,
         },
       },
     });
@@ -112,12 +107,22 @@ export const SteppedForm = ({ children, questionId, status }) => {
           </Button>
         </Modal>
       )}
-      {confirmCompletion && (
+      {confirmCompletionModal && (
         <Modal
           closeButtonText="Não, ainda não está pronto."
           confirmButtonText="Sim, desejo finalizar."
-          onClose={() => setConfirmCompletion(false)}
-          onConfirm={confirmCompletion}
+          onClose={() => setConfirmCompletionModal(false)}
+          onConfirm={async () => {
+            await saveMutation({
+              variables: {
+                input: {
+                  question: formatedInputs(),
+                },
+              },
+            });
+
+            window.location = "/";
+          }}
         >
           Ao finalizar uma questão o revisor selecionado será solicitado a
           revisar a questão. Tem certeza que está tudo certo para finalizar?
@@ -129,6 +134,15 @@ export const SteppedForm = ({ children, questionId, status }) => {
           className="h-full flex flex-col space-y-4"
           onSubmit={handleSubmit(onSubmit)}
         >
+          {questionId && (
+            <input
+              hidden
+              value={questionId}
+              readOnly={true}
+              ref={register}
+              name="id"
+            ></input>
+          )}
           <FormContext.Provider value={{ register, control, setValue }}>
             {children.map((x) => {
               const visible = x.props["step"] === currentStep;

@@ -58,7 +58,7 @@ export const FeaturesForm = ({ questionData }) => {
                   className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                   name={"source"}
                   defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
-                  disabled={ownQuestion}
+                  readOnly={ownQuestion}
                 />
               </div>
             </div>
@@ -72,7 +72,7 @@ export const FeaturesForm = ({ questionData }) => {
                 step="1"
                 name="authorshipYear"
                 defaultValue={authorshipYear}
-                disabled={ownQuestion}
+                readOnly={ownQuestion}
               />
             </div>
           </div>

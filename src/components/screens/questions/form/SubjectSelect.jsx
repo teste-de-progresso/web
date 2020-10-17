@@ -1,6 +1,4 @@
 import React, { useContext, useState } from "react";
-import Select from "react-select";
-import { Controller } from "react-hook-form";
 import { gql, useQuery } from "@apollo/client";
 
 import { Input } from "../../../widgets";
@@ -47,15 +45,6 @@ export const SubjectSelect = ({ subjectId }) => {
     });
   })();
 
-  const defaultValue = (() => {
-    if (!selectedSubject) return undefined;
-
-    return {
-      value: selectedSubject.id,
-      label: selectedSubject.name,
-    };
-  })();
-
   const axis = selectedSubject?.axis;
   const subCategory = axis?.subCategory;
   const category = subCategory?.category;
@@ -63,31 +52,28 @@ export const SubjectSelect = ({ subjectId }) => {
   const categorySlug = `${category?.name} > ${subCategory?.name}`;
 
   return (
-    <div className="flex flex-col justify-between h-full">
-      <h2>Assunto</h2>
-      <Controller
-        control={formContext.control}
-        name="subjectId"
-        render={({ onChange }) => (
-          <Select
-            placeholder="..."
-            className="w-full"
-            classNamePrefix="select"
-            defaultValue={defaultValue}
-            isLoading={loading}
-            isClearable={true}
-            isSearchable={true}
-            onChange={(e) => {
-              onChange(e?.value);
-              setSelectedId(e?.value);
-            }}
-            name="color"
-            options={subjects}
-          />
-        )}
-      />
+    <div className="flex flex-col h-full">
+      <div>
+        <h2>Assunto</h2>
+        <select
+          ref={formContext.register}
+          className="w-full rounded p-1 border-gray-400 border shadow-sm"
+          name="subjectId"
+          defaultValue={selectedSubject?.id}
+          onChange={(e) => setSelectedId(e.target.value)}
+        >
+          <option></option>
+          {subjects.map((item, index) => {
+            return (
+              <option key={index} value={item.value}>
+                {item.label}
+              </option>
+            );
+          })}
+        </select>
+      </div>
 
-      <span>
+      <span className="mt-4">
         Eixo:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
@@ -95,7 +81,7 @@ export const SubjectSelect = ({ subjectId }) => {
           disabled={true}
         />
       </span>
-      <span>
+      <span className="mt-4">
         Categoria:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
