@@ -1,5 +1,5 @@
 export const CHECK_TYPE = [
-  { key: "unique_answer", value: "Resposta Única"},
+  { key: "unique_answer", value: "Resposta Única" },
   { key: "incomplete_affirmation", value: "Afirmação Incompleta" },
   { key: "multiple_answer", value: "Resposta Múltipla" },
   { key: "negative_focus", value: "Foco Negativo" },
@@ -31,3 +31,21 @@ export const BLOOM_TAXONOMY = [
   { key: "evaluate", value: "Avaliar" },
   { key: "create", value: "Criar" },
 ];
+
+export const REVIEW_FEEDBACK = [
+  {
+    label: "Comentário",
+    description: "Envie um feedback geral sem aprovação explícita.",
+    value: "comment"
+  },
+  {
+    label: "Aprovação",
+    description: "Enviar feedback e aprovar o uso em provas.",
+    value: "approve"
+  },
+  {
+    label: "Requisitar alterações",
+    description: "Envie feedback que deve ser abordado antes do uso em provas.",
+    value: "request_change"
+  },
+]
