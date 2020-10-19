@@ -125,7 +125,7 @@ export const ReadQuestion = ({ id }) => {
         </Card>
       )}
 
-      <Card className="mb-3" title="Resposta">
+      <Card className="mb-3" title="Resposta Correta">
         <div
           dangerouslySetInnerHTML={{
             __html: correctAlternative?.text || "",
