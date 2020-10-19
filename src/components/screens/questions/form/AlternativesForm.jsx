@@ -44,7 +44,7 @@ export const AlternativesForm = ({ questionData }) => {
           </div>
         </div>
       </Card>
-      <Card title={"Alternativas incorretas"}>
+      <Card title={"Distratores"}>
         <div className="flex flex-col">
           <div className="">
             {incorrectAnswers.map((answer, index) => {
