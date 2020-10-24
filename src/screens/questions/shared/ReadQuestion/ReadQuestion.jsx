@@ -1,5 +1,4 @@
 import React from "react";
-import { gql, useQuery } from "@apollo/client";
 
 import { Card } from "../../../../components";
 
@@ -18,45 +17,8 @@ const difficulty = {
   hard: "Difícil",
 };
 
-export const ReadQuestion = ({ id }) => {
-  const GET_QUESTION = gql`
-  query {
-    objectiveQuestion(id: ${id}) {
-      id
-      instruction
-      support
-      body
-      own
-      authorshipYear
-      difficulty
-      explanation
-      source
-      bloomTaxonomy
-      references
-      checkType
-      status
-      createdAt
-      updatedAt
-      reviewer {
-        id
-        name
-      }
-      subject {
-        id
-        name
-      }
-      alternatives {
-        correct
-        text
-      }
-    }
-  }
-`;
-
-  const { loading, data } = useQuery(GET_QUESTION);
-  const questionData = data?.objectiveQuestion;
-
-  if (loading || !questionData) return null;
+export const ReadQuestion = ({ questionData }) => {
+  if (!questionData) return null;
 
   const alternatives = questionData.alternatives;
 
