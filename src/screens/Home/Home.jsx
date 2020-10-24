@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 import { FaFilter } from "react-icons/fa";
+
 import { Button, Modal } from "../../components";
-import { QuestionsList, Filter } from "./";
+import { Filter } from "./Filter";
+import { QuestionsList } from "./QuestionsList";
 import { useAuth } from "../../utils/contexts";
 
 const RESULT_LIMIT = [5, 10, 15, 20, 30, 40, 50];

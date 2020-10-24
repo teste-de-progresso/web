@@ -3,7 +3,7 @@ export const formatInput = (inputs) => ({
   instruction: inputs.instruction,
   body: inputs.body,
   support: inputs.support,
-  own: inputs.own === "true",
+  own: inputs.own === 'true',
   explanation: inputs.explanation,
   references: inputs.references,
   bloomTaxonomy: inputs.bloomTaxonomy,

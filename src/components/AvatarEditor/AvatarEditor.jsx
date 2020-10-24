@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { Alert, Modal } from "../";
-import { PhotoCrop } from ".";
+
+import { Alert } from "../Alert";
+import { Modal } from "../Modal";
+import { PhotoCrop } from "./PhotoCrop";
 
 export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
   const { token } = useSelector((state) => state.auth);

@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, gql } from "@apollo/client";
 
-import { Button, Navigator, Modal, Alert } from "../../components";
+import { Button } from "../Button";
+import { Navigator } from "../Navigator";
+import { Modal } from "../Modal";
+import { Alert } from "../Alert";
+
 import { formatInput } from "../../screens/questions/formatInputs";
 import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
 
