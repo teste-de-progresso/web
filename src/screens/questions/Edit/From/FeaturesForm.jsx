@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
+
 import { Card, Input, FormContext } from "../../../../components";
-import { SubjectSelect, ReviewerSelect } from ".";
+import SubjectSelect from "./SubjectSelect";
+import ReviewerSelect from "./ReviewerSelect";
 
 import {
   BLOOM_TAXONOMY,

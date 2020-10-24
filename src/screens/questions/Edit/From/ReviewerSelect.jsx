@@ -13,14 +13,14 @@ const GET_REVIEWER = gql`
   }
 `;
 
-export const ReviewerSelect = ({ reviewerId }) => {
+const ReviewerSelect = ({ reviewerId }) => {
   const formContext = useContext(FormContext);
 
   const { loading, data } = useQuery(GET_REVIEWER);
 
   if (loading) return null;
 
-  const reviewers = data.reviewers.map(({id, name, email}) => {
+  const reviewers = data.reviewers.map(({ id, name, email }) => {
     return {
       value: id,
       label: `${name || ""} (${email})`,
@@ -45,3 +45,5 @@ export const ReviewerSelect = ({ reviewerId }) => {
     </select>
   );
 };
+
+export default ReviewerSelect;

@@ -21,7 +21,7 @@ const GET_SUBJECTS = gql`
   }
 `;
 
-export const SubjectSelect = ({ subjectId }) => {
+const SubjectSelect = ({ subjectId }) => {
   const formContext = useContext(FormContext);
   const [selectedId, setSelectedId] = useState(subjectId);
 
@@ -36,19 +36,13 @@ export const SubjectSelect = ({ subjectId }) => {
     };
   });
 
-  const selectedSubject = (() => {
+  const { id: selectedSubjectId } = (() => {
     if (!selectedId) return undefined;
 
     return data.subjects.find((item) => {
       return item.id === selectedId;
     });
   })();
-
-  const axis = "";
-  const subCategory = "";
-  const category = "";
-
-  const categorySlug = `${category?.name} > ${subCategory?.name}`;
 
   return (
     <div className="flex flex-col h-full">
@@ -58,7 +52,7 @@ export const SubjectSelect = ({ subjectId }) => {
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
-          defaultValue={selectedSubject?.id}
+          defaultValue={selectedSubjectId}
           onChange={(e) => setSelectedId(e.target.value)}
         >
           <option></option>
@@ -76,7 +70,6 @@ export const SubjectSelect = ({ subjectId }) => {
         Eixo:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-          defaultValue={axis?.name}
           disabled={true}
         />
       </span>
@@ -84,10 +77,11 @@ export const SubjectSelect = ({ subjectId }) => {
         Categoria:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-          defaultValue={category ? categorySlug : ""}
           disabled={true}
         />
       </span>
     </div>
   );
 };
+
+export default SubjectSelect;
