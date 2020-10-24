@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Card, Input } from "../../../../components";
-import { FormContext } from "../../../../layout";
+import { Card, Input, FormContext } from "../../../../components";
 import { SubjectSelect, ReviewerSelect } from ".";
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";

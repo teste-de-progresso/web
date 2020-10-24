@@ -1,1 +1,1 @@
-export { AuthenticationContext, useAuth } from "./Authentication";
+export { AuthenticationContext, useAuth } from './Authentication';

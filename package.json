@@ -29,6 +29,12 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.5",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "postcss": "^7.0.32",
     "postcss-cli": "^7.1.1",
     "postcss-import": "^12.0.1",

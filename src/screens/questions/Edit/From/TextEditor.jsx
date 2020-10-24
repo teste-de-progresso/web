@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import { Controller } from "react-hook-form";
-import { FormContext } from "../../../../layout";
+import { FormContext } from "../../../../components";
 import * as ClassicEditor from "ckeditor5-mathtype/build/ckeditor"
 
 const toolbarOptions = [

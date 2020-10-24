@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 
-import { Input } from "../../../../components";
-import { FormContext } from "../../../../layout";
+import { Input, FormContext } from "../../../../components";
 
 const GET_SUBJECTS = gql`
   query {

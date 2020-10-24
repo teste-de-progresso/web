@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
-import { SteppedForm, Step } from "../../../layout";
+import { SteppedForm, Step } from "../../../components";
 import {
   EnunciadoForm,
   AnswerForm,
