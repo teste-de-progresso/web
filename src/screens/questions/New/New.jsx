@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SteppedForm, Step } from "../../../layout";
+import { SteppedForm, Step } from "../../../components";
 import {
   EnunciadoForm,
   AnswerForm,

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation, gql } from "@apollo/client";
 
-import { formatInput } from "../screens/questions";
-import { Button, Navigator, Modal, Alert } from "../components";
-import { validateQuestionInputs } from "../utils/validateQuestionInputs";
+import { Button, Navigator, Modal, Alert } from "../../components";
+import { formatInput } from "../../screens/questions/formatInputs";
+import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
 
 export const FormContext = React.createContext({
   register: undefined,

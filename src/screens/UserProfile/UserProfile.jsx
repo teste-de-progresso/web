@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useUserContext } from "../../utils";
-import { AvatarEditor, Navigator } from "../../components";
-import { Avatar } from "../../layout";
+import { AvatarEditor, Navigator, Avatar } from "../../components";
 import { useAuth } from "../../utils/contexts/Authentication"
 
 export const UserProfile = () => {

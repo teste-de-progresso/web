@@ -8,7 +8,7 @@ import {
 
 import { ApolloContext, UserContextProvider } from "./utils"
 
-import { Navbar } from "./layout"
+import { Navbar } from "./components"
 import { Home } from "./screens"
 import { New, Edit, Show, Review } from "./screens/questions"
 import { Loading } from "./screens/Loading";

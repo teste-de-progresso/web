@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "../utils/contexts/Authentication";
+import { useAuth } from "../../utils/contexts/Authentication";
 import { useDispatch } from "react-redux";
-import { logout } from "../store/ducks/auth/actions";
-import { useUserContext } from "../utils";
+import { logout } from "../../store/ducks/auth/actions";
+import { useUserContext } from "../../utils";
 
-import { Avatar } from "./Avatar";
-import unifesoLogo from "../img/unifeso-logo-branco.svg";
+import { Avatar } from "../Avatar/Avatar";
+import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
 export const Navbar = () => {
   const auth = useAuth();

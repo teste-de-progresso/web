@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { gql, useQuery } from "@apollo/client";
 
-import { FormContext } from "../../../../layout";
+import { FormContext } from "../../../../components";
 
 const GET_REVIEWER = gql`
   query {
