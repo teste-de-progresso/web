@@ -6,15 +6,15 @@ import {
     BrowserRouter as Router, Switch, Route
 } from "react-router-dom";
 
-import { ApolloContext, UserContextProvider } from "./components/utils"
+import { ApolloContext, UserContextProvider } from "./utils"
 
-import { Navbar } from "./components/layout"
-import { Home } from "./components/screens/home"
-import { New, Edit, Show, Review } from "./components/screens/questions"
-import { Loading } from "./components/screens/Loading";
-import { AuthenticationContext } from "./context/Authentication";
+import { Navbar } from "./layout"
+import { Home } from "./screens"
+import { New, Edit, Show, Review } from "./screens/questions"
+import { Loading } from "./screens/Loading";
+import { AuthenticationContext } from "./utils/contexts";
 import { loadAuthentication } from "./store/ducks/auth/actions";
-import { Login, UserProfile } from "./components/screens"
+import { Login, UserProfile } from "./screens"
 
 const Layout = styled.div`
   display: grid;
