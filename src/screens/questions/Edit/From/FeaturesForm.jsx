@@ -46,6 +46,7 @@ export const FeaturesForm = ({ questionData }) => {
                 type="radio"
                 id="own"
                 name="own"
+                value={true}
                 checked={ownQuestion}
                 ref={formContext.register}
                 onChange={() => handleOwnCheck(true)}
@@ -58,6 +59,7 @@ export const FeaturesForm = ({ questionData }) => {
                 type="radio"
                 id="third"
                 name="own"
+                value={false}
                 checked={!ownQuestion}
                 ref={formContext.register}
                 onChange={() => handleOwnCheck(false)}
@@ -69,9 +71,8 @@ export const FeaturesForm = ({ questionData }) => {
             <div className="flex">
               <h2 className="pr-2 pl-3 my-auto">Fonte:</h2>
               <div className="w-full">
-                <div>
+                <div style={{ maxWidth: "194px"}}>
                   <Input
-                    style={{ maxWidth: "194px"}}
                     ref={formContext.register}
                     className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                     name={"source"}
@@ -86,7 +87,6 @@ export const FeaturesForm = ({ questionData }) => {
               <div style={{ maxWidth: "62px" }}>
                 <Input
                   ref={formContext.register}
-                  maxWidth="62px"
                   type="number"
                   min="1999"
                   max={currentYear}

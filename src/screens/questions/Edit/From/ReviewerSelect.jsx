@@ -20,10 +20,10 @@ export const ReviewerSelect = ({ reviewerId }) => {
 
   if (loading) return null;
 
-  const reviewers = data.reviewers.map((item) => {
+  const reviewers = data.reviewers.map(({id, name, email}) => {
     return {
-      value: item.id,
-      label: item.name || item.email,
+      value: id,
+      label: `${name || ""} (${email})`,
     };
   });
 
