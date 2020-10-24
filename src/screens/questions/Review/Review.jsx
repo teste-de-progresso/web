@@ -1,11 +1,45 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory } from "react-router-dom";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation, useQuery, gql } from "@apollo/client";
 
-import { ReadQuestion } from "../Shared";
+import { ReadQuestion } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
+
+const GET_QUESTION = gql`
+  query($id: ID!) {
+    objectiveQuestion(id: $id) {
+      id
+      instruction
+      support
+      body
+      own
+      authorshipYear
+      difficulty
+      explanation
+      source
+      bloomTaxonomy
+      references
+      checkType
+      status
+      createdAt
+      updatedAt
+      reviewer {
+        id
+        name
+      }
+      subject {
+        id
+        name
+      }
+      alternatives {
+        correct
+        text
+      }
+    }
+  }
+`;
 
 const SUBMIT_REVIEW = gql`
   mutation($questionId: ID!, $status: FeedbackStatus!, $comment: String) {
@@ -31,8 +65,18 @@ export const Review = () => {
 
   if (!id) history.push("/");
 
+  const { loading, data } = useQuery(GET_QUESTION, {
+    variables: {
+      id: id,
+    },
+  });
+
   const [sendFeedback] = useMutation(SUBMIT_REVIEW);
   const { register, handleSubmit } = useForm();
+
+  if (loading) return null;
+
+  const questionData = data?.objectiveQuestion;
 
   const formSubmit = async (inputs) => {
     await sendFeedback({
@@ -49,7 +93,7 @@ export const Review = () => {
     <div className="bg-primary-normal h-full w-full">
       <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
         <Navigator />
-        <ReadQuestion id={id} />
+        <ReadQuestion questionData={questionData} />
         <Card title="Feedback de revisão" className="max-w-screen-md mx-auto">
           <form onSubmit={handleSubmit(formSubmit)}>
             <textarea
