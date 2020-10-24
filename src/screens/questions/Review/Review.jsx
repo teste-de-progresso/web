@@ -76,7 +76,7 @@ export const Review = () => {
 
   if (loading) return null;
 
-  const questionData = data?.objectiveQuestion;
+  const { objectiveQuestion: questionData } = data;
 
   const formSubmit = async (inputs) => {
     await sendFeedback({
@@ -86,7 +86,7 @@ export const Review = () => {
       },
     });
 
-    history.push("/");
+    window.location = "/";
   };
 
   return (

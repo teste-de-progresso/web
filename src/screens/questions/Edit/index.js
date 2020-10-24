@@ -1,1 +1,1 @@
-export * from './Edit';
+export { Edit } from './Edit';

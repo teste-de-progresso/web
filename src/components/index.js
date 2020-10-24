@@ -6,7 +6,7 @@ export * from './Input';
 export * from './InputGroup';
 export * from './AvatarEditor';
 export * from './Modal';
-export * from './Navegator';
+export * from './Navigator';
 export * from './Navbar';
 export * from './Avatar';
 export { FormContext, SteppedForm, Step } from './SteppedForm';

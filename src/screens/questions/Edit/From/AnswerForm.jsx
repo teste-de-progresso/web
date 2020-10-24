@@ -3,26 +3,26 @@ import { Card } from "../../../../components/Card/Card";
 import { TextEditor } from "./TextEditor";
 
 export const AnswerForm = ({ questionData }) => {
-  const explanation = questionData?.explanation;
-  const references = questionData?.references;
+  const {
+    explanation,
+    references,
+    alternatives: rawAlternatives,
+  } = questionData;
 
-  const alternatives = questionData?.alternatives || [
-    { text: "", correct: true },
-  ];
+  const alternatives = rawAlternatives || [{ text: "", correct: true }];
 
   const correctAlternative = alternatives.find(
     (alternative) => alternative.correct === true
   );
+
+  const { text: correctAlternativeText } = correctAlternative;
 
   return (
     <>
       <Card title="Resposta Correta" className="mb-3">
         <div className="flex flex-col">
           <div className="w-full">
-            <TextEditor
-              name={"correctAlternative"}
-              defaultValue={correctAlternative?.text || ""}
-            />
+            <TextEditor name={"correctAlternative"} defaultValue={correctAlternativeText || ""} />
           </div>
           <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
             <div>

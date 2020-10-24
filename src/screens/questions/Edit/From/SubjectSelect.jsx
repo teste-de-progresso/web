@@ -44,9 +44,9 @@ export const SubjectSelect = ({ subjectId }) => {
     });
   })();
 
-  const axis = selectedSubject?.axis;
-  const subCategory = axis?.subCategory;
-  const category = subCategory?.category;
+  const axis = "";
+  const subCategory = "";
+  const category = "";
 
   const categorySlug = `${category?.name} > ${subCategory?.name}`;
 

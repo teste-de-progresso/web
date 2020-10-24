@@ -3,7 +3,9 @@ import { Card } from "../../../../components";
 import { TextEditor } from "./TextEditor";
 
 export const DistractorsForm = ({ questionData }) => {
-  const alternatives = questionData?.alternatives || [
+  const { alternatives: rawAlternatives } = questionData;
+
+  const alternatives = rawAlternatives || [
     { text: "", correct: false },
     { text: "", correct: false },
     { text: "", correct: false },

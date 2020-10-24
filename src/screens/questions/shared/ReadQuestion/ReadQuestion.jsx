@@ -26,6 +26,8 @@ export const ReadQuestion = ({ questionData }) => {
     (alternative) => alternative.correct === true
   );
 
+  const { text: correctAlternativeText } = correctAlternative;
+
   const incorrectAnswers = alternatives.filter(
     (alternative) => alternative.correct === false
   );
@@ -90,7 +92,7 @@ export const ReadQuestion = ({ questionData }) => {
       <Card className="mb-3" title="Resposta Correta">
         <div
           dangerouslySetInnerHTML={{
-            __html: correctAlternative?.text || "",
+            __html: correctAlternativeText || "",
           }}
         />
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
@@ -117,7 +119,7 @@ export const ReadQuestion = ({ questionData }) => {
         </div>
       </Card>
       <Card className="mb-3" title="Distratores">
-        {incorrectAnswers.map((item, index) => {
+        {incorrectAnswers.map(({ text: incorrentAnswerText }, index) => {
           return (
             <div key={index}>
               {index !== 0 && (
@@ -126,7 +128,9 @@ export const ReadQuestion = ({ questionData }) => {
                   style={{ height: "1px" }}
                 ></div>
               )}
-              <div dangerouslySetInnerHTML={{ __html: item?.text || "" }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: incorrentAnswerText || "" }}
+              />
             </div>
           );
         })}

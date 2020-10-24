@@ -54,7 +54,7 @@ export const Show = () => {
 
   if (loading) return null;
 
-  const questionData = data?.objectiveQuestion;
+  const { objectiveQuestion: questionData } = data;
 
   const handleEditQuestion = () => history.push(`/question/${id}/edit`);
 

@@ -2,17 +2,23 @@ import React, { useContext, useState } from "react";
 import { Card, Input, FormContext } from "../../../../components";
 import { SubjectSelect, ReviewerSelect } from ".";
 
-import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
+import {
+  BLOOM_TAXONOMY,
+  CHECK_TYPE,
+  DIFFICULTY,
+} from "../../../../utils/types";
 
 export const FeaturesForm = ({ questionData }) => {
-  const own = questionData?.own;
-  const source = questionData?.source;
-  const authorshipYear = questionData?.authorshipYear;
-  const difficulty = questionData?.difficulty;
-  const bloomTaxonomy = questionData?.bloomTaxonomy;
-  const checkType = questionData?.checkType;
-  const subject = questionData?.subject;
-  const reviewer = questionData?.reviewer;
+  const {
+    own,
+    source,
+    authorshipYear,
+    difficulty,
+    bloomTaxonomy,
+    checkType,
+    subject,
+    reviewer,
+  } = questionData;
 
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
@@ -71,7 +77,7 @@ export const FeaturesForm = ({ questionData }) => {
             <div className="flex">
               <h2 className="pr-2 pl-3 my-auto">Fonte:</h2>
               <div className="w-full">
-                <div style={{ maxWidth: "194px"}}>
+                <div style={{ maxWidth: "194px" }}>
                   <Input
                     ref={formContext.register}
                     className="block rounded p-1 w-full border-gray-400 border shadow-sm"
@@ -92,7 +98,7 @@ export const FeaturesForm = ({ questionData }) => {
                   max={currentYear}
                   step="1"
                   name="authorshipYear"
-                  defaultValue={authorshipYear}
+                  defaultValue={authorshipYear || "2020"}
                   readOnly={ownQuestion}
                 />
               </div>
@@ -158,12 +164,12 @@ export const FeaturesForm = ({ questionData }) => {
             </div>
           </div>
           <div className="w-full">
-            <SubjectSelect subjectId={subject?.id} />
+            <SubjectSelect subjectId={subject.id} />
           </div>
         </div>
         <div className="flex flex-col mt-4">
           <h2>Revisor:</h2>
-          <ReviewerSelect reviewerId={reviewer?.id} />
+          <ReviewerSelect reviewerId={reviewer.id} />
         </div>
       </Card>
     </>

@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { useUserContext } from "../../utils";
 import { AvatarEditor, Navigator, Avatar } from "../../components";
-import { useAuth } from "../../utils/contexts/Authentication"
+import { useAuth } from "../../utils/contexts/Authentication";
 
 export const UserProfile = () => {
   const auth = useAuth();
 
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
   const userContextData = useUserContext();
-  const userInfo = userContextData?.userInfo;
+  const { userInfo } = userContextData;
 
   return (
     <>
-      {avatarEditorExhibit && <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />}
+      {avatarEditorExhibit && (
+        <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />
+      )}
       <div className="bg-primary-normal h-full w-full">
         <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
           <Navigator />
@@ -26,7 +28,9 @@ export const UserProfile = () => {
                 <Avatar src={userInfo.avatarUrl} />
               </div>
               <div className="mt-8 text-center">
-                <h2 className="font-bold">{auth.user.name || auth.user.email}</h2>
+                <h2 className="font-bold">
+                  {auth.user.name || auth.user.email}
+                </h2>
                 <h2 className="py-4">TODO: Centro</h2>
                 <h2 className="">TODO: Cargo</h2>
               </div>

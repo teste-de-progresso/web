@@ -28,8 +28,8 @@ export const UserContextProvider = ({ children }) => {
   const providerValue = useMemo(() => ({ userInfo }), [userInfo]);
 
   useQuery(MY_USER, {
-    onCompleted: (data) => {
-      setUserInfo(data?.myUser);
+    onCompleted: ({ myUser }) => {
+      setUserInfo(myUser);
     },
     onError: () => {
       setUserInfo(false);
@@ -38,7 +38,7 @@ export const UserContextProvider = ({ children }) => {
 
   return (
     <Context.Provider value={providerValue}>
-      {userInfo ? children : <BadConnection/>}
+      {userInfo ? children : <BadConnection />}
     </Context.Provider>
   );
 };

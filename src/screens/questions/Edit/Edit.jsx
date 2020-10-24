@@ -49,9 +49,12 @@ export const Edit = () => {
   `;
 
   const { loading, data } = useQuery(GET_QUESTION);
-  const questionData = data?.objectiveQuestion;
 
-  if (loading || !questionData) return null;
+  if (loading) return null;
+
+  const { objectiveQuestion: questionData } = data;
+
+  if (!questionData) return null;
 
   return (
     <div className="bg-primary-normal h-full w-full">

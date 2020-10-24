@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+
 import { useAuth } from "../../utils/contexts/Authentication";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/ducks/auth/actions";
@@ -12,7 +13,7 @@ export const Navbar = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
   const userContextData = useUserContext();
-  const userInfo = userContextData?.userInfo;
+  const { userInfo } = userContextData;
   const history = useHistory();
 
   if (!userInfo) return null;
