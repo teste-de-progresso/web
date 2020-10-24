@@ -150,6 +150,7 @@ export const Home = () => {
       {filterModalOpened && (
         <Modal onClose={() => setFilterModalOpened(false)}>
           <Filter
+            filterModalOpened={filterModalOpened}
             setCheckType={setCheckType}
             setBloomTaxonomy={setBloomTaxonomy}
             setDifficulty={setDifficulty}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -16,7 +16,9 @@ export const Filter = ({
   setStatus,
   closeCallback,
   allSelectedKeys,
+  filterModalOpened,
 }) => {
+  const [enableSubmit, setEnableSubmit] = useState(false);
   const { handleSubmit, register, reset } = useForm();
 
   const filterGroups = [
@@ -40,8 +42,6 @@ export const Filter = ({
     filterGroups.forEach(({ callback }) => {
       callback([]);
     });
-
-    closeCallback();
   };
 
   const onSubmit = (inputs) => {
@@ -73,7 +73,7 @@ export const Filter = ({
               <h3 className="font-bold mb-2">{title}</h3>
               {group.map(({ key, value }, index) => {
                 return (
-                  <span key={index}>
+                  <span key={index} onClick={() => setEnableSubmit(true)}>
                     <input
                       type="checkbox"
                       name={key}
@@ -92,7 +92,12 @@ export const Filter = ({
         })}
       </div>
       <div className="flex flex-row-reverse">
-        <Button className="mx-3" type="submit">
+        <Button
+          className="mx-3"
+          type="submit"
+          style={{ opacity: enableSubmit ? "1" : "0" }}
+          disabled={!enableSubmit}
+        >
           Aplicar filtros
         </Button>
         <Button

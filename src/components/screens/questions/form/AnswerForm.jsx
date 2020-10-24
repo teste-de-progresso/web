@@ -16,7 +16,7 @@ export const AnswerForm = ({ questionData }) => {
 
   return (
     <>
-      <Card title="Resposta" className="mb-3">
+      <Card title="Resposta Correta" className="mb-3">
         <div className="flex flex-col">
           <div className="w-full">
             <TextEditor

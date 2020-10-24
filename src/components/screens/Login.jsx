@@ -19,6 +19,7 @@ export const Login = () => {
   const handleLogin = (inputs) => {
     dispatch(requestAuthentication(inputs.email, inputs.password));
   };
+  if (state.error) debugger;
 
   return (
     <Layout className="w-screen h-screen bg-primary-normal">
@@ -40,7 +41,7 @@ export const Login = () => {
                 type="email"
                 autoComplete="email"
                 name={"email"}
-                ref={register}
+                ref={register({ required: true })}
               />
             </InputGroup>
             <InputGroup className="mt-4">
@@ -49,7 +50,7 @@ export const Login = () => {
                 type="password"
                 autoComplete="password"
                 name={"password"}
-                ref={register}
+                ref={register({ required: true })}
               />
             </InputGroup>
             <InputGroup className="mt-4">

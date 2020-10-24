@@ -6,6 +6,8 @@ export const Button = ({
   className,
   type = "button",
   secondary,
+  style,
+  disabled,
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -20,9 +22,10 @@ export const Button = ({
   })();
 
   return (
-    <div className={className}>
+    <div className={className} style={style}>
       <button
         type={type}
+        disabled={disabled}
         className={`transition duration-300 ease-in-out block text-center cursor-pointer p-2 px-8 rounded shadow-lg hover:shadow-lg w-full ${colorClasses}`}
         onClick={() => handleClick()}
       >

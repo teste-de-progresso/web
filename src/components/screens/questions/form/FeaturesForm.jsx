@@ -23,11 +23,13 @@ export const FeaturesForm = ({ questionData }) => {
     setOwnQuestion(value);
 
     if (value) {
-      formContext.setValue("source", value ? "UNIFESO" : "");
+      formContext.setValue("source", "UNIFESO");
       formContext.setValue(
         "authorshipYear",
         value ? String(new Date().getFullYear()) : ""
       );
+    } else {
+      formContext.setValue("source", "");
     }
   };
 
@@ -37,43 +39,64 @@ export const FeaturesForm = ({ questionData }) => {
         <div className="flex justify-between">
           <div className="flex">
             <label htmlFor="own" className="mr-2 my-auto">
-              Autoria própria?
+              Autoria:
             </label>
-            <input
-              className="my-auto"
-              type="checkbox"
-              id="own"
-              name="own"
-              checked={ownQuestion}
-              ref={formContext.register}
-              onChange={(e) => handleOwnCheck(e.target.checked)}
-            />
+            <div className="my-auto">
+              <input
+                className="my-auto"
+                type="radio"
+                id="own"
+                name="own"
+                checked={ownQuestion}
+                ref={formContext.register}
+                onChange={() => handleOwnCheck(true)}
+              />
+              <label htmlFor="own">Própria</label>
+            </div>
+            <div className="my-auto ml-2">
+              <input
+                className="my-auto"
+                type="radio"
+                id="third"
+                name="own"
+                checked={!ownQuestion}
+                ref={formContext.register}
+                onChange={() => handleOwnCheck(false)}
+              />
+              <label htmlFor="third">Terceiro(s)</label>
+            </div>
           </div>
           <div className="flex">
             <div className="flex">
               <h2 className="pr-2 pl-3 my-auto">Fonte:</h2>
               <div className="w-full">
-                <Input
-                  ref={formContext.register}
-                  className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-                  name={"source"}
-                  defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
-                  readOnly={ownQuestion}
-                />
+                <div>
+                  <Input
+                    style={{ maxWidth: "194px"}}
+                    ref={formContext.register}
+                    className="block rounded p-1 w-full border-gray-400 border shadow-sm"
+                    name={"source"}
+                    defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
+                    readOnly={ownQuestion}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex">
               <h2 className="pr-2 pl-3 my-auto">Ano:</h2>
-              <Input
-                ref={formContext.register}
-                type="number"
-                min="1999"
-                max={currentYear}
-                step="1"
-                name="authorshipYear"
-                defaultValue={authorshipYear}
-                readOnly={ownQuestion}
-              />
+              <div style={{ maxWidth: "62px" }}>
+                <Input
+                  ref={formContext.register}
+                  maxWidth="62px"
+                  type="number"
+                  min="1999"
+                  max={currentYear}
+                  step="1"
+                  name="authorshipYear"
+                  defaultValue={authorshipYear}
+                  readOnly={ownQuestion}
+                />
+              </div>
             </div>
           </div>
         </div>

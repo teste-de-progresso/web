@@ -54,7 +54,7 @@ export const SubjectSelect = ({ subjectId }) => {
   return (
     <div className="flex flex-col h-full">
       <div>
-        <h2>Assunto</h2>
+        <h2>Assunto:</h2>
         <select
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
