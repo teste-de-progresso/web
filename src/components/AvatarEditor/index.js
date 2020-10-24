@@ -1,2 +1,2 @@
-export * from "./AvatarEditor";
-export * from "./PhotoCrop";
+export * from './AvatarEditor';
+export * from './PhotoCrop';
