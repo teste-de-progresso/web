@@ -14,7 +14,7 @@
     "ckeditor5-mathtype": "^1.0.4",
     "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
-    "react": "^16.13.1",
+    "react": "^17.0.1",
     "react-avatar-edit": "^0.8.3",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.2.0",

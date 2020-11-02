@@ -9,12 +9,13 @@ import {
 import { ApolloContext, UserContextProvider } from "./components/utils"
 
 import { Navbar } from "./components/layout"
-import { Home } from "./components/screens/home"
+import {Home, OldHome} from "./components/screens/home"
 import { New, Edit, Show, Review } from "./components/screens/questions"
 import { Loading } from "./components/screens/Loading";
 import { AuthenticationContext } from "./context/Authentication";
 import { loadAuthentication } from "./store/ducks/auth/actions";
 import { Login, UserProfile } from "./components/screens"
+import {Navigator} from './components/widgets';
 
 const Layout = styled.div`
   display: grid;
@@ -39,13 +40,18 @@ function App() {
                         <Router>
                             <Switch>
                                 <Layout className="h-screen">
-                                    <Navbar />
-                                    <Route exact path={"/"} component={Home} />
-                                    <Route exact path={"/question/new"} component={New} />
-                                    <Route exact path={"/question/:id/edit"} component={Edit} />
-                                    <Route exact path={"/question/:id/show"} component={Show} />
-                                    <Route exact path={"/question/:id/review"} component={Review} />
-                                    <Route exact path={"/user/profile"} component={UserProfile} />
+                                    <div>
+                                        <Navbar />
+                                        <Navigator/>
+                                    </div>
+                                    <div className="bg-gray-100 pt-4">
+                                        <Route exact path={"/"} component={Home} />
+                                        <Route exact path={"/question/new"} component={New} />
+                                        <Route exact path={"/question/:id/edit"} component={Edit} />
+                                        <Route exact path={"/question/:id/show"} component={Show} />
+                                        <Route exact path={"/question/:id/review"} component={Review} />
+                                        <Route exact path={"/user/profile"} component={UserProfile} />
+                                    </div>
                                 </Layout>
                             </Switch>
                         </Router>

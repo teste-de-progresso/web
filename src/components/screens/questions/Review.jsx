@@ -46,9 +46,8 @@ export const Review = () => {
   };
 
   return (
-    <div className="bg-primary-normal h-full w-full">
-      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-        <Navigator />
+    <div className="bg-gray-100 h-full w-full">
+      <main className="h-full pb-4">
         <ReadQuestion id={id} />
         <Card title="Feedback de revisão" className="max-w-screen-md mx-auto">
           <form onSubmit={handleSubmit(formSubmit)}>
@@ -59,7 +58,7 @@ export const Review = () => {
             />
             {REVIEW_FEEDBACK.map((item, index) => {
               return (
-                <div key={index} className="flex">
+                <div key={index} className="flex mb-2">
                   <input
                     type="radio"
                     id={item.value}

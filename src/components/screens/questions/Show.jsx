@@ -11,10 +11,9 @@ export const Show = () => {
   if (!id) history.push("/");
 
   return (
-    <div className="bg-primary-normal h-full w-full">
-      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-        <Navigator />
-        <ReadQuestion id={id} />
+    <div className="bg-gray-100 h-full w-full">
+        <main className="h-full">
+            <ReadQuestion id={id} />
       </main>
     </div>
   );

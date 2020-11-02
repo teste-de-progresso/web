@@ -19,6 +19,10 @@ const SEARCH_QUESTIONS = gql`
           status
           updatedAt
           createdAt
+          reviewer {
+            id
+            name
+          }
         }
         pageInfo {
           totalPages
@@ -37,6 +41,7 @@ export const QuestionsList = ({
   where,
   setIsFirstPage,
   setIsLastPage,
+    editable
 }) => {
   const [questions, setQuestions] = useState([]);
   const authenticationState = useSelector((state) => state.auth);
@@ -51,7 +56,6 @@ export const QuestionsList = ({
       page: page,
       limit: limit,
       where: {
-        userId: authenticationState.user.user_id,
         ...where,
       },
     },
@@ -103,15 +107,15 @@ export const QuestionsList = ({
   }
 
   return (
-    <div style={{ minHeight: "calc(100vh - 13rem)" }}>
-      <div className="grid gap-4 col-gap-8 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2">
+    <div>
+      <div className="grid gap-4 col-gap-8 w-full grid-cols-3">
         {questions.map((question) => (
           <div
             key={question.id}
-            className="border-l-8 border-primary-light flex bg-white hover:bg-gray-200 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
+            className="border-l-8 border-primary-light flex bg-white hover:bg-unifeso-50 hover:shadow-lg rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
           >
             <div
-              className="flex flex-col w-full p-3"
+              className="flex flex-col w-full px-3 py-2"
               onClick={() => bandleShowQuestion(question.id)}
             >
               <h2># {question.id}</h2>
@@ -126,12 +130,13 @@ export const QuestionsList = ({
               className="bg-red-300 flex flex-col relative flex-grow justify-center"
               onClick={() => handleEditQuestion(question.id)}
             >
-              <div
-                className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
-                style={{ left: "-1.5rem" }}
-              >
-                <EditIcon />
-              </div>
+              {
+                editable ? <div
+                    className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
+                    style={{ left: "-1.5rem" }}>
+                  <EditIcon />
+                </div> : null
+              }
             </div>
           </div>
         ))}
