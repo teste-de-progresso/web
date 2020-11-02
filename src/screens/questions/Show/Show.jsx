@@ -67,9 +67,8 @@ export const Show = () => {
   ];
 
   return (
-    <div className="bg-primary-normal h-full w-full">
-      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
-        <Navigator />
+    <div className="bg-gray-100 h-full w-full">
+      <main className="h-full">
         <div className="m-auto max-w-screen-md py-2 flex flex-row-reverse">
           {options.map((option, index) => {
             return (

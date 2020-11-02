@@ -54,8 +54,8 @@ export const Edit = () => {
   if (loading || !questionData) return null;
 
   return (
-    <div className="bg-primary-normal h-full w-full">
-      <main className="bg-gray-100 py-4 px-8 rounded-t-xlg h-full">
+    <div className="bg-gray-100 h-full w-full">
+      <main className="h-full">
         <SteppedForm questionId={id} status={questionData.status}>
           <Step step={0}>
             <EnunciadoForm questionData={questionData} />

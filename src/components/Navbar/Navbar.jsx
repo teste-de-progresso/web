@@ -25,7 +25,7 @@ export const Navbar = () => {
   return (
     <nav className="h-16 bg-primary-normal w-full flex items-center px-8 z-10">
       <div className="flex-grow">
-        <img alt="Logo do Unifeso" className="h-16" src={unifesoLogo}></img>
+        <img alt="Logo do Unifeso" className="h-12" src={unifesoLogo}></img>
       </div>
       <div className="group inline-block relative text-white font-medium hover:bg-primary-dark p-2 hover:shadow-lg cursor-pointer">
         <div className="flex flex-row items-center space-x-2">

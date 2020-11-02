@@ -128,7 +128,6 @@ export const SteppedForm = ({ children, questionId, status }) => {
           revisar a questão. Tem certeza que está tudo certo para finalizar?
         </Modal>
       )}
-      <Navigator needsConfirmation={true} />
       <div className="m-auto max-w-screen-md">
         <form
           className="h-full flex flex-col space-y-4"

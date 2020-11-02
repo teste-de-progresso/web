@@ -13,6 +13,13 @@ const initialState = {
   isLoggedIn: false,
   error: undefined,
   isLoading: false,
+  isTeacher: function() {
+    if (this.isLoggedIn && this.user.roles) {
+      return this.user.roles.includes("teacher");
+    } else {
+      return false;
+    }
+  }
 };
 
 export const reducer = (state = initialState, action) => {
