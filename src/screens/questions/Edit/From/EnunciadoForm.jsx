@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "../../../../components";
 import { TextEditor } from "./TextEditor";
 
-export const EnunciadoForm = ({ questionData }) => {
+export const EnunciadoForm = ({ questionData = {} }) => {
   const { instruction, support, body } = questionData;
 
   return (

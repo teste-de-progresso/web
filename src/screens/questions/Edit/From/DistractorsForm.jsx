@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "../../../../components";
 import { TextEditor } from "./TextEditor";
 
-export const DistractorsForm = ({ questionData }) => {
+export const DistractorsForm = ({ questionData = {} }) => {
   const { alternatives } = questionData;
 
   const alternativesMapped = alternatives || [

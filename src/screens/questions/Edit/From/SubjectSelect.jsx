@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { gql, useQuery } from "@apollo/client";
 
 import { Input, FormContext } from "../../../../components";
@@ -12,7 +12,7 @@ const GET_SUBJECTS = gql`
   }
 `;
 
-export const SubjectSelect = ({ subject }) => {
+export const SubjectSelect = ({ subject = {} }) => {
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
@@ -36,7 +36,6 @@ export const SubjectSelect = ({ subject }) => {
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
           defaultValue={subjectId}
-          onChange={(e) => setSelectedId(e.target.value)}
         >
           <option></option>
           {subjects.map((item, index) => {

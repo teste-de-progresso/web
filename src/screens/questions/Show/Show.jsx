@@ -4,7 +4,6 @@ import { MdEdit } from "react-icons/md";
 import { gql, useQuery } from "@apollo/client";
 
 import { ReadQuestion } from "../shared";
-import { Navigator } from "../../../components";
 
 const GET_QUESTION = gql`
   query($id: ID!) {

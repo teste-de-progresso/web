@@ -5,7 +5,7 @@ import { ReviewerSelect } from "./ReviewerSelect"
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
 
-export const FeaturesForm = ({ questionData }) => {
+export const FeaturesForm = ({ questionData = {} }) => {
   const { own,
     source,
     authorshipYear,

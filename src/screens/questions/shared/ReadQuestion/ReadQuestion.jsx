@@ -17,7 +17,7 @@ const difficulty = {
   hard: "Difícil",
 };
 
-export const ReadQuestion = ({ questionData }) => {
+export const ReadQuestion = ({ questionData = {} }) => {
   if (!questionData) return null;
 
   const alternatives = questionData.alternatives;

@@ -13,7 +13,7 @@ const GET_REVIEWER = gql`
   }
 `;
 
-export const ReviewerSelect = ({ reviewer }) => {
+export const ReviewerSelect = ({ reviewer = {} }) => {
   const formContext = useContext(FormContext);
 
   const { loading, data } = useQuery(GET_REVIEWER);
