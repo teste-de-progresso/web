@@ -8,26 +8,17 @@ const GET_SUBJECTS = gql`
     subjects {
       id
       name
-      axis {
-        name
-        subCategory {
-          name
-          category {
-            name
-          }
-        }
-      }
     }
   }
 `;
 
-export const SubjectSelect = ({ subjectId }) => {
+export const SubjectSelect = ({ subject }) => {
   const formContext = useContext(FormContext);
-  const [selectedId, setSelectedId] = useState(subjectId);
-
   const { loading, data } = useQuery(GET_SUBJECTS);
 
   if (loading) return null;
+
+  const { id: subjectId } = subject
 
   const subjects = data.subjects.map((item) => {
     return {
@@ -35,20 +26,6 @@ export const SubjectSelect = ({ subjectId }) => {
       label: item.name,
     };
   });
-
-  const selectedSubject = (() => {
-    if (!selectedId) return undefined;
-
-    return data.subjects.find((item) => {
-      return item.id === selectedId;
-    });
-  })();
-
-  const axis = selectedSubject?.axis;
-  const subCategory = axis?.subCategory;
-  const category = subCategory?.category;
-
-  const categorySlug = `${category?.name} > ${subCategory?.name}`;
 
   return (
     <div className="flex flex-col h-full">
@@ -58,7 +35,7 @@ export const SubjectSelect = ({ subjectId }) => {
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
-          defaultValue={selectedSubject?.id}
+          defaultValue={subjectId}
           onChange={(e) => setSelectedId(e.target.value)}
         >
           <option></option>
@@ -76,7 +53,6 @@ export const SubjectSelect = ({ subjectId }) => {
         Eixo:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-          defaultValue={axis?.name}
           disabled={true}
         />
       </span>
@@ -84,7 +60,6 @@ export const SubjectSelect = ({ subjectId }) => {
         Categoria:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-          defaultValue={category ? categorySlug : ""}
           disabled={true}
         />
       </span>

@@ -22,7 +22,7 @@ export const ReadQuestion = ({ questionData }) => {
 
   const alternatives = questionData.alternatives;
 
-  const correctAlternative = alternatives.find(
+  const { text: correctAlternativeText } = alternatives.find(
     (alternative) => alternative.correct === true
   );
 
@@ -90,7 +90,7 @@ export const ReadQuestion = ({ questionData }) => {
       <Card className="mb-3" title="Resposta Correta">
         <div
           dangerouslySetInnerHTML={{
-            __html: correctAlternative?.text || "",
+            __html: correctAlternativeText || "",
           }}
         />
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
@@ -117,7 +117,7 @@ export const ReadQuestion = ({ questionData }) => {
         </div>
       </Card>
       <Card className="mb-3" title="Distratores">
-        {incorrectAnswers.map((item, index) => {
+        {incorrectAnswers.map(({ text }, index) => {
           return (
             <div key={index}>
               {index !== 0 && (
@@ -126,7 +126,7 @@ export const ReadQuestion = ({ questionData }) => {
                   style={{ height: "1px" }}
                 ></div>
               )}
-              <div dangerouslySetInnerHTML={{ __html: item?.text || "" }} />
+              <div dangerouslySetInnerHTML={{ __html: text || "" }} />
             </div>
           );
         })}

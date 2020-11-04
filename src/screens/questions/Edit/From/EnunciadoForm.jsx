@@ -3,9 +3,7 @@ import { Card } from "../../../../components";
 import { TextEditor } from "./TextEditor";
 
 export const EnunciadoForm = ({ questionData }) => {
-  const instruction = questionData?.instruction;
-  const support = questionData?.support;
-  const body = questionData?.body;
+  const { instruction, support, body } = questionData;
 
   return (
     <>

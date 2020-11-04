@@ -1,6 +1,6 @@
-import { all, takeLatest } from '@redux-saga/core/effects';
-import { AUTHENTICATION_LOAD, AUTHENTICATION_REQUEST } from './auth/types';
-import { authentcationLoad, authenticationRequested } from './auth/sagas';
+import { all, takeLatest } from "@redux-saga/core/effects";
+import { AUTHENTICATION_LOAD, AUTHENTICATION_REQUEST } from "./auth/types";
+import { authentcationLoad, authenticationRequested } from "./auth/sagas";
 
 export default function* rootSaga() {
   return yield all([

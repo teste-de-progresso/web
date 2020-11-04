@@ -1,4 +1,4 @@
-export * from './New';
-export * from './Edit';
-export * from './Show';
-export * from './Review';
+export { New } from "./New";
+export { Edit } from "./Edit";
+export { Show } from "./Show";
+export { Review } from "./Review";

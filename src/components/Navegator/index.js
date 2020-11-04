@@ -1,1 +1,1 @@
-export * from './Navegator';
+export { Navigator } from "./Navegator";

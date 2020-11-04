@@ -1,7 +1,7 @@
-export * from './AnswerForm';
-export * from './DistractorsForm';
-export * from './EnunciadoForm';
-export * from './FeaturesForm';
-export * from './TextEditor';
-export { SubjectSelect } from './SubjectSelect';
-export { ReviewerSelect } from './ReviewerSelect';
+export { AnswerForm } from "./AnswerForm";
+export { DistractorsForm } from "./DistractorsForm";
+export { EnunciadoForm } from "./EnunciadoForm";
+export { FeaturesForm } from "./FeaturesForm";
+export { TextEditor } from "./TextEditor";
+export { SubjectSelect } from "./SubjectSelect";
+export { ReviewerSelect } from "./ReviewerSelect";

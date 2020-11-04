@@ -1,3 +1,3 @@
-export * from './ApolloContext';
-export * from './PrivateRoute';
-export * from './UserContext';
+export { ApolloContext } from "./ApolloContext";
+export { PrivateRoute } from "./PrivateRoute";
+export { UserContextProvider, useUserContext } from "./UserContext";

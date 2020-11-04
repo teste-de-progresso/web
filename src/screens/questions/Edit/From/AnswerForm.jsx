@@ -3,14 +3,13 @@ import { Card } from "../../../../components/Card/Card";
 import { TextEditor } from "./TextEditor";
 
 export const AnswerForm = ({ questionData }) => {
-  const explanation = questionData?.explanation;
-  const references = questionData?.references;
+  const { explanation, references, alternatives } = questionData;
 
-  const alternatives = questionData?.alternatives || [
+  const alternativesMaped = alternatives || [
     { text: "", correct: true },
   ];
 
-  const correctAlternative = alternatives.find(
+  const { text: correctAlternativeText } = alternativesMaped.find(
     (alternative) => alternative.correct === true
   );
 
@@ -21,7 +20,7 @@ export const AnswerForm = ({ questionData }) => {
           <div className="w-full">
             <TextEditor
               name={"correctAlternative"}
-              defaultValue={correctAlternative?.text || ""}
+              defaultValue={correctAlternativeText || ""}
             />
           </div>
           <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
