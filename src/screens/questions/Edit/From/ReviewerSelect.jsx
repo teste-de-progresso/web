@@ -20,7 +20,7 @@ export const ReviewerSelect = ({ reviewer = {} }) => {
 
   if (loading) return null;
 
-  const { id: reviewerId } = reviewer
+  const reviewerId = reviewer?.id
 
   const reviewers = data.reviewers.map(({ id, name, email }) => {
     return {

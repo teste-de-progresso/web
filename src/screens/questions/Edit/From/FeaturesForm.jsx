@@ -111,7 +111,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 name={"difficulty"}
                 defaultValue={difficulty}
               >
-                <option value=""></option>
+                <option></option>
                 {DIFFICULTY.map((item, index) => {
                   return (
                     <option key={index} value={item.key}>
@@ -129,7 +129,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 name={"checkType"}
                 defaultValue={checkType}
               >
-                <option value=""></option>
+                <option></option>
                 {CHECK_TYPE.map((item, index) => {
                   return (
                     <option key={index} value={item.key}>
@@ -147,7 +147,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 name={"bloomTaxonomy"}
                 defaultValue={bloomTaxonomy}
               >
-                <option value=""></option>
+                <option></option>
                 {BLOOM_TAXONOMY.map((item, index) => {
                   return (
                     <option key={index} value={item.key}>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 
 import { Input, FormContext } from "../../../../components";
@@ -8,17 +8,22 @@ const GET_SUBJECTS = gql`
     subjects {
       id
       name
+      axis {
+        name
+      }
+      category {
+        name
+      }
     }
   }
 `;
 
-export const SubjectSelect = ({ subject = {} }) => {
+export const SubjectSelect = ({ subject = undefined }) => {
+  const [selectedId, setSelectedId] = useState(subject?.id)
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
   if (loading) return null;
-
-  const { id: subjectId } = subject
 
   const subjects = data.subjects.map((item) => {
     return {
@@ -26,6 +31,14 @@ export const SubjectSelect = ({ subject = {} }) => {
       label: item.name,
     };
   });
+
+  const selectedSubject = (() => {
+    if (!selectedId) return undefined;
+
+    return data.subjects.find((item) => {
+      return item.id === selectedId;
+    });
+  })();
 
   return (
     <div className="flex flex-col h-full">
@@ -35,7 +48,8 @@ export const SubjectSelect = ({ subject = {} }) => {
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
-          defaultValue={subjectId}
+          defaultValue={selectedId}
+          onChange={(e) => setSelectedId(e.target.value)}
         >
           <option></option>
           {subjects.map((item, index) => {
@@ -53,6 +67,7 @@ export const SubjectSelect = ({ subject = {} }) => {
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled={true}
+          value={selectedSubject?.axis?.name}
         />
       </span>
       <span className="mt-4">
@@ -60,6 +75,7 @@ export const SubjectSelect = ({ subject = {} }) => {
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled={true}
+          value={selectedSubject?.category?.name}
         />
       </span>
     </div>
