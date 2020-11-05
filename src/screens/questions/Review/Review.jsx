@@ -86,7 +86,7 @@ export const Review = () => {
       },
     });
 
-    history.push("/");
+    window.location = "/"
   };
 
   return (
