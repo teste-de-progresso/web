@@ -49,7 +49,7 @@ export const Edit = () => {
   `;
 
   const { loading, data } = useQuery(GET_QUESTION);
-  const questionData = data?.objectiveQuestion;
+  const { objectiveQuestion: questionData } = data;
 
   if (loading || !questionData) return null;
 

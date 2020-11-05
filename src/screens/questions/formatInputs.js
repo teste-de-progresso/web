@@ -16,23 +16,23 @@ export const formatInput = (inputs) => ({
   alternatives: [
     {
       correct: true,
-      text: inputs.correctAlternative || '',
+      text: inputs.correctAlternative || "",
     },
     {
       correct: false,
-      text: inputs.incorrectAlternative1 || '',
+      text: inputs.incorrectAlternative1 || "",
     },
     {
       correct: false,
-      text: inputs.incorrectAlternative2 || '',
+      text: inputs.incorrectAlternative2 || "",
     },
     {
       correct: false,
-      text: inputs.incorrectAlternative3 || '',
+      text: inputs.incorrectAlternative3 || "",
     },
     {
       correct: false,
-      text: inputs.incorrectAlternative4 || '',
+      text: inputs.incorrectAlternative4 || "",
     },
   ],
 });

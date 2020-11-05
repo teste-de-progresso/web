@@ -4,7 +4,7 @@ import {
   AUTHENTICATION_REQUEST,
   AUTHENTICATION_SUCCESS,
   LOGOUT,
-} from './types';
+} from "./types";
 
 export const requestAuthentication = (email, password) => ({
   type: AUTHENTICATION_REQUEST,

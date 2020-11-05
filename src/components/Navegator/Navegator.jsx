@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../../utils/contexts/";
-import {Link, useHistory} from "react-router-dom";
-import {FaHome, FaLongArrowAltLeft, FaPlus} from "react-icons/fa";
+import { useHistory } from "react-router-dom";
+import { FaHome, FaPlus } from "react-icons/fa";
 import styled from 'styled-components';
 
 const HorizontalMenu = styled.ul`
@@ -21,10 +21,10 @@ list-style: none;
 }
 `
 
-const Item = ({children}) => (
-    <li className="hover:text-white">
-      {children}
-    </li>
+const Item = ({ children }) => (
+  <li className="hover:text-white">
+    {children}
+  </li>
 )
 
 export const Navigator = ({ needsConfirmation = false }) => {
@@ -34,7 +34,7 @@ export const Navigator = ({ needsConfirmation = false }) => {
   const confirmLeave = () => {
     if (needsConfirmation) {
       const leaveConfirmed = window.confirm(
-          "O progresso não foi salvo. Deseja sair sem salvar?"
+        "O progresso não foi salvo. Deseja sair sem salvar?"
       );
 
       return leaveConfirmed;
@@ -57,30 +57,30 @@ export const Navigator = ({ needsConfirmation = false }) => {
   }
 
   return (
-      <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md">
-        <HorizontalMenu className="list-none">
-          <Item>
-            <div onClick={() => goHome()}>
-              <FaHome className="my-auto" />
-              <span className="pl-3">Inicio</span>
+    <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md">
+      <HorizontalMenu className="list-none">
+        <Item>
+          <div onClick={() => goHome()}>
+            <FaHome className="my-auto" />
+            <span className="pl-3">Inicio</span>
+          </div>
+        </Item>
+        {
+          auth.isTeacher() ? <Item>
+            <div onClick={() => createQuestion()}>
+              <FaPlus className="my-auto" />
+              <span className="pl-3">Nova Questão</span>
             </div>
-          </Item>
-          {
-            auth.isTeacher() ? <Item>
-              <div onClick={() => createQuestion()}>
-                <FaPlus className="my-auto" />
-                <span className="pl-3">Nova Questão</span>
-              </div>
-            </Item> : null
-          }
-        </HorizontalMenu>
-        {/*<div onClick={() => goHome()} className="flex flex-row hover:text-gray-200">*/}
-        {/*  */}
-        {/*</div>*/}
-        {/*<div onClick={() => createQuestion()} className="flex flex-row hover:text-gray-200">*/}
-        {/*  <FaPlus className="my-auto" />*/}
-        {/*  <span className="pl-3">Criar Questão</span>*/}
-        {/*</div>*/}
-      </div>
+          </Item> : null
+        }
+      </HorizontalMenu>
+      {/*<div onClick={() => goHome()} className="flex flex-row hover:text-gray-200">*/}
+      {/*  */}
+      {/*</div>*/}
+      {/*<div onClick={() => createQuestion()} className="flex flex-row hover:text-gray-200">*/}
+      {/*  <FaPlus className="my-auto" />*/}
+      {/*  <span className="pl-3">Criar Questão</span>*/}
+      {/*</div>*/}
+    </div>
   );
 };

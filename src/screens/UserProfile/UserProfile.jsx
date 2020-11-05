@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useUserContext } from "../../utils";
 import { AvatarEditor, Navigator, Avatar } from "../../components";
-import { useAuth } from "../../utils/contexts/Authentication"
+import { useAuth } from "../../utils/contexts/Authentication";
 
 export const UserProfile = () => {
   const auth = useAuth();
 
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
   const userContextData = useUserContext();
-  const userInfo = userContextData?.userInfo;
+  const { userInfo } = userContextData;
 
   return (
     <>

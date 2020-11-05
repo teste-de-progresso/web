@@ -5,14 +5,14 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../store/ducks/auth/actions";
 import { useUserContext } from "../../utils";
 
-import { Avatar } from "../Avatar/Avatar";
+import { Avatar } from "../Avatar";
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
 export const Navbar = () => {
   const auth = useAuth();
   const dispatch = useDispatch();
   const userContextData = useUserContext();
-  const userInfo = userContextData?.userInfo;
+  const { userInfo } = userContextData;
   const history = useHistory();
 
   if (!userInfo) return null;

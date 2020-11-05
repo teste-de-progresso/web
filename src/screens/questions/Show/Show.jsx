@@ -4,7 +4,6 @@ import { MdEdit } from "react-icons/md";
 import { gql, useQuery } from "@apollo/client";
 
 import { ReadQuestion } from "../shared";
-import { Navigator } from "../../../components";
 
 const GET_QUESTION = gql`
   query($id: ID!) {
@@ -54,7 +53,7 @@ export const Show = () => {
 
   if (loading) return null;
 
-  const questionData = data?.objectiveQuestion;
+  const { objectiveQuestion: questionData } = data;
 
   const handleEditQuestion = () => history.push(`/question/${id}/edit`);
 
