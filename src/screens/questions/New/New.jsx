@@ -8,24 +8,58 @@ import {
   FeaturesForm,
 } from "../Edit/From";
 
+const initialQuestionData = {
+  authorshipYear: "",
+  body: "",
+  explanation: "",
+  instruction: "",
+  own: false,
+  references: "",
+  source: "",
+  status: "draft",
+  support: "",
+  alternatives: [
+    {
+      correct: true,
+      text: "",
+    },
+    {
+      correct: false,
+      text: "",
+    },
+    {
+      correct: false,
+      text: "",
+    },
+    {
+      correct: false,
+      text: "",
+    },
+    {
+      correct: false,
+      text: "",
+    },
+  ]
+}
+
 export const New = () => {
   return (
     <>
       <Navigator home={true} needsConfirmation={true} />
       <div className="bg-gray-100 w-full my-2">
         <main>
-          <SteppedForm>
+        <SteppedForm status={initialQuestionData.status}>
             <Step step={0}>
-              <EnunciadoForm />
+              <EnunciadoForm questionData={initialQuestionData} />
             </Step>
             <Step step={1}>
-              <AnswerForm />
+              <AnswerForm questionData={initialQuestionData} />
             </Step>
             <Step step={2}>
-              <DistractorsForm />
+              <DistractorsForm questionData={initialQuestionData} />
             </Step>
             <Step step={3}>
-              <FeaturesForm />
+              <FeaturesForm questionData={initialQuestionData} />
             </Step>
           </SteppedForm>
         </main>

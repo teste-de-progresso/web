@@ -5,14 +5,7 @@ import { TextEditor } from "./TextEditor";
 export const DistractorsForm = ({ questionData = {} }) => {
   const { alternatives } = questionData;
 
-  const alternativesMapped = alternatives || [
-    { text: "", correct: false },
-    { text: "", correct: false },
-    { text: "", correct: false },
-    { text: "", correct: false },
-  ];
-
-  const incorrectAnswers = alternativesMapped.filter(
+  const incorrectAnswers = alternatives.filter(
     (alternative) => alternative.correct === false
   );
 
