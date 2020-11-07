@@ -1,9 +1,16 @@
 import React from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { MdEdit } from "react-icons/md";
-import { gql, useQuery } from "@apollo/client";
+import { MdEdit, MdSave } from "react-icons/md";
+import { gql, useQuery, useMutation } from "@apollo/client";
 
 import { ReadQuestion } from "../shared";
+import { Navigator } from "../../../components";
+
+const Item = ({ children, className }) => (
+  <li className={`hover:text-white ${className || ""}`}>
+    {children}
+  </li >
+)
 
 const GET_QUESTION = gql`
   query($id: ID!) {
@@ -39,15 +46,32 @@ const GET_QUESTION = gql`
   }
 `;
 
+const FINISH_QUESTION = gql`
+  mutation ($questionId: ID!) {
+    finishQuestion (
+      input: {
+        questionId: $questionId
+      }
+    ) {
+      payload {
+        id
+        status
+      }
+    }
+  }
+`
+
 export const Show = () => {
-  const { id } = useParams();
+  const { id: questionId } = useParams();
   const history = useHistory();
 
-  if (!id) history.push("/");
+  const [finishQuestion] = useMutation(FINISH_QUESTION)
+
+  if (!questionId) history.push("/");
 
   const { loading, data } = useQuery(GET_QUESTION, {
     variables: {
-      id: id,
+      id: questionId,
     },
   });
 
@@ -55,7 +79,23 @@ export const Show = () => {
 
   const { objectiveQuestion: questionData } = data;
 
-  const handleEditQuestion = () => history.push(`/question/${id}/edit`);
+  const handleEditQuestion = () => {
+    const confirmEdition = () => window.confirm(
+      "Alterar uma questão registrada irá requerir uma revisão da quetão, deseja realmente editar?"
+    )
+
+    if (questionData.status !== 'finished' || confirmEdition()) {
+      history.push(`/question/${questionId}/edit`)
+    }
+  }
+
+  const handleRegisterQuestion = () => {
+    finishQuestion({
+      variables: {
+        questionId: questionId
+      },
+    })
+  }
 
   const options = [
     {
@@ -65,25 +105,39 @@ export const Show = () => {
     },
   ];
 
+  if (questionData.status === 'approved') {
+    options.push(
+      {
+        icon: <MdSave className="my-auto" />,
+        label: "Registrar",
+        action: handleRegisterQuestion,
+      }
+    )
+  }
+
   return (
-    <div className="bg-gray-100 w-full">
-      <main>
-        <div className="m-auto max-w-screen-md py-2 flex flex-row-reverse">
-          {options.map((option, index) => {
-            return (
+    <>
+      <Navigator home={true}>
+        {options.map((option, index) => {
+          return (
+            <Item className={index === 0 ? "ml-auto" : ""}
+              key={index}
+            >
               <div
-                className="flex text-lg cursor-pointer text-gray-800 hover:text-primary-dark pl-4"
                 onClick={option.action}
-                key={index}
               >
                 {option.icon}
-                <span className="pl-2">{option.label}</span>
+                <span className="pl-3">{option.label}</span>
               </div>
-            );
-          })}
-        </div>
-        <ReadQuestion questionData={questionData} />
-      </main>
-    </div>
+            </Item>
+          );
+        })}
+      </Navigator>
+      <div className="bg-gray-100 w-full my-2">
+        <main>
+          <ReadQuestion questionData={questionData} />
+        </main>
+      </div>
+    </>
   );
 };
