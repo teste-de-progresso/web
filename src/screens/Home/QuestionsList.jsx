@@ -37,6 +37,7 @@ const SEARCH_QUESTIONS = gql`
 
 export const QuestionsList = ({
   where,
+  title,
 }) => {
   const [page, setPage] = useState(1);
   const [limit,] = useState(9);
@@ -52,7 +53,7 @@ export const QuestionsList = ({
     <div className="bg-gray-200 p-4 rounded my-2">
       <h2 className="text-gray-500 font-medium text-xl flex">
         <span>
-          Rascunhos
+          {title}
         </span>
         <div className="ml-auto text-base text-gray-700">
           <button
@@ -100,7 +101,11 @@ export const QuestionsListContent = ({
     onCompleted: ({ objectives }) => {
       setQuestions(objectives.payload.nodes);
       setIsFirstPage(objectives.payload.pageInfo.firstPage);
-      setIsLastPage(objectives.payload.pageInfo.lastPage);
+      if (objectives.payload.nodes.length) {
+        setIsLastPage(objectives.payload.pageInfo.lastPage);
+      } else {
+        setIsLastPage(true)
+      }
     },
     variables: {
       page: page,

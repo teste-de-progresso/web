@@ -109,8 +109,9 @@ export const Home = () => {
                 <WaitingReviewList isLoading={isLoadingWaitingReview} questions={questionWaitingToReview} />
               </div>
             </div>
-            <QuestionsList where={{ status: 'draft', ...where }} limit={6} editable={true} />
-            <QuestionsList where={{ status: 'approved', ...where }} limit={6} />
+            <QuestionsList title="Rascunho" where={{ status: 'draft', ...where }} editable={true} />
+            <QuestionsList title="Aprovadas" where={{ status: 'approved', ...where }} />
+            <QuestionsList title="Finalizadas" where={{ status: 'finished', ...where }} />
           </div>
         </main>
       </div>
