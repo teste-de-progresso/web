@@ -13,7 +13,7 @@ const EditIcon = styled(MdModeEdit)`
 
 const SEARCH_QUESTIONS = gql`
   query($where: Where, $page: Int!, $limit: Int!) {
-    objectives(where: $where) {
+    questions (where: $where) {
       payload(page: $page, limit: $limit) {
         nodes {
           id
@@ -99,11 +99,11 @@ export const QuestionsListContent = ({
   const authenticationState = useSelector((state) => state.auth);
 
   const { loading } = useQuery(SEARCH_QUESTIONS, {
-    onCompleted: ({ objectives }) => {
-      setQuestions(objectives.payload.nodes);
-      setIsFirstPage(objectives.payload.pageInfo.firstPage);
-      if (objectives.payload.nodes.length) {
-        setIsLastPage(objectives.payload.pageInfo.lastPage);
+    onCompleted: ({ questions }) => {
+      setQuestions(questions.payload.nodes);
+      setIsFirstPage(questions.payload.pageInfo.firstPage);
+      if (questions.payload.nodes.length) {
+        setIsLastPage(questions.payload.pageInfo.lastPage);
       } else {
         setIsLastPage(true)
       }

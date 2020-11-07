@@ -2,44 +2,11 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory } from "react-router-dom";
 import { useMutation, useQuery, gql } from "@apollo/client";
+import { loader } from "graphql.macro";
 
 import { ReadQuestion } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
-
-const GET_QUESTION = gql`
-  query($id: ID!) {
-    objectiveQuestion(id: $id) {
-      id
-      instruction
-      support
-      body
-      own
-      authorshipYear
-      difficulty
-      explanation
-      source
-      bloomTaxonomy
-      references
-      checkType
-      status
-      createdAt
-      updatedAt
-      reviewer {
-        id
-        name
-      }
-      subject {
-        id
-        name
-      }
-      alternatives {
-        correct
-        text
-      }
-    }
-  }
-`;
 
 const SUBMIT_REVIEW = gql`
   mutation($questionId: ID!, $status: FeedbackStatus!, $comment: String) {
@@ -60,6 +27,7 @@ const SUBMIT_REVIEW = gql`
 `;
 
 export const Review = () => {
+  const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
   const { id } = useParams();
   const history = useHistory();
 
@@ -76,7 +44,7 @@ export const Review = () => {
 
   if (loading) return null;
 
-  const { objectiveQuestion: questionData } = data;
+  const { question: questionData } = data;
 
   const formSubmit = async (inputs) => {
     await sendFeedback({

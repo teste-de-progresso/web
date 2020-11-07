@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { loader } from "graphql.macro";
 
 import { SteppedForm, Step, Navigator } from "../../../components";
 import {
@@ -11,55 +12,28 @@ import {
 } from "./From";
 
 export const Edit = () => {
-  const { id } = useParams();
+  const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
+  const { id: questionId } = useParams();
   const history = useHistory();
 
-  if (!id) history.push("/");
+  if (!questionId) history.push("/");
 
-  const GET_QUESTION = gql`
-    query {
-      objectiveQuestion(id: ${id}) {
-        id
-        instruction
-        support
-        body
-        own
-        authorshipYear
-        difficulty
-        explanation
-        source
-        bloomTaxonomy
-        references
-        checkType
-        status
-        reviewer {
-          id
-          name
-        }
-        subject {
-          id
-          name
-        }
-        alternatives {
-          correct
-          text
-        }
-      }
+  const { loading, data } = useQuery(GET_QUESTION, {
+    variables: {
+      id: questionId
     }
-  `;
-
-  const { loading, data } = useQuery(GET_QUESTION);
+  });
 
   if (loading) return null;
 
-  const { objectiveQuestion: questionData } = data;
+  const { question: questionData } = data;
 
   return (
     <>
       <Navigator home={true} needsConfirmation={true} />
       <div className="bg-gray-100 w-full my-2">
         <main>
-          <SteppedForm questionId={id} status={questionData.status}>
+          <SteppedForm questionId={questionId} status={questionData.status}>
             <Step step={0}>
               <EnunciadoForm questionData={questionData} />
             </Step>

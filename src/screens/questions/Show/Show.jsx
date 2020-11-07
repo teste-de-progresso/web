@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { MdEdit, MdSave } from "react-icons/md";
 import { gql, useQuery, useMutation } from "@apollo/client";
+import { loader } from "graphql.macro";
 
 import { ReadQuestion } from "../shared";
 import { Navigator } from "../../../components";
@@ -11,40 +12,6 @@ const Item = ({ children, className }) => (
     {children}
   </li >
 )
-
-const GET_QUESTION = gql`
-  query($id: ID!) {
-    objectiveQuestion(id: $id) {
-      id
-      instruction
-      support
-      body
-      own
-      authorshipYear
-      difficulty
-      explanation
-      source
-      bloomTaxonomy
-      references
-      checkType
-      status
-      createdAt
-      updatedAt
-      reviewer {
-        id
-        name
-      }
-      subject {
-        id
-        name
-      }
-      alternatives {
-        correct
-        text
-      }
-    }
-  }
-`;
 
 const FINISH_QUESTION = gql`
   mutation ($questionId: ID!) {
@@ -62,6 +29,7 @@ const FINISH_QUESTION = gql`
 `
 
 export const Show = () => {
+  const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
   const { id: questionId } = useParams();
   const history = useHistory();
 
@@ -77,7 +45,7 @@ export const Show = () => {
 
   if (loading) return null;
 
-  const { objectiveQuestion: questionData } = data;
+  const { question: questionData } = data;
 
   const handleEditQuestion = () => {
     const confirmEdition = () => window.confirm(
