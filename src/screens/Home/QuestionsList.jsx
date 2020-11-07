@@ -39,7 +39,7 @@ export const QuestionsList = ({
   where,
 }) => {
   const [page, setPage] = useState(1);
-  const [limit,] = useState(20);
+  const [limit,] = useState(9);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isFirstPage, setIsFirstPage] = useState(true);
 

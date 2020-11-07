@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../../utils/contexts/";
 import { useHistory } from "react-router-dom";
-import { FaHome, FaPlus, FaFilter } from "react-icons/fa";
+import { FaHome, FaPlus } from "react-icons/fa";
 import styled from 'styled-components';
 
 const HorizontalMenu = styled.ul`
