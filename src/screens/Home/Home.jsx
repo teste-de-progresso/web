@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useQuery, gql } from "@apollo/client"
+import { loader } from "graphql.macro"
 import { FaFilter } from "react-icons/fa";
 
 import { Navigator, Modal } from "../../components";
@@ -8,20 +9,6 @@ import { QuestionsList } from "./QuestionsList";
 import { Filter } from "./Filter";
 import { WaitingReviewList } from "./WaitingReviewList";
 
-const QUESTION_WAITING_REVIEW = gql`
-  query {
-    myUser {
-      activeReviewRequests {
-        objective {
-          id
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`
-
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
     {children}
@@ -29,6 +16,7 @@ const Item = ({ children, className }) => (
 )
 
 export const Home = () => {
+  const QUESTION_WAITING_REVIEW = loader("../../graphql/query/getQuestionWaitingReview.gql")
   const auth = useAuth();
   const [checkType, setCheckType] = useState([]);
   const [bloomTaxonomy, setBloomTaxonomy] = useState([]);

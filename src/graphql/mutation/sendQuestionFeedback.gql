@@ -1,0 +1,15 @@
+mutation($questionId: ID!, $status: FeedbackStatus!, $comment: String) {
+  sendFeedback(
+    input: {
+      feedback: {
+        questionId: $questionId
+        status: $status
+        comment: $comment
+      }
+    }
+  ) {
+    payload {
+      id
+    }
+  }
+}

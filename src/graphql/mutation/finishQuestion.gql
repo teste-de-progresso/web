@@ -1,0 +1,12 @@
+mutation ($questionId: ID!) {
+  finishQuestion (
+    input: {
+      questionId: $questionId
+    }
+  ) {
+    payload {
+      id
+      status
+    }
+  }
+}

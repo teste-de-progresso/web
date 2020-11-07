@@ -2,37 +2,15 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { loader } from "graphql.macro";
+
 import { MdModeEdit } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
   font-size: 1.5rem;
-`;
-
-const SEARCH_QUESTIONS = gql`
-  query($where: Where, $page: Int!, $limit: Int!) {
-    objectives(where: $where) {
-      payload(page: $page, limit: $limit) {
-        nodes {
-          id
-          status
-          updatedAt
-          createdAt
-          reviewer {
-            id
-            name
-          }
-        }
-        pageInfo {
-          totalPages
-          firstPage
-          lastPage
-        }
-      }
-    }
-  }
 `;
 
 export const QuestionsList = ({
@@ -95,15 +73,16 @@ export const QuestionsListContent = ({
   setIsLastPage,
   editable = false
 }) => {
+  const SEARCH_QUESTIONS = loader("../../graphql/query/getQuestions.gql")
   const [questions, setQuestions] = useState([]);
   const authenticationState = useSelector((state) => state.auth);
 
   const { loading } = useQuery(SEARCH_QUESTIONS, {
-    onCompleted: ({ objectives }) => {
-      setQuestions(objectives.payload.nodes);
-      setIsFirstPage(objectives.payload.pageInfo.firstPage);
-      if (objectives.payload.nodes.length) {
-        setIsLastPage(objectives.payload.pageInfo.lastPage);
+    onCompleted: ({ questions }) => {
+      setQuestions(questions.payload.nodes);
+      setIsFirstPage(questions.payload.pageInfo.firstPage);
+      if (questions.payload.nodes.length) {
+        setIsLastPage(questions.payload.pageInfo.lastPage);
       } else {
         setIsLastPage(true)
       }

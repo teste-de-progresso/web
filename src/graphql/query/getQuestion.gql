@@ -1,0 +1,31 @@
+query ($id: ID!) {
+  question (id: $id) {
+    id
+    instruction
+    support
+    body
+    alternatives {
+      correct
+      text
+    }
+    explanation
+    references
+    own
+    source
+    authorshipYear
+    difficulty
+    checkType
+    bloomTaxonomy
+    subject {
+      id
+      name
+    }
+    status
+    reviewer {
+      id
+      name
+    }
+    updatedAt
+    createdAt
+  }
+}

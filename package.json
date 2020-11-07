@@ -13,6 +13,7 @@
     "axios": "^0.20.0",
     "ckeditor5-mathtype": "^1.0.4",
     "graphql": "^15.3.0",
+    "graphql.macro": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
     "react": "^16.13.1",
     "react-avatar-edit": "^0.8.3",

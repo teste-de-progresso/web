@@ -8,13 +8,13 @@ export const EnunciadoForm = ({ questionData = {} }) => {
   return (
     <>
       <Card className="h-full mb-3" title="Instrução">
-        <TextEditor name="instruction" defaultValue={instruction || ""} />
+        <TextEditor name="instruction" defaultValue={instruction} />
       </Card>
       <Card className="h-full mb-3" title="Suporte">
-        <TextEditor name="support" defaultValue={support || ""} />
+        <TextEditor name="support" defaultValue={support} />
       </Card>
       <Card className="h-full mb-3" title="Enunciado">
-        <TextEditor name="body" defaultValue={body || ""} />
+        <TextEditor name="body" defaultValue={body} />
       </Card>
     </>
   );
