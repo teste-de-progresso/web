@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { MdContentPaste } from "react-icons/md";
 
-export const QuestionsListRefactor = ({
+export const WaitingReviewList = ({
   questions,
   isLoading,
 }) => {
@@ -35,8 +35,8 @@ export const QuestionsListRefactor = ({
         style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <MdContentPaste className="text-6xl mx-auto" />
-          <span className="text-lg">
+          <MdContentPaste className="text-4xl mx-auto" />
+          <span className="text-base">
             Não existem questões registradas para esses parametros.
           </span>
         </div>
