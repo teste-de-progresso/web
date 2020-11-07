@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 const HorizontalMenu = styled.ul`
 list-style: none;
+width: 100%;
+display: flex;
 & > li {
   display: inline;
   cursor: pointer;
@@ -21,13 +23,13 @@ list-style: none;
 }
 `
 
-const Item = ({ children }) => (
-  <li className="hover:text-white">
+const Item = ({ children, className }) => (
+  <li className={`hover:text-white ${className || ""}`}>
     {children}
-  </li>
+  </li >
 )
 
-export const Navigator = ({ needsConfirmation = false, home = false, newQuestion = false }) => {
+export const Navigator = ({ needsConfirmation = false, home = false, newQuestion = false, children }) => {
   const history = useHistory();
   const auth = useAuth();
 
@@ -75,6 +77,7 @@ export const Navigator = ({ needsConfirmation = false, home = false, newQuestion
             </div>
           </Item> : null
         }
+        {children}
       </HorizontalMenu>
     </div>
   );

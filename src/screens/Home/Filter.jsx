@@ -5,7 +5,6 @@ import {
   CHECK_TYPE,
   BLOOM_TAXONOMY,
   DIFFICULTY,
-  STATUS,
 } from "../../utils/types";
 import { Button } from "../../components";
 
@@ -13,10 +12,8 @@ export const Filter = ({
   setCheckType,
   setBloomTaxonomy,
   setDifficulty,
-  setStatus,
   closeCallback,
   allSelectedKeys,
-  filterModalOpened,
 }) => {
   const [enableSubmit, setEnableSubmit] = useState(false);
   const { handleSubmit, register, reset } = useForm();
@@ -29,7 +26,6 @@ export const Filter = ({
       title: "Taxonomia de Bloom",
     },
     { callback: setDifficulty, group: DIFFICULTY, title: "Dificuldade" },
-    { callback: setStatus, group: STATUS, title: "Status" },
   ];
 
   const handleUndo = () => {

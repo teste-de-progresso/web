@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import { MdModeEdit, MdContentPaste } from "react-icons/md";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -35,13 +36,63 @@ const SEARCH_QUESTIONS = gql`
 `;
 
 export const QuestionsList = ({
-  userId,
+  where,
+  title,
+}) => {
+  const [page, setPage] = useState(1);
+  const [limit,] = useState(9);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const [isFirstPage, setIsFirstPage] = useState(true);
+
+  const changePage = (direction) => {
+    if (!isLastPage && direction === "next") setPage(page + 1);
+    if (!isFirstPage && direction === "previous") setPage(page - 1);
+  };
+
+  return (
+    <div className="bg-gray-200 p-4 rounded my-2">
+      <h2 className="text-gray-500 font-medium text-xl flex">
+        <span>
+          {title}
+        </span>
+        <div className="ml-auto text-base text-gray-700">
+          <button
+            onClick={() => changePage("previous")}
+            className="p-2"
+          >
+            <FaArrowLeft/>
+          </button>
+          <span className="mb-2 m-auto">Pagina: {page}</span>
+          <button
+            onClick={() => changePage("next")}
+            className="p-2"
+          >
+            <FaArrowRight />
+          </button>
+          <input readOnly hidden value={page} />
+        </div>
+      </h2>
+      <hr className="border-t border-gray-400 m-px" />
+      <div className="p-2">
+        <QuestionsListContent
+          page={page}
+          limit={limit}
+          where={where}
+          setIsFirstPage={setIsFirstPage}
+          setIsLastPage={setIsLastPage}
+          editable
+        /></div>
+    </div>
+  )
+}
+
+export const QuestionsListContent = ({
   page,
   limit,
   where,
   setIsFirstPage,
   setIsLastPage,
-    editable
+  editable
 }) => {
   const [questions, setQuestions] = useState([]);
   const authenticationState = useSelector((state) => state.auth);
@@ -50,7 +101,11 @@ export const QuestionsList = ({
     onCompleted: ({ objectives }) => {
       setQuestions(objectives.payload.nodes);
       setIsFirstPage(objectives.payload.pageInfo.firstPage);
-      setIsLastPage(objectives.payload.pageInfo.lastPage);
+      if (objectives.payload.nodes.length) {
+        setIsLastPage(objectives.payload.pageInfo.lastPage);
+      } else {
+        setIsLastPage(true)
+      }
     },
     variables: {
       page: page,
@@ -75,7 +130,7 @@ export const QuestionsList = ({
     return (
       <div
         className="grid"
-        style={{ placeItems: "center", height: "calc(100vh - 13rem)" }}
+        style={{ placeItems: "center" }}
       >
         <div className="lds-roller">
           <div></div>
@@ -95,11 +150,11 @@ export const QuestionsList = ({
     return (
       <div
         className="grid text-gray-800"
-        style={{ placeItems: "center", height: "calc(100vh - 13rem)" }}
+        style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <MdContentPaste className="text-6xl mx-auto" />
-          <span className="text-lg">
+          <MdContentPaste className="text-4xl mx-auto" />
+          <span className="text-base">
             Não existem questões registradas para esses parametros.
           </span>
         </div>
@@ -131,12 +186,12 @@ export const QuestionsList = ({
               className="bg-red-300 flex flex-col relative flex-grow justify-center"
               onClick={() => handleEditQuestion(question.id)}
             >
-              { editable ? <div
-                  className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
-                  style={{ left: "-1.5rem" }}
+              {editable ? <div
+                className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
+                style={{ left: "-1.5rem" }}
               >
                 <EditIcon />
-              </div> : null }
+              </div> : null}
             </div>
           </div>
         ))}
