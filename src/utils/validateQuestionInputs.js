@@ -7,6 +7,9 @@ export const validateQuestionInputs = (inputs) => {
     body,
     explanation,
     references,
+    difficulty,
+    bloomTaxonomy,
+    checkType,
     subjectId,
     source,
     reviewerId,
@@ -46,6 +49,18 @@ export const validateQuestionInputs = (inputs) => {
 
   if (!source || source.length === 0) {
     errors.push("Nenhuma fonte informada");
+  }
+
+  if (!difficulty) {
+    errors.push("Você precisa selecionar a dificuldade");
+  }
+
+  if (!bloomTaxonomy) {
+    errors.push("Você precisa selecionar a habilidade (Taxonomia de Bloom)");
+  }
+
+  if (!checkType) {
+    errors.push("Você precisa selecionar o tipo");
   }
 
   return errors;
