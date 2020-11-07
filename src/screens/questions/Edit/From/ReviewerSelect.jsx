@@ -1,22 +1,14 @@
 import React, { useContext } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { loader } from "graphql.macro";
 
 import { FormContext } from "../../../../components";
 
-const GET_REVIEWER = gql`
-  query {
-    reviewers {
-      id
-      name
-      email
-    }
-  }
-`;
-
 export const ReviewerSelect = ({ reviewer = {} }) => {
+  const GET_REVIEWERS = loader("../../../../graphql/query/getReviewers.gql")
   const formContext = useContext(FormContext);
 
-  const { loading, data } = useQuery(GET_REVIEWER);
+  const { loading, data } = useQuery(GET_REVIEWERS);
 
   if (loading) return null;
 

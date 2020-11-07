@@ -1,0 +1,11 @@
+query {
+  myUser {
+    activeReviewRequests {
+      objective {
+        id
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}

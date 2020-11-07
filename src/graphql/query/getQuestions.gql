@@ -1,0 +1,21 @@
+query($where: Where, $page: Int!, $limit: Int!) {
+  questions (where: $where) {
+    payload(page: $page, limit: $limit) {
+      nodes {
+        id
+        status
+        updatedAt
+        createdAt
+        reviewer {
+          id
+          name
+        }
+      }
+      pageInfo {
+        totalPages
+        firstPage
+        lastPage
+      }
+    }
+  }
+}

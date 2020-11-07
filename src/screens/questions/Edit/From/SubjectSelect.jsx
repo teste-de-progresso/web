@@ -1,25 +1,12 @@
 import React, { useContext, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
+import { loader } from "graphql.macro";
 
 import { Input, FormContext } from "../../../../components";
 
-const GET_SUBJECTS = gql`
-  query {
-    subjects {
-      id
-      name
-      axis {
-        name
-      }
-      category {
-        name
-      }
-    }
-  }
-`;
-
 export const SubjectSelect = ({ subject = undefined }) => {
-  const [selectedId, setSelectedId] = useState(subject?.id)
+  const GET_SUBJECTS = loader("../../../../graphql/query/getSubjects.gql");
+  const [selectedId, setSelectedId] = useState(subject?.id);
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
