@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
-import { MdModeEdit, MdContentPaste } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
 
 const EditIcon = styled(MdModeEdit)`
@@ -38,6 +38,7 @@ const SEARCH_QUESTIONS = gql`
 export const QuestionsList = ({
   where,
   title,
+  editable,
 }) => {
   const [page, setPage] = useState(1);
   const [limit,] = useState(9);
@@ -60,7 +61,7 @@ export const QuestionsList = ({
             onClick={() => changePage("previous")}
             className="p-2"
           >
-            <FaArrowLeft/>
+            <FaArrowLeft />
           </button>
           <span className="mb-2 m-auto">Pagina: {page}</span>
           <button
@@ -80,7 +81,7 @@ export const QuestionsList = ({
           where={where}
           setIsFirstPage={setIsFirstPage}
           setIsLastPage={setIsLastPage}
-          editable
+          editable={editable}
         /></div>
     </div>
   )
@@ -92,7 +93,7 @@ export const QuestionsListContent = ({
   where,
   setIsFirstPage,
   setIsLastPage,
-  editable
+  editable = false
 }) => {
   const [questions, setQuestions] = useState([]);
   const authenticationState = useSelector((state) => state.auth);
@@ -153,7 +154,6 @@ export const QuestionsListContent = ({
         style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <MdContentPaste className="text-4xl mx-auto" />
           <span className="text-base">
             Não existem questões registradas para esses parametros.
           </span>
@@ -186,12 +186,12 @@ export const QuestionsListContent = ({
               className="bg-red-300 flex flex-col relative flex-grow justify-center"
               onClick={() => handleEditQuestion(question.id)}
             >
-              {editable ? <div
+              {editable && <div
                 className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
                 style={{ left: "-1.5rem" }}
               >
                 <EditIcon />
-              </div> : null}
+              </div>}
             </div>
           </div>
         ))}

@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { MdContentPaste } from "react-icons/md";
 
 export const WaitingReviewList = ({
   questions,
@@ -35,7 +34,6 @@ export const WaitingReviewList = ({
         style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <MdContentPaste className="text-4xl mx-auto" />
           <span className="text-base">
             Não existem questões registradas para esses parametros.
           </span>
