@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SteppedForm, Step } from "../../../components";
+import { SteppedForm, Step, Navigator } from "../../../components";
 import {
   EnunciadoForm,
   AnswerForm,
@@ -10,23 +10,26 @@ import {
 
 export const New = () => {
   return (
-      <div className="bg-gray-100 h-full w-full">
-      <main className="h-full">
-        <SteppedForm>
-          <Step step={0}>
-            <EnunciadoForm />
-          </Step>
-          <Step step={1}>
-            <AnswerForm />
-          </Step>
-          <Step step={2}>
-            <DistractorsForm />
-          </Step>
-          <Step step={3}>
-            <FeaturesForm />
-          </Step>
-        </SteppedForm>
-      </main>
-    </div>
+    <>
+      <Navigator home={true} needsConfirmation={true} />
+      <div className="bg-gray-100 w-full my-2">
+        <main>
+          <SteppedForm>
+            <Step step={0}>
+              <EnunciadoForm />
+            </Step>
+            <Step step={1}>
+              <AnswerForm />
+            </Step>
+            <Step step={2}>
+              <DistractorsForm />
+            </Step>
+            <Step step={3}>
+              <FeaturesForm />
+            </Step>
+          </SteppedForm>
+        </main>
+      </div>
+    </>
   );
 };

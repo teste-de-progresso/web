@@ -27,7 +27,7 @@ const Item = ({ children }) => (
   </li>
 )
 
-export const Navigator = ({ needsConfirmation = false }) => {
+export const Navigator = ({ needsConfirmation = false, home = false, newQuestion = false }) => {
   const history = useHistory();
   const auth = useAuth();
 
@@ -57,16 +57,18 @@ export const Navigator = ({ needsConfirmation = false }) => {
   }
 
   return (
-    <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md">
+    <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md" style={{ maxHeight: "34.4px" }}>
       <HorizontalMenu className="list-none">
-        <Item>
-          <div onClick={() => goHome()}>
-            <FaHome className="my-auto" />
-            <span className="pl-3">Inicio</span>
-          </div>
-        </Item>
+        {home &&
+          <Item>
+            <div onClick={() => goHome()}>
+              <FaHome className="my-auto" />
+              <span className="pl-3">Inicio</span>
+            </div>
+          </Item>
+        }
         {
-          auth.isTeacher() ? <Item>
+          (auth.isTeacher() && newQuestion) ? <Item>
             <div onClick={() => createQuestion()}>
               <FaPlus className="my-auto" />
               <span className="pl-3">Nova Questão</span>
@@ -74,13 +76,6 @@ export const Navigator = ({ needsConfirmation = false }) => {
           </Item> : null
         }
       </HorizontalMenu>
-      {/*<div onClick={() => goHome()} className="flex flex-row hover:text-gray-200">*/}
-      {/*  */}
-      {/*</div>*/}
-      {/*<div onClick={() => createQuestion()} className="flex flex-row hover:text-gray-200">*/}
-      {/*  <FaPlus className="my-auto" />*/}
-      {/*  <span className="pl-3">Criar Questão</span>*/}
-      {/*</div>*/}
     </div>
   );
 };
