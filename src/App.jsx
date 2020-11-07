@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Provider, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import {
   BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
@@ -8,7 +7,7 @@ import { store } from './store';
 
 import { ApolloContext, UserContextProvider } from './utils';
 
-import {Navbar, Navigator} from './components';
+import { Navbar } from './components';
 import { Home, Login, UserProfile } from './screens';
 import {
   New, Edit, Show, Review,
@@ -16,11 +15,6 @@ import {
 import { Loading } from './screens/Loading';
 import { AuthenticationContext } from './utils/contexts';
 import { loadAuthentication } from './store/ducks/auth/actions';
-
-const Layout = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-`;
 
 function App() {
   const authenticationState = useSelector((state) => state.auth);
@@ -38,19 +32,14 @@ function App() {
         <ApolloContext>
           <UserContextProvider>
             <Router>
+              <Navbar />
               <Switch>
-                <Layout className="h-screen">
-                  <div>
-                    <Navbar />
-                    <Navigator/>
-                  </div>
-                  <Route exact path="/" component={Home} />
-                  <Route exact path="/question/new" component={New} />
-                  <Route exact path="/question/:id/edit" component={Edit} />
-                  <Route exact path="/question/:id/show" component={Show} />
-                  <Route exact path="/question/:id/review" component={Review} />
-                  <Route exact path="/user/profile" component={UserProfile} />
-                </Layout>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/question/new" component={New} />
+                <Route exact path="/question/:id/edit" component={Edit} />
+                <Route exact path="/question/:id/show" component={Show} />
+                <Route exact path="/question/:id/review" component={Review} />
+                <Route exact path="/user/profile" component={UserProfile} />
               </Switch>
             </Router>
           </UserContextProvider>

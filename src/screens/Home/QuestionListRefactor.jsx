@@ -12,7 +12,7 @@ export const QuestionsListRefactor = ({
     return (
       <div
         className="grid"
-        style={{ placeItems: "center", height: "calc(100vh - 13rem)" }}
+        style={{ placeItems: "center" }}
       >
         <div className="lds-roller">
           <div></div>
@@ -32,7 +32,7 @@ export const QuestionsListRefactor = ({
     return (
       <div
         className="grid text-gray-800"
-        style={{ placeItems: "center", height: "calc(100vh - 13rem)" }}
+        style={{ placeItems: "center" }}
       >
         <div className="text-center">
           <MdContentPaste className="text-6xl mx-auto" />

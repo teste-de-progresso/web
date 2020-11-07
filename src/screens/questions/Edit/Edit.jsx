@@ -2,7 +2,7 @@ import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
-import { SteppedForm, Step } from "../../../components";
+import { SteppedForm, Step, Navigator } from "../../../components";
 import {
   EnunciadoForm,
   AnswerForm,
@@ -55,23 +55,26 @@ export const Edit = () => {
   const { objectiveQuestion: questionData } = data;
 
   return (
-    <div className="bg-gray-100 h-full w-full">
-      <main className="h-full">
-        <SteppedForm questionId={id} status={questionData.status}>
-          <Step step={0}>
-            <EnunciadoForm questionData={questionData} />
-          </Step>
-          <Step step={1}>
-            <AnswerForm questionData={questionData} />
-          </Step>
-          <Step step={2}>
-            <DistractorsForm questionData={questionData} />
-          </Step>
-          <Step step={3}>
-            <FeaturesForm questionData={questionData} />
-          </Step>
-        </SteppedForm>
-      </main>
-    </div>
+    <>
+      <Navigator home={true} needsConfirmation={true} />
+      <div className="bg-gray-100 w-full my-2">
+        <main>
+          <SteppedForm questionId={id} status={questionData.status}>
+            <Step step={0}>
+              <EnunciadoForm questionData={questionData} />
+            </Step>
+            <Step step={1}>
+              <AnswerForm questionData={questionData} />
+            </Step>
+            <Step step={2}>
+              <DistractorsForm questionData={questionData} />
+            </Step>
+            <Step step={3}>
+              <FeaturesForm questionData={questionData} />
+            </Step>
+          </SteppedForm>
+        </main>
+      </div>
+    </>
   );
 };

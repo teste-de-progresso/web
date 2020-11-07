@@ -13,9 +13,9 @@ export const UserProfile = () => {
   return (
     <>
       {avatarEditorExhibit && <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />}
-      <div className="bg-gray-100 h-full w-full">
-        <main className="rounded-t-xlg h-full">
-          <Navigator />
+      <Navigator home={true} />
+      <div className="bg-gray-100 w-full my-3">
+        <main>
           <div className="flex items-center flex-col max-w-4xl m-auto">
             <div className="bg-white shadow border border-gray-100 flex flex-col items-center rounded p-4 w-full mt-12 mb-4 relative">
               <div
