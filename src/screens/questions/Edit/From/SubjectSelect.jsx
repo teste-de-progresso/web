@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 
 import { Input, FormContext } from "../../../../components";

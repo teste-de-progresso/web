@@ -1,35 +1,36 @@
 export const CHECK_TYPE = [
-  { key: "unique_answer", value: "Resposta Única" },
-  { key: "incomplete_affirmation", value: "Afirmação Incompleta" },
-  { key: "multiple_answer", value: "Resposta Múltipla" },
-  { key: "negative_focus", value: "Foco Negativo" },
-  { key: "assertion_and_reason", value: "Asserção e Razão" },
-  { key: "gap", value: "Lacuna" },
-  { key: "interpretation", value: "Interpretação" },
-  { key: "association", value: "Associação" },
-  { key: "ordering_or_ranking", value: "Ordenação ou Seriação" },
-  { key: "constant_alternatives", value: "Alternativas Constantes" },
+  { value: "unique_answer", label: "Resposta Única" },
+  { value: "incomplete_affirmation", label: "Afirmação Incompleta" },
+  { value: "multiple_answer", label: "Resposta Múltipla" },
+  { value: "negative_focus", label: "Foco Negativo" },
+  { value: "assertion_and_reason", label: "Asserção e Razão" },
+  { value: "gap", label: "Lacuna" },
+  { value: "interpretation", label: "Interpretação" },
+  { value: "association", label: "Associação" },
+  { value: "ordering_or_ranking", label: "Ordenação ou Seriação" },
+  { value: "constant_alternatives", label: "Alternativas Constantes" },
 ];
 
 export const STATUS = [
-  { key: "draft", value: "Rascunho" },
-  { key: "pending", value: "Pendente" },
-  { key: "finished", value: "Finalizada" },
+  { value: "draft", label: "Rascunho" },
+  { value: "pending", label: "Pendente" },
+  { value: "approved", label: "Aprovada" },
+  { value: "finished", label: "Finalizada" },
 ];
 
 export const DIFFICULTY = [
-  { key: "easy", value: "Fácil" },
-  { key: "medium", value: "Média" },
-  { key: "hard", value: "Difícil" },
+  { value: "easy", label: "Fácil" },
+  { value: "medium", label: "Média" },
+  { value: "hard", label: "Difícil" },
 ];
 
 export const BLOOM_TAXONOMY = [
-  { key: "remember", value: "Recordar" },
-  { key: "understand", value: "Compreender" },
-  { key: "apply", value: "Aplicar" },
-  { key: "analyze", value: "Analisar" },
-  { key: "evaluate", value: "Avaliar" },
-  { key: "create", value: "Criar" },
+  { value: "remember", label: "Recordar" },
+  { value: "understand", label: "Compreender" },
+  { value: "apply", label: "Aplicar" },
+  { value: "analyze", label: "Analisar" },
+  { value: "evaluate", label: "Avaliar" },
+  { value: "create", label: "Criar" },
 ];
 
 export const REVIEW_FEEDBACK = [

@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useHistory } from "react-router-dom";
-import { useMutation, useQuery, gql } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 
 import { ReadQuestion } from "../shared";
