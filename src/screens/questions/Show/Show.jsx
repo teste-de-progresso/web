@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { MdEdit, MdSave } from "react-icons/md";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
 
 import { ReadQuestion } from "../shared";
@@ -13,22 +13,8 @@ const Item = ({ children, className }) => (
   </li >
 )
 
-const FINISH_QUESTION = gql`
-  mutation ($questionId: ID!) {
-    finishQuestion (
-      input: {
-        questionId: $questionId
-      }
-    ) {
-      payload {
-        id
-        status
-      }
-    }
-  }
-`
-
 export const Show = () => {
+  const FINISH_QUESTION = loader("../../../graphql/mutation/finishQuestion.gql");
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
   const { id: questionId } = useParams();
   const history = useHistory();

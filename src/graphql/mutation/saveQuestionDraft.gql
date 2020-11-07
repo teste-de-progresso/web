@@ -1,0 +1,7 @@
+mutation($input: SaveDraftInput!) {
+  saveQuestionDraft(input: $input) {
+    payload {
+      id
+    }
+  }
+}

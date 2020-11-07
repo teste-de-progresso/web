@@ -8,26 +8,11 @@ import { ReadQuestion } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 
-const SUBMIT_REVIEW = gql`
-  mutation($questionId: ID!, $status: FeedbackStatus!, $comment: String) {
-    sendFeedback(
-      input: {
-        feedback: {
-          questionId: $questionId
-          status: $status
-          comment: $comment
-        }
-      }
-    ) {
-      payload {
-        id
-      }
-    }
-  }
-`;
 
 export const Review = () => {
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
+  const SUBMIT_REVIEW = loader("../../../graphql/mutation/sendQuestionFeedback.gql");
+
   const { id } = useParams();
   const history = useHistory();
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation, gql } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { loader } from "graphql.macro";
 
 import { Button } from "../Button";
 import { Modal } from "../Modal";
@@ -15,27 +16,9 @@ export const FormContext = React.createContext({
   setValue: undefined,
 });
 
-const SAVE_DRAFT = gql`
-  mutation($input: SaveDraftInput!) {
-    saveQuestionDraft(input: $input) {
-      payload {
-        id
-      }
-    }
-  }
-`;
-
-const SAVE = gql`
-  mutation($input: SaveInput!) {
-    saveQuestion(input: $input) {
-      payload {
-        id
-      }
-    }
-  }
-`;
-
 export const SteppedForm = ({ children, questionId, status }) => {
+  const SAVE = loader("../../graphql/mutation/saveQuestion.gql") ;
+  const SAVE_DRAFT = loader("../../graphql/mutation/saveQuestionDraft.gql");
   const allSteps = children.map((x) => x.props["step"]);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
