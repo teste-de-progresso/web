@@ -4,16 +4,17 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
-
 import { MdModeEdit } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+
+import { Section } from "../../components";
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
   font-size: 1.5rem;
 `;
 
-export const QuestionsList = ({
+export const QuestionsGroup = ({
   where,
   title,
   editable,
@@ -29,8 +30,8 @@ export const QuestionsList = ({
   };
 
   return (
-    <div className="bg-gray-200 p-4 rounded my-2">
-      <h2 className="text-gray-500 font-medium text-xl flex">
+    <Section title={
+      <div className="flex">
         <span>
           {title}
         </span>
@@ -50,18 +51,17 @@ export const QuestionsList = ({
           </button>
           <input readOnly hidden value={page} />
         </div>
-      </h2>
-      <hr className="border-t border-gray-400 m-px" />
-      <div className="p-2">
-        <QuestionsListContent
-          page={page}
-          limit={limit}
-          where={where}
-          setIsFirstPage={setIsFirstPage}
-          setIsLastPage={setIsLastPage}
-          editable={editable}
-        /></div>
-    </div>
+      </div>
+    }>
+      <QuestionsListContent
+        page={page}
+        limit={limit}
+        where={where}
+        setIsFirstPage={setIsFirstPage}
+        setIsLastPage={setIsLastPage}
+        editable={editable}
+      />
+    </Section>
   )
 }
 
@@ -147,7 +147,7 @@ export const QuestionsListContent = ({
         {questions.map((question) => (
           <div
             key={question.id}
-            className="border-l-8 border-primary-light flex bg-white hover:bg-unifeso-50 hover:shadow-lg rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
+            className="border-l-8 border-primary-light flex bg-white hover:bg-unifeso-50 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
           >
             <div
               className="flex flex-col w-full px-3 py-2"

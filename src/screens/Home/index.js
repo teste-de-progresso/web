@@ -1,4 +1,4 @@
 export { Home } from "./Home";
-export { QuestionsList } from "./QuestionsList";
+export { QuestionsGroup } from "./QuestionsGroup";
 export { Filter } from "./Filter";
 // export * from './OldHome';
