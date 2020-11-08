@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { useQuery, gql } from "@apollo/client"
-import { loader } from "graphql.macro"
 import { FaFilter } from "react-icons/fa";
 
 import { Navigator, Modal } from "../../components";
 import { useAuth } from "../../utils/contexts";
-import { QuestionsList } from "./QuestionsList";
 import { Filter } from "./Filter";
-import { WaitingReviewList } from "./WaitingReviewList";
+import { QuestionPainel } from "./QuestionsPainel";
 
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
@@ -16,7 +13,6 @@ const Item = ({ children, className }) => (
 )
 
 export const Home = () => {
-  const QUESTION_WAITING_REVIEW = loader("../../graphql/query/getQuestionWaitingReview.gql")
   const auth = useAuth();
   const [checkType, setCheckType] = useState([]);
   const [bloomTaxonomy, setBloomTaxonomy] = useState([]);
@@ -43,20 +39,10 @@ export const Home = () => {
       empty = false;
     }
 
-    if (!empty) return { where: params };
+    if (!empty) return params;
   })();
 
   const [filterModalOpened, setFilterModalOpened] = useState(false);
-
-  const [questionWaitingToReview, setQuestionWaitingToReview] = useState([])
-
-  const { loading: isLoadingWaitingReview } = useQuery(QUESTION_WAITING_REVIEW, {
-    onCompleted: ({ myUser }) => {
-      setQuestionWaitingToReview(myUser.activeReviewRequests.map((reviewRequest) => {
-        return reviewRequest.objective
-      }))
-    }
-  });
 
   return (
     <>
@@ -90,17 +76,7 @@ export const Home = () => {
       <div className="bg-gray-100 w-full">
         <main className="px-8 rounded-t-xlg">
           <div className="mr-4">
-            <div className="bg-gray-200 p-4 rounded my-2">
-              <h2 className="text-gray-500 font-medium text-xl">Aguardando Revisão</h2>
-              <hr className="border-t border-gray-400 m-px" />
-              <div className="p-2">
-                <WaitingReviewList isLoading={isLoadingWaitingReview} questions={questionWaitingToReview} />
-              </div>
-            </div>
-            <QuestionsList title="Pendentes" where={{ status: 'pending', ...where }} />
-            <QuestionsList title="Rascunho" where={{ status: 'draft', ...where }} editable={true} />
-            <QuestionsList title="Aprovadas" where={{ status: 'approved', ...where }} />
-            <QuestionsList title="Finalizadas" where={{ status: 'finished', ...where }} />
+            <QuestionPainel whereOptions={where} />
           </div>
         </main>
       </div>

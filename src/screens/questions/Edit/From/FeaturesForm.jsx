@@ -114,8 +114,8 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 <option></option>
                 {DIFFICULTY.map((item, index) => {
                   return (
-                    <option key={index} value={item.key}>
-                      {item.value}
+                    <option key={index} value={item.value}>
+                      {item.label}
                     </option>
                   );
                 })}
@@ -132,8 +132,8 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 <option></option>
                 {CHECK_TYPE.map((item, index) => {
                   return (
-                    <option key={index} value={item.key}>
-                      {item.value}
+                    <option key={index} value={item.value}>
+                      {item.label}
                     </option>
                   );
                 })}
@@ -150,8 +150,8 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 <option></option>
                 {BLOOM_TAXONOMY.map((item, index) => {
                   return (
-                    <option key={index} value={item.key}>
-                      {item.value}
+                    <option key={index} value={item.value}>
+                      {item.label}
                     </option>
                   );
                 })}

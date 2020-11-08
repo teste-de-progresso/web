@@ -10,3 +10,4 @@ export * from "./Navegator";
 export * from "./Navbar";
 export * from "./Avatar";
 export * from "./SteppedForm";
+export { Section } from "./Section"

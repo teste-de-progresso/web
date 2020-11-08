@@ -44,10 +44,10 @@ export const Filter = ({
     filterGroups.forEach(({ callback, group }) => {
       const items = group
         .filter((item) => {
-          return inputs[item.key];
+          return inputs[item.value];
         })
         .map((item) => {
-          return item.key;
+          return item.value;
         });
 
       callback(items);
@@ -67,18 +67,18 @@ export const Filter = ({
           return (
             <div className="flex flex-col" key={index}>
               <h3 className="font-bold mb-2">{title}</h3>
-              {group.map(({ key, value }, index) => {
+              {group.map(({ value, label }, index) => {
                 return (
                   <span key={index} onClick={() => setEnableSubmit(true)}>
                     <input
                       type="checkbox"
-                      name={key}
+                      name={value}
                       ref={register}
-                      id={key}
-                      defaultChecked={isSelected(key)}
+                      id={value}
+                      defaultChecked={isSelected(value)}
                     />
-                    <label htmlFor={key} className="ml-2">
-                      {value}
+                    <label htmlFor={value} className="ml-2">
+                      {label}
                     </label>
                   </span>
                 );
