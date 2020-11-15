@@ -10,7 +10,6 @@ query ($id: ID!) {
     }
     explanation
     references
-    own
     source
     authorshipYear
     difficulty

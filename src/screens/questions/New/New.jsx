@@ -13,7 +13,6 @@ const initialQuestionData = {
   body: "",
   explanation: "",
   instruction: "",
-  own: false,
   references: "",
   source: "",
   status: "draft",

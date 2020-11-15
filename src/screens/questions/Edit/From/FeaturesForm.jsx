@@ -6,7 +6,7 @@ import { ReviewerSelect } from "./ReviewerSelect"
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
 
 export const FeaturesForm = ({ questionData = {} }) => {
-  const { own,
+  const {
     source,
     authorshipYear,
     difficulty,
@@ -17,7 +17,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
 
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
-  const [ownQuestion, setOwnQuestion] = useState(own);
+  const [ownQuestion, setOwnQuestion] = useState(source === 'UNIFESO');
 
   const handleOwnCheck = (value) => {
     setOwnQuestion(value);
@@ -30,6 +30,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
       );
     } else {
       formContext.setValue("source", "");
+      formContext.setValue("authorshipYear", "");
     }
   };
 
@@ -46,8 +47,6 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 className="my-auto"
                 type="radio"
                 id="own"
-                name="own"
-                value={true}
                 checked={ownQuestion}
                 ref={formContext.register}
                 onChange={() => handleOwnCheck(true)}
