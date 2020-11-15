@@ -16,7 +16,9 @@ export const Filter = ({
   allSelectedKeys,
 }) => {
   const [enableSubmit, setEnableSubmit] = useState(false);
-  const { handleSubmit, register, reset } = useForm();
+  const {
+    handleSubmit, register, reset, setValue,
+  } = useForm();
 
   const filterGroups = [
     { callback: setCheckType, group: CHECK_TYPE, title: "Tipo de marcação" },
@@ -35,9 +37,11 @@ export const Filter = ({
   };
 
   const handleClean = () => {
-    filterGroups.forEach(({ callback }) => {
-      callback([]);
+    filterGroups.forEach(({ group }) => {
+      group.forEach(({ value }) => { setValue(value, false); });
     });
+
+    setEnableSubmit(true);
   };
 
   const onSubmit = (inputs) => {
@@ -57,11 +61,11 @@ export const Filter = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
-        {filterGroups.map(({ group, title }, index) => (
-          <div className="flex flex-col" key={index}>
+        {filterGroups.map(({ group, title }) => (
+          <div className="flex flex-col" key={title}>
             <h3 className="font-bold mb-2">{title}</h3>
-            {group.map(({ value, label }, index) => (
-              <span key={index} onClick={() => setEnableSubmit(true)}>
+            {group.map(({ value, label }) => (
+              <span key={value} onClick={() => setEnableSubmit(true)}>
                 <input
                   type="checkbox"
                   name={value}

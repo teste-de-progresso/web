@@ -11,10 +11,12 @@ export const QuestionPainel = ({ whereOptions }) => {
     { title: "Finalizadas", where: { status: "finished", ...whereOptions } },
   ];
 
+  const questionsGroupsComponents = questionsGroups.map(({ title, where, editable }, index) => <QuestionsGroup key={index} title={title} where={where} editable={editable} />);
+
   return (
     <>
       <WaitingReviewList />
-      {questionsGroups.map(({ title, where, editable }) => <QuestionsGroup title={title} where={where} editable={editable} />)}
+      {questionsGroupsComponents}
     </>
   );
 };

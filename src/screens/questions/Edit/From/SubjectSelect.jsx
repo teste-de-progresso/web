@@ -6,25 +6,22 @@ import { Input, FormContext } from "../../../../components";
 
 export const SubjectSelect = ({ subject = undefined }) => {
   const GET_SUBJECTS = loader("../../../../graphql/query/getSubjects.gql");
-  const [selectedId, setSelectedId] = useState(subject?.id);
+  const { id: subjectId } = subject;
+  const [selectedId, setSelectedId] = useState(subjectId);
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
   if (loading) return null;
 
-  const subjects = data.subjects.map((item) => {
-    return {
-      value: item.id,
-      label: item.name,
-    };
-  });
+  const subjects = data.subjects.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
 
   const selectedSubject = (() => {
     if (!selectedId) return undefined;
 
-    return data.subjects.find((item) => {
-      return item.id === selectedId;
-    });
+    return data.subjects.find((item) => item.id === selectedId);
   })();
 
   return (
@@ -38,14 +35,12 @@ export const SubjectSelect = ({ subject = undefined }) => {
           defaultValue={selectedId}
           onChange={(e) => setSelectedId(e.target.value)}
         >
-          <option></option>
-          {subjects.map((item, index) => {
-            return (
-              <option key={index} value={item.value}>
-                {item.label}
-              </option>
-            );
-          })}
+          <option value="" />
+          {subjects.map(({ label, value }) => (
+            <option key={`${label}-${value}`} value={value}>
+              {label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -53,16 +48,16 @@ export const SubjectSelect = ({ subject = undefined }) => {
         Eixo:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-          disabled={true}
-          value={selectedSubject?.axis?.name}
+          disabled
+          value={selectedSubject.axis.name}
         />
       </span>
       <span className="mt-4">
         Categoria:
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-          disabled={true}
-          value={selectedSubject?.category?.name}
+          disabled
+          value={selectedSubject.category.name}
         />
       </span>
     </div>

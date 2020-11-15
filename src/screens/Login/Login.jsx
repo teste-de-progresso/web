@@ -14,14 +14,13 @@ const Layout = styled.div`
 `;
 
 export const Login = () => {
-  const state = useSelector((state) => state.auth);
+  const state = useSelector(({ auth }) => auth);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
   const handleLogin = (inputs) => {
     dispatch(requestAuthentication(inputs.email, inputs.password));
   };
-  if (state.error) debugger;
 
   return (
     <Layout className="w-screen h-screen bg-primary-normal">

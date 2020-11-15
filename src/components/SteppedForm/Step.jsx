@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Step = ({ step, children }) => (
+export const Step = ({ children }) => (
   <>
     {children}
   </>

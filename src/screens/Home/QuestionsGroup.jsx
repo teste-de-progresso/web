@@ -82,11 +82,11 @@ export const QuestionsListContent = ({
   const authenticationState = useSelector((state) => state.auth);
 
   const { loading } = useQuery(SEARCH_QUESTIONS, {
-    onCompleted: ({ questions }) => {
-      setQuestions(questions.payload.nodes);
-      setIsFirstPage(questions.payload.pageInfo.firstPage);
-      if (questions.payload.nodes.length) {
-        setIsLastPage(questions.payload.pageInfo.lastPage);
+    onCompleted: ({ questions: result }) => {
+      setQuestions(result.payload.nodes);
+      setIsFirstPage(result.payload.pageInfo.firstPage);
+      if (result.payload.nodes.length) {
+        setIsLastPage(result.payload.pageInfo.lastPage);
       } else {
         setIsLastPage(true);
       }

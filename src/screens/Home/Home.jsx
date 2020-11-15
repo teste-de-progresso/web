@@ -24,22 +24,18 @@ export const Home = () => {
 
   const where = (() => {
     const params = {};
-    let empty = true;
 
     if (checkType && checkType.length > 0) {
       params.checkType = checkType;
-      empty = false;
     }
     if (bloomTaxonomy && bloomTaxonomy.length > 0) {
       params.bloomTaxonomy = bloomTaxonomy;
-      empty = false;
     }
     if (difficulty && difficulty.length > 0) {
       params.difficulty = difficulty;
-      empty = false;
     }
 
-    if (!empty) return params;
+    return params;
   })();
 
   const [filterModalOpened, setFilterModalOpened] = useState(false);
@@ -48,19 +44,19 @@ export const Home = () => {
     <>
       {auth.isTeacher()
         && (
-        <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
-          <Item
-            className="ml-auto"
-          >
-            <div
-              onClick={() => setFilterModalOpened(true)}
+          <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
+            <Item
+              className="ml-auto"
             >
+              <div
+                onClick={() => setFilterModalOpened(true)}
+              >
 
-              <FaFilter className="my-auto" />
-              <span className="pl-3">Filtros</span>
-            </div>
-          </Item>
-        </Navigator>
+                <FaFilter className="my-auto" />
+                <span className="pl-3">Filtros</span>
+              </div>
+            </Item>
+          </Navigator>
         )}
       {filterModalOpened && (
         <Modal onClose={() => setFilterModalOpened(false)}>
