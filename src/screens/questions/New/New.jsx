@@ -39,6 +39,11 @@ const initialQuestionData = {
       text: "",
     },
   ],
+  subject: {
+    axis: {},
+    category: {},
+  },
+  reviewer: {},
 };
 
 export const New = () => (

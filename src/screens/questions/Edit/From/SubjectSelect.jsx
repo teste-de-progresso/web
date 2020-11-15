@@ -4,24 +4,33 @@ import { loader } from "graphql.macro";
 
 import { Input, FormContext } from "../../../../components";
 
-export const SubjectSelect = ({ subject = undefined }) => {
+export const SubjectSelect = ({ subject }) => {
   const GET_SUBJECTS = loader("../../../../graphql/query/getSubjects.gql");
-  const { id: subjectId } = subject;
-  const [selectedId, setSelectedId] = useState(subjectId);
+  const [selectedId, setSelectedId] = useState();
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
-  if (loading) return null;
+  if (subject === null || loading) return null;
 
   const subjects = data.subjects.map((item) => ({
     value: item.id,
     label: item.name,
   }));
 
-  const selectedSubject = (() => {
-    if (!selectedId) return undefined;
+  const { id: subjectId } = subject;
 
-    return data.subjects.find((item) => item.id === selectedId);
+  const selectedSubject = (() => {
+    if (selectedId) {
+      return data.subjects.find((item) => item.id === selectedId);
+    }
+    if (subjectId) {
+      return data.subjects.find((item) => item.id === subjectId);
+    }
+
+    return {
+      axis: {},
+      category: {},
+    };
   })();
 
   return (
@@ -32,7 +41,7 @@ export const SubjectSelect = ({ subject = undefined }) => {
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
-          defaultValue={selectedId}
+          defaultValue={selectedSubject.id}
           onChange={(e) => setSelectedId(e.target.value)}
         >
           <option value="" />

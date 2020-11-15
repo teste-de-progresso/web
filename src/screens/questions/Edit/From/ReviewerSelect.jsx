@@ -4,16 +4,14 @@ import { loader } from "graphql.macro";
 
 import { FormContext } from "../../../../components";
 
-export const ReviewerSelect = ({ reviewer = {} }) => {
+export const ReviewerSelect = ({ reviewer }) => {
   const GET_REVIEWERS = loader("../../../../graphql/query/getReviewers.gql");
   const formContext = useContext(FormContext);
-
   const { loading, data } = useQuery(GET_REVIEWERS);
 
-  if (loading) return null;
+  if (loading || !reviewer) return null;
 
   const { id: reviewerId } = reviewer;
-
   const reviewers = data.reviewers.map(({ id, name, email }) => ({
     value: id,
     label: `${name || ""} (${email})`,
