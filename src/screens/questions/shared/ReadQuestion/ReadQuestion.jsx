@@ -20,14 +20,14 @@ const difficulty = {
 export const ReadQuestion = ({ questionData = {} }) => {
   if (!questionData) return null;
 
-  const alternatives = questionData.alternatives;
+  const { alternatives } = questionData;
 
   const { text: correctAlternativeText } = alternatives.find(
-    (alternative) => alternative.correct === true
+    (alternative) => alternative.correct === true,
   );
 
   const incorrectAnswers = alternatives.filter(
-    (alternative) => alternative.correct === false
+    (alternative) => alternative.correct === false,
   );
 
   function formatDate(stringDate) {
@@ -105,7 +105,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
           <div
             className="bg-gray-400 w-full my-3"
             style={{ height: "1px" }}
-          ></div>
+          />
           <div>
             <h2 className="text-xl font-medium">Referências</h2>
             <div
@@ -117,19 +117,17 @@ export const ReadQuestion = ({ questionData = {} }) => {
         </div>
       </Card>
       <Card className="mb-3" title="Distratores">
-        {incorrectAnswers.map(({ text }, index) => {
-          return (
-            <div key={index}>
-              {index !== 0 && (
-                <div
-                  className="bg-gray-400 w-full my-3"
-                  style={{ height: "1px" }}
-                ></div>
-              )}
-              <div dangerouslySetInnerHTML={{ __html: text || "" }} />
-            </div>
-          );
-        })}
+        {incorrectAnswers.map(({ text }, index) => (
+          <div key={index}>
+            {index !== 0 && (
+            <div
+              className="bg-gray-400 w-full my-3"
+              style={{ height: "1px" }}
+            />
+            )}
+            <div dangerouslySetInnerHTML={{ __html: text || "" }} />
+          </div>
+        ))}
       </Card>
     </div>
   );

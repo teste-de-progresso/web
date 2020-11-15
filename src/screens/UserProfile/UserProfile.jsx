@@ -13,7 +13,7 @@ export const UserProfile = () => {
   return (
     <>
       {avatarEditorExhibit && <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />}
-      <Navigator home={true} />
+      <Navigator home />
       <div className="bg-gray-100 w-full my-3">
         <main>
           <div className="flex items-center flex-col max-w-4xl m-auto">

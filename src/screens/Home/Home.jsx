@@ -9,8 +9,8 @@ import { QuestionPainel } from "./QuestionsPainel";
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
     {children}
-  </li >
-)
+  </li>
+);
 
 export const Home = () => {
   const auth = useAuth();
@@ -20,10 +20,10 @@ export const Home = () => {
 
   const allSelectedKeys = checkType
     .concat(bloomTaxonomy)
-    .concat(difficulty)
+    .concat(difficulty);
 
   const where = (() => {
-    let params = {};
+    const params = {};
     let empty = true;
 
     if (checkType && checkType.length > 0) {
@@ -46,8 +46,9 @@ export const Home = () => {
 
   return (
     <>
-      {auth.isTeacher() &&
-        <Navigator newQuestion={true} setFilterModalOpened={setFilterModalOpened}>
+      {auth.isTeacher()
+        && (
+        <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
           <Item
             className="ml-auto"
           >
@@ -60,7 +61,7 @@ export const Home = () => {
             </div>
           </Item>
         </Navigator>
-      }
+        )}
       {filterModalOpened && (
         <Modal onClose={() => setFilterModalOpened(false)}>
           <Filter

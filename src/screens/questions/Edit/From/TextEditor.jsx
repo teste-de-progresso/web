@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import { Controller } from "react-hook-form";
+import * as ClassicEditor from "ckeditor5-mathtype/build/ckeditor";
 import { FormContext } from "../../../../components";
-import * as ClassicEditor from "ckeditor5-mathtype/build/ckeditor"
 
 const toolbarOptions = [
   "bold",
@@ -38,7 +38,7 @@ export const TextEditor = ({ name, defaultValue = "" }) => {
           config={{
             toolbar: toolbarOptions,
             ckfinder: {
-              uploadUrl: process.env.REACT_APP_BACKEND_URL + "/picture/upload",
+              uploadUrl: `${process.env.REACT_APP_BACKEND_URL}/picture/upload`,
             },
           }}
           onChange={(_, editor) => onChange(editor.getData())}

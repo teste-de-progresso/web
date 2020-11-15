@@ -8,11 +8,8 @@ const StyledInputGroup = styled.div`
     &:last-of-type {
         margin-bottom: 0
     }
-`
+`;
 
-export const InputGroup = ({children}) => {
-    return (
-        <StyledInputGroup className="mt-2 mb-2">{children}</StyledInputGroup>
-    )
-}
-
+export const InputGroup = ({ children }) => (
+  <StyledInputGroup className="mt-2 mb-2">{children}</StyledInputGroup>
+);

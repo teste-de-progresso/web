@@ -16,7 +16,7 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
     baseURL: process.env.REACT_APP_BACKEND_URL,
   });
 
-  instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   const onSubmit = () => {
     instance

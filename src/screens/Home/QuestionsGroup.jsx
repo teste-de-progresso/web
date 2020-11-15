@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 import { MdModeEdit } from "react-icons/md";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa"
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 import { Section } from "../../components";
 
@@ -20,7 +20,7 @@ export const QuestionsGroup = ({
   editable,
 }) => {
   const [page, setPage] = useState(1);
-  const [limit,] = useState(9);
+  const [limit] = useState(9);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isFirstPage, setIsFirstPage] = useState(true);
 
@@ -30,7 +30,7 @@ export const QuestionsGroup = ({
   };
 
   return (
-    <Section title={
+    <Section title={(
       <div className="flex">
         <span>
           {title}
@@ -42,7 +42,10 @@ export const QuestionsGroup = ({
           >
             <FaArrowLeft />
           </button>
-          <span className="mb-2 m-auto">Pagina: {page}</span>
+          <span className="mb-2 m-auto">
+            Pagina:
+            {page}
+          </span>
           <button
             onClick={() => changePage("next")}
             className="p-2"
@@ -52,7 +55,8 @@ export const QuestionsGroup = ({
           <input readOnly hidden value={page} />
         </div>
       </div>
-    }>
+    )}
+    >
       <QuestionsListContent
         page={page}
         limit={limit}
@@ -62,8 +66,8 @@ export const QuestionsGroup = ({
         editable={editable}
       />
     </Section>
-  )
-}
+  );
+};
 
 export const QuestionsListContent = ({
   page,
@@ -71,9 +75,9 @@ export const QuestionsListContent = ({
   where,
   setIsFirstPage,
   setIsLastPage,
-  editable = false
+  editable = false,
 }) => {
-  const SEARCH_QUESTIONS = loader("../../graphql/query/getQuestions.gql")
+  const SEARCH_QUESTIONS = loader("../../graphql/query/getQuestions.gql");
   const [questions, setQuestions] = useState([]);
   const authenticationState = useSelector((state) => state.auth);
 
@@ -84,12 +88,12 @@ export const QuestionsListContent = ({
       if (questions.payload.nodes.length) {
         setIsLastPage(questions.payload.pageInfo.lastPage);
       } else {
-        setIsLastPage(true)
+        setIsLastPage(true);
       }
     },
     variables: {
-      page: page,
-      limit: limit,
+      page,
+      limit,
       where: {
         userId: authenticationState.user.user_id,
         ...where,
@@ -113,14 +117,14 @@ export const QuestionsListContent = ({
         style={{ placeItems: "center" }}
       >
         <div className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
         </div>
       </div>
     );
@@ -153,11 +157,20 @@ export const QuestionsListContent = ({
               className="flex flex-col w-full px-3 py-2"
               onClick={() => bandleShowQuestion(question.id)}
             >
-              <h2># {question.id}</h2>
+              <h2>
+                #
+                {question.id}
+              </h2>
 
               <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
-                <span>Registrado em: {formatDate(question.createdAt)}</span>
-                <span>Atualizado em: {formatDate(question.updatedAt)}</span>
+                <span>
+                  Registrado em:
+                  {formatDate(question.createdAt)}
+                </span>
+                <span>
+                  Atualizado em:
+                  {formatDate(question.updatedAt)}
+                </span>
               </div>
             </div>
 
@@ -165,12 +178,14 @@ export const QuestionsListContent = ({
               className="bg-red-300 flex flex-col relative flex-grow justify-center"
               onClick={() => handleEditQuestion(question.id)}
             >
-              {editable && <div
+              {editable && (
+              <div
                 className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
                 style={{ left: "-1.5rem" }}
               >
                 <EditIcon />
-              </div>}
+              </div>
+              )}
             </div>
           </div>
         ))}

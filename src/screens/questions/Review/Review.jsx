@@ -8,7 +8,6 @@ import { ReadQuestion } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 
-
 export const Review = () => {
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
   const SUBMIT_REVIEW = loader("../../../graphql/mutation/sendQuestionFeedback.gql");
@@ -20,7 +19,7 @@ export const Review = () => {
 
   const { loading, data } = useQuery(GET_QUESTION, {
     variables: {
-      id: id,
+      id,
     },
   });
 
@@ -39,12 +38,12 @@ export const Review = () => {
       },
     });
 
-    window.location = "/"
+    window.location = "/";
   };
 
   return (
     <>
-      <Navigator home={true} />
+      <Navigator home />
       <div className="bg-gray-100 h-full w-full my-2">
         <main className="h-full pb-4">
           <ReadQuestion questionData={questionData} />
@@ -55,31 +54,29 @@ export const Review = () => {
                 ref={register}
                 name="comment"
               />
-              {REVIEW_FEEDBACK.map((item, index) => {
-                return (
-                  <div key={index} className="flex mb-2">
-                    <input
-                      type="radio"
-                      id={item.value}
-                      name="status"
-                      ref={register({ required: true })}
-                      value={item.value}
-                      className="my-auto"
-                      defaultChecked={index === 0}
-                    />
-                    <label
-                      htmlFor={item.value}
-                      className="flex flex-col pl-2 w-full"
-                    >
-                      {item.label}
-                      <p className="text-gray-700 text-sm">{item.description}</p>
-                    </label>
-                  </div>
-                );
-              })}
+              {REVIEW_FEEDBACK.map((item, index) => (
+                <div key={index} className="flex mb-2">
+                  <input
+                    type="radio"
+                    id={item.value}
+                    name="status"
+                    ref={register({ required: true })}
+                    value={item.value}
+                    className="my-auto"
+                    defaultChecked={index === 0}
+                  />
+                  <label
+                    htmlFor={item.value}
+                    className="flex flex-col pl-2 w-full"
+                  >
+                    {item.label}
+                    <p className="text-gray-700 text-sm">{item.description}</p>
+                  </label>
+                </div>
+              ))}
               <Button type="submit" className="mt-4">
                 Submeter Feedback
-            </Button>
+              </Button>
             </form>
           </Card>
         </main>

@@ -43,12 +43,8 @@ export const Filter = ({
   const onSubmit = (inputs) => {
     filterGroups.forEach(({ callback, group }) => {
       const items = group
-        .filter((item) => {
-          return inputs[item.value];
-        })
-        .map((item) => {
-          return item.value;
-        });
+        .filter((item) => inputs[item.value])
+        .map((item) => item.value);
 
       callback(items);
     });
@@ -56,36 +52,30 @@ export const Filter = ({
     closeCallback();
   };
 
-  const isSelected = (key) => {
-    return allSelectedKeys.includes(key);
-  };
+  const isSelected = (key) => allSelectedKeys.includes(key);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
-        {filterGroups.map(({ group, title }, index) => {
-          return (
-            <div className="flex flex-col" key={index}>
-              <h3 className="font-bold mb-2">{title}</h3>
-              {group.map(({ value, label }, index) => {
-                return (
-                  <span key={index} onClick={() => setEnableSubmit(true)}>
-                    <input
-                      type="checkbox"
-                      name={value}
-                      ref={register}
-                      id={value}
-                      defaultChecked={isSelected(value)}
-                    />
-                    <label htmlFor={value} className="ml-2">
-                      {label}
-                    </label>
-                  </span>
-                );
-              })}
-            </div>
-          );
-        })}
+        {filterGroups.map(({ group, title }, index) => (
+          <div className="flex flex-col" key={index}>
+            <h3 className="font-bold mb-2">{title}</h3>
+            {group.map(({ value, label }, index) => (
+              <span key={index} onClick={() => setEnableSubmit(true)}>
+                <input
+                  type="checkbox"
+                  name={value}
+                  ref={register}
+                  id={value}
+                  defaultChecked={isSelected(value)}
+                />
+                <label htmlFor={value} className="ml-2">
+                  {label}
+                </label>
+              </span>
+            ))}
+          </div>
+        ))}
       </div>
       <div className="flex flex-row-reverse">
         <Button
@@ -98,14 +88,14 @@ export const Filter = ({
         </Button>
         <Button
           className="mx-3 gray-100"
-          secondary={true}
+          secondary
           onClick={() => handleUndo()}
         >
           Cancelar
         </Button>
         <Button
           className="mx-3 gray-100"
-          secondary={true}
+          secondary
           onClick={() => handleClean()}
         >
           Limpar filtros

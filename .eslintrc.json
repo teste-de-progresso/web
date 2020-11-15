@@ -23,6 +23,8 @@
     ],
     "rules": {
         "import/prefer-default-export": "off",
-        "quotes": ["error", "double"]
+        "quotes": ["error", "double"],
+        "react/prop-types" : "off",
+        "react/no-danger": "off"
     }
 }

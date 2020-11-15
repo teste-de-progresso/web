@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Card, Input, FormContext } from "../../../../components";
 import { SubjectSelect } from "./SubjectSelect";
-import { ReviewerSelect } from "./ReviewerSelect"
+import { ReviewerSelect } from "./ReviewerSelect";
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
 
@@ -13,11 +13,12 @@ export const FeaturesForm = ({ questionData = {} }) => {
     bloomTaxonomy,
     checkType,
     subject,
-    reviewer } = questionData
+    reviewer,
+  } = questionData;
 
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
-  const [ownQuestion, setOwnQuestion] = useState(source === 'UNIFESO');
+  const [ownQuestion, setOwnQuestion] = useState(source === "UNIFESO");
 
   const handleOwnCheck = (value) => {
     setOwnQuestion(value);
@@ -26,7 +27,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
       formContext.setValue("source", "UNIFESO");
       formContext.setValue(
         "authorshipYear",
-        value ? String(new Date().getFullYear()) : ""
+        value ? String(new Date().getFullYear()) : "",
       );
     } else {
       formContext.setValue("source", "");
@@ -75,7 +76,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                   <Input
                     ref={formContext.register}
                     className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-                    name={"source"}
+                    name="source"
                     defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
                     readOnly={ownQuestion}
                   />
@@ -107,17 +108,15 @@ export const FeaturesForm = ({ questionData = {} }) => {
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
-                name={"difficulty"}
+                name="difficulty"
                 defaultValue={difficulty}
               >
-                <option></option>
-                {DIFFICULTY.map((item, index) => {
-                  return (
-                    <option key={index} value={item.value}>
-                      {item.label}
-                    </option>
-                  );
-                })}
+                <option />
+                {DIFFICULTY.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="w-full">
@@ -125,17 +124,15 @@ export const FeaturesForm = ({ questionData = {} }) => {
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
-                name={"checkType"}
+                name="checkType"
                 defaultValue={checkType}
               >
-                <option></option>
-                {CHECK_TYPE.map((item, index) => {
-                  return (
-                    <option key={index} value={item.value}>
-                      {item.label}
-                    </option>
-                  );
-                })}
+                <option />
+                {CHECK_TYPE.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="w-full">
@@ -143,17 +140,15 @@ export const FeaturesForm = ({ questionData = {} }) => {
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
-                name={"bloomTaxonomy"}
+                name="bloomTaxonomy"
                 defaultValue={bloomTaxonomy}
               >
-                <option></option>
-                {BLOOM_TAXONOMY.map((item, index) => {
-                  return (
-                    <option key={index} value={item.value}>
-                      {item.label}
-                    </option>
-                  );
-                })}
+                <option />
+                {BLOOM_TAXONOMY.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

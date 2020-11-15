@@ -18,7 +18,7 @@ export const Modal = ({
 
   return (
     <>
-      <div className="absolute z-20 inset-0 bg-gray-500 opacity-75"></div>
+      <div className="absolute z-20 inset-0 bg-gray-500 opacity-75" />
 
       <div className="fixed inset-0 z-30 transition-opacity">
         <div className="grid h-screen" style={{ placeItems: "center" }}>
@@ -42,7 +42,7 @@ export const Modal = ({
                       {closeButtonText && (
                         <Button
                           className="mx-3 gray-100"
-                          secondary={true}
+                          secondary
                           onClick={closeButtonHandle}
                         >
                           {closeButtonText}

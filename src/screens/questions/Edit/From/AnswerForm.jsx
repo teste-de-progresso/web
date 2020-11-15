@@ -10,7 +10,7 @@ export const AnswerForm = ({ questionData = {} }) => {
   ];
 
   const { text: correctAlternativeText } = alternativesMaped.find(
-    (alternative) => alternative.correct === true
+    (alternative) => alternative.correct === true,
   );
 
   return (
@@ -19,7 +19,7 @@ export const AnswerForm = ({ questionData = {} }) => {
         <div className="flex flex-col">
           <div className="w-full">
             <TextEditor
-              name={"correctAlternative"}
+              name="correctAlternative"
               defaultValue={correctAlternativeText}
             />
           </div>
