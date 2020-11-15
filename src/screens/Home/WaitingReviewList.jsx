@@ -21,7 +21,7 @@ const QuestionGroupContent = () => {
   const { loading } = useQuery(QUESTION_WAITING_REVIEW, {
     onCompleted: ({ myUser }) => {
       setQuestions(myUser.activeReviewRequests.map((reviewRequest) => {
-        return reviewRequest.objective
+        return reviewRequest.question
       }))
     }
   });

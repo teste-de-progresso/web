@@ -1,7 +1,7 @@
 query {
   myUser {
     activeReviewRequests {
-      objective {
+      question {
         id
         createdAt
         updatedAt
