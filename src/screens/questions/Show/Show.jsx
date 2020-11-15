@@ -10,8 +10,8 @@ import { Navigator } from "../../../components";
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
     {children}
-  </li >
-)
+  </li>
+);
 
 export const Show = () => {
   const FINISH_QUESTION = loader("../../../graphql/mutation/finishQuestion.gql");
@@ -19,7 +19,7 @@ export const Show = () => {
   const { id: questionId } = useParams();
   const history = useHistory();
 
-  const [finishQuestion] = useMutation(FINISH_QUESTION)
+  const [finishQuestion] = useMutation(FINISH_QUESTION);
 
   if (!questionId) history.push("/");
 
@@ -35,21 +35,21 @@ export const Show = () => {
 
   const handleEditQuestion = () => {
     const confirmEdition = () => window.confirm(
-      "Alterar uma questão registrada irá requerir uma revisão da quetão, deseja realmente editar?"
-    )
+      "Alterar uma questão registrada irá requerir uma revisão da quetão, deseja realmente editar?",
+    );
 
-    if (questionData.status !== 'finished' || confirmEdition()) {
-      history.push(`/question/${questionId}/edit`)
+    if (questionData.status !== "finished" || confirmEdition()) {
+      history.push(`/question/${questionId}/edit`);
     }
-  }
+  };
 
   const handleRegisterQuestion = () => {
     finishQuestion({
       variables: {
-        questionId: questionId
+        questionId,
       },
-    })
-  }
+    });
+  };
 
   const options = [
     {
@@ -59,33 +59,32 @@ export const Show = () => {
     },
   ];
 
-  if (questionData.status === 'approved') {
+  if (questionData.status === "approved") {
     options.push(
       {
         icon: <MdSave className="my-auto" />,
         label: "Registrar",
         action: handleRegisterQuestion,
-      }
-    )
+      },
+    );
   }
 
   return (
     <>
-      <Navigator home={true}>
-        {options.map((option, index) => {
-          return (
-            <Item className={index === 0 ? "ml-auto" : ""}
-              key={index}
+      <Navigator home>
+        {options.map((option, index) => (
+          <Item
+            className={index === 0 ? "ml-auto" : ""}
+            key={index}
+          >
+            <div
+              onClick={option.action}
             >
-              <div
-                onClick={option.action}
-              >
-                {option.icon}
-                <span className="pl-3">{option.label}</span>
-              </div>
-            </Item>
-          );
-        })}
+              {option.icon}
+              <span className="pl-3">{option.label}</span>
+            </div>
+          </Item>
+        ))}
       </Navigator>
       <div className="bg-gray-100 w-full my-2">
         <main>

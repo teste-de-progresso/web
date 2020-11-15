@@ -9,8 +9,8 @@ import { QuestionPainel } from "./QuestionsPainel";
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
     {children}
-  </li >
-)
+  </li>
+);
 
 export const Home = () => {
   const auth = useAuth();
@@ -20,47 +20,44 @@ export const Home = () => {
 
   const allSelectedKeys = checkType
     .concat(bloomTaxonomy)
-    .concat(difficulty)
+    .concat(difficulty);
 
   const where = (() => {
-    let params = {};
-    let empty = true;
+    const params = {};
 
     if (checkType && checkType.length > 0) {
       params.checkType = checkType;
-      empty = false;
     }
     if (bloomTaxonomy && bloomTaxonomy.length > 0) {
       params.bloomTaxonomy = bloomTaxonomy;
-      empty = false;
     }
     if (difficulty && difficulty.length > 0) {
       params.difficulty = difficulty;
-      empty = false;
     }
 
-    if (!empty) return params;
+    return params;
   })();
 
   const [filterModalOpened, setFilterModalOpened] = useState(false);
 
   return (
     <>
-      {auth.isTeacher() &&
-        <Navigator newQuestion={true} setFilterModalOpened={setFilterModalOpened}>
-          <Item
-            className="ml-auto"
-          >
-            <div
-              onClick={() => setFilterModalOpened(true)}
+      {auth.isTeacher()
+        && (
+          <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
+            <Item
+              className="ml-auto"
             >
+              <div
+                onClick={() => setFilterModalOpened(true)}
+              >
 
-              <FaFilter className="my-auto" />
-              <span className="pl-3">Filtros</span>
-            </div>
-          </Item>
-        </Navigator>
-      }
+                <FaFilter className="my-auto" />
+                <span className="pl-3">Filtros</span>
+              </div>
+            </Item>
+          </Navigator>
+        )}
       {filterModalOpened && (
         <Modal onClose={() => setFilterModalOpened(false)}>
           <Filter

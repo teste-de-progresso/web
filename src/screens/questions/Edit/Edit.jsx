@@ -20,8 +20,8 @@ export const Edit = () => {
 
   const { loading, data } = useQuery(GET_QUESTION, {
     variables: {
-      id: questionId
-    }
+      id: questionId,
+    },
   });
 
   if (loading) return null;
@@ -30,7 +30,7 @@ export const Edit = () => {
 
   return (
     <>
-      <Navigator home={true} needsConfirmation={true} />
+      <Navigator home needsConfirmation />
       <div className="bg-gray-100 w-full my-2">
         <main>
           <SteppedForm questionId={questionId} status={questionData.status}>

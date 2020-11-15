@@ -4,22 +4,18 @@ import { loader } from "graphql.macro";
 
 import { FormContext } from "../../../../components";
 
-export const ReviewerSelect = ({ reviewer = {} }) => {
-  const GET_REVIEWERS = loader("../../../../graphql/query/getReviewers.gql")
+export const ReviewerSelect = ({ reviewer }) => {
+  const GET_REVIEWERS = loader("../../../../graphql/query/getReviewers.gql");
   const formContext = useContext(FormContext);
-
   const { loading, data } = useQuery(GET_REVIEWERS);
 
-  if (loading) return null;
+  if (loading || !reviewer) return null;
 
-  const reviewerId = reviewer?.id
-
-  const reviewers = data.reviewers.map(({ id, name, email }) => {
-    return {
-      value: id,
-      label: `${name || ""} (${email})`,
-    };
-  });
+  const { id: reviewerId } = reviewer;
+  const reviewers = data.reviewers.map(({ id, name, email }) => ({
+    value: id,
+    label: `${name || ""} (${email})`,
+  }));
 
   return (
     <select
@@ -28,14 +24,12 @@ export const ReviewerSelect = ({ reviewer = {} }) => {
       name="reviewerId"
       defaultValue={reviewerId}
     >
-      <option></option>
-      {reviewers.map((item, index) => {
-        return (
-          <option key={index} value={item.value}>
-            {item.label}
-          </option>
-        );
-      })}
+      <option />
+      {reviewers.map((item, index) => (
+        <option key={index} value={item.value}>
+          {item.label}
+        </option>
+      ))}
     </select>
   );
 };

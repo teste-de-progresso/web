@@ -16,7 +16,7 @@ export const ApolloContext = ({ children }) => {
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = authenticationState.token;
+    const { token } = authenticationState;
 
     return {
       headers: {
@@ -26,13 +26,12 @@ export const ApolloContext = ({ children }) => {
     };
   });
 
-   const credentialsType = () => {
+  const credentialsType = () => {
     if (process.env.NODE_ENV === "development") {
       return "same-origin";
     }
     return "include";
   };
-
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),

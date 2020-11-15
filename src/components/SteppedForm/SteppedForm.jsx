@@ -17,9 +17,9 @@ export const FormContext = React.createContext({
 });
 
 export const SteppedForm = ({ children, questionId, status }) => {
-  const SAVE = loader("../../graphql/mutation/saveQuestion.gql") ;
+  const SAVE = loader("../../graphql/mutation/saveQuestion.gql");
   const SAVE_DRAFT = loader("../../graphql/mutation/saveQuestionDraft.gql");
-  const allSteps = children.map((x) => x.props["step"]);
+  const allSteps = children.map((x) => x.props.step);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
   const [currentStep, setCurrentStep] = useState(minStep);
@@ -38,14 +38,14 @@ export const SteppedForm = ({ children, questionId, status }) => {
     setSubmitNext(false);
   };
 
-  const { register, handleSubmit, control, setValue, getValues } = useForm();
+  const {
+    register, handleSubmit, control, setValue, getValues,
+  } = useForm();
 
   const [saveMutation] = useMutation(SAVE);
   const [saveDraftMutation] = useMutation(SAVE_DRAFT);
 
-  const formatedInputs = () => {
-    return formatInput(getValues());
-  };
+  const formatedInputs = () => formatInput(getValues());
 
   const onSubmit = async (inputs) => {
     const inputValues = formatInput(inputs);
@@ -80,9 +80,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
         <Modal>
           <Alert>Algumas validações falharam.</Alert>
           <ul>
-            {errorsList.map((item, index) => {
-              return <li key={index}>{item}</li>;
-            })}
+            {errorsList.map((item, index) => <li key={index}>{item}</li>)}
           </ul>
 
           <Button
@@ -123,17 +121,17 @@ export const SteppedForm = ({ children, questionId, status }) => {
             <input
               hidden
               value={questionId}
-              readOnly={true}
+              readOnly
               ref={register}
               name="id"
-            ></input>
+            />
           )}
           <FormContext.Provider value={{ register, control, setValue }}>
             {children.map((x) => {
-              const visible = x.props["step"] === currentStep;
+              const visible = x.props.step === currentStep;
 
               return (
-                <div key={x.props["step"]} className={visible ? "" : "hidden"}>
+                <div key={x.props.step} className={visible ? "" : "hidden"}>
                   {x}
                 </div>
               );
@@ -147,12 +145,12 @@ export const SteppedForm = ({ children, questionId, status }) => {
             >
               Retornar
             </Button>
-            {maxStep === currentStep &&
-              (status === "draft" || status === undefined) && (
+            {maxStep === currentStep
+              && (status === "draft" || status === undefined) && (
                 <Button onClick={() => saveDraft()}>
                   Salvar como rascunho
                 </Button>
-              )}
+            )}
             <Button
               onClick={() => handleNext()}
               type={submitNext ? "submit" : "button"}

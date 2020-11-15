@@ -1,8 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { Card, Button, Input, InputGroup, Alert } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  Card, Button, Input, InputGroup, Alert,
+} from "../../components";
 import { requestAuthentication } from "../../store/ducks/auth/actions";
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
@@ -12,14 +14,13 @@ const Layout = styled.div`
 `;
 
 export const Login = () => {
-  const state = useSelector((state) => state.auth);
+  const state = useSelector(({ auth }) => auth);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
   const handleLogin = (inputs) => {
     dispatch(requestAuthentication(inputs.email, inputs.password));
   };
-  if (state.error) debugger;
 
   return (
     <Layout className="w-screen h-screen bg-primary-normal">
@@ -28,19 +29,19 @@ export const Login = () => {
           alt="Logo do Unifeso"
           src={unifesoLogo}
           style={{ width: "85%", margin: "auto" }}
-        ></img>
+        />
         <form
           onSubmit={handleSubmit(handleLogin)}
           className="w-full h-full md:max-w-xl md:h-auto"
         >
           {state.error ? <Alert>{state.error}</Alert> : null}
-          <Card title={"Entrar no Sistema"}>
+          <Card title="Entrar no Sistema">
             <InputGroup>
               <label>Email</label>
               <Input
                 type="email"
                 autoComplete="email"
-                name={"email"}
+                name="email"
                 ref={register({ required: true })}
               />
             </InputGroup>
@@ -49,7 +50,7 @@ export const Login = () => {
               <Input
                 type="password"
                 autoComplete="password"
-                name={"password"}
+                name="password"
                 ref={register({ required: true })}
               />
             </InputGroup>

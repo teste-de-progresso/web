@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { Provider, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { Provider, useSelector } from "react-redux";
 import {
   BrowserRouter as Router, Switch, Route,
-} from 'react-router-dom';
-import { store } from './store';
+} from "react-router-dom";
+import { store } from "./store";
 
-import { ApolloContext, UserContextProvider } from './utils';
+import { ApolloContext, UserContextProvider } from "./utils";
 
-import { Navbar } from './components';
-import { Home, Login, UserProfile } from './screens';
+import { Navbar } from "./components";
+import { Home, Login, UserProfile } from "./screens";
 import {
   New, Edit, Show, Review,
-} from './screens/questions';
-import { Loading } from './screens/Loading';
-import { AuthenticationContext } from './utils/contexts';
-import { loadAuthentication } from './store/ducks/auth/actions';
+} from "./screens/questions";
+import { Loading } from "./screens/Loading";
+import { AuthenticationContext } from "./utils/contexts";
+import { loadAuthentication } from "./store/ducks/auth/actions";
 
 function App() {
   const authenticationState = useSelector((state) => state.auth);

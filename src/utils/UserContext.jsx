@@ -1,4 +1,6 @@
-import React, { createContext, useMemo, useContext, useState } from "react";
+import React, {
+  createContext, useMemo, useContext, useState,
+} from "react";
 import { useQuery, gql } from "@apollo/client";
 
 import { BadConnection } from "../screens";
