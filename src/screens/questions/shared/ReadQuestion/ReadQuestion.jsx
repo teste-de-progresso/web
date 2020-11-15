@@ -54,7 +54,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
           </div>
           <div>
             <span className="text-gray-700">Autoria: </span>
-            {questionData.own ? "Própria" : "Terceiros"}
+            {questionData.source === "UNIFESO" ? "Própria" : "Terceiros"}
           </div>
           <div>
             <span className="text-gray-700">Atualizado em: </span>
