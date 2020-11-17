@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-import { Modal } from "../Modal";
 import { Alert } from "../Alert";
+import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 
 export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
@@ -38,16 +38,22 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
   };
 
   return (
-    <Modal
-      confirmButtonText="Enviar"
-      closeButtonText="Cancelar"
-      onClose={() => {
-        setAvatarEditorExhibition(false);
-      }}
-      onConfirm={onSubmit}
-    >
-      {alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
+    <div className="p-4 ">
+      { alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
       <PhotoCrop callback={setCroppedImage} />
-    </Modal>
+      <Button
+        className="mx-3 gray-100"
+        secondary
+        onClick={() => setAvatarEditorExhibition(false)}
+      >
+        Cancelar
+      </Button>
+      <Button
+        className="mx-3 gray-100"
+        onClick={() => onSubmit()}
+      >
+        Salvar
+      </Button>
+    </div>
   );
 };

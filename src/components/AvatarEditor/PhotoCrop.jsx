@@ -25,7 +25,7 @@ export class PhotoCrop extends React.Component {
   }
 
   onBeforeFileLoad(elem) {
-    if (elem.target.files[0].size > 1200000) {
+    if (elem.target.files[0].size > 120000) {
       alert("File is too big!");
       elem.target.value = "";
     }
@@ -45,14 +45,13 @@ export class PhotoCrop extends React.Component {
           onBeforeFileLoad={this.onBeforeFileLoad}
           src={this.state.src}
         />
-        {this.state.preview && (
-          <img
-            width={sizes}
-            height={sizes}
-            src={this.state.preview}
-            alt="Preview"
-          />
-        )}
+        <img
+          width={sizes}
+          height={sizes}
+          src={this.state.preview}
+          alt="Preview"
+          className="hidden"
+        />
       </div>
     );
   }
