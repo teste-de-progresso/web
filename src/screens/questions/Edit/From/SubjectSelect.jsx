@@ -10,7 +10,7 @@ export const SubjectSelect = ({ subject }) => {
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
-  if (subject === null || loading) return null;
+  if (loading) return null;
 
   const subjects = data.subjects.map((item) => ({
     value: item.id,
