@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
+import { Dialog } from "@material-ui/core";
 
 import { Button } from "../Button";
-import { Modal } from "../Modal";
 import { Alert } from "../Alert";
 
 import { formatInput } from "../../screens/questions/formatInputs";
@@ -76,8 +76,12 @@ export const SteppedForm = ({ children, questionId, status }) => {
 
   return (
     <>
-      {errorsModalShowing && (
-        <Modal>
+      <Dialog
+        open={errorsModalShowing}
+        onClose={() => setConfirmCompletionModal(false)}
+      >
+        <div className="p-4">
+
           <Alert>Algumas validações falharam.</Alert>
           <ul>
             {errorsList.map((item, index) => <li key={index}>{item}</li>)}
@@ -89,29 +93,28 @@ export const SteppedForm = ({ children, questionId, status }) => {
           >
             OK!
           </Button>
-        </Modal>
-      )}
-      {confirmCompletionModal && (
-        <Modal
-          closeButtonText="Não, ainda não está pronto."
-          confirmButtonText="Sim, desejo finalizar."
-          onClose={() => setConfirmCompletionModal(false)}
-          onConfirm={async () => {
-            await saveMutation({
-              variables: {
-                input: {
-                  question: formatedInputs(),
-                },
+        </div>
+      </Dialog>
+      <Dialog
+        open={confirmCompletionModal}
+        closeButtonText="Não, ainda não está pronto."
+        confirmButtonText="Sim, desejo finalizar."
+        onClose={() => setConfirmCompletionModal(false)}
+        onConfirm={async () => {
+          await saveMutation({
+            variables: {
+              input: {
+                question: formatedInputs(),
               },
-            });
+            },
+          });
 
-            window.location = "/";
-          }}
-        >
-          Ao finalizar uma questão o revisor selecionado será solicitado a
-          revisar a questão. Tem certeza que está tudo certo para finalizar?
-        </Modal>
-      )}
+          window.location = "/";
+        }}
+      >
+        Ao finalizar uma questão o revisor selecionado será solicitado a
+        revisar a questão. Tem certeza que está tudo certo para finalizar?
+      </Dialog>
       <div className="m-auto max-w-screen-md">
         <form
           className="h-full flex flex-col space-y-4"

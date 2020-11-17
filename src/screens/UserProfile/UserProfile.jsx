@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Dialog } from "@material-ui/core";
+
 import { useUserContext } from "../../utils";
 import { AvatarEditor, Navigator, Avatar } from "../../components";
 import { useAuth } from "../../utils/contexts/Authentication";
@@ -12,7 +14,9 @@ export const UserProfile = () => {
 
   return (
     <>
-      {avatarEditorExhibit && <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />}
+      <Dialog open={avatarEditorExhibit} onClose={() => setAvatarEditorExhibition(false)}>
+        <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />
+      </Dialog>
       <Navigator home />
       <div className="bg-gray-100 w-full my-3">
         <main>

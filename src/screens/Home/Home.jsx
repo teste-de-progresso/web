@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa";
+import { Dialog } from "@material-ui/core";
 
-import { Navigator, Modal } from "../../components";
+import { Navigator } from "../../components";
 import { useAuth } from "../../utils/contexts";
 import { Filter } from "./Filter";
 import { QuestionPainel } from "./QuestionsPainel";
@@ -58,18 +59,16 @@ export const Home = () => {
             </Item>
           </Navigator>
         )}
-      {filterModalOpened && (
-        <Modal onClose={() => setFilterModalOpened(false)}>
-          <Filter
-            filterModalOpened={filterModalOpened}
-            setCheckType={setCheckType}
-            setBloomTaxonomy={setBloomTaxonomy}
-            setDifficulty={setDifficulty}
-            allSelectedKeys={allSelectedKeys}
-            closeCallback={() => setFilterModalOpened(false)}
-          />
-        </Modal>
-      )}
+      <Dialog open={filterModalOpened} onClose={() => setFilterModalOpened(false)}>
+        <Filter
+          filterModalOpened={filterModalOpened}
+          setCheckType={setCheckType}
+          setBloomTaxonomy={setBloomTaxonomy}
+          setDifficulty={setDifficulty}
+          allSelectedKeys={allSelectedKeys}
+          closeCallback={() => setFilterModalOpened(false)}
+        />
+      </Dialog>
       <div className="bg-gray-100 w-full">
         <main className="px-8 rounded-t-xlg">
           <div className="mr-4">

@@ -59,7 +59,7 @@ export const Filter = ({
   const isSelected = (key) => allSelectedKeys.includes(key);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="p-4">
       <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
         {filterGroups.map(({ group, title }) => (
           <div className="flex flex-col" key={title}>
