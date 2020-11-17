@@ -5,7 +5,7 @@ import { QuestionsGroup } from "./QuestionsGroup";
 
 export const QuestionPainel = ({ whereOptions }) => {
   const questionsGroups = [
-    { title: "Pendentes", where: { status: "pending", ...whereOptions } },
+    { title: "Aguardando revisão do par", where: { status: "pending", ...whereOptions } },
     { title: "Rascunho", where: { status: "draft", ...whereOptions }, editable: true },
     { title: "Aprovadas", where: { status: "approved", ...whereOptions } },
     { title: "Finalizadas", where: { status: "finished", ...whereOptions } },

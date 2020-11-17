@@ -7,7 +7,7 @@ import { loader } from "graphql.macro";
 import { MdModeEdit } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-import { Section } from "../../components";
+import { Section, ListItem, Loading } from "../../components";
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -112,21 +112,7 @@ export const QuestionsListContent = ({
 
   if (loading) {
     return (
-      <div
-        className="grid"
-        style={{ placeItems: "center" }}
-      >
-        <div className="lds-roller">
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-          <div />
-        </div>
-      </div>
+      <Loading />
     );
   }
 
@@ -149,45 +135,26 @@ export const QuestionsListContent = ({
     <div>
       <div className="grid gap-4 col-gap-8 w-full grid-cols-3">
         {questions.map((question) => (
-          <div
-            key={question.id}
-            className="border-l-8 border-primary-light flex bg-white hover:bg-unifeso-50 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
+          <ListItem
+            key={`question-${question.id}`}
+            onClick={() => bandleShowQuestion(question.id)}
+            header={`# ${question.id}`}
+            icon={editable && (<EditIcon />)}
+            iconClick={() => handleEditQuestion(question.id)}
           >
-            <div
-              className="flex flex-col w-full px-3 py-2"
-              onClick={() => bandleShowQuestion(question.id)}
-            >
-              <h2>
-                #
-                {question.id}
-              </h2>
-
-              <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
-                <span>
-                  Registrado em:
-                  {formatDate(question.createdAt)}
-                </span>
-                <span>
-                  Atualizado em:
-                  {formatDate(question.updatedAt)}
-                </span>
-              </div>
+            <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
+              <span>
+                Registrado em:
+                {" "}
+                {formatDate(question.createdAt)}
+              </span>
+              <span>
+                Atualizado em:
+                {" "}
+                {formatDate(question.updatedAt)}
+              </span>
             </div>
-
-            <div
-              className="bg-red-300 flex flex-col relative flex-grow justify-center"
-              onClick={() => handleEditQuestion(question.id)}
-            >
-              {editable && (
-              <div
-                className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
-                style={{ left: "-1.5rem" }}
-              >
-                <EditIcon />
-              </div>
-              )}
-            </div>
-          </div>
+          </ListItem>
         ))}
       </div>
     </div>
