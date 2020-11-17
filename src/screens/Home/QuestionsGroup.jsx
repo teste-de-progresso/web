@@ -20,7 +20,7 @@ export const QuestionsGroup = ({
   editable,
 }) => {
   const [page, setPage] = useState(1);
-  const [limit] = useState(9);
+  const [limit] = useState(3);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isFirstPage, setIsFirstPage] = useState(true);
 

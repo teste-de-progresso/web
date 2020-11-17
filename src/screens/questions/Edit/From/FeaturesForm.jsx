@@ -153,12 +153,12 @@ export const FeaturesForm = ({ questionData = {} }) => {
             </div>
           </div>
           <div className="w-full">
-            <SubjectSelect subject={subject} />
+            <SubjectSelect subject={subject || {}} />
           </div>
         </div>
         <div className="flex flex-col mt-4">
           <h2>Revisor:</h2>
-          <ReviewerSelect reviewer={reviewer} />
+          <ReviewerSelect reviewer={reviewer || {}} />
         </div>
       </Card>
     </>
