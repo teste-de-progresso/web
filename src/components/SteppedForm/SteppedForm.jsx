@@ -84,7 +84,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
     });
 
     window.location = "/";
-  }
+  };
 
   return (
     <>
@@ -121,13 +121,13 @@ export const SteppedForm = ({ children, questionId, status }) => {
               className="ml-2"
             >
               Finalizar
-          </Button>
+            </Button>
             <Button
               onClick={() => setConfirmCompletionModal(false)}
               secondary
             >
               Cancelar
-          </Button>
+            </Button>
           </div>
         </div>
       </Dialog>
@@ -169,7 +169,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
                 <Button onClick={() => saveDraft()}>
                   Salvar como rascunho
                 </Button>
-              )}
+            )}
             <Button
               onClick={() => handleNext()}
               type={submitNext ? "submit" : "button"}

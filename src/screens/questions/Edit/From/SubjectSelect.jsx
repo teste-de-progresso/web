@@ -6,7 +6,8 @@ import { Input, FormContext } from "../../../../components";
 
 export const SubjectSelect = ({ subject }) => {
   const GET_SUBJECTS = loader("../../../../graphql/query/getSubjects.gql");
-  const [selectedId, setSelectedId] = useState();
+  const { id: subjectId } = subject;
+  const [selectedId, setSelectedId] = useState(subjectId);
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery(GET_SUBJECTS);
 
@@ -17,20 +18,21 @@ export const SubjectSelect = ({ subject }) => {
     label: item.name,
   }));
 
-  const { id: subjectId } = subject;
 
   const selectedSubject = (() => {
-    if (selectedId) {
-      return data.subjects.find((item) => item.id === selectedId);
-    }
-    if (subjectId) {
-      return data.subjects.find((item) => item.id === subjectId);
+    if (!selectedId || selectedId === "") {
+      return {
+        name: "",
+        axis: {
+          name: "",
+        },
+        category: {
+          name: "",
+        },
+      };
     }
 
-    return {
-      axis: {},
-      category: {},
-    };
+    return data.subjects.find((item) => item.id === selectedId);
   })();
 
   return (
