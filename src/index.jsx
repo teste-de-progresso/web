@@ -4,9 +4,10 @@ import { Provider } from "react-redux";
 
 import App from "./App";
 import { store } from "./store";
+import "fontsource-roboto";
 
+import "./styles/global.css";
 import "./styles/main.css";
-import "./styles/index.css";
 
 ReactDOM.render(
   <React.StrictMode>
