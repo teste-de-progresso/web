@@ -74,6 +74,18 @@ export const SteppedForm = ({ children, questionId, status }) => {
     window.location = "/";
   };
 
+  const save = async () => {
+    await saveMutation({
+      variables: {
+        input: {
+          question: formatedInputs(),
+        },
+      },
+    });
+
+    window.location = "/";
+  }
+
   return (
     <>
       <Dialog
@@ -81,7 +93,6 @@ export const SteppedForm = ({ children, questionId, status }) => {
         onClose={() => setConfirmCompletionModal(false)}
       >
         <div className="p-4">
-
           <Alert>Algumas validações falharam.</Alert>
           <ul>
             {errorsList.map((item, index) => <li key={index}>{item}</li>)}
@@ -100,20 +111,25 @@ export const SteppedForm = ({ children, questionId, status }) => {
         closeButtonText="Não, ainda não está pronto."
         confirmButtonText="Sim, desejo finalizar."
         onClose={() => setConfirmCompletionModal(false)}
-        onConfirm={async () => {
-          await saveMutation({
-            variables: {
-              input: {
-                question: formatedInputs(),
-              },
-            },
-          });
-
-          window.location = "/";
-        }}
       >
-        Ao finalizar uma questão o revisor selecionado será solicitado a
-        revisar a questão. Tem certeza que está tudo certo para finalizar?
+        <div className="p-4">
+          Ao finalizar uma questão o revisor selecionado será solicitado a
+          revisar a questão. Tem certeza que está tudo certo para finalizar?
+          <div className="flex flex-row-reverse mt-2">
+            <Button
+              onClick={() => save()}
+              className="ml-2"
+            >
+              Finalizar
+          </Button>
+            <Button
+              onClick={() => setConfirmCompletionModal(false)}
+              secondary
+            >
+              Cancelar
+          </Button>
+          </div>
+        </div>
       </Dialog>
       <div className="m-auto max-w-screen-md">
         <form
@@ -153,7 +169,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
                 <Button onClick={() => saveDraft()}>
                   Salvar como rascunho
                 </Button>
-            )}
+              )}
             <Button
               onClick={() => handleNext()}
               type={submitNext ? "submit" : "button"}
