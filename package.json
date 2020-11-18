@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
     "ckeditor5-mathtype": "^1.0.4",
+    "fontsource-roboto": "^3.0.3",
     "graphql": "^15.3.0",
     "graphql.macro": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
