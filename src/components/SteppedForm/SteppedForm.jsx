@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
 import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, List, ListItem, ListItemIcon, ListItemText,
 } from "@material-ui/core";
+import { MdError } from "react-icons/md";
 
 import { Button } from "../Button";
-import { Alert } from "../Alert";
 
 import { formatInput } from "../../screens/questions/formatInputs";
 import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
@@ -94,20 +94,33 @@ export const SteppedForm = ({ children, questionId, status }) => {
         open={errorsModalShowing}
         onClose={() => setConfirmCompletionModal(false)}
       >
-        <div className="p-4">
-
-          <Alert>Algumas validações falharam.</Alert>
-          <ul>
-            {errorsList.map((item, index) => <li key={index}>{item}</li>)}
-          </ul>
-
+        <DialogTitle>
+          Uma ou mais validações falharam.
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <List>
+              {errorsList.map((item) => (
+                <ListItem key={item}>
+                  <ListItemIcon>
+                    <MdError />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
           <Button
             onClick={() => setErrorsModalShowing(false)}
             className="mt-2 ml-auto"
           >
             OK!
           </Button>
-        </div>
+        </DialogActions>
       </Dialog>
       <Dialog
         open={confirmCompletionModal}
