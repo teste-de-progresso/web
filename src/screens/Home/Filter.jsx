@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { DialogContent, DialogActions } from "@material-ui/core";
 
 import {
   CHECK_TYPE,
@@ -59,36 +60,37 @@ export const Filter = ({
   const isSelected = (key) => allSelectedKeys.includes(key);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-4">
-      <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
-        {filterGroups.map(({ group, title }) => (
-          <div className="flex flex-col" key={title}>
-            <h3 className="font-bold mb-2">{title}</h3>
-            {group.map(({ value, label }) => (
-              <span key={value} onClick={() => setEnableSubmit(true)}>
-                <input
-                  type="checkbox"
-                  name={value}
-                  ref={register}
-                  id={value}
-                  defaultChecked={isSelected(value)}
-                />
-                <label htmlFor={value} className="ml-2">
-                  {label}
-                </label>
-              </span>
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-row-reverse">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <DialogContent>
+        <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
+          {filterGroups.map(({ group, title }) => (
+            <div className="flex flex-col" key={title}>
+              <h3 className="font-bold mb-2">{title}</h3>
+              {group.map(({ value, label }) => (
+                <span key={value} onClick={() => setEnableSubmit(true)}>
+                  <input
+                    type="checkbox"
+                    name={value}
+                    ref={register}
+                    id={value}
+                    defaultChecked={isSelected(value)}
+                  />
+                  <label htmlFor={value} className="ml-2">
+                    {label}
+                  </label>
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </DialogContent>
+      <DialogActions>
         <Button
-          className="mx-3"
-          type="submit"
-          style={{ opacity: enableSubmit ? "1" : "0" }}
-          disabled={!enableSubmit}
+          className="mx-3 gray-100"
+          secondary
+          onClick={() => handleClean()}
         >
-          Aplicar filtros
+          Limpar filtros
         </Button>
         <Button
           className="mx-3 gray-100"
@@ -98,13 +100,14 @@ export const Filter = ({
           Cancelar
         </Button>
         <Button
-          className="mx-3 gray-100"
-          secondary
-          onClick={() => handleClean()}
+          className="mx-3"
+          type="submit"
+          style={{ opacity: enableSubmit ? "1" : "0" }}
+          disabled={!enableSubmit}
         >
-          Limpar filtros
+          Aplicar filtros
         </Button>
-      </div>
+      </DialogActions>
     </form>
   );
 };

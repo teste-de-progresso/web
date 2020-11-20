@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { MdEdit, MdSave } from "react-icons/md";
 import { useQuery, useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
+import {
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
+} from "@material-ui/core";
 
 import { ReadQuestion } from "../shared";
-import { Navigator } from "../../../components";
+import { Navigator, Button } from "../../../components";
 
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
@@ -18,6 +21,7 @@ export const Show = () => {
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
   const { id: questionId } = useParams();
   const history = useHistory();
+  const [confirmEditDialog, setConfirmEditDialog] = useState(false);
 
   const [finishQuestion] = useMutation(FINISH_QUESTION);
 
@@ -33,13 +37,17 @@ export const Show = () => {
 
   const { question: questionData } = data;
 
-  const handleEditQuestion = () => {
-    const confirmEdition = () => window.confirm(
-      "Alterar uma questão registrada irá requerir uma revisão da quetão, deseja realmente editar?",
-    );
-
-    if (questionData.status !== "finished" || confirmEdition()) {
+  const confirmEditQuestion = () => {
+    if (questionData.status !== "finished") {
       history.push(`/question/${questionId}/edit`);
+    }
+  };
+
+  const handleEditQuestion = () => {
+    if (questionData.status !== "finished") {
+      setConfirmEditDialog(true);
+    } else {
+      confirmEditQuestion();
     }
   };
 
@@ -71,6 +79,22 @@ export const Show = () => {
 
   return (
     <>
+      <Dialog open={confirmEditDialog} onClose={() => setConfirmEditDialog(false)}>
+        <DialogTitle>Deseja realmente editar esta questão?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Alterar uma questão registrada irá requerir uma revisão da quetão, deseja confirmar essa ação?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button secondary onClick={() => setConfirmEditDialog(false)}>
+            Cancelar
+          </Button>
+          <Button onClick={() => confirmEditQuestion()}>
+            Editar
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Navigator home>
         {options.map((option, index) => (
           <Item
