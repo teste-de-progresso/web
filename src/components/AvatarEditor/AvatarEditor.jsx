@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { DialogContent, DialogActions } from "@material-ui/core";
 
 import { Alert } from "../Alert";
 import { Button } from "../Button";
@@ -38,22 +39,24 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
   };
 
   return (
-    <div className="p-4 ">
-      { alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
-      <PhotoCrop callback={setCroppedImage} />
-      <Button
-        className="mx-3 gray-100"
-        secondary
-        onClick={() => setAvatarEditorExhibition(false)}
-      >
-        Cancelar
-      </Button>
-      <Button
-        className="mx-3 gray-100"
-        onClick={() => onSubmit()}
-      >
-        Salvar
-      </Button>
-    </div>
+    <>
+      <DialogContent>
+        {alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
+        <PhotoCrop callback={setCroppedImage} />
+      </DialogContent>
+      <DialogActions>
+        <Button
+          secondary
+          onClick={() => setAvatarEditorExhibition(false)}
+        >
+          Cancelar
+        </Button>
+        <Button
+          onClick={() => onSubmit()}
+        >
+          Salvar
+        </Button>
+      </DialogActions>
+    </>
   );
 };

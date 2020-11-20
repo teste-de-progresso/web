@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FaHome, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
+import {
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
+} from "@material-ui/core";
+
 import { useAuth } from "../../utils/contexts";
+import { Button } from "../Button";
 
 const HorizontalMenu = styled.ul`
 list-style: none;
@@ -14,9 +19,9 @@ display: flex;
 }
 & > li {
   display: inline;
-  cursor: pointer;
 }
 & > li > div {
+  cursor: pointer;
   display: inline-flex;
   flex-direction: row;
   margin-right: 2rem;
@@ -34,56 +39,66 @@ export const Navigator = ({
 }) => {
   const history = useHistory();
   const auth = useAuth();
+  const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
 
   const confirmLeave = () => {
-    if (needsConfirmation) {
-      const leaveConfirmed = window.confirm(
-        "O progresso não foi salvo. Deseja sair sem salvar?",
-      );
-
-      return leaveConfirmed;
-    }
-
-    return true;
+    history.push("/");
   };
 
-  // TODO: Create dialog component
   const goHome = () => {
-    if (confirmLeave()) {
-      history.push("/");
+    if (needsConfirmation) {
+      setConfirmLeaveDialog(true);
+    } else {
+      confirmLeave();
     }
   };
 
   const createQuestion = () => {
-    if (confirmLeave()) {
-      history.push("/question/new");
-    }
+    history.push("/question/new");
   };
 
   return (
-    <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md" style={{ maxHeight: "34.4px" }}>
-      <HorizontalMenu className="list-none">
-        {home
+    <>
+      <Dialog open={confirmLeaveDialog} onClose={() => setConfirmLeaveDialog(false)}>
+        <DialogTitle>Deseja sair sem salvar?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Todas as alterações feitas serão perdidas, deseja confirmar a ação?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button secondary onClick={() => setConfirmLeaveDialog(false)}>
+            Cancelar
+          </Button>
+          <Button onClick={() => confirmLeave()}>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md" style={{ maxHeight: "34.4px" }}>
+        <HorizontalMenu className="list-none">
+          {home
           && (
-          <Item>
-            <div onClick={() => goHome()}>
-              <FaHome className="my-auto" />
-              <span className="pl-3">Inicio</span>
-            </div>
-          </Item>
+            <Item>
+              <button onClick={() => goHome()} className="flex">
+                <FaHome className="my-auto" />
+                <span className="pl-3">Inicio</span>
+              </button>
+            </Item>
           )}
-        {
+          {
           (auth.isTeacher() && newQuestion) ? (
             <Item>
-              <div onClick={() => createQuestion()}>
+              <button onClick={() => createQuestion()} className="flex">
                 <FaPlus className="my-auto" />
                 <span className="pl-3">Nova Questão</span>
-              </div>
+              </button>
             </Item>
           ) : null
         }
-        {children}
-      </HorizontalMenu>
-    </div>
+          {children}
+        </HorizontalMenu>
+      </div>
+    </>
   );
 };

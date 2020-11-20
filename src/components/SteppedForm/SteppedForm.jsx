@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
-import { Dialog } from "@material-ui/core";
+import {
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
+} from "@material-ui/core";
 
 import { Button } from "../Button";
 import { Alert } from "../Alert";
@@ -74,6 +76,18 @@ export const SteppedForm = ({ children, questionId, status }) => {
     window.location = "/";
   };
 
+  const save = async () => {
+    await saveMutation({
+      variables: {
+        input: {
+          question: formatedInputs(),
+        },
+      },
+    });
+
+    window.location = "/";
+  };
+
   return (
     <>
       <Dialog
@@ -97,23 +111,25 @@ export const SteppedForm = ({ children, questionId, status }) => {
       </Dialog>
       <Dialog
         open={confirmCompletionModal}
-        closeButtonText="Não, ainda não está pronto."
-        confirmButtonText="Sim, desejo finalizar."
         onClose={() => setConfirmCompletionModal(false)}
-        onConfirm={async () => {
-          await saveMutation({
-            variables: {
-              input: {
-                question: formatedInputs(),
-              },
-            },
-          });
-
-          window.location = "/";
-        }}
       >
-        Ao finalizar uma questão o revisor selecionado será solicitado a
-        revisar a questão. Tem certeza que está tudo certo para finalizar?
+        <DialogTitle>
+          Confirmar finalização de questão.
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Ao finalizar uma questão o revisor selecionado será solicitado a
+            revisar a questão. Tem certeza que está tudo certo para finalizar?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button secondary onClick={() => setConfirmCompletionModal(false)}>
+            Cancelar
+          </Button>
+          <Button onClick={() => save()}>
+            Finalizar
+          </Button>
+        </DialogActions>
       </Dialog>
       <div className="m-auto max-w-screen-md">
         <form
