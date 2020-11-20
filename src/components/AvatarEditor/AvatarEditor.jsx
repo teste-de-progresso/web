@@ -39,24 +39,24 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
   };
 
   return (
-    <DialogContent>
-      { alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
-      <PhotoCrop callback={setCroppedImage} />
+    <>
+      <DialogContent>
+        {alert && <Alert>Algo deu errado, tente novamente mais tarde.</Alert>}
+        <PhotoCrop callback={setCroppedImage} />
+      </DialogContent>
       <DialogActions>
         <Button
-          className="mx-3 gray-100"
           secondary
           onClick={() => setAvatarEditorExhibition(false)}
         >
           Cancelar
         </Button>
         <Button
-          className="mx-3 gray-100"
           onClick={() => onSubmit()}
         >
           Salvar
         </Button>
       </DialogActions>
-    </DialogContent>
+    </>
   );
 };
