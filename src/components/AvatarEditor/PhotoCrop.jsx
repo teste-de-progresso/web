@@ -32,6 +32,7 @@ export const PhotoCrop = ({ callback }) => {
         </Alert>
       </Snackbar>
       <Avatar
+        label="Escolha uma imagem"
         width={dimention}
         height={dimention}
         imageWidth={dimention}
