@@ -49,13 +49,14 @@ export const Home = () => {
             <Item
               className="ml-auto"
             >
-              <div
+              <button
                 onClick={() => setFilterModalOpened(true)}
+                className="flex"
               >
 
                 <FaFilter className="my-auto" />
                 <span className="pl-3">Filtros</span>
-              </div>
+              </button>
             </Item>
           </Navigator>
         )}
