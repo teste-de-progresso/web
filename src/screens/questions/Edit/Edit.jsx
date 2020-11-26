@@ -13,14 +13,14 @@ import {
 
 export const Edit = () => {
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
-  const { id: questionId } = useParams();
+  const { id: questionUUID } = useParams();
   const history = useHistory();
 
-  if (!questionId) history.push("/");
+  if (!questionUUID) history.push("/");
 
   const { loading, data } = useQuery(GET_QUESTION, {
     variables: {
-      id: questionId,
+      uuid: questionUUID,
     },
   });
 
@@ -33,7 +33,7 @@ export const Edit = () => {
       <Navigator home needsConfirmation />
       <div className="bg-gray-100 w-full my-2">
         <main>
-          <SteppedForm questionId={questionId} status={questionData.status}>
+          <SteppedForm questionId={questionData.id} status={questionData.status}>
             <Step step={0}>
               <EnunciadoForm questionData={questionData} />
             </Step>

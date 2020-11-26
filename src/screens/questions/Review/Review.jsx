@@ -12,14 +12,14 @@ export const Review = () => {
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
   const SUBMIT_REVIEW = loader("../../../graphql/mutation/sendQuestionFeedback.gql");
 
-  const { id } = useParams();
+  const { id: questionUUID } = useParams();
   const history = useHistory();
 
-  if (!id) history.push("/");
+  if (!questionUUID) history.push("/");
 
   const { loading, data } = useQuery(GET_QUESTION, {
     variables: {
-      id,
+      uuid: questionUUID,
     },
   });
 
@@ -33,7 +33,7 @@ export const Review = () => {
   const formSubmit = async (inputs) => {
     await sendFeedback({
       variables: {
-        questionId: id,
+        questionId: questionData.id,
         ...inputs,
       },
     });
