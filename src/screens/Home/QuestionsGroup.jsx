@@ -108,7 +108,7 @@ export const QuestionsListContent = ({
   const history = useHistory();
 
   const handleEditQuestion = (id) => history.push(`/question/${id}/edit`);
-  const bandleShowQuestion = (id) => history.push(`/question/${id}/show`);
+  const bandleShowQuestion = (id) => history.push(`/question/${id}`);
 
   if (loading) {
     return (
@@ -136,11 +136,11 @@ export const QuestionsListContent = ({
       <div className="grid gap-4 col-gap-8 w-full grid-cols-3">
         {questions.map((question) => (
           <ListItem
-            key={`question-${question.id}`}
-            onClick={() => bandleShowQuestion(question.id)}
-            header={`# ${question.id}`}
+            key={`question-${question.uuid}`}
+            onClick={() => bandleShowQuestion(question.uuid)}
             icon={editable && (<EditIcon />)}
-            iconClick={() => handleEditQuestion(question.id)}
+            iconClick={() => handleEditQuestion(question.uuid)}
+            header={`# ${question.id}`}
           >
             <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
               <span>

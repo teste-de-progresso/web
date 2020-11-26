@@ -19,17 +19,17 @@ const Item = ({ children, className }) => (
 export const Show = () => {
   const FINISH_QUESTION = loader("../../../graphql/mutation/finishQuestion.gql");
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");
-  const { id: questionId } = useParams();
+  const { id: questionUUID } = useParams();
   const history = useHistory();
   const [confirmEditDialog, setConfirmEditDialog] = useState(false);
 
   const [finishQuestion] = useMutation(FINISH_QUESTION);
 
-  if (!questionId) history.push("/");
+  if (!questionUUID) history.push("/");
 
   const { loading, data } = useQuery(GET_QUESTION, {
     variables: {
-      id: questionId,
+      uuid: questionUUID,
     },
   });
 
@@ -38,13 +38,11 @@ export const Show = () => {
   const { question: questionData } = data;
 
   const confirmEditQuestion = () => {
-    if (questionData.status !== "finished") {
-      history.push(`/question/${questionId}/edit`);
-    }
+    history.push(`/question/${questionUUID}/edit`);
   };
 
   const handleEditQuestion = () => {
-    if (questionData.status !== "finished") {
+    if (questionData.status === "finished" || questionData.status === "approved") {
       setConfirmEditDialog(true);
     } else {
       confirmEditQuestion();
@@ -52,6 +50,7 @@ export const Show = () => {
   };
 
   const handleRegisterQuestion = () => {
+    const { id: questionId } = questionData;
     finishQuestion({
       variables: {
         questionId,
@@ -83,7 +82,7 @@ export const Show = () => {
         <DialogTitle>Deseja realmente editar esta questão?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Alterar uma questão registrada irá requerir uma revisão da quetão, deseja confirmar essa ação?
+            Alterar uma questão registrada irá requerir uma nova revisão do seu par, deseja ir para tela de edição?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

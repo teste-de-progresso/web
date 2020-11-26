@@ -3,6 +3,7 @@ query($where: Where, $page: Int!, $limit: Int!) {
     payload(page: $page, limit: $limit) {
       nodes {
         id
+        uuid
         status
         updatedAt
         createdAt

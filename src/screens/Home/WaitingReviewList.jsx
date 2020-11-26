@@ -55,8 +55,8 @@ const QuestionGroupContent = () => {
     <div className="grid gap-4 col-gap-8 w-full grid-cols-3">
       {questions.map((question) => (
         <ListItem
-          key={`question-${question.id}`}
-          onClick={() => handleReviewPainel(question.id)}
+          key={`question-${question.uuid}`}
+          onClick={() => handleReviewPainel(question.uuid)}
           header={`# ${question.id}`}
         >
           <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">

@@ -3,6 +3,7 @@ query {
     activeReviewRequests {
       question {
         id
+        uuid
         createdAt
         updatedAt
       }
