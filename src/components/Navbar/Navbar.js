@@ -33,20 +33,20 @@ export const Navbar = () => {
           <Avatar src={userInfo.avatarUrl} className="w-12" />
         </div>
         <div className="absolute hidden pt-1 group-hover:block w-full right-0 text-black">
-          <ul className="mt-2 bg-white rounded shadow-md border border-gray-300 font-light">
-            <li
+          <div className="mt-2 bg-white rounded shadow-md border border-gray-300 font-light">
+            <div
               className="rounded-t py-2 px-4 block whitespace-no-wrap hover:bg-gray-200 border-b border-gray-300"
               onClick={() => openProfile()}
             >
               <p>Perfil</p>
-            </li>
-            <li
+            </div>
+            <div
               className="py-2 px-4 block whitespace-no-wrap hover:bg-gray-200"
               onClick={() => doLogout()}
             >
               <p>Sair</p>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

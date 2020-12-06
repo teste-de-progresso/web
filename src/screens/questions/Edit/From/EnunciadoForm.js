@@ -7,10 +7,10 @@ export const EnunciadoForm = ({ questionData = {} }) => {
 
   return (
     <>
-      <Card className="h-full mb-3" title="Instrução">
+      <Card className="h-full mb-3" title="Instrução (opcional)">
         <TextEditor name="instruction" defaultValue={instruction} />
       </Card>
-      <Card className="h-full mb-3" title="Suporte">
+      <Card className="h-full mb-3" title="Suporte (opcional)">
         <TextEditor name="support" defaultValue={support} />
       </Card>
       <Card className="h-full mb-3" title="Enunciado">

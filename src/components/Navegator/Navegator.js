@@ -10,6 +10,8 @@ import { useAuth } from "../../utils/contexts";
 import { Button } from "../Button";
 
 const HorizontalMenu = styled.ul`
+margin: 0;
+padding: 0;
 list-style: none;
 width: 100%;
 display: flex;
@@ -29,9 +31,9 @@ display: flex;
 `;
 
 const Item = ({ children, className }) => (
-  <li className={`hover:text-white ${className || ""}`}>
+  <div className={`hover:text-white ${className || ""}`}>
     {children}
-  </li>
+  </div>
 );
 
 export const Navigator = ({
