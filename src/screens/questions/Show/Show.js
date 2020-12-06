@@ -11,9 +11,9 @@ import { ReadQuestion } from "../shared";
 import { Navigator, Button } from "../../../components";
 
 const Item = ({ children, className }) => (
-  <li className={`hover:text-white ${className || ""}`}>
+  <div className={`hover:text-white ${className || ""}`}>
     {children}
-  </li>
+  </div>
 );
 
 export const Show = () => {
