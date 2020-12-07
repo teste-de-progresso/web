@@ -100,12 +100,10 @@ export const Show = () => {
             className={index === 0 ? "ml-auto" : ""}
             key={index}
           >
-            <div
-              onClick={option.action}
-            >
+            <button onClick={option.action} className="flex">
               {option.icon}
               <span className="pl-3">{option.label}</span>
-            </div>
+            </button>
           </Item>
         ))}
       </Navigator>
