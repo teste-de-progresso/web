@@ -12,3 +12,4 @@ export * from "./SteppedForm";
 export { Section } from "./Section";
 export * from "./ListItem";
 export * from "./Loading";
+export { WysiwygViewer } from "./WysiwygViewer";

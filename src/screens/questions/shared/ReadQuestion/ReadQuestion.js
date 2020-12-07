@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card } from "../../../../components";
+import { Card, WysiwygViewer } from "../../../../components";
 
 const bloomTaxonomy = {
   remember: "Recordar",
@@ -69,38 +69,27 @@ export const ReadQuestion = ({ questionData = {} }) => {
 
       {instruction && (
         <Card className="mb-3" title="Instrução">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: instruction || "",
-            }}
-          />
+          <WysiwygViewer defaultValue={instruction} />
         </Card>
       )}
       {support && (
         <Card className="mb-3" title="Suporte">
-          <div dangerouslySetInnerHTML={{ __html: support || "" }} />
+          <WysiwygViewer defaultValue={support} />
         </Card>
       )}
       {body && (
         <Card className="mb-3" title="Enunciado">
-          <div dangerouslySetInnerHTML={{ __html: body || "" }} />
+          <WysiwygViewer defaultValue={body} />
         </Card>
       )}
 
       <Card className="mb-3" title="Resposta Correta">
-        <div
-          dangerouslySetInnerHTML={{
-            __html: correctAlternativeText || "",
-          }}
-        />
+        <WysiwygViewer defaultValue={correctAlternativeText} />
+
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
           <div>
             <h2 className="text-xl font-medium">Explicação</h2>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: questionData.explanation || "",
-              }}
-            />
+            <WysiwygViewer defaultValue={questionData.explanation} />
           </div>
           <div
             className="bg-gray-400 w-full my-3"
@@ -108,11 +97,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
           />
           <div>
             <h2 className="text-xl font-medium">Referências</h2>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: questionData.references || "",
-              }}
-            />
+            <WysiwygViewer defaultValue={questionData.references} />
           </div>
         </div>
       </Card>
@@ -125,7 +110,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
               style={{ height: "1px" }}
             />
             )}
-            <div dangerouslySetInnerHTML={{ __html: text || "" }} />
+            <WysiwygViewer defaultValue={text} />
           </div>
         ))}
       </Card>
