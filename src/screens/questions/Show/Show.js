@@ -7,7 +7,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@material-ui/core";
 
-import { ReadQuestion } from "../shared";
+import { ReadQuestion, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
 
 const Item = ({ children, className }) => (
@@ -100,16 +100,23 @@ export const Show = () => {
             className={index === 0 ? "ml-auto" : ""}
             key={index}
           >
-            <button onClick={option.action} className="flex">
+            <button onClick={option.action} className="flex pl-4">
               {option.icon}
-              <span className="pl-3">{option.label}</span>
+              <span className="pl-2">{option.label}</span>
             </button>
           </Item>
         ))}
       </Navigator>
       <div className="bg-gray-100 w-full my-2">
-        <main>
-          <ReadQuestion questionData={questionData} />
+        <main className="m-auto">
+          <div className="flex px-5">
+            <div className="w-3/5">
+              <ReadQuestion questionData={questionData} />
+            </div>
+            <div className="w-2/5 ml-3">
+              <QuestionFeedback feedbacks={questionData.reviewFeedbacks} />
+            </div>
+          </div>
         </main>
       </div>
     </>

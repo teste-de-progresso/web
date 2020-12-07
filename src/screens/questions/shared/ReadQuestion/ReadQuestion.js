@@ -37,7 +37,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
   const { instruction, support, body } = questionData;
 
   return (
-    <div className="m-auto max-w-screen-md">
+    <>
       <Card className="mb-3" title="Detalhes da questão">
         <div className="grid grid-cols-2">
           <div>
@@ -114,6 +114,6 @@ export const ReadQuestion = ({ questionData = {} }) => {
           </div>
         ))}
       </Card>
-    </div>
+    </>
   );
 };

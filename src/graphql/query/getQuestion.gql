@@ -25,6 +25,15 @@ query ($uuid: ID!) {
       id
       name
     }
+    reviewFeedbacks {
+      id
+      status
+      comment
+      user {
+        name
+        avatarUrl
+      }
+    }
     updatedAt
     createdAt
   }

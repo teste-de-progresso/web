@@ -46,7 +46,9 @@ export const Review = () => {
       <Navigator home />
       <div className="bg-gray-100 h-full w-full my-2">
         <main className="h-full pb-4">
-          <ReadQuestion questionData={questionData} />
+          <div className="m-auto max-w-screen-md">
+            <ReadQuestion questionData={questionData} />
+          </div>
           <Card title="Feedback de revisão" className="max-w-screen-md mx-auto">
             <form onSubmit={handleSubmit(formSubmit)}>
               <textarea
