@@ -100,9 +100,9 @@ export const Show = () => {
             className={index === 0 ? "ml-auto" : ""}
             key={index}
           >
-            <button onClick={option.action} className="flex">
+            <button onClick={option.action} className="flex pl-4">
               {option.icon}
-              <span className="pl-3">{option.label}</span>
+              <span className="pl-2">{option.label}</span>
             </button>
           </Item>
         ))}
