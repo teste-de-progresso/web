@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -79,7 +78,6 @@ export const QuestionsListContent = ({
 }) => {
   const SEARCH_QUESTIONS = loader("../../graphql/query/getQuestions.gql");
   const [questions, setQuestions] = useState([]);
-  const authenticationState = useSelector((state) => state.auth);
 
   const { loading } = useQuery(SEARCH_QUESTIONS, {
     onCompleted: ({ questions: result }) => {
@@ -95,7 +93,6 @@ export const QuestionsListContent = ({
       page,
       limit,
       where: {
-        userId: authenticationState.user.user_id,
         ...where,
       },
     },

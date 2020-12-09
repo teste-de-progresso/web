@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import {
   ApolloClient,
   createHttpLink,
@@ -7,24 +6,17 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import firebase from "firebase";
 
 export const ApolloContext = ({ children }) => {
-  const authenticationState = useSelector((state) => state.auth);
-
-  const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:3001",
-  });
-
-  const authLink = setContext((_, { headers }) => {
-    const { token } = authenticationState;
-
-    return {
-      headers: {
-        ...headers,
-        authorization: token ? `Bearer ${token}` : "",
-      },
-    };
-  });
+  const authLink = setContext(async (_, { headers }) => ({
+    headers: {
+      ...headers,
+      authorization: `${await firebase.auth().currentUser.getIdToken()}`,
+    },
+  })).concat(createHttpLink({
+    uri: process.env.REACT_APP_BACKEND_URL,
+  }));
 
   const credentialsType = () => {
     if (process.env.NODE_ENV === "development") {
@@ -34,7 +26,7 @@ export const ApolloContext = ({ children }) => {
   };
 
   const client = new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: authLink,
     cache: new InMemoryCache(),
     credentials: credentialsType(),
   });

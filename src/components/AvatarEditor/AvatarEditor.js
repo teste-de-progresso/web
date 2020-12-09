@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { DialogContent, DialogActions } from "@material-ui/core";
 
@@ -8,8 +7,6 @@ import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 
 export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
-  const { token } = useSelector((state) => state.auth);
-
   const [croppedImage, setCroppedImage] = useState();
   const [alert, setAlert] = useState();
 
@@ -17,7 +14,7 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
     baseURL: process.env.REACT_APP_BACKEND_URL,
   });
 
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // instance.defaults.headers.common.Authorization = `Bearer ${token}`;
 
   const onSubmit = () => {
     instance

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
@@ -29,6 +30,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
   const [errorsList, setErrorList] = useState([]);
   const [confirmCompletionModal, setConfirmCompletionModal] = useState(false);
+  const history = useHistory();
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -73,7 +75,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    window.location = "/";
+    history.push("/");
   };
 
   const save = async () => {
@@ -85,7 +87,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    window.location = "/";
+    history.push("/");
   };
 
   return (

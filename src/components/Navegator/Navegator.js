@@ -6,7 +6,6 @@ import {
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@material-ui/core";
 
-import { useAuth } from "../../utils/contexts";
 import { Button } from "../Button";
 
 const HorizontalMenu = styled.ul`
@@ -40,7 +39,6 @@ export const Navigator = ({
   needsConfirmation = false, home = false, newQuestion = false, children,
 }) => {
   const history = useHistory();
-  const auth = useAuth();
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
 
   const confirmLeave = () => {
@@ -89,7 +87,7 @@ export const Navigator = ({
             </Item>
           )}
           {
-          (auth.isTeacher() && newQuestion) ? (
+          (true && newQuestion) ? (
             <Item>
               <button onClick={() => createQuestion()} className="flex">
                 <FaPlus className="my-auto" />

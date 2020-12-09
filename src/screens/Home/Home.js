@@ -3,9 +3,9 @@ import { FaFilter } from "react-icons/fa";
 import { Dialog } from "@material-ui/core";
 
 import { Navigator } from "../../components";
-import { useAuth } from "../../utils/contexts";
 import { Filter } from "./Filter";
 import { QuestionPainel } from "./QuestionsPainel";
+import { useUserContext } from "../../utils";
 
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
@@ -14,10 +14,10 @@ const Item = ({ children, className }) => (
 );
 
 export const Home = () => {
-  const auth = useAuth();
   const [checkType, setCheckType] = useState([]);
   const [bloomTaxonomy, setBloomTaxonomy] = useState([]);
   const [difficulty, setDifficulty] = useState([]);
+  const userContext = useUserContext();
 
   const allSelectedKeys = checkType
     .concat(bloomTaxonomy)
@@ -43,7 +43,7 @@ export const Home = () => {
 
   return (
     <>
-      {auth.isTeacher()
+      {userContext.userRoles.includes("teacher")
         && (
           <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
             <Item
