@@ -2,6 +2,7 @@ import React, {
   createContext, useMemo, useContext, useState,
 } from "react";
 import { useQuery, gql } from "@apollo/client";
+import { Loading, NotAllowed } from "../screens";
 
 const Context = createContext(null);
 
@@ -23,22 +24,28 @@ const MY_USER = gql`
   }
 `;
 
-export const UserContextProvider = ({ children }) => {
+export const UserContext = ({ children }) => {
   const [userRoles, setUserRoles] = useState();
-  const providerValue = useMemo(() => ({ userRoles }), [userRoles]);
+  const [isNotAllowed, setIsNotAllowed] = useState(true);
 
-  useQuery(MY_USER, {
-    onCompleted: ({ myUser: { roles } }) => {
-      setUserRoles(roles);
-    },
-    onError: () => {
-      setUserRoles(false);
+  const providerValue = useMemo(() => ({ userRoles }), [userRoles]);
+  const { loading } = useQuery(MY_USER, {
+    onCompleted: ({ myUser }) => {
+      if (!myUser || myUser.length === 0) {
+        setIsNotAllowed(true);
+      } else {
+        setUserRoles(myUser.roles);
+        setIsNotAllowed(false);
+      }
     },
   });
 
+  if (loading) return <Loading />;
+  if (isNotAllowed) return <NotAllowed />;
+
   return (
     <Context.Provider value={providerValue}>
-      {userRoles ? children : null}
+      {children}
     </Context.Provider>
   );
 };

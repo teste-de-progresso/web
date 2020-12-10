@@ -5,7 +5,6 @@ import { Dialog } from "@material-ui/core";
 import { Navigator } from "../../components";
 import { Filter } from "./Filter";
 import { QuestionPainel } from "./QuestionsPainel";
-import { useUserContext } from "../../utils";
 
 const Item = ({ children, className }) => (
   <li className={`hover:text-white ${className || ""}`}>
@@ -17,7 +16,6 @@ export const Home = () => {
   const [checkType, setCheckType] = useState([]);
   const [bloomTaxonomy, setBloomTaxonomy] = useState([]);
   const [difficulty, setDifficulty] = useState([]);
-  const userContext = useUserContext();
 
   const allSelectedKeys = checkType
     .concat(bloomTaxonomy)
@@ -43,7 +41,7 @@ export const Home = () => {
 
   return (
     <>
-      {userContext.userRoles.includes("teacher")
+      {true
         && (
           <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
             <Item

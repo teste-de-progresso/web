@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ApolloClient,
   createHttpLink,
@@ -9,10 +9,15 @@ import { setContext } from "@apollo/client/link/context";
 import firebase from "firebase";
 
 export const ApolloContext = ({ children }) => {
-  const authLink = setContext(async (_, { headers }) => ({
+  const [jwtToken, setJwtToken] = useState();
+  firebase.auth().currentUser.getIdToken().then((token) => setJwtToken(token));
+
+  if (!jwtToken) return <div />;
+
+  const authLink = setContext((_, { headers }) => ({
     headers: {
       ...headers,
-      authorization: `${await firebase.auth().currentUser.getIdToken()}`,
+      authorization: jwtToken,
     },
   })).concat(createHttpLink({
     uri: process.env.REACT_APP_BACKEND_URL,
