@@ -6,7 +6,7 @@ import { loader } from "graphql.macro";
 
 import { ReadQuestion, QuestionFeedback } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
-import { REVIEW_FEEDBACK } from "../../../utils/types";
+import { REVIEW_FEEDBACK } from "../../../utils";
 
 export const Review = () => {
   const GET_QUESTION = loader("../../../graphql/query/getQuestion.gql");

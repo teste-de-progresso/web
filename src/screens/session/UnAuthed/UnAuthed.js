@@ -3,8 +3,8 @@ import firebase from "firebase/app";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import { MdSecurity } from "react-icons/md";
-import unifesoLogo from "../../img/unifeso-logo-branco.svg";
-import { Loading } from "../Loading";
+import unifesoLogo from "../../../img/unifeso-logo-branco.svg";
+import { Loading } from "../../Loading";
 
 const Layout = styled.div`
   display: grid;

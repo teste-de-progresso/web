@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
@@ -11,7 +10,7 @@ import { MdError } from "react-icons/md";
 import { Button } from "../Button";
 
 import { formatInput } from "../../screens/questions/formatInputs";
-import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
+import { questionsValidations } from "../../utils";
 
 export const FormContext = React.createContext({
   register: undefined,
@@ -30,7 +29,6 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
   const [errorsList, setErrorList] = useState([]);
   const [confirmCompletionModal, setConfirmCompletionModal] = useState(false);
-  const history = useHistory();
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -54,7 +52,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const onSubmit = async (inputs) => {
     const inputValues = formatInput(inputs);
 
-    const errors = validateQuestionInputs(inputValues);
+    const errors = questionsValidations(inputValues);
 
     if (errors.length === 0) {
       setConfirmCompletionModal(true);
@@ -75,7 +73,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    history.push("/");
+    window.location = "/";
   };
 
   const save = async () => {
@@ -87,7 +85,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    history.push("/");
+    window.location = "/";
   };
 
   return (

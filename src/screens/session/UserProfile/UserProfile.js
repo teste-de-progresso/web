@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import firebase from "firebase";
 
-import { Navigator, Avatar } from "../../components";
+import { Navigator, Avatar } from "../../../components";
 
 export const UserProfile = () => {
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);

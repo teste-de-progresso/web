@@ -6,7 +6,7 @@ import {
   CHECK_TYPE,
   BLOOM_TAXONOMY,
   DIFFICULTY,
-} from "../../utils/types";
+} from "../../utils";
 import { Button } from "../../components";
 
 export const Filter = ({

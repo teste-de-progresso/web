@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import { MdSecurity } from "react-icons/md";
 import firebase from "firebase";
 import { Alert } from "@material-ui/lab";
-import unifesoLogo from "../../img/unifeso-logo-branco.svg";
+import unifesoLogo from "../../../img/unifeso-logo-branco.svg";
 
 const Layout = styled.div`
   display: grid;
@@ -35,7 +35,7 @@ export const NotAllowed = () => {
           variant="contained"
           endIcon={<MdSecurity color="#000000" />}
         >
-          Logar com outra conta
+          Entrar com outra conta
         </Button>
       </div>
     </Layout>

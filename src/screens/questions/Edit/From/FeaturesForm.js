@@ -3,7 +3,7 @@ import { Card, Input, FormContext } from "../../../../components";
 import { SubjectSelect } from "./SubjectSelect";
 import { ReviewerSelect } from "./ReviewerSelect";
 
-import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
+import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils";
 
 export const FeaturesForm = ({ questionData = {} }) => {
   const {
