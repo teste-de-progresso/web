@@ -2,8 +2,7 @@ import React, {
   createContext, useMemo, useContext, useState,
 } from "react";
 import { useQuery, gql } from "@apollo/client";
-
-import { BadConnection } from "../screens";
+import { Loading, NotAllowed } from "../screens";
 
 const Context = createContext(null);
 
@@ -20,27 +19,36 @@ export const useUserContext = () => {
 const MY_USER = gql`
   query {
     myUser {
-      avatarUrl
+      roles
     }
   }
 `;
 
-export const UserContextProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState(true);
-  const providerValue = useMemo(() => ({ userInfo }), [userInfo]);
+export const UserContext = ({ children }) => {
+  const [userRoles, setUserRoles] = useState();
+  const [isNotAllowed, setIsNotAllowed] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const providerValue = useMemo(() => ({ userRoles }), [userRoles]);
 
   useQuery(MY_USER, {
     onCompleted: ({ myUser }) => {
-      setUserInfo(myUser);
-    },
-    onError: () => {
-      setUserInfo(false);
+      if (!myUser || myUser.length === 0) {
+        setIsNotAllowed(true);
+        setLoading(false);
+      } else {
+        setUserRoles(myUser.roles);
+        setIsNotAllowed(false);
+        setLoading(false);
+      }
     },
   });
 
+  if (loading) return <Loading />;
+  if (isNotAllowed) return <NotAllowed />;
+
   return (
     <Context.Provider value={providerValue}>
-      {userInfo ? children : <BadConnection />}
+      {children}
     </Context.Provider>
   );
 };

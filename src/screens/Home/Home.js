@@ -3,7 +3,6 @@ import { FaFilter } from "react-icons/fa";
 import { Dialog } from "@material-ui/core";
 
 import { Navigator } from "../../components";
-import { useAuth } from "../../utils/contexts";
 import { Filter } from "./Filter";
 import { QuestionPainel } from "./QuestionsPainel";
 
@@ -14,7 +13,6 @@ const Item = ({ children, className }) => (
 );
 
 export const Home = () => {
-  const auth = useAuth();
   const [checkType, setCheckType] = useState([]);
   const [bloomTaxonomy, setBloomTaxonomy] = useState([]);
   const [difficulty, setDifficulty] = useState([]);
@@ -43,7 +41,7 @@ export const Home = () => {
 
   return (
     <>
-      {auth.isTeacher()
+      {true
         && (
           <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
             <Item

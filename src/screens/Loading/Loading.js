@@ -1,7 +1,10 @@
 import React from "react";
+import { CircularProgress } from "@material-ui/core";
 
 export const Loading = () => (
-  <div className="h-screen w-screen bg-primary-normal grid items-center text-center text-white">
-    <h1 className="font-bold text-lg">Carregando...</h1>
+  <div className="h-screen w-screen bg-primary-normal grid place-items-center text-white">
+    <div style={{ textAlign: "center" }}>
+      <CircularProgress color="inherit" />
+    </div>
   </div>
 );
