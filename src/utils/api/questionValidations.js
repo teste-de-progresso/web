@@ -1,4 +1,4 @@
-export const validateQuestionInputs = (inputs) => {
+export const questionsValidations = (inputs) => {
   const errors = [];
 
   const {

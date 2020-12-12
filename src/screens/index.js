@@ -1,6 +1,3 @@
-export * from "./BadConnection";
+export * from "./session";
 export * from "./Loading";
-export * from "./UserProfile";
 export * from "./Home";
-export { UnAuthed } from "./UnAuthed";
-export { NotAllowed } from "./NotAllowed";

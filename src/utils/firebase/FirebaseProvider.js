@@ -5,8 +5,10 @@ import { FirebaseAuthProvider } from "@react-firebase/auth";
 
 import firebaseConfig from "./firebaseConfig";
 
-export const FirebaseProvider = ({ children }) => (
+const FirebaseProvider = ({ children }) => (
   <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
     {children}
   </FirebaseAuthProvider>
 );
+
+export default FirebaseProvider;

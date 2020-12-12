@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
 import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, List, ListItem, ListItemIcon, ListItemText,
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, List, ListItem, ListItemIcon, ListItemText, Button,
 } from "@material-ui/core";
 import { MdError } from "react-icons/md";
 
-import { Button } from "../Button";
-
 import { formatInput } from "../../screens/questions/formatInputs";
-import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
+import { questionsValidations } from "../../utils";
 
 export const FormContext = React.createContext({
   register: undefined,
@@ -30,7 +27,6 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
   const [errorsList, setErrorList] = useState([]);
   const [confirmCompletionModal, setConfirmCompletionModal] = useState(false);
-  const history = useHistory();
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -54,7 +50,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
   const onSubmit = async (inputs) => {
     const inputValues = formatInput(inputs);
 
-    const errors = validateQuestionInputs(inputValues);
+    const errors = questionsValidations(inputValues);
 
     if (errors.length === 0) {
       setConfirmCompletionModal(true);
@@ -75,7 +71,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    history.push("/");
+    window.location = "/";
   };
 
   const save = async () => {
@@ -87,7 +83,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    history.push("/");
+    window.location = "/";
   };
 
   return (
@@ -117,6 +113,8 @@ export const SteppedForm = ({ children, questionId, status }) => {
         </DialogContent>
         <DialogActions>
           <Button
+            variant="contained"
+            color="primary"
             onClick={() => setErrorsModalShowing(false)}
             className="mt-2 ml-auto"
           >
@@ -138,10 +136,10 @@ export const SteppedForm = ({ children, questionId, status }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmCompletionModal(false)}>
+          <Button variant="contained" onClick={() => setConfirmCompletionModal(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => save()}>
+          <Button variant="contained" color="primary" onClick={() => save()}>
             Finalizar
           </Button>
         </DialogActions>
@@ -172,20 +170,25 @@ export const SteppedForm = ({ children, questionId, status }) => {
             })}
           </FormContext.Provider>
 
-          <div className="flex justify-end space-x-2">
-            <Button
-              className={minStep === currentStep ? "hidden" : ""}
-              onClick={() => handleBack()}
-            >
-              Retornar
-            </Button>
+          <div className="flex justify-end space-x-2 pb-4">
+            {minStep !== currentStep
+              && (
+              <Button
+                variant="contained"
+                onClick={() => handleBack()}
+              >
+                Retornar
+              </Button>
+              )}
             {maxStep === currentStep
               && (status === "draft" || status === undefined) && (
-                <Button onClick={() => saveDraft()}>
+                <Button variant="contained" onClick={() => saveDraft()}>
                   Salvar como rascunho
                 </Button>
             )}
             <Button
+              variant="contained"
+              color="primary"
               onClick={() => handleNext()}
               type={submitNext ? "submit" : "button"}
             >

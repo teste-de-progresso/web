@@ -3,10 +3,8 @@ import { useHistory } from "react-router-dom";
 import { FaHome, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
 import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,
 } from "@material-ui/core";
-
-import { Button } from "../Button";
 
 const HorizontalMenu = styled.ul`
 margin: 0;
@@ -67,10 +65,10 @@ export const Navigator = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmLeaveDialog(false)}>
+          <Button variant="contained" onClick={() => setConfirmLeaveDialog(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => confirmLeave()}>
+          <Button variant="contained" color="primary" onClick={() => confirmLeave()}>
             Confirmar
           </Button>
         </DialogActions>

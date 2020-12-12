@@ -1,31 +1,19 @@
 import React from "react";
-import { FirebaseAuthConsumer } from "@react-firebase/auth";
-import { ApolloContext, UserContext, FirebaseProvider } from "./utils";
+import {
+  ApolloContext, ThemeProvider, UserContext, FirebaseContext,
+} from "./utils";
 import Routes from "./Routes";
-
-import { UnAuthed } from "./screens";
 
 const App = () => (
   <FirebaseContext>
     <ApolloContext>
       <UserContext>
-        <Routes />
+        <ThemeProvider>
+          <Routes />
+        </ThemeProvider>
       </UserContext>
     </ApolloContext>
   </FirebaseContext>
-);
-
-const FirebaseContext = ({ children }) => (
-  <FirebaseProvider>
-    <FirebaseAuthConsumer>
-      {({ isSignedIn }) => {
-        if (isSignedIn) {
-          return (children);
-        }
-        return <UnAuthed />;
-      }}
-    </FirebaseAuthConsumer>
-  </FirebaseProvider>
 );
 
 export default App;
