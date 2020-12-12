@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { DialogContent, DialogActions } from "@material-ui/core";
+import { DialogContent, DialogActions, Button } from "@material-ui/core";
 
 import {
   CHECK_TYPE,
   BLOOM_TAXONOMY,
   DIFFICULTY,
 } from "../../utils";
-import { Button } from "../../components";
 
 export const Filter = ({
   setCheckType,
@@ -86,21 +85,20 @@ export const Filter = ({
       </DialogContent>
       <DialogActions>
         <Button
-          className="mx-3 gray-100"
-          secondary
+          variant="contained"
           onClick={() => handleClean()}
         >
           Limpar filtros
         </Button>
         <Button
-          className="mx-3 gray-100"
-          secondary
+          variant="contained"
           onClick={() => handleUndo()}
         >
           Cancelar
         </Button>
         <Button
-          className="mx-3"
+          variant="contained"
+          color="primary"
           type="submit"
           style={{ opacity: enableSubmit ? "1" : "0" }}
           disabled={!enableSubmit}

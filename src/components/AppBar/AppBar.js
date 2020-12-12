@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase";
-import { AppBar, Toolbar } from "@material-ui/core";
+import { AppBar as AppBarBase, Toolbar } from "@material-ui/core";
 import { Avatar } from "../Avatar";
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
@@ -21,7 +21,7 @@ export const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBarBase position="static">
       <Toolbar>
         <div className="flex-grow">
           <img alt="Logo do Unifeso" className="h-12" src={unifesoLogo} />
@@ -49,6 +49,6 @@ export const Navbar = () => {
           </div>
         </div>
       </Toolbar>
-    </AppBar>
+    </AppBarBase>
   );
 };

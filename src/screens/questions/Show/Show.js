@@ -4,11 +4,11 @@ import { MdEdit, MdSave } from "react-icons/md";
 import { useQuery, useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
 import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
+  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button,
 } from "@material-ui/core";
 
 import { ReadQuestion, QuestionFeedback } from "../shared";
-import { Navigator, Button } from "../../../components";
+import { Navigator } from "../../../components";
 
 const Item = ({ children, className }) => (
   <div className={`hover:text-white ${className || ""}`}>
@@ -86,10 +86,10 @@ export const Show = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmEditDialog(false)}>
+          <Button variant="contained" onClick={() => setConfirmEditDialog(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => confirmEditQuestion()}>
+          <Button variant="contained" color="primary" onClick={() => confirmEditQuestion()}>
             Editar
           </Button>
         </DialogActions>

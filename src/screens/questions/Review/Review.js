@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { useParams, useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
-
+import { Button } from "@material-ui/core";
 import { ReadQuestion, QuestionFeedback } from "../shared";
-import { Card, Button, Navigator } from "../../../components";
+import { Card, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils";
 
 export const Review = () => {
@@ -88,7 +88,7 @@ const FeedbackForm = ({ handleSubmit, formSubmit, register }) => (
           </label>
         </div>
       ))}
-      <Button type="submit" className="mt-4">
+      <Button variant="contained" color="primary" type="submit" className="mt-4">
         Submeter Feedback
       </Button>
     </form>
