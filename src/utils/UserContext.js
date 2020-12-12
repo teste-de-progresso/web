@@ -27,15 +27,18 @@ const MY_USER = gql`
 export const UserContext = ({ children }) => {
   const [userRoles, setUserRoles] = useState();
   const [isNotAllowed, setIsNotAllowed] = useState(true);
-
+  const [loading, setLoading] = useState(true);
   const providerValue = useMemo(() => ({ userRoles }), [userRoles]);
-  const { loading } = useQuery(MY_USER, {
+
+  useQuery(MY_USER, {
     onCompleted: ({ myUser }) => {
       if (!myUser || myUser.length === 0) {
         setIsNotAllowed(true);
+        setLoading(false);
       } else {
         setUserRoles(myUser.roles);
         setIsNotAllowed(false);
+        setLoading(false);
       }
     },
   });
