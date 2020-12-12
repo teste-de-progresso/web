@@ -4,7 +4,7 @@ import { DialogContent, DialogActions } from "@material-ui/core";
 
 import { Alert } from "../Alert";
 import { Button } from "../Button";
-import { PhotoCrop } from "./PhotoCrop";
+import PhotoCrop from "./PhotoCrop";
 
 export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
   const [croppedImage, setCroppedImage] = useState();

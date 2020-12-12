@@ -3,7 +3,7 @@ import Avatar from "react-avatar-edit";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-export const PhotoCrop = ({ callback }) => {
+const PhotoCrop = ({ callback }) => {
   const [result, setResult] = useState();
   const [fileSizeIsBig, setFileSizeBig] = useState(false);
   const onCrop = (cropped) => {
@@ -44,3 +44,5 @@ export const PhotoCrop = ({ callback }) => {
     </>
   );
 };
+
+export default PhotoCrop;

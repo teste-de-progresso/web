@@ -170,7 +170,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
             })}
           </FormContext.Provider>
 
-          <div className="flex justify-end space-x-2">
+          <div className="flex justify-end space-x-2 pb-4">
             <Button
               className={minStep === currentStep ? "hidden" : ""}
               onClick={() => handleBack()}
