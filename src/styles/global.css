@@ -7,3 +7,7 @@ body, #root {
   background-color: #f7fafc;
   font-family: Roboto, 'Times New Roman', Times, serif;
 }
+
+button:focus {
+  outline: none !important;
+}
