@@ -32,7 +32,7 @@ export const UserContext = ({ children }) => {
 
   useQuery(MY_USER, {
     onCompleted: ({ myUser }) => {
-      if (!myUser || myUser.length === 0) {
+      if (!myUser || myUser.roles.length === 0) {
         setIsNotAllowed(true);
         setLoading(false);
       } else {
