@@ -38,7 +38,7 @@ export const TextEditor = ({ name, defaultValue = "" }) => {
           config={{
             toolbar: toolbarOptions,
             ckfinder: {
-              uploadUrl: `${process.env.REACT_APP_BACKEND_URL}/picture/upload`,
+              uploadUrl: `${process.env.REACT_APP_BACKEND_URL}/upload`,
             },
           }}
           onChange={(_, editor) => onChange(editor.getData())}
