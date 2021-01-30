@@ -95,7 +95,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
         onClose={() => setConfirmCompletionModal(false)}
       >
         <DialogTitle>
-          Uma ou mais validações falharam.
+          Falha de Validação
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -118,7 +118,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
             onClick={() => setErrorsModalShowing(false)}
             className="mt-2 ml-auto"
           >
-            OK!
+            Sair
           </Button>
         </DialogActions>
       </Dialog>
@@ -127,12 +127,11 @@ export const SteppedForm = ({ children, questionId, status }) => {
         onClose={() => setConfirmCompletionModal(false)}
       >
         <DialogTitle>
-          Confirmar finalização de questão.
+          Finalização de Questão
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Ao finalizar uma questão o revisor selecionado será solicitado a
-            revisar a questão. Tem certeza que está tudo certo para finalizar?
+            Ao finalizar a questão, o revisor receberá uma notificação para revisá-la. Deseja continuar?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -177,11 +176,10 @@ export const SteppedForm = ({ children, questionId, status }) => {
             >
               Retornar
             </Button>
-            {maxStep === currentStep
-              && (status === "draft" || status === undefined) && (
-                <Button onClick={() => saveDraft()}>
-                  Salvar como rascunho
-                </Button>
+            {(status === "draft" || status === undefined) && (
+              <Button onClick={() => saveDraft()}>
+                Salvar como rascunho
+              </Button>
             )}
             <Button
               onClick={() => handleNext()}

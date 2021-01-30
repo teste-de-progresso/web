@@ -37,7 +37,7 @@ export const SubjectSelect = ({ subject }) => {
   return (
     <div className="flex flex-col h-full">
       <div>
-        <h2>Assunto:</h2>
+        <h2>Assunto</h2>
         <select
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -55,7 +55,7 @@ export const SubjectSelect = ({ subject }) => {
       </div>
 
       <span className="mt-4">
-        Eixo:
+        Eixo de formação
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled
@@ -63,7 +63,7 @@ export const SubjectSelect = ({ subject }) => {
         />
       </span>
       <span className="mt-4">
-        Categoria:
+        Categoria
         <Input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled

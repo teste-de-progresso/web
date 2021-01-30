@@ -41,7 +41,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
         <div className="flex justify-between">
           <div className="flex">
             <label htmlFor="own" className="mr-2 my-auto">
-              Autoria:
+              Autoria
             </label>
             <div className="my-auto">
               <input
@@ -52,7 +52,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 ref={formContext.register}
                 onChange={() => handleOwnCheck(true)}
               />
-              <label htmlFor="own">Própria</label>
+              <label htmlFor="own" className="ml-1">Própria</label>
             </div>
             <div className="my-auto ml-2">
               <input
@@ -65,12 +65,12 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 ref={formContext.register}
                 onChange={() => handleOwnCheck(false)}
               />
-              <label htmlFor="third">Terceiro(s)</label>
+              <label htmlFor="third" className="ml-1">Outro</label>
             </div>
           </div>
           <div className="flex">
             <div className="flex">
-              <h2 className="pr-2 pl-3 my-auto">Fonte:</h2>
+              <h2 className="pr-2 pl-3 my-auto">Fonte</h2>
               <div className="w-full">
                 <div style={{ maxWidth: "194px" }}>
                   <Input
@@ -84,7 +84,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
               </div>
             </div>
             <div className="flex">
-              <h2 className="pr-2 pl-3 my-auto">Ano:</h2>
+              <h2 className="pr-2 pl-3 my-auto">Ano</h2>
               <div style={{ maxWidth: "62px" }}>
                 <Input
                   ref={formContext.register}
@@ -104,7 +104,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
         <div className="grid grid-cols-2 col-gap-2 mt-3">
           <div className="w-full grid grid-cols-1 row-gap-4">
             <div className="flex flex-col">
-              <h2>Grau de Dificuldade:</h2>
+              <h2>Grau de Dificuldade</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -120,7 +120,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
               </select>
             </div>
             <div className="w-full">
-              <h2>Tipo:</h2>
+              <h2>Tipo</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -136,7 +136,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
               </select>
             </div>
             <div className="w-full">
-              <h2>Habilidade (Taxonomia de Bloom):</h2>
+              <h2>Habilidade (Taxonomia de Bloom)</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -157,7 +157,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
           </div>
         </div>
         <div className="flex flex-col mt-4">
-          <h2>Revisor:</h2>
+          <h2>Revisor</h2>
           <ReviewerSelect reviewer={reviewer || {}} />
         </div>
       </Card>
