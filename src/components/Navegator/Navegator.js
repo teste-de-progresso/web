@@ -62,10 +62,10 @@ export const Navigator = ({
   return (
     <>
       <Dialog open={confirmLeaveDialog} onClose={() => setConfirmLeaveDialog(false)}>
-        <DialogTitle>Deseja sair sem salvar?</DialogTitle>
+        <DialogTitle>Modificações não Salvas</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Todas as alterações feitas serão perdidas, deseja confirmar a ação?
+            Todas as alterações serão descartadas. Deseja continuar?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -84,7 +84,7 @@ export const Navigator = ({
             <Item>
               <button onClick={() => goHome()} className="flex">
                 <FaHome className="my-auto" />
-                <span className="pl-3">Inicio</span>
+                <span className="pl-3">Início</span>
               </button>
             </Item>
           )}

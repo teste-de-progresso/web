@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { DialogContent, DialogActions } from "@material-ui/core";
 
@@ -16,17 +16,16 @@ export const Filter = ({
   closeCallback,
   allSelectedKeys,
 }) => {
-  const [enableSubmit, setEnableSubmit] = useState(false);
   const {
     handleSubmit, register, reset, setValue,
   } = useForm();
 
   const filterGroups = [
-    { callback: setCheckType, group: CHECK_TYPE, title: "Tipo de marcação" },
+    { callback: setCheckType, group: CHECK_TYPE, title: "Tipo de Questão" },
     {
       callback: setBloomTaxonomy,
       group: BLOOM_TAXONOMY,
-      title: "Taxonomia de Bloom",
+      title: "Habilidade Cognitiva",
     },
     { callback: setDifficulty, group: DIFFICULTY, title: "Dificuldade" },
   ];
@@ -41,8 +40,6 @@ export const Filter = ({
     filterGroups.forEach(({ group }) => {
       group.forEach(({ value }) => { setValue(value, false); });
     });
-
-    setEnableSubmit(true);
   };
 
   const onSubmit = (inputs) => {
@@ -67,7 +64,7 @@ export const Filter = ({
             <div className="flex flex-col" key={title}>
               <h3 className="font-bold mb-2">{title}</h3>
               {group.map(({ value, label }) => (
-                <span key={value} onClick={() => setEnableSubmit(true)}>
+                <span key={value}>
                   <input
                     type="checkbox"
                     name={value}
@@ -90,7 +87,7 @@ export const Filter = ({
           secondary
           onClick={() => handleClean()}
         >
-          Limpar filtros
+          Limpar
         </Button>
         <Button
           className="mx-3 gray-100"
@@ -102,10 +99,8 @@ export const Filter = ({
         <Button
           className="mx-3"
           type="submit"
-          style={{ opacity: enableSubmit ? "1" : "0" }}
-          disabled={!enableSubmit}
         >
-          Aplicar filtros
+          Aplicar
         </Button>
       </DialogActions>
     </form>
