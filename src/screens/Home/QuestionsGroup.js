@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -7,6 +6,7 @@ import { loader } from "graphql.macro";
 import { MdModeEdit } from "react-icons/md";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
+import { useAuth } from "../../utils/contexts";
 import { Section, ListItem, Loading } from "../../components";
 
 const EditIcon = styled(MdModeEdit)`
@@ -79,7 +79,7 @@ export const QuestionsListContent = ({
 }) => {
   const SEARCH_QUESTIONS = loader("../../graphql/query/getQuestions.gql");
   const [questions, setQuestions] = useState([]);
-  const authenticationState = useSelector((state) => state.auth);
+  const { user } = useAuth();
 
   const { loading } = useQuery(SEARCH_QUESTIONS, {
     onCompleted: ({ questions: result }) => {
@@ -95,7 +95,7 @@ export const QuestionsListContent = ({
       page,
       limit,
       where: {
-        userId: authenticationState.user.user_id,
+        userId: user.user_id,
         ...where,
       },
     },
