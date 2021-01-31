@@ -77,15 +77,19 @@ export const SteppedForm = ({ children, questionId, status }) => {
   };
 
   const save = async () => {
-    await saveMutation({
-      variables: {
-        input: {
-          question: formatedInputs(),
+    try {
+      await saveMutation({
+        variables: {
+          input: {
+            question: formatedInputs(),
+          },
         },
-      },
-    });
+      });
 
-    window.location = "/";
+      window.location = "/";
+    } catch (e) {
+      window.alert(`Falha ao salvar questão. Error: ${e}`);
+    }
   };
 
   return (
