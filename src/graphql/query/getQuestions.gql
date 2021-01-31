@@ -1,4 +1,4 @@
-query($where: Where, $page: Int!, $limit: Int!) {
+query($where: QuestionWhereInput, $page: Int!, $limit: Int!) {
   questions (where: $where) {
     payload(page: $page, limit: $limit) {
       nodes {
