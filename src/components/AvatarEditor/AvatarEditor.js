@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import axios from "axios";
 import { DialogContent, DialogActions } from "@material-ui/core";
 
+import { useAuth } from "../../utils/contexts";
 import { Alert } from "../Alert";
 import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 
 export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
-  const { token } = useSelector((state) => state.auth);
-
+  const { token } = useAuth();
   const [croppedImage, setCroppedImage] = useState();
   const [alert, setAlert] = useState();
 
