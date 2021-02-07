@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useRouteMatch } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 
@@ -13,7 +13,7 @@ export const Review = () => {
   const SUBMIT_REVIEW = loader("../../../graphql/mutation/sendQuestionFeedback.gql");
 
   const { id: questionUUID } = useParams();
-  const history = useHistory();
+  const history = useRouteMatch();
 
   if (!questionUUID) history.push("/");
 

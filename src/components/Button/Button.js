@@ -6,8 +6,8 @@ export const Button = ({
   className,
   type = "button",
   secondary,
-  style,
   disabled,
+  style,
 }) => {
   const handleClick = () => {
     if (onClick) {
@@ -15,18 +15,29 @@ export const Button = ({
     }
   };
 
-  const colorClasses = (() => {
-    if (secondary) return "bg-gray-200 hover:bg-gray-400 text-gray-800";
+  const styleClasses = {
+    secondary: "bg-gray-200 hover:bg-gray-400 text-gray-800",
+    primary: "bg-primary-normal hover:bg-primary-dark text-white",
+    disabled: "bg-gray-200 text-gray-600 cursor-not-allowed shadow-none hover:shadow-none",
+    default: "`transition duration-300 ease-in-out block text-center cursor-pointer p-2 px-8 rounded shadow-lg hover:shadow-lg w-full",
+  };
 
-    return "bg-primary-normal hover:bg-primary-dark text-white";
-  })();
+  let additionalClasses = "";
+
+  if (disabled) {
+    additionalClasses = additionalClasses.concat(" ", styleClasses.disabled);
+  } else if (secondary) {
+    additionalClasses = additionalClasses.concat(" ", styleClasses.secondary);
+  } else {
+    additionalClasses = additionalClasses.concat(" ", styleClasses.primary);
+  }
 
   return (
     <div className={className} style={style}>
       <button
         type={type}
         disabled={disabled}
-        className={`transition duration-300 ease-in-out block text-center cursor-pointer p-2 px-8 rounded shadow-lg hover:shadow-lg w-full ${colorClasses}`}
+        className={styleClasses.default + additionalClasses}
         onClick={() => handleClick()}
       >
         {children}
