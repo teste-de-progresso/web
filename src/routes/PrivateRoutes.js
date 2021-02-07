@@ -3,13 +3,13 @@ import {
   BrowserRouter as Router, Switch, Route,
 } from "react-router-dom";
 
-import { Navbar } from "./components";
-import { Home, UserProfile } from "./screens";
+import { Navbar } from "../components";
+import { Home, UserProfile } from "../screens";
 import {
   New, Edit, Show, Review,
-} from "./screens/questions";
+} from "../screens/questions";
 
-const Routes = () => (
+export const PrivateRoutes = () => (
   <Router>
     <Navbar />
     <Switch>
@@ -22,5 +22,3 @@ const Routes = () => (
     </Switch>
   </Router>
 );
-
-export default Routes;

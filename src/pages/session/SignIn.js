@@ -1,11 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   Card, Button, Input, InputGroup, Alert,
 } from "../../components";
 import { requestAuthentication } from "../../store/ducks/auth/actions";
+
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
 const Layout = styled.div`
@@ -13,10 +16,11 @@ const Layout = styled.div`
   place-items: center;
 `;
 
-export const Login = () => {
+export const SignIn = () => {
+  const { register, handleSubmit } = useForm();
   const state = useSelector(({ auth }) => auth);
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
   const handleLogin = (inputs) => {
     dispatch(requestAuthentication(inputs.email, inputs.password));
@@ -30,12 +34,12 @@ export const Login = () => {
           src={unifesoLogo}
           style={{ width: "85%", margin: "auto" }}
         />
-        <form
-          onSubmit={handleSubmit(handleLogin)}
-          className="w-full h-full md:max-w-xl md:h-auto"
-        >
-          {state.error ? <Alert>{state.error}</Alert> : null}
-          <Card title="Entrar no Sistema">
+        <Card title="Entrar no Sistema">
+          <form
+            onSubmit={handleSubmit(handleLogin)}
+            className="w-full h-full md:max-w-xl md:h-auto"
+          >
+            {state.error ? <Alert>{state.error}</Alert> : null}
             <InputGroup>
               <label>Email</label>
               <Input
@@ -57,8 +61,19 @@ export const Login = () => {
             <InputGroup className="mt-4">
               <Button type="submit">Login</Button>
             </InputGroup>
-          </Card>
-        </form>
+          </form>
+
+          <div
+            className="mt-3 w-full text-center"
+          >
+            <button
+              onClick={() => history.push("/password/new")}
+              className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"
+            >
+              Esqueceu sua senha?
+            </button>
+          </div>
+        </Card>
       </div>
     </Layout>
   );
