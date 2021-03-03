@@ -38,7 +38,7 @@ const QuestionGroupContent = () => {
       >
         <div className="text-center">
           <span className="text-base">
-            Não existem questões registradas para esses parametros.
+            Nenhuma questão registrada.
           </span>
         </div>
       </div>
