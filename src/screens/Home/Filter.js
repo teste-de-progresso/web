@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { DialogContent, DialogActions } from "@material-ui/core";
+import { DialogContent, DialogActions, DialogTitle } from "@material-ui/core";
 
 import {
   CHECK_TYPE,
@@ -58,6 +58,9 @@ export const Filter = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <DialogTitle>
+        Filtros
+      </DialogTitle>
       <DialogContent>
         <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
           {filterGroups.map(({ group, title }) => (

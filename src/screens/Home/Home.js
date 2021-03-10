@@ -3,25 +3,19 @@ import { FaFilter } from "react-icons/fa";
 import { Dialog } from "@material-ui/core";
 
 import { Navigator } from "../../components";
-import { useAuth } from "../../utils/contexts";
 import { Filter } from "./Filter";
 import { QuestionPainel } from "./QuestionsPainel";
 
 const Item = ({ children, className }) => (
-  <li className={`hover:text-white ${className || ""}`}>
-    {children}
-  </li>
+  <li className={`hover:text-white ${className || ""}`}>{children}</li>
 );
 
 export const Home = () => {
-  const auth = useAuth();
   const [checkType, setCheckType] = useState([]);
   const [bloomTaxonomy, setBloomTaxonomy] = useState([]);
   const [difficulty, setDifficulty] = useState([]);
 
-  const allSelectedKeys = checkType
-    .concat(bloomTaxonomy)
-    .concat(difficulty);
+  const allSelectedKeys = checkType.concat(bloomTaxonomy).concat(difficulty);
 
   const where = (() => {
     const params = {};
@@ -43,24 +37,18 @@ export const Home = () => {
 
   return (
     <>
-      {auth.isTeacher()
-        && (
-          <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
-            <Item
-              className="ml-auto"
-            >
-              <button
-                onClick={() => setFilterModalOpened(true)}
-                className="flex"
-              >
-
-                <FaFilter className="my-auto" />
-                <span className="pl-3">Filtros</span>
-              </button>
-            </Item>
-          </Navigator>
-        )}
-      <Dialog open={filterModalOpened} onClose={() => setFilterModalOpened(false)}>
+      <Navigator newQuestion setFilterModalOpened={setFilterModalOpened}>
+        <Item className="ml-auto">
+          <button onClick={() => setFilterModalOpened(true)} className="flex">
+            <FaFilter className="my-auto" />
+            <span className="pl-3">Filtros</span>
+          </button>
+        </Item>
+      </Navigator>
+      <Dialog
+        open={filterModalOpened}
+        onClose={() => setFilterModalOpened(false)}
+      >
         <Filter
           filterModalOpened={filterModalOpened}
           setCheckType={setCheckType}

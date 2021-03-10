@@ -44,6 +44,7 @@ export const QuestionsGroup = ({
           </button>
           <span className="mb-2 m-auto">
             Pagina:
+            {" "}
             {page}
           </span>
           <button

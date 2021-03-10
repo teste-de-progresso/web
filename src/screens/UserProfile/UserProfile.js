@@ -31,7 +31,7 @@ export const UserProfile = () => {
               </div>
               <div className="mt-8 text-center">
                 <h2 className="font-bold">{auth.user.name || auth.user.email}</h2>
-                <h2 className="py-4">TODO: Centro</h2>
+                <h2 className="py-4">Centro: CCT</h2>
                 <h2 className="">TODO: Cargo</h2>
               </div>
             </div>

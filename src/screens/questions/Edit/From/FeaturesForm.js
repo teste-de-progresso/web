@@ -18,7 +18,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
 
   const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
-  const [ownQuestion, setOwnQuestion] = useState(source === "UNIFESO");
+  const [ownQuestion, setOwnQuestion] = useState(source === "UNIFESO" || source === undefined);
 
   const handleOwnCheck = (value) => {
     setOwnQuestion(value);
@@ -40,7 +40,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
       <Card title="Características">
         <div className="flex justify-between">
           <div className="flex">
-            <label htmlFor="own" className="mr-2 my-auto">
+            <label htmlFor="own" className="mr-3 my-auto">
               Autoria
             </label>
             <div className="my-auto">
@@ -54,7 +54,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
               />
               <label htmlFor="own" className="ml-1">Própria</label>
             </div>
-            <div className="my-auto ml-2">
+            <div className="my-auto ml-3">
               <input
                 className="my-auto"
                 type="radio"

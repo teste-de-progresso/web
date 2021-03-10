@@ -62,10 +62,12 @@ const QuestionGroupContent = () => {
           <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
             <span>
               Registrado em:
+              {" "}
               {formatDate(question.createdAt)}
             </span>
             <span>
               Atualizado em:
+              {" "}
               {formatDate(question.updatedAt)}
             </span>
           </div>

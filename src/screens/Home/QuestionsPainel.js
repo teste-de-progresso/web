@@ -8,7 +8,7 @@ export const QuestionPainel = ({ whereOptions }) => {
     { title: "Aguardando parecer do revisor", where: { status: "pending", ...whereOptions } },
     { title: "Rascunhos", where: { status: "draft", ...whereOptions }, editable: true },
     { title: "Aprovadas", where: { status: "approved", ...whereOptions } },
-    { title: "Finalizadas", where: { status: "finished", ...whereOptions } },
+    { title: "Regristradas", where: { status: "finished", ...whereOptions } },
   ];
 
   const questionsGroupsComponents = questionsGroups.map(({ title, where, editable }, index) => <QuestionsGroup key={index} title={title} where={where} editable={editable} />);

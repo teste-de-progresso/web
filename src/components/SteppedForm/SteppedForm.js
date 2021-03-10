@@ -178,7 +178,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
             </Button>
             {(status === "draft" || status === undefined) && (
               <Button onClick={() => saveDraft()}>
-                Salvar como rascunho
+                Salvar rascunho
               </Button>
             )}
             <Button
