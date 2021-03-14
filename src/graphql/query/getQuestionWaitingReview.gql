@@ -1,5 +1,6 @@
 query {
-  myUser {
+  currentUser {
+    id
     activeReviewRequests {
       question {
         id
