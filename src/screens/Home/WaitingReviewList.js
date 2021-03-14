@@ -17,8 +17,8 @@ const QuestionGroupContent = () => {
   const [questions, setQuestions] = useState([]);
 
   const { loading } = useQuery(QUESTION_WAITING_REVIEW, {
-    onCompleted: ({ myUser }) => {
-      setQuestions(myUser.activeReviewRequests.map((reviewRequest) => reviewRequest.question));
+    onCompleted: ({ currentUser }) => {
+      setQuestions(currentUser.activeReviewRequests.map((reviewRequest) => reviewRequest.question));
     },
   });
 

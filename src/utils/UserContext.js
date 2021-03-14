@@ -19,7 +19,8 @@ export const useUserContext = () => {
 
 const MY_USER = gql`
   query {
-    myUser {
+    currentUser {
+      id
       avatarUrl
     }
   }
@@ -30,8 +31,8 @@ export const UserContextProvider = ({ children }) => {
   const providerValue = useMemo(() => ({ userInfo }), [userInfo]);
 
   useQuery(MY_USER, {
-    onCompleted: ({ myUser }) => {
-      setUserInfo(myUser);
+    onCompleted: ({ currentUser }) => {
+      setUserInfo(currentUser);
     },
     onError: () => {
       setUserInfo(false);
