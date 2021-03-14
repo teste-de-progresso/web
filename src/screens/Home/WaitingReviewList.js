@@ -5,11 +5,23 @@ import { loader } from "graphql.macro";
 
 import { Section, Loading, ListItem } from "../../components";
 
-export const WaitingReviewList = () => (
-  <Section title="Aguardando sua revisão">
-    <QuestionGroupContent />
-  </Section>
-);
+export const WaitingReviewList = () => {
+  const [cardOpened, setCardOpened] = useState(false);
+
+  const handleCardOpen = () => {
+    setCardOpened(!cardOpened);
+  };
+
+  return (
+    <Section
+      title="Aguardando sua revisão"
+      cardOpened={cardOpened}
+      handleOpenCard={handleCardOpen}
+    >
+      <QuestionGroupContent />
+    </Section>
+  );
+};
 
 const QuestionGroupContent = () => {
   const QUESTION_WAITING_REVIEW = loader("../../graphql/query/getQuestionWaitingReview.gql");

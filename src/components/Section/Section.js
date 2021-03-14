@@ -1,22 +1,52 @@
 import React from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import {
+  FaChevronDown, FaChevronUp, FaArrowLeft, FaArrowRight,
+} from "react-icons/fa";
 
-export const Section = ({ children, title }) => {
+export const Section = ({
+  children, title, cardOpened, handleOpenCard, page, changePage,
+}) => {
   if (window.screen.width < 640) {
     return (
       <>
         <div className="bg-gray-200 rounded mt-4 w-full">
           <div className=" inline-flex items-center justify-between w-full p-2">
             <h2 className="text-gray-500 pt-2 text-sm">{title}</h2>
-            <button>
-              <FaChevronDown />
+            <button onClick={handleOpenCard} className="text-gray-700">
+              {cardOpened ? <FaChevronUp /> : <FaChevronDown />}
             </button>
           </div>
-          <hr className="border-t border-gray-400 mb-4 mx-2" />
           <div>
-            <div className="py-1 text-sm">
-              {children}
-            </div>
+            {cardOpened && (
+              <>
+                <hr className="border-t border-gray-400 mb-4 mx-2" />
+                <div className="py-1 text-sm overflow-y-scroll">
+                  {children}
+                </div>
+                <div className="text-sm sm:text-base text-gray-700 flex flex-row-reverse">
+                  <div className="p-1">
+                    <button
+                      onClick={() => changePage("previous")}
+                      className="p-2"
+                    >
+                      <FaArrowLeft />
+                    </button>
+                    <span className="mb-2 m-auto">
+                      Página:
+                      {" "}
+                      {page}
+                    </span>
+                    <button
+                      onClick={() => changePage("next")}
+                      className="p-2"
+                    >
+                      <FaArrowRight />
+                    </button>
+                    <input readOnly hidden value={page} />
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </>
