@@ -1,2 +1,3 @@
-export { ApolloContext } from "./ApolloContext";
-export { UserContextProvider, useUserContext } from "./UserContext";
+export * from "./ApolloContext";
+export * from "./UserContext";
+export * from "./WIRISplugin";

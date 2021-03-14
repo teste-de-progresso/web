@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Card, WysiwygViewer } from "../../../../components";
+import { Card } from "../../../components";
+import { loadWIRISplugin } from "../../../utils";
 
 const bloomTaxonomy = {
   remember: "Recordar",
@@ -17,7 +18,7 @@ const difficulty = {
   hard: "Difícil",
 };
 
-export const ReadQuestion = ({ questionData = {} }) => {
+export const ViewMode = ({ questionData = {} }) => {
   if (!questionData) return null;
 
   const { alternatives } = questionData;
@@ -36,8 +37,10 @@ export const ReadQuestion = ({ questionData = {} }) => {
 
   const { instruction, support, body } = questionData;
 
+  loadWIRISplugin();
+
   return (
-    <>
+    <div className="max-w-screen-lg">
       <Card className="mb-3" title="Detalhes da questão">
         <div className="grid grid-cols-2">
           <div>
@@ -66,54 +69,56 @@ export const ReadQuestion = ({ questionData = {} }) => {
           </div>
         </div>
       </Card>
-
       {instruction && (
         <Card className="mb-3" title="Instrução">
-          <WysiwygViewer defaultValue={instruction} />
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: instruction }} />
         </Card>
       )}
       {support && (
         <Card className="mb-3" title="Suporte">
-          <WysiwygViewer defaultValue={support} />
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: support }} />
         </Card>
       )}
       {body && (
         <Card className="mb-3" title="Enunciado">
-          <WysiwygViewer defaultValue={body} />
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: body }} />
         </Card>
       )}
 
       <Card className="mb-3" title="Resposta Correta">
-        <WysiwygViewer defaultValue={correctAlternativeText} />
+        <div className="ck-content" dangerouslySetInnerHTML={{ __html: correctAlternativeText }} />
 
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
           <div>
             <h2 className="text-xl font-medium">Explicação</h2>
-            <WysiwygViewer defaultValue={questionData.explanation} />
+            <div
+              className="ck-content"
+              dangerouslySetInnerHTML={{ __html: questionData.explanation }}
+            />
           </div>
-          <div
-            className="bg-gray-400 w-full my-3"
-            style={{ height: "1px" }}
-          />
+          <div className="bg-gray-400 w-full my-3" style={{ height: "1px" }} />
           <div>
             <h2 className="text-xl font-medium">Referências</h2>
-            <WysiwygViewer defaultValue={questionData.references} />
+            <div
+              className="ck-content"
+              dangerouslySetInnerHTML={{ __html: questionData.references }}
+            />
           </div>
         </div>
       </Card>
       <Card className="mb-3" title="Distratores">
         {incorrectAnswers.map(({ text }, index) => (
-          <div key={index}>
+          <div key={`question-alternative-${index}`}>
             {index !== 0 && (
-            <div
-              className="bg-gray-400 w-full my-3"
-              style={{ height: "1px" }}
-            />
+              <div
+                className="bg-gray-400 w-full my-3"
+                style={{ height: "1px" }}
+              />
             )}
-            <WysiwygViewer defaultValue={text} />
+            <div className="ck-content" dangerouslySetInnerHTML={{ __html: text }} />
           </div>
         ))}
       </Card>
-    </>
+    </div>
   );
 };

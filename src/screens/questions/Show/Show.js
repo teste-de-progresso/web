@@ -7,7 +7,7 @@ import {
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@material-ui/core";
 
-import { ReadQuestion, QuestionFeedback } from "../shared";
+import { ViewMode, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
 
 const Item = ({ children, className }) => (
@@ -108,10 +108,10 @@ export const Show = () => {
         ))}
       </Navigator>
       <div className="bg-gray-100 w-full my-2">
-        <main className="m-auto">
+        <main className="max-w-screen-xl m-auto">
           <div className="flex px-5">
             <div className="w-3/5">
-              <ReadQuestion questionData={questionData} />
+              <ViewMode questionData={questionData} />
             </div>
             <div className="w-2/5 ml-3">
               <QuestionFeedback feedbacks={questionData.reviewFeedbacks} />

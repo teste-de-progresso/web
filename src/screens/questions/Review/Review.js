@@ -4,7 +4,7 @@ import { useParams, useRouteMatch } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 
-import { ReadQuestion, QuestionFeedback } from "../shared";
+import { ViewMode, QuestionFeedback } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 
@@ -45,9 +45,9 @@ export const Review = () => {
     <>
       <Navigator home />
       <div className="bg-gray-100 h-full w-full my-2">
-        <main className="flex px-5">
+        <main className="flex px-5 max-w-screen-xl m-auto">
           <div className="w-3/5">
-            <ReadQuestion questionData={questionData} />
+            <ViewMode questionData={questionData} />
           </div>
           <div className="w-2/5 ml-3">
             <FeedbackForm handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} />

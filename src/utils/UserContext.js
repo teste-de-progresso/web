@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import { useQuery, gql } from "@apollo/client";
 
-import { BadConnection } from "../screens";
+import { BadConnection } from "../screens/BadConnection";
 
 const Context = createContext(null);
 
