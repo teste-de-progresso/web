@@ -8,6 +8,7 @@ import "fontsource-roboto";
 
 import "./styles/global.css";
 import "./styles/main.css";
+import "./styles/ckeditor-content-styles.css";
 
 ReactDOM.render(
   <React.StrictMode>

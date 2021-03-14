@@ -13,7 +13,7 @@ import {
 
 import { MdComment, MdDone, MdWarning } from "react-icons/md";
 
-import { Card } from "../../../../components";
+import { Card } from "../../../components";
 
 export const QuestionFeedback = ({ feedbacks }) => (
   <Card title="Revisões">

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Card } from "../../../../components";
-import { loadWIRISplugin } from "../../../../utils";
+import { Card } from "../../../components";
+import { loadWIRISplugin } from "../../../utils";
 
 const bloomTaxonomy = {
   remember: "Recordar",
@@ -18,17 +18,17 @@ const difficulty = {
   hard: "Difícil",
 };
 
-export const ReadQuestion = ({ questionData = {} }) => {
+export const ViewMode = ({ questionData = {} }) => {
   if (!questionData) return null;
 
   const { alternatives } = questionData;
 
   const { text: correctAlternativeText } = alternatives.find(
-    (alternative) => alternative.correct === true
+    (alternative) => alternative.correct === true,
   );
 
   const incorrectAnswers = alternatives.filter(
-    (alternative) => alternative.correct === false
+    (alternative) => alternative.correct === false,
   );
 
   function formatDate(stringDate) {
@@ -40,7 +40,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
   loadWIRISplugin();
 
   return (
-    <>
+    <div className="max-w-screen-lg">
       <Card className="mb-3" title="Detalhes da questão">
         <div className="grid grid-cols-2">
           <div>
@@ -71,27 +71,28 @@ export const ReadQuestion = ({ questionData = {} }) => {
       </Card>
       {instruction && (
         <Card className="mb-3" title="Instrução">
-          <div dangerouslySetInnerHTML={{ __html: instruction }} />
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: instruction }} />
         </Card>
       )}
       {support && (
         <Card className="mb-3" title="Suporte">
-          <div dangerouslySetInnerHTML={{ __html: support }} />
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: support }} />
         </Card>
       )}
       {body && (
         <Card className="mb-3" title="Enunciado">
-          <div dangerouslySetInnerHTML={{ __html: body }} />
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: body }} />
         </Card>
       )}
 
       <Card className="mb-3" title="Resposta Correta">
-        <div dangerouslySetInnerHTML={{ __html: correctAlternativeText }} />
+        <div className="ck-content" dangerouslySetInnerHTML={{ __html: correctAlternativeText }} />
 
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
           <div>
             <h2 className="text-xl font-medium">Explicação</h2>
             <div
+              className="ck-content"
               dangerouslySetInnerHTML={{ __html: questionData.explanation }}
             />
           </div>
@@ -99,6 +100,7 @@ export const ReadQuestion = ({ questionData = {} }) => {
           <div>
             <h2 className="text-xl font-medium">Referências</h2>
             <div
+              className="ck-content"
               dangerouslySetInnerHTML={{ __html: questionData.references }}
             />
           </div>
@@ -113,10 +115,10 @@ export const ReadQuestion = ({ questionData = {} }) => {
                 style={{ height: "1px" }}
               />
             )}
-            <div dangerouslySetInnerHTML={{ __html: text }} />
+            <div className="ck-content" dangerouslySetInnerHTML={{ __html: text }} />
           </div>
         ))}
       </Card>
-    </>
+    </div>
   );
 };
