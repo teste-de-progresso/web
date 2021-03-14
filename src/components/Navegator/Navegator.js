@@ -77,27 +77,27 @@ export const Navigator = ({
           </Button>
         </DialogActions>
       </Dialog>
-      <div className="flex p-1 text-md px-8 text-gray-400 bg-primary-dark shadow-md" style={{ maxHeight: "34.4px" }}>
+      <div className="flex p-1 text-md px-2 sm:px-8 text-gray-400 bg-primary-dark shadow-md" style={{ maxHeight: "34.4px" }}>
         <HorizontalMenu className="list-none">
           {home
-          && (
-            <Item>
-              <button onClick={() => goHome()} className="flex">
-                <FaHome className="my-auto" />
-                <span className="pl-3">Início</span>
-              </button>
-            </Item>
-          )}
+            && (
+              <Item>
+                <button onClick={() => goHome()} className="flex">
+                  <FaHome className="my-auto" />
+                  <span className="pl-3">Início</span>
+                </button>
+              </Item>
+            )}
           {
-          (auth.isTeacher() && newQuestion) ? (
-            <Item>
-              <button onClick={() => createQuestion()} className="flex">
-                <FaPlus className="my-auto" />
-                <span className="pl-3">Nova Questão</span>
-              </button>
-            </Item>
-          ) : null
-        }
+            (auth.isTeacher() && newQuestion) ? (
+              <Item>
+                <button onClick={() => createQuestion()} className="flex">
+                  <FaPlus className="my-auto" />
+                  <span className="pl-3">Nova Questão</span>
+                </button>
+              </Item>
+            ) : null
+          }
           {children}
         </HorizontalMenu>
       </div>

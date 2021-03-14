@@ -37,7 +37,7 @@ const QuestionGroupContent = () => {
         style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <span className="text-base">
+          <span className="text-sm sm:text-base">
             Nenhuma questão registrada.
           </span>
         </div>

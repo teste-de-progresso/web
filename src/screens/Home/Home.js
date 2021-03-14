@@ -59,8 +59,8 @@ export const Home = () => {
         />
       </Dialog>
       <div className="bg-gray-100 w-full">
-        <main className="px-8 rounded-t-xlg">
-          <div className="mr-4">
+        <main className="sm:px-8 rounded-t-xlg">
+          <div className="mx-2 sm:mx-0 sm:mr-4">
             <QuestionPainel whereOptions={where} />
           </div>
         </main>

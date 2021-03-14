@@ -35,7 +35,7 @@ export const QuestionsGroup = ({
         <span>
           {title}
         </span>
-        <div className="ml-auto text-base text-gray-700">
+        <div className="ml-auto text-sm sm:text-base text-gray-700">
           <button
             onClick={() => changePage("previous")}
             className="p-2"
@@ -43,7 +43,7 @@ export const QuestionsGroup = ({
             <FaArrowLeft />
           </button>
           <span className="mb-2 m-auto">
-            Pagina:
+            Página:
             {" "}
             {page}
           </span>
@@ -124,7 +124,7 @@ export const QuestionsListContent = ({
         style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <span className="text-base">
+          <span className="text-sm sm:text-base">
             Nenhuma questão registrada.
           </span>
         </div>
