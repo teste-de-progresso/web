@@ -48,6 +48,7 @@ export const QuestionsGroup = ({
         handleOpenCard={handleCardOpen}
         changePage={changePage}
         page={page}
+        onlyOnePage={isLastPage && page === 1}
       >
         <QuestionsListContent
           page={page}

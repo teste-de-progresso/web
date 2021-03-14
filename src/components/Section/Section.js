@@ -3,8 +3,36 @@ import {
   FaChevronDown, FaChevronUp, FaArrowLeft, FaArrowRight,
 } from "react-icons/fa";
 
+const SwitchPageButton = ({ page, changePage, onlyOnePage }) => (
+  (page && !onlyOnePage)
+    ? (
+      <div className="text-sm sm:text-base text-gray-700 flex flex-row-reverse">
+        <div className="p-1">
+          <button
+            onClick={() => changePage("previous")}
+            className="p-2"
+          >
+            <FaArrowLeft />
+          </button>
+          <span className="mb-2 m-auto">
+            Página:
+            {" "}
+            {page}
+          </span>
+          <button
+            onClick={() => changePage("next")}
+            className="p-2"
+          >
+            <FaArrowRight />
+          </button>
+          <input readOnly hidden value={page} />
+        </div>
+      </div>
+    ) : null
+);
+
 export const Section = ({
-  children, title, cardOpened, handleOpenCard, page, changePage,
+  children, title, cardOpened, handleOpenCard, page, changePage, onlyOnePage,
 }) => {
   if (window.screen.width < 640) {
     return (
@@ -23,30 +51,10 @@ export const Section = ({
                 <div className="py-1 text-sm overflow-y-scroll">
                   {children}
                 </div>
-                <div className="text-sm sm:text-base text-gray-700 flex flex-row-reverse">
-                  <div className="p-1">
-                    <button
-                      onClick={() => changePage("previous")}
-                      className="p-2"
-                    >
-                      <FaArrowLeft />
-                    </button>
-                    <span className="mb-2 m-auto">
-                      Página:
-                      {" "}
-                      {page}
-                    </span>
-                    <button
-                      onClick={() => changePage("next")}
-                      className="p-2"
-                    >
-                      <FaArrowRight />
-                    </button>
-                    <input readOnly hidden value={page} />
-                  </div>
-                </div>
+                <SwitchPageButton page={page} changePage={changePage} onlyOnePage={onlyOnePage} />
               </>
             )}
+
           </div>
         </div>
       </>
