@@ -23,11 +23,44 @@ export const QuestionsGroup = ({
   const [limit] = useState(3);
   const [isLastPage, setIsLastPage] = useState(false);
   const [isFirstPage, setIsFirstPage] = useState(true);
+  const [cardOpened, setCardOpened] = useState(false);
+
+  const handleCardOpen = () => {
+    setCardOpened(!cardOpened);
+  };
 
   const changePage = (direction) => {
     if (!isLastPage && direction === "next") setPage(page + 1);
     if (!isFirstPage && direction === "previous") setPage(page - 1);
   };
+
+  if (window.screen.width < 640) {
+    return (
+      <Section
+        title={(
+          <div className="flex">
+            <span>
+              {title}
+            </span>
+          </div>
+        )}
+        cardOpened={cardOpened}
+        handleOpenCard={handleCardOpen}
+        changePage={changePage}
+        page={page}
+        onlyOnePage={isLastPage && page === 1}
+      >
+        <QuestionsListContent
+          page={page}
+          limit={limit}
+          where={where}
+          setIsFirstPage={setIsFirstPage}
+          setIsLastPage={setIsLastPage}
+          editable={editable}
+        />
+      </Section>
+    );
+  }
 
   return (
     <Section title={(
@@ -35,7 +68,7 @@ export const QuestionsGroup = ({
         <span>
           {title}
         </span>
-        <div className="ml-auto text-base text-gray-700">
+        <div className="ml-auto text-sm sm:text-base text-gray-700">
           <button
             onClick={() => changePage("previous")}
             className="p-2"
@@ -43,7 +76,7 @@ export const QuestionsGroup = ({
             <FaArrowLeft />
           </button>
           <span className="mb-2 m-auto">
-            Pagina:
+            Página:
             {" "}
             {page}
           </span>
@@ -124,7 +157,7 @@ export const QuestionsListContent = ({
         style={{ placeItems: "center" }}
       >
         <div className="text-center">
-          <span className="text-base">
+          <span className="text-sm sm:text-base">
             Nenhuma questão registrada.
           </span>
         </div>
@@ -134,7 +167,7 @@ export const QuestionsListContent = ({
 
   return (
     <div>
-      <div className="grid gap-4 col-gap-8 w-full grid-cols-3">
+      <div className="flex-col w-full sm:grid sm:gap-4 sm:col-gap-8 sm:grid-cols-3">
         {questions.map((question) => (
           <ListItem
             key={`question-${question.uuid}`}
