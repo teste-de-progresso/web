@@ -1,7 +1,7 @@
 import React from "react";
 
 export const ModalConfirmation = ({
-  title, text, onConfirmationClick, onCloseModal,
+  title, text, onConfirmationClick, onCloseModal, confirmationButtonText, goBackButtonText, backButton = true,
 }) => {
   const handleBackClick = () => {
     onCloseModal(false);
@@ -14,7 +14,7 @@ export const ModalConfirmation = ({
   return (
     <>
       <div className="fixed items-center flex justify-center top-0 w-full h-full overflow-auto bg-transparent z-50">
-        <div className="h-auto w-full sm:w-2/6 p-4 bg-white shadow-md rounded">
+        <div className="h-auto w-full sm:w-3/12 p-4 bg-white shadow-md rounded">
           <div className="mb-3 text-2xl ">
             {title}
           </div>
@@ -24,11 +24,13 @@ export const ModalConfirmation = ({
           </div>
           <div className="flex flex-row-reverse">
             <button onClick={handleConfirmClick} className="ml-4 text-white rounded bg-primary-normal hover:bg-primary-dark p-2">
-              Confirmar
+              {confirmationButtonText}
             </button>
-            <button className="text-red-600 hover:text-red-800" onClick={handleBackClick}>
-              Voltar
-            </button>
+            {backButton && (
+              <button className="text-red-600 hover:text-red-800" onClick={handleBackClick}>
+                {goBackButtonText}
+              </button>
+            )}
           </div>
         </div>
       </div>

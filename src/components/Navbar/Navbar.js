@@ -21,10 +21,6 @@ export const Navbar = () => {
 
   if (!userInfo) return null;
 
-  const handleLogout = () => {
-    dispatch(logout());
-  };
-
   const doLogout = () => {
     setLogoutModal(true);
   };
@@ -66,8 +62,10 @@ export const Navbar = () => {
         <ModalConfirmation
           title="Logout"
           text="Você está prestes a sair da conta, confirmar?"
-          onConfirmationClick={handleLogout}
+          onConfirmationClick={() => dispatch(logout())}
           onCloseModal={setLogoutModal}
+          confirmationButtonText="Confirmar"
+          goBackButtonText="Voltar"
         />
       )}
     </>
