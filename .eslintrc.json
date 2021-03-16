@@ -21,6 +21,7 @@
     "plugins": [
         "react"
     ],
+    "ignorePatterns": ["**/__generated__/**"],
     "rules": {
         "import/prefer-default-export": "off",
         "quotes": ["error", "double"],
