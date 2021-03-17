@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FaHome, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
@@ -6,7 +6,6 @@ import {
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@material-ui/core";
 
-import { useAuth } from "../../utils/contexts";
 import { Button } from "../Button";
 
 const HorizontalMenu = styled.ul`
@@ -30,17 +29,28 @@ display: flex;
 }
 `;
 
-const Item = ({ children, className }) => (
+type ItemProps = {
+  className?: string
+  children?: any
+}
+
+const Item: FC<ItemProps> = ({ children, className }) => (
   <div className={`hover:text-white ${className || ""}`}>
     {children}
   </div>
 );
 
-export const Navigator = ({
+type Props = {
+  needsConfirmation?: boolean
+  home?: boolean
+  newQuestion?: boolean
+  children?: any
+}
+
+export const Navigator: FC<Props> = ({
   needsConfirmation = false, home = false, newQuestion = false, children,
 }) => {
   const history = useHistory();
-  const auth = useAuth();
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
 
   const confirmLeave = () => {
@@ -89,7 +99,7 @@ export const Navigator = ({
               </Item>
             )}
           {
-            (auth.isTeacher() && newQuestion) ? (
+            (newQuestion) ? (
               <Item>
                 <button onClick={() => createQuestion()} className="flex">
                   <FaPlus className="my-auto" />

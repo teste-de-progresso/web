@@ -1,6 +1,16 @@
-import React from "react";
+import React, { CSSProperties, FC } from "react";
 
-export const Button = ({
+type Props = {
+  children?: string
+  onClick?: () => void
+  className?: string
+  type?: 'button' | 'submit'
+  secondary?: boolean
+  disabled?: boolean
+  style?: CSSProperties
+}
+
+export const Button: FC<Props> = ({
   children,
   onClick,
   className,

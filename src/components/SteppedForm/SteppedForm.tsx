@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { loader } from "graphql.macro";
 import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, List, ListItem, ListItemIcon, ListItemText,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
 } from "@material-ui/core";
 import { MdError } from "react-icons/md";
 
@@ -11,23 +19,36 @@ import { Button } from "../Button";
 
 import { formatInput } from "../../screens/questions/formatInputs";
 import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
+import { Status } from "../../graphql/__generated__/graphql-schema";
 
-export const FormContext = React.createContext({
+type FormContextProps = {
+  register?: any
+  control?: any
+  setValue?: any
+}
+
+export const FormContext = React.createContext<FormContextProps>({
   register: undefined,
   control: undefined,
   setValue: undefined,
 });
 
-export const SteppedForm = ({ children, questionId, status }) => {
+type Props = {
+  children: any;
+  questionId: string;
+  status: Status;
+};
+
+export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
   const SAVE = loader("../../graphql/mutation/saveQuestion.gql");
   const SAVE_DRAFT = loader("../../graphql/mutation/saveQuestionDraft.gql");
-  const allSteps = children.map((x) => x.props.step);
+  const allSteps = children.map((x: any) => x.props.step);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
   const [currentStep, setCurrentStep] = useState(minStep);
   const [submitNext, setSubmitNext] = useState(false);
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
-  const [errorsList, setErrorList] = useState([]);
+  const [errorsList, setErrorList] = useState<any>([]);
   const [confirmCompletionModal, setConfirmCompletionModal] = useState(false);
 
   const handleNext = () => {
@@ -40,16 +61,14 @@ export const SteppedForm = ({ children, questionId, status }) => {
     setSubmitNext(false);
   };
 
-  const {
-    register, handleSubmit, control, setValue, getValues,
-  } = useForm();
+  const { register, handleSubmit, control, setValue, getValues } = useForm();
 
   const [saveMutation] = useMutation(SAVE);
   const [saveDraftMutation] = useMutation(SAVE_DRAFT);
 
   const formatedInputs = () => formatInput(getValues());
 
-  const onSubmit = async (inputs) => {
+  const onSubmit = async (inputs: any) => {
     const inputValues = formatInput(inputs);
 
     const errors = validateQuestionInputs(inputValues);
@@ -73,7 +92,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    window.location = "/";
+    window.location.href = "/";
   };
 
   const save = async () => {
@@ -85,7 +104,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
       },
     });
 
-    window.location = "/";
+    window.location.href = "/";
   };
 
   return (
@@ -94,20 +113,16 @@ export const SteppedForm = ({ children, questionId, status }) => {
         open={errorsModalShowing}
         onClose={() => setConfirmCompletionModal(false)}
       >
-        <DialogTitle>
-          Falha de Validação
-        </DialogTitle>
+        <DialogTitle>Falha de Validação</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <List>
-              {errorsList.map((item) => (
+              {errorsList.map((item: any) => (
                 <ListItem key={item}>
                   <ListItemIcon>
                     <MdError />
                   </ListItemIcon>
-                  <ListItemText
-                    primary={item}
-                  />
+                  <ListItemText primary={item} />
                 </ListItem>
               ))}
             </List>
@@ -126,21 +141,18 @@ export const SteppedForm = ({ children, questionId, status }) => {
         open={confirmCompletionModal}
         onClose={() => setConfirmCompletionModal(false)}
       >
-        <DialogTitle>
-          Finalização de Questão
-        </DialogTitle>
+        <DialogTitle>Finalização de Questão</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Ao finalizar a questão, o revisor receberá uma notificação para revisá-la. Deseja continuar?
+            Ao finalizar a questão, o revisor receberá uma notificação para
+            revisá-la. Deseja continuar?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button secondary onClick={() => setConfirmCompletionModal(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => save()}>
-            Finalizar
-          </Button>
+          <Button onClick={() => save()}>Finalizar</Button>
         </DialogActions>
       </Dialog>
       <div className="m-auto max-w-screen-md">
@@ -158,7 +170,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
             />
           )}
           <FormContext.Provider value={{ register, control, setValue }}>
-            {children.map((x) => {
+            {children.map((x: any) => {
               const visible = x.props.step === currentStep;
 
               return (
@@ -177,9 +189,7 @@ export const SteppedForm = ({ children, questionId, status }) => {
               Retornar
             </Button>
             {(status === "draft" || status === undefined) && (
-              <Button onClick={() => saveDraft()}>
-                Salvar rascunho
-              </Button>
+              <Button onClick={() => saveDraft()}>Salvar rascunho</Button>
             )}
             <Button
               onClick={() => handleNext()}

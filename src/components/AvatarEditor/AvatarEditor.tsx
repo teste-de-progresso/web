@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import axios from "axios";
 import { DialogContent, DialogActions } from "@material-ui/core";
 
@@ -7,10 +7,18 @@ import { Alert } from "../Alert";
 import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 
-export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
+type Props = {
+  sucessCallback: (value: boolean) => void;
+  setAvatarEditorExhibition: (value: boolean) => void;
+};
+
+export const AvatarEditor: FC<Props> = ({
+  sucessCallback,
+  setAvatarEditorExhibition,
+}) => {
   const { token } = useAuth();
-  const [croppedImage, setCroppedImage] = useState();
-  const [alert, setAlert] = useState();
+  const [croppedImage, setCroppedImage] = useState<any>();
+  const [alert, setAlert] = useState<boolean>();
 
   const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -27,7 +35,7 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
         if (res.status === 200) {
           setAvatarEditorExhibition(false);
           if (sucessCallback) sucessCallback(true);
-          window.location = "/user/profile";
+          window.location.href = "/user/profile";
         } else {
           setAlert(true);
         }
@@ -44,17 +52,10 @@ export const AvatarEditor = ({ sucessCallback, setAvatarEditorExhibition }) => {
         <PhotoCrop callback={setCroppedImage} />
       </DialogContent>
       <DialogActions>
-        <Button
-          secondary
-          onClick={() => setAvatarEditorExhibition(false)}
-        >
+        <Button secondary onClick={() => setAvatarEditorExhibition(false)}>
           Cancelar
         </Button>
-        <Button
-          onClick={() => onSubmit()}
-        >
-          Salvar
-        </Button>
+        <Button onClick={() => onSubmit()}>Salvar</Button>
       </DialogActions>
     </>
   );

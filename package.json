@@ -9,12 +9,13 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .jsx,.js src",
     "lint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src",
-    "build-styles": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css"
+    "build-styles": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css",
+    "graphql:clean": "rimraf -g src/graphql/__generated__/**/*.ts",
+    "graphql:download-schema:json": "apollo schema:download ./src/graphql/__generated__/graphql-schema.json --endpoint=http://localhost:4000/",
+    "graphql:codegen": "yarn graphql:download-schema:json && yarn graphql:clean && graphql-codegen -c graphql-codegen.yml"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:fix"
-    }
+    "hooks": {}
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,7 +70,12 @@
     "typescript": "^4.1.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.3",
+    "@graphql-codegen/typescript": "^1.21.1",
     "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.9",
+    "apollo": "^2.32.5",
     "autoprefixer": "^9.8.5",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -81,6 +87,7 @@
     "postcss": "^7.0.32",
     "postcss-cli": "^7.1.1",
     "postcss-import": "^12.0.1",
+    "rimraf": "^3.0.2",
     "tailwindcss": "^1.5.2"
   }
 }

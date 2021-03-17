@@ -1,6 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 
-export const Alert = ({ children }) => (
+type Props = {
+  children: any
+}
+
+export const Alert: FC<Props> = ({ children }) => (
   <div
     className="w-full md:my-2 p-2 bg-red-600 items-center text-red-100 leading-none lg:rounded flex lg:inline-flex"
     role="alert"
