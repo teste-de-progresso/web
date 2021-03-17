@@ -15,9 +15,7 @@
     "graphql:codegen": "yarn graphql:download-schema:json && yarn graphql:clean && graphql-codegen -c graphql-codegen.yml"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:fix"
-    }
+    "hooks": {}
   },
   "eslintConfig": {
     "extends": "react-app"

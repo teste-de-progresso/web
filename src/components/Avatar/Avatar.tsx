@@ -1,6 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 
-export const Avatar = ({ src, className }) => {
+type Props = {
+  src: string
+  className?: string
+}
+
+export const Avatar: FC<Props> = ({ src, className = '' }) => {
   const url = () => {
     if (!src) return "https://via.placeholder.com/150";
 

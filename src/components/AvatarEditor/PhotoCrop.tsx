@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import Avatar from "react-avatar-edit";
 import { Snackbar } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 
-export const PhotoCrop = ({ callback }) => {
-  const [result, setResult] = useState();
+
+type Props = {
+  callback: (value: any) => void
+}
+
+export const PhotoCrop: FC<Props> = ({ callback }) => {
+  const [result, setResult] = useState<any>();
   const [fileSizeIsBig, setFileSizeBig] = useState(false);
-  const onCrop = (cropped) => {
+  const onCrop = (cropped: any) => {
     setResult(cropped);
     callback(result);
   };
@@ -15,7 +20,7 @@ export const PhotoCrop = ({ callback }) => {
     setResult(null);
   };
 
-  const onBeforeFileLoad = (elem) => {
+  const onBeforeFileLoad = (elem: any) => {
     if (elem.target.files[0].size > 180000) {
       elem.target.value = "";
       setFileSizeBig(true);
