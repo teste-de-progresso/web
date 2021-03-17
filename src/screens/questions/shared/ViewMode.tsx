@@ -1,6 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { Card } from "../../../components";
+import { Question } from "../../../graphql/__generated__/graphql-schema";
 import { loadWIRISplugin } from "../../../utils";
 
 const bloomTaxonomy = {
@@ -18,54 +19,70 @@ const difficulty = {
   hard: "Difícil",
 };
 
-export const ViewMode = ({ questionData = {} }) => {
+type Props = {
+  questionData?: Question
+}
+
+export const ViewMode: FC<Props> = ({ questionData }) => {
   if (!questionData) return null;
 
   const { alternatives } = questionData;
 
-  const { text: correctAlternativeText } = alternatives.find(
+  const correctAlternative = alternatives?.find(
     (alternative) => alternative.correct === true,
   );
 
-  const incorrectAnswers = alternatives.filter(
+  const incorrectAnswers = alternatives?.filter(
     (alternative) => alternative.correct === false,
   );
 
-  function formatDate(stringDate) {
+  function formatDate(stringDate: string) {
     return new Date(stringDate).toLocaleDateString();
   }
 
   const { instruction, support, body } = questionData;
 
-  loadWIRISplugin();
+  loadWIRISplugin()
 
   return (
     <div className="max-w-screen-lg">
       <Card className="mb-3" title="Detalhes da questão">
         <div className="grid grid-cols-2">
           <div>
-            <span className="text-gray-700">Dificuldade: </span>
-            {difficulty[questionData.difficulty]}
+            <span className="text-gray-700">Dificuldade </span>
+            {questionData.difficulty ? difficulty[questionData.difficulty] : ''}
           </div>
           <div>
-            <span className="text-gray-700">Taxonomia de Bloom: </span>
-            {bloomTaxonomy[questionData.bloomTaxonomy]}
+            <span className="text-gray-700">Taxonomia de Bloom </span>
+            {questionData.bloomTaxonomy ? bloomTaxonomy[questionData.bloomTaxonomy] : ''}
           </div>
           <div>
-            <span className="text-gray-700">Ano de autoria: </span>
+            <span className="text-gray-700">Ano de autoria </span>
             {questionData.authorshipYear}
           </div>
           <div>
-            <span className="text-gray-700">Autoria: </span>
+            <span className="text-gray-700">Autoria </span>
             {questionData.source === "UNIFESO" ? "Própria" : "Terceiros"}
           </div>
           <div>
-            <span className="text-gray-700">Atualizado em: </span>
+            <span className="text-gray-700">Atualizado em </span>
             {formatDate(questionData.updatedAt)}
           </div>
           <div>
-            <span className="text-gray-700">Registrada em: </span>
+            <span className="text-gray-700">Registrada em </span>
             {formatDate(questionData.createdAt)}
+          </div>
+          <div>
+            <span className="text-gray-700">Assunto </span>
+            {questionData.subject?.name}
+          </div>
+          <div>
+            <span className="text-gray-700">Categoria </span>
+            {questionData.subject?.category?.name}
+          </div>
+          <div>
+            <span className="text-gray-700">Eixo de formação </span>
+            {questionData.subject?.axis?.name}
           </div>
         </div>
       </Card>
@@ -86,14 +103,14 @@ export const ViewMode = ({ questionData = {} }) => {
       )}
 
       <Card className="mb-3" title="Resposta Correta">
-        <div className="ck-content" dangerouslySetInnerHTML={{ __html: correctAlternativeText }} />
+        <div className="ck-content" dangerouslySetInnerHTML={{ __html: correctAlternative?.text ?? '' }} />
 
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
           <div>
             <h2 className="text-xl font-medium">Explicação</h2>
             <div
               className="ck-content"
-              dangerouslySetInnerHTML={{ __html: questionData.explanation }}
+              dangerouslySetInnerHTML={{ __html: questionData.explanation ?? '' }}
             />
           </div>
           <div className="bg-gray-400 w-full my-3" style={{ height: "1px" }} />
@@ -101,13 +118,13 @@ export const ViewMode = ({ questionData = {} }) => {
             <h2 className="text-xl font-medium">Referências</h2>
             <div
               className="ck-content"
-              dangerouslySetInnerHTML={{ __html: questionData.references }}
+              dangerouslySetInnerHTML={{ __html: questionData.references ?? '' }}
             />
           </div>
         </div>
       </Card>
       <Card className="mb-3" title="Distratores">
-        {incorrectAnswers.map(({ text }, index) => (
+        {incorrectAnswers?.map(({ text }, index) => (
           <div key={`question-alternative-${index}`}>
             {index !== 0 && (
               <div
@@ -115,7 +132,7 @@ export const ViewMode = ({ questionData = {} }) => {
                 style={{ height: "1px" }}
               />
             )}
-            <div className="ck-content" dangerouslySetInnerHTML={{ __html: text }} />
+            <div className="ck-content" dangerouslySetInnerHTML={{ __html: text ?? '' }} />
           </div>
         ))}
       </Card>

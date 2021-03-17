@@ -16,6 +16,7 @@ const QUESTIONS_QUERY = gql`
       nodes {
         id
         uuid
+        userId
         updatedAt
         createdAt
       }

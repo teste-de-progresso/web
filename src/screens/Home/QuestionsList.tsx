@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { Question } from '../../graphql/__generated__/graphql-schema'
+import { useAuth } from '../../utils/contexts';
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -23,12 +24,16 @@ type Props = {
 }
 
 export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
-  const history = useHistory();
+  const { user } = useAuth()
+  const history = useHistory()
   const [pageCount, setPageCount] = useState(1)
 
   const formatDate = (stringDate: string) => new Date(stringDate).toLocaleDateString()
-  const handleEditQuestion = (id: string) => history.push(`/question/${id}/edit`);
-  const handleShowQuestion = (id: string) => history.push(`/question/${id}`);
+
+  const handleEditQuestion = (id: string) => history.push(`/question/${id}/edit`)
+  const handleReviewQuestion = (id: string) => history.push(`/question/${id}/review`)
+  const handleShowQuestion = (id: string) => history.push(`/question/${id}`)
+
   const handleOnNextPageClick = () => {
     if (pagination?.hasNextPage) {
       pagination.onNextPageClick()
@@ -75,7 +80,14 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
               >
                 <div
                   className="flex flex-col w-full px-3 py-2"
-                  onClick={() => handleShowQuestion(question.uuid)}
+                  onClick={() => {
+                    if (question.userId === user?.user_id) {
+                      handleShowQuestion(question.uuid)
+                    }
+                    else {
+                      handleReviewQuestion(question.uuid)
+                    }
+                  }}
                 >
                   <h2>
                     {`# ${question.id}`}
@@ -93,17 +105,19 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                     </span>
                   </div>
                 </div>
-                <div
-                  className="flex flex-col relative flex-grow justify-center"
-                >
+                {(question.userId === user?.user_id && question.status !== 'finished') &&
                   <div
-                    className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
-                    style={{ left: '-1.5rem' }}
-                    onClick={() => handleEditQuestion(question.uuid)}
+                    className="flex flex-col relative flex-grow justify-center"
                   >
-                    <EditIcon />
+                    <div
+                      className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
+                      style={{ left: '-1.5rem' }}
+                      onClick={() => handleEditQuestion(question.uuid)}
+                    >
+                      <EditIcon />
+                    </div>
                   </div>
-                </div>
+                }
               </div>
             ))}
           </div>

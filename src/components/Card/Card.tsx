@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 type Props = {
   title: string
-  action: () => void
+  action?: () => void
   children: any
   className?: string
 }
