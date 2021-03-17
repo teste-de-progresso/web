@@ -17,6 +17,7 @@ const QUESTIONS_QUERY = gql`
           question {
             id
             uuid
+            userId
             updatedAt
             createdAt
           }

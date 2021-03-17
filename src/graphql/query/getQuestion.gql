@@ -17,8 +17,16 @@ query ($uuid: ID!) {
     checkType
     bloomTaxonomy
     subject {
-      id
       name
+      subject {
+        name
+        axis {
+          name
+        }
+        category {
+          name
+        }
+      }
     }
     status
     reviewer {
