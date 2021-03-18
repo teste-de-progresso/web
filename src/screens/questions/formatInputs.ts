@@ -1,4 +1,4 @@
-export const formatInput = (inputs) => ({
+export const formatInput = (inputs: any) => ({
   id: inputs.id,
   instruction: inputs.instruction,
   body: inputs.body,

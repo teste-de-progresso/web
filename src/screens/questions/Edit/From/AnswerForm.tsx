@@ -1,15 +1,18 @@
-import React from "react";
+import React, { FC } from "react";
 import { Card } from "../../../../components/Card/Card";
+import { Question } from "../../../../graphql/__generated__/graphql-schema";
 import { TextEditor } from "./TextEditor";
 
-export const AnswerForm = ({ questionData = {} }) => {
-  const { explanation, references, alternatives } = questionData;
+type Props = {
+  question?: Question
+}
 
-  const alternativesMaped = alternatives || [
+export const AnswerForm: FC<Props> = ({ question }) => {
+  const alternativesMaped = question?.alternatives || [
     { text: "", correct: true },
   ];
 
-  const { text: correctAlternativeText } = alternativesMaped.find(
+  const correctAlternative = alternativesMaped.find(
     (alternative) => alternative.correct === true,
   );
 
@@ -20,17 +23,17 @@ export const AnswerForm = ({ questionData = {} }) => {
           <div className="w-full">
             <TextEditor
               name="correctAlternative"
-              defaultValue={correctAlternativeText}
+              defaultValue={correctAlternative?.text ?? ''}
             />
           </div>
           <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
             <div>
               <h2 className="text-xl font-medium">Explicação</h2>
-              <TextEditor name="explanation" defaultValue={explanation} />
+              <TextEditor name="explanation" defaultValue={question?.explanation ?? ''} />
             </div>
             <div>
               <h2 className="text-xl font-medium">Referências</h2>
-              <TextEditor defaultValue={references} name="references" />
+              <TextEditor defaultValue={question?.references ?? ''} name="references" />
             </div>
           </div>
         </div>

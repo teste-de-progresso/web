@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   ApolloClient,
   createHttpLink,
@@ -8,7 +8,11 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { useAuth } from "./contexts";
 
-export const ApolloContext = ({ children }) => {
+type Props = {
+  children?: any
+}
+
+export const ApolloContext: FC<Props> = ({ children }) => {
   const { token } = useAuth();
   const httpLink = createHttpLink({
     uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:3001",

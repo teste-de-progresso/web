@@ -1,12 +1,16 @@
 import { put } from "@redux-saga/core/effects";
 import * as jwt from "jsonwebtoken";
-import { failedLoadAuthentication, failureAuthentication, successAuthentication } from "./actions";
-import AuthenticationService from "../../../services/AuthenticationService";
+import {
+  failedLoadAuthentication,
+  failureAuthentication,
+  successAuthentication,
+} from "./actions";
+import { authentication } from "../../../services/api";
 
 export function* authenticationRequested(action) {
   const { email, password } = action.payload;
 
-  const [result, data] = yield AuthenticationService.login(email, password);
+  const [result, data] = yield authentication.login(email, password);
 
   if (result) {
     yield put(successAuthentication(data));
@@ -19,7 +23,9 @@ export function* authenticationRequested(action) {
 
 export function* authentcationLoad() {
   const token = localStorage.getItem("auth");
-  const guid = process.env.REACT_APP_JWT_SECRET_KEY || "1cb26f40-498b-4f72-a00a-e8633abc5957";
+  const guid =
+    process.env.REACT_APP_JWT_SECRET_KEY ||
+    "1cb26f40-498b-4f72-a00a-e8633abc5957";
 
   if (token) {
     try {

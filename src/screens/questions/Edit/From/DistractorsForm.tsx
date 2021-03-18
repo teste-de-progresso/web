@@ -1,13 +1,21 @@
-import React from "react";
+import React, { FC } from "react";
 import { Card } from "../../../../components";
+import { Question } from "../../../../graphql/__generated__/graphql-schema";
 import { TextEditor } from "./TextEditor";
 
-export const DistractorsForm = ({ questionData = {} }) => {
-  const { alternatives } = questionData;
+type Props = {
+  question?: Question
+}
 
-  const incorrectAnswers = alternatives.filter(
+export const DistractorsForm: FC<Props> = ({ question }) => {
+  const incorrectAnswers = question?.alternatives?.filter(
     (alternative) => alternative.correct === false,
-  );
+  ) || [
+      { text: "", correct: false },
+      { text: "", correct: false },
+      { text: "", correct: false },
+      { text: "", correct: false },
+    ];
 
   return (
     <>
@@ -18,7 +26,7 @@ export const DistractorsForm = ({ questionData = {} }) => {
               <div className="w-full mb-3" key={index}>
                 <TextEditor
                   name={`incorrectAlternative${index + 1}`}
-                  defaultValue={text}
+                  defaultValue={text ?? ""}
                 />
               </div>
             ))}

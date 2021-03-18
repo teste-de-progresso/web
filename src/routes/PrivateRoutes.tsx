@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router, Switch, Route,
 } from "react-router-dom";
 
-import { Navbar } from "../components";
+import { AppBar } from "../components";
 import { Home, UserProfile } from "../screens";
 import {
   New, Edit, Show, Review,
@@ -11,7 +11,7 @@ import {
 
 export const PrivateRoutes = () => (
   <Router>
-    <Navbar />
+    <AppBar />
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/question/new" component={New} />

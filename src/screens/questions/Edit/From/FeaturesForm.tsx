@@ -1,11 +1,19 @@
-import React, { useContext, useState } from "react";
-import { Card, Input, FormContext } from "../../../../components";
+import React, { FC, useContext, useState } from "react";
+import { Card, FormContext } from "../../../../components";
 import { SubjectSelect } from "./SubjectSelect";
 import { ReviewerSelect } from "./ReviewerSelect";
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
+import { Question, Subject, User } from "../../../../graphql/__generated__/graphql-schema";
 
-export const FeaturesForm = ({ questionData = {} }) => {
+type Props = {
+  question?: Question
+}
+
+export const FeaturesForm: FC<Props> = ({ question }) => {
+  const formContext = useContext(FormContext);
+  const currentYear = new Date().getFullYear();
+
   const {
     source,
     authorshipYear,
@@ -13,14 +21,11 @@ export const FeaturesForm = ({ questionData = {} }) => {
     bloomTaxonomy,
     checkType,
     subject,
-    reviewer,
-  } = questionData;
+    reviewer } = question || {} as Question
 
-  const formContext = useContext(FormContext);
-  const currentYear = new Date().getFullYear();
   const [ownQuestion, setOwnQuestion] = useState(source === "UNIFESO" || source === undefined);
 
-  const handleOwnCheck = (value) => {
+  const handleOwnCheck = (value: any) => {
     setOwnQuestion(value);
 
     if (value) {
@@ -60,7 +65,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 type="radio"
                 id="third"
                 name="own"
-                value={false}
+                value={"false"}
                 checked={!ownQuestion}
                 ref={formContext.register}
                 onChange={() => handleOwnCheck(false)}
@@ -73,9 +78,9 @@ export const FeaturesForm = ({ questionData = {} }) => {
               <h2 className="pr-2 pl-3 my-auto">Fonte</h2>
               <div className="w-full">
                 <div style={{ maxWidth: "194px" }}>
-                  <Input
-                    ref={formContext.register}
+                  <input
                     className="block rounded p-1 w-full border-gray-400 border shadow-sm"
+                    ref={formContext.register}
                     name="source"
                     defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
                     readOnly={ownQuestion}
@@ -86,14 +91,15 @@ export const FeaturesForm = ({ questionData = {} }) => {
             <div className="flex">
               <h2 className="pr-2 pl-3 my-auto">Ano</h2>
               <div style={{ maxWidth: "62px" }}>
-                <Input
+                <input
+                  className="w-full rounded p-1 border-gray-400 border shadow-sm"
                   ref={formContext.register}
                   type="number"
                   min="1999"
                   max={currentYear}
                   step="1"
                   name="authorshipYear"
-                  defaultValue={authorshipYear}
+                  defaultValue={authorshipYear ?? ""}
                   readOnly={ownQuestion}
                 />
               </div>
@@ -109,7 +115,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name="difficulty"
-                defaultValue={difficulty}
+                defaultValue={difficulty ?? ""}
               >
                 <option />
                 {DIFFICULTY.map((item, index) => (
@@ -125,7 +131,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name="checkType"
-                defaultValue={checkType}
+                defaultValue={checkType ?? ""}
               >
                 <option />
                 {CHECK_TYPE.map((item, index) => (
@@ -141,7 +147,7 @@ export const FeaturesForm = ({ questionData = {} }) => {
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name="bloomTaxonomy"
-                defaultValue={bloomTaxonomy}
+                defaultValue={bloomTaxonomy ?? ""}
               >
                 <option />
                 {BLOOM_TAXONOMY.map((item, index) => (
@@ -153,12 +159,12 @@ export const FeaturesForm = ({ questionData = {} }) => {
             </div>
           </div>
           <div className="w-full">
-            <SubjectSelect subject={subject || {}} />
+            <SubjectSelect subject={subject || { id: "" } as Subject} />
           </div>
         </div>
         <div className="flex flex-col mt-4">
           <h2>Revisor</h2>
-          <ReviewerSelect reviewer={reviewer || {}} />
+          <ReviewerSelect reviewer={reviewer || { id: "", name: "" } as User} />
         </div>
       </Card>
     </>

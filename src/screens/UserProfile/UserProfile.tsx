@@ -3,14 +3,11 @@ import { Dialog } from "@material-ui/core";
 
 import { useUserContext } from "../../utils";
 import { AvatarEditor, Navigator, Avatar } from "../../components";
-import { useAuth } from "../../utils/contexts/Authentication";
 
 export const UserProfile = () => {
-  const auth = useAuth();
-
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
   const userContextData = useUserContext();
-  const { userInfo } = userContextData;
+  const user = userContextData;
 
   return (
     <>
@@ -27,10 +24,10 @@ export const UserProfile = () => {
                 style={{ top: "-3.10rem" }}
                 onClick={() => setAvatarEditorExhibition(!avatarEditorExhibit)}
               >
-                <Avatar src={userInfo.avatarUrl} />
+                <Avatar src={user?.avatarUrl ?? ''} />
               </div>
               <div className="mt-8 text-center">
-                <h2 className="font-bold">{auth.user.name || auth.user.email}</h2>
+                <h2 className="font-bold">{user?.name || user?.email}</h2>
                 <h2 className="py-4">Centro: CCT</h2>
                 <h2 className="">TODO: Cargo</h2>
               </div>

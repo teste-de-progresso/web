@@ -3,13 +3,15 @@ import { useForm } from "react-hook-form";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import {
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@material-ui/core";
 
-import AuthenticationService from "../../services/AuthenticationService";
-import {
-  Card, Button, Input, InputGroup,
-} from "../../components";
+import { authentication } from "../../services/api";
+import { Card, Button, InputGroup } from "../../components";
 
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
@@ -34,10 +36,15 @@ export const ResetPasswordByToken = () => {
   });
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handlePasswordReset = async (inputs) => {
+  type FormInputs = {
+    password: string
+    password_confirmation: string
+  }
+
+  const handlePasswordReset = async (inputs: FormInputs) => {
     try {
-      const success = await AuthenticationService.resetPasswordByToken({
-        reset_password_token: query.get("reset_password_token"),
+      const success = await authentication.resetPasswordByToken({
+        reset_password_token: query.get("reset_password_token") ?? "",
         ...inputs,
       });
 
@@ -57,7 +64,8 @@ export const ResetPasswordByToken = () => {
     } catch (error) {
       setResponse({
         header: "Falha do Redefinir Senha",
-        body: "Tente novamente mais tarde ou entre em contato com o administrador",
+        body:
+          "Tente novamente mais tarde ou entre em contato com o administrador",
         success: false,
       });
     }
@@ -78,9 +86,7 @@ export const ResetPasswordByToken = () => {
       <Dialog open={modalOpen} onClose={() => confirmModal()}>
         <DialogTitle id="form-dialog-title">{response.header}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {response.body}
-          </DialogContentText>
+          <DialogContentText>{response.body}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => confirmModal()}>Login</Button>
@@ -97,25 +103,27 @@ export const ResetPasswordByToken = () => {
             onSubmit={handleSubmit(handlePasswordReset)}
             className="w-full h-full md:max-w-xl md:h-auto"
           >
-            <InputGroup className="mt-4">
+            <InputGroup>
               <label>Senha</label>
-              <Input
+              <input
+                className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                 type="password"
                 autoComplete="password"
                 name="password"
                 ref={register({ required: true })}
               />
             </InputGroup>
-            <InputGroup className="mt-4">
+            <InputGroup>
               <label>Confirmação de Senha</label>
-              <Input
+              <input
+                className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                 type="password"
                 autoComplete="password"
                 name="password_confirmation"
                 ref={register({ required: true })}
               />
             </InputGroup>
-            <InputGroup className="mt-4">
+            <InputGroup>
               <Button type="submit">Login</Button>
             </InputGroup>
           </form>

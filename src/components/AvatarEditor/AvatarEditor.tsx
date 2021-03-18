@@ -8,12 +8,10 @@ import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 
 type Props = {
-  sucessCallback: (value: boolean) => void;
   setAvatarEditorExhibition: (value: boolean) => void;
 };
 
 export const AvatarEditor: FC<Props> = ({
-  sucessCallback,
   setAvatarEditorExhibition,
 }) => {
   const { token } = useAuth();
@@ -34,7 +32,6 @@ export const AvatarEditor: FC<Props> = ({
       .then((res) => {
         if (res.status === 200) {
           setAvatarEditorExhibition(false);
-          if (sucessCallback) sucessCallback(true);
           window.location.href = "/user/profile";
         } else {
           setAlert(true);

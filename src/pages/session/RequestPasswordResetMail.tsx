@@ -3,13 +3,15 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@material-ui/core";
 
-import {
-  Card, Button, Input, InputGroup,
-} from "../../components";
-import AuthenticationService from "../../services/AuthenticationService";
+import { Card, Button, InputGroup } from "../../components";
+import { authentication } from "../../services/api";
 
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 
@@ -29,11 +31,15 @@ export const RequestPasswordResetMail = () => {
   const { register, handleSubmit } = useForm();
   const history = useHistory();
 
-  const handleResetPasswordEmail = async ({ email }) => {
+  type FormInputs = {
+    email: string
+  }
+
+  const handleResetPasswordEmail = async ({ email }: FormInputs) => {
     setDisableButton(true);
 
     try {
-      const success = await AuthenticationService.resetPasswordEmail(email);
+      const success = await authentication.resetPasswordEmail(email);
 
       if (success) {
         setResponse({
@@ -51,7 +57,8 @@ export const RequestPasswordResetMail = () => {
     } catch (error) {
       setResponse({
         header: "Falha ao redefinir senha",
-        body: "Tente novamente mais tarde ou entre em contato com o administrador",
+        body:
+          "Tente novamente mais tarde ou entre em contato com o administrador",
         success: false,
       });
     }
@@ -73,9 +80,7 @@ export const RequestPasswordResetMail = () => {
       <Dialog open={modalOpen} onClose={() => confirmModal()}>
         <DialogTitle id="form-dialog-title">{response.header}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {response.body}
-          </DialogContentText>
+          <DialogContentText>{response.body}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => confirmModal()}>Vou checar</Button>
@@ -94,26 +99,22 @@ export const RequestPasswordResetMail = () => {
           >
             <InputGroup>
               <label>Email</label>
-              <Input
+              <input
+                className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                 type="email"
                 autoComplete="email"
                 name="email"
                 ref={register({ required: true })}
               />
             </InputGroup>
-            <InputGroup className="mt-4">
-              <Button
-                type="submit"
-                disabled={disableButton}
-              >
+            <InputGroup>
+              <Button type="submit" disabled={disableButton}>
                 Enviar e-mail de redefinição
               </Button>
             </InputGroup>
           </form>
 
-          <div
-            className="mt-3 w-full text-center"
-          >
+          <div className="mt-3 w-full text-center">
             <button
               onClick={() => history.push("/")}
               className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"

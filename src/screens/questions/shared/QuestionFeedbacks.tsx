@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   List,
   ListItem,
@@ -14,8 +14,13 @@ import {
 import { MdComment, MdDone, MdWarning } from "react-icons/md";
 
 import { Card } from "../../../components";
+import { ReviewFeedback } from "../../../graphql/__generated__/graphql-schema";
 
-export const QuestionFeedback = ({ feedbacks }) => (
+type Porps = {
+  feedbacks: readonly ReviewFeedback[]
+}
+
+export const QuestionFeedback: FC<Porps> = ({ feedbacks }) => (
   <Card title="Revisões">
     {feedbacks.length ? (
       <List>
@@ -36,21 +41,26 @@ export const QuestionFeedback = ({ feedbacks }) => (
   </Card>
 );
 
-const Feedback = ({ feedback, isLast }) => {
-  const { user } = feedback;
-  const avatarUrl = process.env.REACT_APP_BACKEND_URL + user.avatarUrl;
+type FeedbackProps = {
+  feedback: ReviewFeedback
+  isLast: boolean
+}
 
-  const icon = {
-    comment: <MdComment color="#586069" />,
-    approve: <MdDone color="#22863a" />,
-    request_change: <MdWarning color="#cb2431" />,
-  };
+const FEEDBACK_ICON = {
+  comment: <MdComment color="#586069" />,
+  approve: <MdDone color="#22863a" />,
+  request_change: <MdWarning color="#cb2431" />,
+};
+
+const Feedback: FC<FeedbackProps> = ({ feedback, isLast }) => {
+  const { user } = feedback;
+  const avatarUrl = process.env.REACT_APP_BACKEND_URL ?? "" + user?.avatarUrl ?? "";
 
   return (
     <>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt={user.name} src={avatarUrl} />
+          <Avatar alt={user.name ?? ""} src={avatarUrl} />
         </ListItemAvatar>
         <ListItemText
           primary={user.name}
@@ -63,8 +73,8 @@ const Feedback = ({ feedback, isLast }) => {
           )}
         />
         <ListItemSecondaryAction>
-          <Icon edge="end" aria-label="comments">
-            {icon[feedback.status]}
+          <Icon aria-label="comments">
+            {FEEDBACK_ICON[feedback.status]}
           </Icon>
         </ListItemSecondaryAction>
       </ListItem>
