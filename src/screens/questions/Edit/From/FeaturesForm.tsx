@@ -4,7 +4,7 @@ import { SubjectSelect } from "./SubjectSelect";
 import { ReviewerSelect } from "./ReviewerSelect";
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
-import { Question, Subject, User } from "../../../../graphql/__generated__/graphql-schema";
+import { Question, User } from "../../../../graphql/__generated__/graphql-schema";
 
 type Props = {
   question?: Question
@@ -159,7 +159,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
             </div>
           </div>
           <div className="w-full">
-            <SubjectSelect subject={subject || { id: "" } as Subject} />
+            <SubjectSelect subjectId={subject?.id} />
           </div>
         </div>
         <div className="flex flex-col mt-4">

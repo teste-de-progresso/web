@@ -3,15 +3,15 @@ import { useQuery } from "@apollo/client";
 import { loader } from "graphql.macro";
 
 import { FormContext } from "../../../../components";
-import { Query, Subject } from "../../../../graphql/__generated__/graphql-schema";
+import { Query } from "../../../../graphql/__generated__/graphql-schema";
 
 type Props = {
-  subject?: Subject
+  subjectId?: string
 }
 
-export const SubjectSelect: FC<Props> = ({ subject }) => {
+export const SubjectSelect: FC<Props> = ({ subjectId }) => {
   const GET_SUBJECTS = loader("../../../../graphql/query/getSubjects.gql");
-  const [selectedId, setSelectedId] = useState(subject?.id);
+  const [selectedId, setSelectedId] = useState(subjectId);
   const formContext = useContext(FormContext);
   const { loading, data } = useQuery<Query>(GET_SUBJECTS);
 
@@ -21,23 +21,8 @@ export const SubjectSelect: FC<Props> = ({ subject }) => {
     value: item.id,
     label: item.name,
   }));
-
-  const selectedSubject = (() => {
-    if (!selectedId || selectedId === "") {
-      return {
-        id: undefined,
-        name: "",
-        axis: {
-          name: "",
-        },
-        category: {
-          name: "",
-        },
-      };
-    }
-
-    return data?.subjects.find((item) => item.id === selectedId);
-  })();
+  console.log(subjectId)
+  const selectedSubject = data?.subjects.find((item) => item.id === selectedId);
 
   return (
     <div className="flex flex-col h-full">
@@ -47,7 +32,7 @@ export const SubjectSelect: FC<Props> = ({ subject }) => {
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
-          defaultValue={subject?.id ?? ""}
+          defaultValue={subjectId ?? ""}
           onChange={(e) => setSelectedId(e.target.value)}
         >
           <option value="" />

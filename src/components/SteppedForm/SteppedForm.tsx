@@ -1,7 +1,6 @@
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@apollo/client";
-import { loader } from "graphql.macro";
+import { gql, useMutation } from "@apollo/client";
 import {
   Dialog,
   DialogTitle,
@@ -19,7 +18,7 @@ import { Button } from "../Button";
 
 import { formatInput } from "../../screens/questions/formatInputs";
 import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
-import { Status } from "../../graphql/__generated__/graphql-schema";
+import { Mutation, Status } from "../../graphql/__generated__/graphql-schema";
 
 type FormContextProps = {
   register?: any
@@ -39,9 +38,27 @@ type Props = {
   questionId?: string;
 };
 
+const SAVE_QUESTION_MUTATION = gql`
+  mutation($input: SaveInput!) {
+    saveQuestion(input: $input) {
+      payload {
+        id
+      }
+    }
+  }
+`
+
+const SAVE_DRAFT_QUESTION_MUTATION = gql`
+  mutation($input: SaveDraftInput!) {
+    saveQuestionDraft(input: $input) {
+      payload {
+        id
+      }
+    }
+  }
+`
+
 export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
-  const SAVE = loader("../../graphql/mutation/saveQuestion.gql");
-  const SAVE_DRAFT = loader("../../graphql/mutation/saveQuestionDraft.gql");
   const allSteps = children.map((x: any) => x.props.step);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
@@ -63,8 +80,8 @@ export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
 
   const { register, handleSubmit, control, setValue, getValues } = useForm();
 
-  const [saveMutation] = useMutation(SAVE);
-  const [saveDraftMutation] = useMutation(SAVE_DRAFT);
+  const [saveMutation] = useMutation<Mutation>(SAVE_QUESTION_MUTATION);
+  const [saveDraftMutation] = useMutation<Mutation>(SAVE_DRAFT_QUESTION_MUTATION);
 
   const formatedInputs = () => formatInput(getValues());
 
