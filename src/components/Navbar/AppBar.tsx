@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useAuth } from "../../utils/contexts/Authentication";
 import { logout } from "../../store/ducks/auth/actions";
 import { useUserContext } from "../../utils";
 
@@ -9,14 +8,12 @@ import { Avatar } from "../Avatar";
 import unifesoLogo from "../../img/unifeso-logo-branco.svg";
 import logoImgUnifeso from "../../img/logoImgUnifeso.png";
 
-export const Navbar = () => {
-  const auth = useAuth();
+export const AppBar = () => {
   const dispatch = useDispatch();
-  const userContextData = useUserContext();
-  const { userInfo } = userContextData;
+  const user = useUserContext();
   const history = useHistory();
 
-  if (!userInfo) return null;
+  if (!user) return null;
 
   const doLogout = () => dispatch(logout());
   const openProfile = () => {
@@ -30,8 +27,8 @@ export const Navbar = () => {
       </div>
       <div className="group inline-block relative text-white text-sm sm:text-base font-medium hover:bg-primary-dark p-2 hover:shadow-lg cursor-pointer">
         <div className="flex flex-row items-center space-x-2">
-          <span>{auth?.user?.name || auth?.user?.email}</span>
-          <Avatar src={userInfo.avatarUrl} className="w-10 sm:w-12" />
+          <span>{user?.name || user?.email}</span>
+          <Avatar src={user?.avatarUrl ?? ""} className="w-10 sm:w-12" />
         </div>
         <div className="absolute hidden pt-1 group-hover:block w-full right-0 text-black">
           <div className="mt-2 bg-white rounded shadow-md border border-gray-300 font-light">

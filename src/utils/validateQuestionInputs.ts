@@ -1,4 +1,4 @@
-export const validateQuestionInputs = (inputs) => {
+export const validateQuestionInputs = (inputs: any) => {
   const errors = [];
 
   const {
@@ -15,7 +15,7 @@ export const validateQuestionInputs = (inputs) => {
     reviewerId,
   } = inputs;
 
-  alternatives.forEach(({ correct, text }, index) => {
+  alternatives.forEach(({ correct, text }: any, index: number) => {
     if (correct && text.length <= 4) {
       errors.push("A resposta não está preenchida");
     } else if (text.length <= 4) {

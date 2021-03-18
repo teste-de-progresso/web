@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import { Controller } from "react-hook-form";
 import * as ClassicEditor from "ckeditor5-mathtype/build/ckeditor";
@@ -23,7 +23,12 @@ const toolbarOptions = [
   "redo",
 ];
 
-export const TextEditor = ({ name, defaultValue = "" }) => {
+type Props = {
+  name: string
+  defaultValue: string
+}
+
+export const TextEditor: FC<Props> = ({ name, defaultValue }) => {
   const formContext = useContext(FormContext);
 
   return (
@@ -41,7 +46,7 @@ export const TextEditor = ({ name, defaultValue = "" }) => {
               uploadUrl: `${process.env.REACT_APP_BACKEND_URL}/picture/upload`,
             },
           }}
-          onChange={(_, editor) => onChange(editor.getData())}
+          onChange={(_: any, editor: any) => onChange(editor.getData())}
         />
       )}
     />

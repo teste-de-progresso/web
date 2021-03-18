@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  Card, Button, Input, InputGroup, Alert,
+  Card, Button, InputGroup, Alert,
 } from "../../components";
 import { requestAuthentication } from "../../store/ducks/auth/actions";
 
@@ -18,11 +18,16 @@ const Layout = styled.div`
 
 export const SignIn = () => {
   const { register, handleSubmit } = useForm();
-  const state = useSelector(({ auth }) => auth);
+  const state = useSelector(({ auth }: any) => auth);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleLogin = (inputs) => {
+  type FormInputs = {
+    email: string
+    password: string
+  }
+
+  const handleLogin = (inputs: FormInputs) => {
     dispatch(requestAuthentication(inputs.email, inputs.password));
   };
 
@@ -42,23 +47,25 @@ export const SignIn = () => {
             {state.error ? <Alert>{state.error}</Alert> : null}
             <InputGroup>
               <label>Email</label>
-              <Input
+              <input
+                className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                 type="email"
                 autoComplete="email"
                 name="email"
                 ref={register({ required: true })}
               />
             </InputGroup>
-            <InputGroup className="mt-4">
+            <InputGroup>
               <label>Senha</label>
-              <Input
+              <input
+                className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                 type="password"
                 autoComplete="password"
                 name="password"
                 ref={register({ required: true })}
               />
             </InputGroup>
-            <InputGroup className="mt-4">
+            <InputGroup>
               <Button type="submit">Login</Button>
             </InputGroup>
           </form>

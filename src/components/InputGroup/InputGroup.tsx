@@ -15,5 +15,5 @@ type Props = {
 }
 
 export const InputGroup: FC<Props> = ({ children }) => (
-  <StyledInputGroup className="mt-2 mb-2">{children}</StyledInputGroup>
+  <StyledInputGroup className="mt-4 mb-2">{children}</StyledInputGroup>
 );

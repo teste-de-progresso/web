@@ -35,8 +35,8 @@ export const FormContext = React.createContext<FormContextProps>({
 
 type Props = {
   children: any;
-  questionId: string;
   status: Status;
+  questionId?: string;
 };
 
 export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {

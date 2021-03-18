@@ -82,16 +82,16 @@ export const Edit = () => {
         <main>
           <SteppedForm questionId={question.id} status={question.status as Status}>
             <Step step={0}>
-              <EnunciadoForm questionData={question} />
+              <EnunciadoForm question={question} />
             </Step>
             <Step step={1}>
-              <AnswerForm questionData={question} />
+              <AnswerForm question={question} />
             </Step>
             <Step step={2}>
-              <DistractorsForm questionData={question} />
+              <DistractorsForm question={question} />
             </Step>
             <Step step={3}>
-              <FeaturesForm questionData={question} />
+              <FeaturesForm question={question} />
             </Step>
           </SteppedForm>
         </main>
