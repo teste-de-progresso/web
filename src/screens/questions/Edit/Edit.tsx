@@ -31,13 +31,7 @@ const GET_QUESTION = gql`
       checkType
       bloomTaxonomy
       subject {
-        name
-        axis {
-          name
-        }
-        category {
-          name
-        }
+        id
       }
       status
       reviewer {
@@ -73,7 +67,6 @@ export const Edit = () => {
   });
 
   if (loading || !question) return null;
-
 
   return (
     <div>
