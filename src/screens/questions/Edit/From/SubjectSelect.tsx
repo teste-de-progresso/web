@@ -21,7 +21,7 @@ export const SubjectSelect: FC<Props> = ({ subjectId }) => {
     value: item.id,
     label: item.name,
   }));
-  console.log(subjectId)
+
   const selectedSubject = data?.subjects.find((item) => item.id === selectedId);
 
   return (
