@@ -17,8 +17,8 @@ import { MdError } from "react-icons/md";
 import { Button } from "../Button";
 
 import { formatInput } from "../../screens/questions/formatInputs";
-import { validateQuestionInputs } from "../../utils/validateQuestionInputs";
-import { Mutation, Status } from "../../graphql/__generated__/graphql-schema";
+import { validateQuestionInputs } from "../../utils/questionValidations";
+import { Mutation, SaveDraftQuestionInput, Status } from "../../graphql/__generated__/graphql-schema";
 
 type FormContextProps = {
   register?: any
@@ -85,7 +85,7 @@ export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
 
   const formatedInputs = () => formatInput(getValues());
 
-  const onSubmit = async (inputs: any) => {
+  const onSubmit = async (inputs: SaveDraftQuestionInput) => {
     const inputValues = formatInput(inputs);
 
     const errors = validateQuestionInputs(inputValues);
