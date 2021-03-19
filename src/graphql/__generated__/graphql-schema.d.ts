@@ -136,7 +136,7 @@ export type QueryQuestionsArgs = {
 
 export type Question = {
   readonly __typename?: 'Question';
-  readonly alternatives?: Maybe<ReadonlyArray<QuestionAlternative>>;
+  readonly alternatives: ReadonlyArray<QuestionAlternative>;
   readonly authorshipYear?: Maybe<Scalars['String']>;
   readonly bloomTaxonomy?: Maybe<BloomTaxonomy>;
   readonly body?: Maybe<Scalars['String']>;
@@ -156,7 +156,7 @@ export type Question = {
   readonly subject?: Maybe<Subject>;
   readonly support?: Maybe<Scalars['String']>;
   readonly updatedAt: Scalars['ISO8601DateTime'];
-  readonly userId?: Maybe<Scalars['Int']>;
+  readonly user: User;
   readonly uuid: Scalars['ID'];
 };
 

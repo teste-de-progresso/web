@@ -23,18 +23,15 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
     subject,
     reviewer } = question || {} as Question
 
-  const [ownQuestion, setOwnQuestion] = useState(source === "UNIFESO" || source === undefined);
+  const [ownQuestion, setOwnQuestion] = useState<boolean>(source === "UNIFESO" || source === undefined || source === null);
 
-  const handleOwnCheck = (value: any) => {
-    setOwnQuestion(value);
-
-    if (value) {
+  const handleOwnCheck = (value: string) => {
+    if (value === 'UNIFESO') {
+      setOwnQuestion(true)
       formContext.setValue("source", "UNIFESO");
-      formContext.setValue(
-        "authorshipYear",
-        value ? String(new Date().getFullYear()) : "",
-      );
+      formContext.setValue("authorshipYear", String(new Date().getFullYear()));
     } else {
+      setOwnQuestion(false)
       formContext.setValue("source", "");
       formContext.setValue("authorshipYear", "");
     }
@@ -52,25 +49,23 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
               <input
                 className="my-auto"
                 type="radio"
-                id="own"
-                checked={ownQuestion}
+                id="source-own"
+                checked={!!ownQuestion}
                 ref={formContext.register}
-                onChange={() => handleOwnCheck(true)}
+                onChange={() => handleOwnCheck("UNIFESO")}
               />
-              <label htmlFor="own" className="ml-1">Própria</label>
+              <label htmlFor="source-own" className="ml-1">Própria</label>
             </div>
             <div className="my-auto ml-3">
               <input
                 className="my-auto"
                 type="radio"
-                id="third"
-                name="own"
-                value={"false"}
+                id="source-third"
                 checked={!ownQuestion}
                 ref={formContext.register}
-                onChange={() => handleOwnCheck(false)}
+                onChange={() => handleOwnCheck("")}
               />
-              <label htmlFor="third" className="ml-1">Outro</label>
+              <label htmlFor="source-third" className="ml-1">Outro</label>
             </div>
           </div>
           <div className="flex">
@@ -83,7 +78,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
                     ref={formContext.register}
                     name="source"
                     defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
-                    readOnly={ownQuestion}
+                    readOnly={!!ownQuestion}
                   />
                 </div>
               </div>
@@ -99,8 +94,8 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
                   max={currentYear}
                   step="1"
                   name="authorshipYear"
-                  defaultValue={authorshipYear ?? ""}
-                  readOnly={ownQuestion}
+                  defaultValue={authorshipYear ?? new Date().getFullYear().toString()}
+                  readOnly={!!ownQuestion}
                 />
               </div>
             </div>
