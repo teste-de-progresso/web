@@ -38,8 +38,6 @@ export const validateQuestionInputs = (inputs: SaveDraftQuestionInput) => {
     reviewerId,
   } = values;
 
-  console.log(values);
-
   if (!body || body.length <= 5) {
     errors.push(`"Enunciado" não preenchido.`);
   }
