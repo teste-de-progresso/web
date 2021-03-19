@@ -46,7 +46,7 @@ export const validateQuestionInputs = (inputs: SaveDraftQuestionInput) => {
 
   const answer = alternatives?.find((a) => a.correct);
 
-  if (answer?.text?.length) {
+  if (!answer?.text?.length) {
     errors.push(`"Resposta Correta" não preenchida.`);
   }
 
