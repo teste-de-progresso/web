@@ -81,7 +81,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                 <div
                   className="flex flex-col w-full px-3 py-2"
                   onClick={() => {
-                    if (question.userId === user?.user_id) {
+                    if (question.user.id === user?.user_id.toString()) {
                       handleShowQuestion(question.uuid)
                     }
                     else {
@@ -105,7 +105,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                     </span>
                   </div>
                 </div>
-                {(question.userId === user?.user_id && question.status !== 'finished') &&
+                {(question.user.id === user?.user_id.toString() && question.status !== 'finished') &&
                   <div
                     className="flex flex-col relative flex-grow justify-center"
                   >

@@ -17,7 +17,9 @@ const QUESTIONS_QUERY = gql`
         id
         uuid
         status
-        userId
+        user {
+          id
+        }
         updatedAt
         createdAt
       }
