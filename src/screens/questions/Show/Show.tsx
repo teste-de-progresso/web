@@ -8,7 +8,7 @@ import {
 
 import { ViewMode, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
-import { Query, Question } from "../../../graphql/__generated__/graphql-schema";
+import { Mutation, Query, Question } from "../../../graphql/__generated__/graphql-schema";
 
 const GET_QUESTION = gql`
   query ($uuid: ID!) {
@@ -77,9 +77,10 @@ export const Show: FC = () => {
   const { id: uuid } = useParams<any>();
   const history = useHistory();
   const [confirmEditDialog, setConfirmEditDialog] = useState(false);
+  const [confirmRegister, setConfirmRegister] = useState(false);
   const [question, setQuestion] = useState<Question>();
 
-  const [finishQuestion] = useMutation(FINISH_QUESTION);
+  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION);
 
   if (!uuid) history.push("/");
 
@@ -105,37 +106,59 @@ export const Show: FC = () => {
     }
   };
 
-  const handleRegisterQuestion = () => {
-    const { id: questionId } = question;
-    finishQuestion({
+  const handleRegisterQuestion = async () => {
+    await finishQuestion({
       variables: {
-        questionId,
+        questionId: question.id,
       },
     });
   };
 
-  const options = [
-    {
+
+  const ACTIONS = {
+    edit: {
       icon: <MdEdit className="my-auto" />,
       label: "Editar",
       action: handleEditQuestion,
     },
-  ];
+    register: {
+      icon: <MdSave className="my-auto" />,
+      label: "Registrar",
+      action: () => setConfirmRegister(true),
+    },
+  }
 
-  if (question.status === "approved") {
-    options.push(
-      {
-        icon: <MdSave className="my-auto" />,
-        label: "Registrar",
-        action: handleRegisterQuestion,
-      },
-    );
+  const options = () => {
+    switch (question.status) {
+      case 'finished':
+        return ([]);
+      case 'approved':
+        return ([ACTIONS.edit, ACTIONS.register])
+      default:
+        return ([ACTIONS.edit])
+    }
   }
 
   return (
     <>
+      <Dialog open={confirmRegister} onClose={() => setConfirmRegister(false)}>
+        <DialogTitle>Confrimação de Registro</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Registrar uma questão irá disponibiza-lá para uso em uma prova. Deseja confirma essa ação?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button secondary onClick={() => setConfirmRegister(false)}>
+            Cancelar
+          </Button>
+          <Button onClick={() => handleRegisterQuestion()}>
+            Registar
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Dialog open={confirmEditDialog} onClose={() => setConfirmEditDialog(false)}>
-        <DialogTitle>Deseja realmente editar esta questão?</DialogTitle>
+        <DialogTitle>Confirmação de Edição</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Alterar uma questão registrada irá requerir uma nova revisão do seu par, deseja ir para tela de edição?
@@ -151,7 +174,7 @@ export const Show: FC = () => {
         </DialogActions>
       </Dialog>
       <Navigator home>
-        {options.map((option, index) => (
+        {options().map((option, index) => (
           <div key={`navigation-item-${index}`} className={`hover:text-white ${index === 0 ? "ml-auto" : ""}`}>
             <button onClick={option.action} className="flex pl-4">
               {option.icon}

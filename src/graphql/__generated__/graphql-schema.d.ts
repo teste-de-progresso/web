@@ -336,7 +336,7 @@ export type User = {
   readonly avatarUrl?: Maybe<Scalars['String']>;
   readonly email: Scalars['String'];
   readonly id: Scalars['ID'];
-  readonly name?: Maybe<Scalars['String']>;
+  readonly name: Scalars['String'];
   readonly roles: ReadonlyArray<UserRoles>;
 };
 
