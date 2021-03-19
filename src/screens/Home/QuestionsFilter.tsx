@@ -1,15 +1,15 @@
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, { FC } from "react";
 import { useForm } from "react-hook-form";
-import { DialogContent, DialogActions, DialogTitle } from "@material-ui/core";
 
+import { BloomTaxonomy, Check, Difficulty } from "../../graphql/__generated__/graphql-schema";
 import {
   CHECK_TYPE,
   BLOOM_TAXONOMY,
   DIFFICULTY,
 } from "../../utils/types";
-import { Button } from "../../components";
 
-import { BloomTaxonomy, Check, Difficulty } from "../../graphql/__generated__/graphql-schema";
+import { Button, Dialog, DialogButton, DialogContent } from "../../components";
+import { useFiltersProvider } from './QuestionsFilterProvider'
 
 type FilterGroupProps = {
   title: string
@@ -18,9 +18,15 @@ type FilterGroupProps = {
     value: string
     label: string
   }[]
+  selecteds: any[]
 }
 
-const FilterGroup: FC<FilterGroupProps> = ({ title, options, register }) => (
+const FilterGroup: FC<FilterGroupProps> = ({
+  title,
+  options,
+  register,
+  selecteds,
+}) => (
   <div className="flex flex-col" key={`filter-group-${title}`}>
     <h3 className="font-bold mb-2">{title}</h3>
     {options.map(({ value, label }) => (
@@ -30,6 +36,7 @@ const FilterGroup: FC<FilterGroupProps> = ({ title, options, register }) => (
           name={value}
           ref={register}
           id={value}
+          defaultChecked={selecteds.includes(value)}
         />
         <label htmlFor={value} className="ml-2">
           {label}
@@ -39,92 +46,103 @@ const FilterGroup: FC<FilterGroupProps> = ({ title, options, register }) => (
   </div>
 )
 
+
 type Props = {
-  setCheckType: Dispatch<SetStateAction<Check[] | undefined>>
-  setBloomTaxonomy: Dispatch<SetStateAction<BloomTaxonomy[] | undefined>>
-  setDifficulty: Dispatch<SetStateAction<Difficulty[] | undefined>>
-  hiddenModal: () => void
+  open: boolean
+  onClose: () => void
 }
 
 export const QuestionsFilter: FC<Props> = ({
-  setCheckType,
-  setBloomTaxonomy,
-  setDifficulty,
-  hiddenModal,
+  open,
+  onClose,
 }) => {
-  const {
-    handleSubmit, register, reset, setValue
-  } = useForm();
-  const filterGroups = [
-    { callback: setCheckType, options: CHECK_TYPE, title: "Tipo de Questão" },
-    {
-      callback: setBloomTaxonomy,
-      options: BLOOM_TAXONOMY,
-      title: "Habilidade Cognitiva",
-    },
-    { callback: setDifficulty, options: DIFFICULTY, title: "Dificuldade" },
-  ];
+  const { handleSubmit, register } = useForm();
+  const { where, setWhere } = useFiltersProvider()
+  const { difficulty, checkType, bloomTaxonomy } = where
 
   const onSubmit = (inputs: any) => {
     const valuesFromCheckType = CHECK_TYPE.filter(({ value }) => inputs[value]).map(({ value }) => value) as Check[]
     const valuesFromBloomTaxonomy = BLOOM_TAXONOMY.filter(({ value }) => inputs[value]).map(({ value }) => value) as BloomTaxonomy[]
     const valuesFromDifficulty = DIFFICULTY.filter(({ value }) => inputs[value]).map(({ value }) => value) as Difficulty[]
 
-    setCheckType(valuesFromCheckType.length ? valuesFromCheckType : undefined)
-    setBloomTaxonomy(valuesFromBloomTaxonomy.length ? valuesFromBloomTaxonomy : undefined)
-    setDifficulty(valuesFromDifficulty.length ? valuesFromDifficulty : undefined)
+    const removeKeysWithUndefiend = (obj: any) => {
+      for (var propName in obj) {
+        if (obj[propName] === null || obj[propName] === undefined) {
+          delete obj[propName];
+        }
+      }
+      return obj
+    }
 
-    hiddenModal()
-  };
-
-  const handleUndo = () => {
-    reset();
-
-    hiddenModal();
+    setWhere(
+      removeKeysWithUndefiend({
+        checkType: (valuesFromCheckType.length ? valuesFromCheckType : undefined),
+        bloomTaxonomy: (valuesFromBloomTaxonomy.length ? valuesFromBloomTaxonomy : undefined),
+        difficulty: (valuesFromDifficulty.length ? valuesFromDifficulty : undefined),
+      })
+    )
+    onClose()
   };
 
   const handleClean = () => {
-    filterGroups.forEach(({ options }) => {
-      options.forEach(({ value }) => {
-        setValue(value, false)
-      })
-    });
+    setWhere({})
   };
 
+  if (!open) return null
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <DialogTitle>
-        Filtros
-      </DialogTitle>
-      <DialogContent>
-        <div className="grid grid-cols-1 gap-10 mb-8 lg:grid-cols-2">
-          {filterGroups.map(({ title, callback, options }) => (
-            <FilterGroup key={`fitler-group-${title}`} title={title} register={register} options={options} />
-          ))}
-        </div>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          className="mx-3 gray-100"
-          secondary
-          onClick={() => handleClean()}
-        >
-          Limpar
-        </Button>
-        <Button
-          className="mx-3 gray-100"
-          secondary
-          onClick={() => handleUndo()}
-        >
-          Cancelar
-        </Button>
-        <Button
-          className="mx-3"
-          type="submit"
-        >
-          Aplicar
-        </Button>
-      </DialogActions>
-    </form>
+    <Dialog
+      title="Filtros"
+      onClose={onClose}
+      open={open}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <DialogContent>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+            <FilterGroup
+              title="Tipo de Questão"
+              register={register}
+              options={CHECK_TYPE}
+              selecteds={(checkType ?? []) as Check[]}
+            />
+            <FilterGroup
+              title="Habilidade Cognitiva"
+              register={register}
+              options={BLOOM_TAXONOMY}
+              selecteds={(bloomTaxonomy ?? []) as BloomTaxonomy[]}
+            />
+            <FilterGroup
+              title="Dificuldade"
+              register={register}
+              options={DIFFICULTY}
+              selecteds={(difficulty ?? []) as Difficulty[]}
+            />
+          </div>
+        </DialogContent>
+
+        <DialogButton>
+          <Button
+            className="mx-3 gray-100"
+            secondary
+            onClick={() => handleClean()}
+          >
+            Limpar
+          </Button>
+          <Button
+            className="mx-3 gray-100"
+            secondary
+            onClick={onClose}
+          >
+            Cancelar
+          </Button>
+          <Button
+            className="mx-3"
+            type="submit"
+          >
+            Aplicar
+          </Button>
+        </DialogButton>
+      </form>
+    </Dialog>
   );
 };

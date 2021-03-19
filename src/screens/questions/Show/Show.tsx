@@ -89,7 +89,6 @@ export const Show: FC = () => {
       uuid,
     },
     onCompleted: ({ question }) => setQuestion(question as Question),
-    onError: (err) => console.log(err)
   });
 
   if (loading || !question) return null;

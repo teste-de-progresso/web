@@ -8,3 +8,4 @@ export * from "./Navegator";
 export * from "./Navbar";
 export * from "./Avatar";
 export * from "./SteppedForm";
+export * from "./Dialog";
