@@ -1,7 +1,7 @@
 import {
   Question,
   SaveDraftQuestionInput,
-} from "../graphql/__generated__/graphql-schema";
+} from "../../graphql/__generated__/graphql-schema";
 
 export type QuestionEditForm = Question & {
   subjectId: string;

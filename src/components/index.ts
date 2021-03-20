@@ -9,3 +9,4 @@ export * from "./Navbar";
 export * from "./Avatar";
 export * from "./SteppedForm";
 export * from "./Dialog";
+export * from "./AlertV2";

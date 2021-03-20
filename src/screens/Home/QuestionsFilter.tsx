@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { BloomTaxonomy, Check, Difficulty } from "../../graphql/__generated__/graphql-schema";
@@ -19,6 +19,7 @@ type FilterGroupProps = {
     label: string
   }[]
   selecteds: any[]
+  setChanged: Dispatch<SetStateAction<boolean>>
 }
 
 const FilterGroup: FC<FilterGroupProps> = ({
@@ -26,6 +27,7 @@ const FilterGroup: FC<FilterGroupProps> = ({
   options,
   register,
   selecteds,
+  setChanged,
 }) => (
   <div className="flex flex-col" key={`filter-group-${title}`}>
     <h3 className="font-bold mb-2">{title}</h3>
@@ -37,6 +39,7 @@ const FilterGroup: FC<FilterGroupProps> = ({
           ref={register}
           id={value}
           defaultChecked={selecteds.includes(value)}
+          onClick={() => setChanged(true)}
         />
         <label htmlFor={value} className="ml-2">
           {label}
@@ -45,7 +48,6 @@ const FilterGroup: FC<FilterGroupProps> = ({
     ))}
   </div>
 )
-
 
 type Props = {
   open: boolean
@@ -56,9 +58,10 @@ export const QuestionsFilter: FC<Props> = ({
   open,
   onClose,
 }) => {
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, reset } = useForm();
   const { where, setWhere } = useFiltersProvider()
   const { difficulty, checkType, bloomTaxonomy } = where
+  const [changed, setChanged] = useState(false)
 
   const onSubmit = (inputs: any) => {
     const valuesFromCheckType = CHECK_TYPE.filter(({ value }) => inputs[value]).map(({ value }) => value) as Check[]
@@ -81,14 +84,15 @@ export const QuestionsFilter: FC<Props> = ({
         difficulty: (valuesFromDifficulty.length ? valuesFromDifficulty : undefined),
       })
     )
+    setChanged(false)
     onClose()
   };
 
   const handleClean = () => {
+    setChanged(false)
     setWhere({})
+    reset()
   };
-
-  if (!open) return null
 
   return (
     <Dialog
@@ -104,24 +108,30 @@ export const QuestionsFilter: FC<Props> = ({
               register={register}
               options={CHECK_TYPE}
               selecteds={(checkType ?? []) as Check[]}
+              setChanged={setChanged}
             />
             <FilterGroup
               title="Habilidade Cognitiva"
               register={register}
               options={BLOOM_TAXONOMY}
               selecteds={(bloomTaxonomy ?? []) as BloomTaxonomy[]}
+              setChanged={setChanged}
             />
             <FilterGroup
               title="Dificuldade"
               register={register}
               options={DIFFICULTY}
               selecteds={(difficulty ?? []) as Difficulty[]}
+              setChanged={setChanged}
             />
           </div>
         </DialogContent>
 
         <DialogButton>
           <Button
+            style={{
+              visibility: (changed ? 'visible' : 'hidden')
+            }}
             className="mx-3 gray-100"
             secondary
             onClick={() => handleClean()}
