@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { MdModeEdit } from 'react-icons/md';
-import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Question } from '../../graphql/__generated__/graphql-schema'
@@ -25,14 +25,9 @@ type Props = {
 
 export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
   const { user } = useAuth()
-  const history = useHistory()
   const [pageCount, setPageCount] = useState(1)
 
   const formatDate = (stringDate: string) => new Date(stringDate).toLocaleDateString()
-
-  const handleEditQuestion = (id: string) => history.push(`/question/${id}/edit`)
-  const handleReviewQuestion = (id: string) => history.push(`/question/${id}/review`)
-  const handleShowQuestion = (id: string) => history.push(`/question/${id}`)
 
   const handleOnNextPageClick = () => {
     if (pagination?.hasNextPage) {
@@ -78,16 +73,9 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                 key={`question-${question.uuid}`}
                 className="mx-1 sm:mx-0 mb-4 sm:mb-0 border-l-8 border-primary-light flex bg-white hover:bg-unifeso-50 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
               >
-                <div
+                <Link
                   className="flex flex-col w-full px-3 py-2"
-                  onClick={() => {
-                    if (question.user.id === user?.user_id.toString()) {
-                      handleShowQuestion(question.uuid)
-                    }
-                    else {
-                      handleReviewQuestion(question.uuid)
-                    }
-                  }}
+                  to={`/question/${question.uuid}/${(question.user.id === user?.user_id.toString() ? '' : '/review')}`}
                 >
                   <h2>
                     {`# ${question.id}`}
@@ -104,18 +92,18 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                       {formatDate(question.updatedAt)}
                     </span>
                   </div>
-                </div>
+                </Link>
                 {(question.user.id === user?.user_id.toString() && question.status !== 'finished') &&
                   <div
                     className="flex flex-col relative flex-grow justify-center"
                   >
-                    <div
+                    <Link
                       className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
                       style={{ left: '-1.5rem' }}
-                      onClick={() => handleEditQuestion(question.uuid)}
+                      to={`/question/${question.uuid}/edit`}
                     >
                       <EditIcon />
-                    </div>
+                    </Link>
                   </div>
                 }
               </div>

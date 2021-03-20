@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { MdEdit, MdSave } from "react-icons/md";
+import { MdDeleteForever, MdEdit, MdSave } from "react-icons/md";
 import { useQuery, useMutation, gql } from "@apollo/client";
 import {
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
@@ -9,6 +9,7 @@ import {
 import { ViewMode, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
 import { Mutation, Query, Question } from "../../../graphql/__generated__/graphql-schema";
+import { AlertSeverity, AlertV2 } from "../../../components/AlertV2";
 
 const GET_QUESTION = gql`
   query ($uuid: ID!) {
@@ -59,10 +60,10 @@ const GET_QUESTION = gql`
 `
 
 const FINISH_QUESTION = gql`
-  mutation ($questionId: ID!) {
+  mutation ($id: ID!) {
     finishQuestion (
       input: {
-        questionId: $questionId
+        questionId: $id
       }
     ) {
       payload {
@@ -73,14 +74,26 @@ const FINISH_QUESTION = gql`
   }
 `
 
+const DESTROY_QUESTION = gql`
+  mutation ($id: ID!) {
+    destroyQuestion(
+      input: {
+        questionId: $id
+      }
+    )
+  }
+`
 export const Show: FC = () => {
   const { id: uuid } = useParams<any>();
   const history = useHistory();
   const [confirmEditDialog, setConfirmEditDialog] = useState(false);
   const [confirmRegister, setConfirmRegister] = useState(false);
+  const [confirmDestroy, setConfirmDestroy] = useState(false);
+  const [alert, setAlert] = useState<{ text: string, severity: AlertSeverity }>()
   const [question, setQuestion] = useState<Question>();
 
-  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION);
+  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION, { variables: { id: question?.id } });
+  const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION, { variables: { id: question?.id } });
 
   if (!uuid) history.push("/");
 
@@ -106,13 +119,22 @@ export const Show: FC = () => {
   };
 
   const handleRegisterQuestion = async () => {
-    await finishQuestion({
-      variables: {
-        questionId: question.id,
-      },
-    });
+    await finishQuestion()
   };
 
+  const handleDestroyQuestion = async () => {
+    const { data } = await destroyQuestion()
+
+    if (data?.destroyQuestion) {
+      window.location.href = '/'
+    } else {
+      setAlert({
+        text: 'Algo inesperado aconteceu ao tentar descartar a questão.',
+        severity: 'error',
+      })
+      setConfirmDestroy(false)
+    }
+  };
 
   const ACTIONS = {
     edit: {
@@ -125,6 +147,11 @@ export const Show: FC = () => {
       label: "Registrar",
       action: () => setConfirmRegister(true),
     },
+    destroy: {
+      icon: <MdDeleteForever className="my-auto" />,
+      label: 'Descartar',
+      action: () => setConfirmDestroy(true),
+    }
   }
 
   const options = () => {
@@ -134,12 +161,28 @@ export const Show: FC = () => {
       case 'approved':
         return ([ACTIONS.edit, ACTIONS.register])
       default:
-        return ([ACTIONS.edit])
+        return ([ACTIONS.edit, ACTIONS.destroy])
     }
   }
 
   return (
     <>
+      <Dialog open={confirmDestroy} onClose={() => setConfirmDestroy(false)}>
+        <DialogTitle>Confirmação de Descarte</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            A ação de descarte é irreversível. Deseja confirmar essa ação?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button secondary onClick={() => setConfirmDestroy(false)}>
+            Cancelar
+          </Button>
+          <Button onClick={() => handleDestroyQuestion()}>
+            Excluir
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Dialog open={confirmRegister} onClose={() => setConfirmRegister(false)}>
         <DialogTitle>Confrimação de Registro</DialogTitle>
         <DialogContent>
@@ -160,7 +203,7 @@ export const Show: FC = () => {
         <DialogTitle>Confirmação de Edição</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Alterar uma questão registrada irá requerir uma nova revisão do seu par, deseja ir para tela de edição?
+            Alterar uma questão registrada irá requerir uma nova revisão do seu par. Deseja ir para tela de edição?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -184,6 +227,9 @@ export const Show: FC = () => {
       </Navigator>
       <div className="bg-gray-100 w-full my-2">
         <main className="max-w-screen-xl m-auto">
+          <div className="flex">
+            {alert && <AlertV2 severity={alert.severity} text={alert.text} />}
+          </div>
           <div className="flex px-5">
             <div className="w-3/5">
               <ViewMode questionData={question} />

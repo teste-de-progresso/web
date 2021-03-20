@@ -20,7 +20,7 @@ export const Dialog: FC<Props> = ({
     }
   }
 
-  // if (!open) return null
+  if (!open) return null
 
   return (
     <AriaModal

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { FaHome, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
 import {
@@ -65,10 +65,6 @@ export const Navigator: FC<Props> = ({
     }
   };
 
-  const createQuestion = () => {
-    history.push("/question/new");
-  };
-
   return (
     <>
       <Dialog open={confirmLeaveDialog} onClose={() => setConfirmLeaveDialog(false)}>
@@ -101,10 +97,10 @@ export const Navigator: FC<Props> = ({
           {
             (newQuestion) ? (
               <Item>
-                <button onClick={() => createQuestion()} className="flex">
+                <Link to="/question/new" className="flex">
                   <FaPlus className="my-auto" />
                   <span className="pl-3">Nova Questão</span>
-                </button>
+                </Link>
               </Item>
             ) : null
           }

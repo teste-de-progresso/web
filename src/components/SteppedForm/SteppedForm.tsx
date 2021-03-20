@@ -17,7 +17,7 @@ import { MdError } from "react-icons/md";
 import { Button } from "../Button";
 
 import { formatInput } from "../../screens/questions/formatInputs";
-import { validateQuestionInputs } from "../../utils/questionValidations";
+import { validateQuestionInputs } from "../../utils/questions/questionValidations";
 import { Mutation, SaveDraftQuestionInput, Status } from "../../graphql/__generated__/graphql-schema";
 
 type FormContextProps = {
