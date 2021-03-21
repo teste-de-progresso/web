@@ -18,13 +18,18 @@ import { Button } from "../Button";
 
 import { formatInput } from "../../screens/questions/formatInputs";
 import { validateQuestionInputs } from "../../utils/questions/questionValidations";
-import { Mutation, SaveDraftQuestionInput, Status } from "../../graphql/__generated__/graphql-schema";
+import {
+  Mutation,
+  SaveDraftQuestionInput,
+  Status,
+} from "../../graphql/__generated__/graphql-schema";
+import { AlertSeverity, AlertV2 } from "../../components/AlertV2";
 
 type FormContextProps = {
-  register?: any
-  control?: any
-  setValue?: any
-}
+  register?: any;
+  control?: any;
+  setValue?: any;
+};
 
 export const FormContext = React.createContext<FormContextProps>({
   register: undefined,
@@ -36,6 +41,7 @@ type Props = {
   children: any;
   status: Status;
   questionId?: string;
+  setPageSaved?: any;
 };
 
 const SAVE_QUESTION_MUTATION = gql`
@@ -46,7 +52,7 @@ const SAVE_QUESTION_MUTATION = gql`
       }
     }
   }
-`
+`;
 
 const SAVE_DRAFT_QUESTION_MUTATION = gql`
   mutation($input: SaveDraftInput!) {
@@ -56,9 +62,14 @@ const SAVE_DRAFT_QUESTION_MUTATION = gql`
       }
     }
   }
-`
+`;
 
-export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
+export const SteppedForm: FC<Props> = ({
+  children,
+  questionId,
+  status,
+  setPageSaved,
+}) => {
   const allSteps = children.map((x: any) => x.props.step);
   const minStep = Math.min(...allSteps);
   const maxStep = Math.max(...allSteps);
@@ -67,6 +78,11 @@ export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
   const [errorsModalShowing, setErrorsModalShowing] = useState(false);
   const [errorsList, setErrorList] = useState<any>([]);
   const [confirmCompletionModal, setConfirmCompletionModal] = useState(false);
+  const [alert, setAlert] = useState<{
+    state: boolean;
+    severity: AlertSeverity;
+    text: string;
+  }>({ state: false, severity: "error", text: "" });
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -81,7 +97,9 @@ export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
   const { register, handleSubmit, control, setValue, getValues } = useForm();
 
   const [saveMutation] = useMutation<Mutation>(SAVE_QUESTION_MUTATION);
-  const [saveDraftMutation] = useMutation<Mutation>(SAVE_DRAFT_QUESTION_MUTATION);
+  const [saveDraftMutation] = useMutation<Mutation>(
+    SAVE_DRAFT_QUESTION_MUTATION
+  );
 
   const formatedInputs = () => formatInput(getValues());
 
@@ -101,15 +119,40 @@ export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
   const saveDraft = async () => {
     const inputValues = formatInput(getValues());
 
-    await saveDraftMutation({
-      variables: {
-        input: {
-          question: inputValues,
+    try {
+      await saveDraftMutation({
+        variables: {
+          input: {
+            question: inputValues,
+          },
         },
-      },
-    });
+      });
+      setAlert({
+        state: true,
+        severity: "success",
+        text: "Rascunho salvo com sucesso",
+      });
 
-    window.location.href = "/";
+      setPageSaved(true)
+
+      setTimeout(
+        () => setAlert({ state: false, severity: "error", text: "" }),
+        2000
+      );
+    } catch (e) {
+      setAlert({
+        state: true,
+        severity: "error",
+        text: `Erro ao salvar rascunho. ${e}`,
+      });
+
+      setPageSaved(false)
+
+      setTimeout(
+        () => setAlert({ state: false, severity: "error", text: "" }),
+        8000
+      );
+    }
   };
 
   const save = async () => {
@@ -126,6 +169,9 @@ export const SteppedForm: FC<Props> = ({ children, questionId, status }) => {
 
   return (
     <>
+      {alert.state && (
+        <AlertV2 severity={alert.severity} text={alert.text}></AlertV2>
+      )}
       <Dialog
         open={errorsModalShowing}
         onClose={() => setConfirmCompletionModal(false)}
