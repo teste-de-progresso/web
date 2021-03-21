@@ -29,24 +29,28 @@ const FilterGroup: FC<FilterGroupProps> = ({
   selecteds,
   setChanged,
 }) => (
-  <div className="flex flex-col" key={`filter-group-${title}`}>
-    <h3 className="font-bold mb-2">{title}</h3>
-    {options.map(({ value, label }) => (
-      <span key={value}>
-        <input
-          type="checkbox"
-          name={value}
-          ref={register}
-          id={value}
-          defaultChecked={selecteds.includes(value)}
-          onClick={() => setChanged(true)}
-        />
-        <label htmlFor={value} className="ml-2">
-          {label}
-        </label>
-      </span>
-    ))}
-  </div>
+  <>
+    <div className="mt-2 sm:mt-0 flex flex-col">
+      <h3 className="font-bold mb-1">{title}</h3>
+      <div className="grid grid-cols-2 sm:flex sm:flex-col" key={`filter-group-${title}`}>
+        {options.map(({ value, label }) => (
+          <span className="mr-1 mb-2 sm:mb-0 sm:mr-0" key={value}>
+            <input
+              type="checkbox"
+              name={value}
+              ref={register}
+              id={value}
+              defaultChecked={selecteds.includes(value)}
+              onClick={() => setChanged(true)}
+            />
+            <label htmlFor={value} className="ml-2">
+              {label}
+            </label>
+          </span>
+        ))}
+      </div>
+    </div>
+  </>
 )
 
 type Props = {
@@ -102,7 +106,7 @@ export const QuestionsFilter: FC<Props> = ({
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-2">
             <FilterGroup
               title="Tipo de Questão"
               register={register}
@@ -128,25 +132,36 @@ export const QuestionsFilter: FC<Props> = ({
         </DialogContent>
 
         <DialogButton>
-          <Button
-            style={{
-              visibility: (changed ? 'visible' : 'hidden')
-            }}
-            className="mx-3 gray-100"
-            secondary
-            onClick={() => handleClean()}
-          >
-            Limpar
+          {window.screen.width < 640 ? (
+            <Button
+              className={`mx-3 gray-100 mb-4 sm:mb-0 mt-2 sm:mt-0 ${changed ? 'block' : 'hidden'}`}
+              secondary
+              onClick={() => handleClean()}
+            >
+              Limpar
           </Button>
+          ):
+          (
+            <Button
+              style={{
+                visibility: (changed ? 'visible' : 'hidden')
+              }}
+              className="mx-3 gray-100 mb-4 sm:mb-0 mt-2 sm:mt-0"
+              secondary
+              onClick={() => handleClean()}
+            >
+              Limpar
+            </Button>
+          )}
           <Button
-            className="mx-3 gray-100"
+            className="mx-3 gray-100 mb-4 sm:mb-0"
             secondary
             onClick={onClose}
           >
             Cancelar
           </Button>
           <Button
-            className="mx-3"
+            className="mx-3 mb-4 sm:mb-0"
             type="submit"
           >
             Aplicar

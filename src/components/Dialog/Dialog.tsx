@@ -27,8 +27,8 @@ export const Dialog: FC<Props> = ({
       titleText="modal"
       onExit={handleClose}
     >
-      <div className="h-screen grid place-items-center">
-        <div className="bg-white pb-2 rounded-md">
+      <div className="h-screen grid place-items-stretch sm:place-items-center">
+        <div className="bg-white pb-0 sm:pb-2 rounded-md">
           {title &&
             <div className="py-4 px-6 text-xl">
               {title}
@@ -42,13 +42,13 @@ export const Dialog: FC<Props> = ({
 }
 
 export const DialogContent: FC = ({ children }) => (
-  <div className="px-6">
+  <div className="px-4 sm:px-6">
     {children}
   </div>
 )
 
 export const DialogButton: FC = ({ children }) => (
-  <div className="py-4 px-2 flex justify-between">
+  <div className="mt-6 sm:mt-0 sm:py-4 mx-8 sm:mx-0 sm:px-2 sm:flex sm:justify-between sm:flex-row flex flex-col">
     {children}
   </div>
 )
