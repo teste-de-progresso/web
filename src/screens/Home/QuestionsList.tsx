@@ -75,7 +75,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
               >
                 <Link
                   className="flex flex-col w-full px-3 py-2"
-                  to={`/question/${question.uuid}/${(question.user.id === user?.user_id.toString() ? '' : '/review')}`}
+                  to={`/question/${question.uuid}/${(question.user.id === user?.user_id.toString() ? '' : 'review')}`}
                 >
                   <h2>
                     {`# ${question.id}`}
