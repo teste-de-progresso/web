@@ -156,15 +156,32 @@ export const SteppedForm: FC<Props> = ({
   };
 
   const save = async () => {
-    await saveMutation({
-      variables: {
-        input: {
-          question: formatedInputs(),
+    try {
+      await saveMutation({
+        variables: {
+          input: {
+            question: formatedInputs(),
+          },
         },
-      },
-    });
+      })
 
-    window.location.href = "/";
+      window.location.href = "/";
+    } catch (e) {
+      setAlert({
+        state: true,
+        severity: "error",
+        text: `Erro ao salvar questão. ${e}. Por favor, tente novamente.`,
+      });
+
+      setPageSaved(false)
+
+      setTimeout(
+        () => setAlert({ state: false, severity: "error", text: "" }),
+        8000
+      );
+    };
+
+    setConfirmCompletionModal(false)
   };
 
   return (
