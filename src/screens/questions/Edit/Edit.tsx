@@ -9,11 +9,15 @@ import {
   DistractorsForm,
   FeaturesForm,
 } from "./From";
-import { Query, Question, Status } from "../../../graphql/__generated__/graphql-schema";
+import {
+  Query,
+  Question,
+  Status,
+} from "../../../graphql/__generated__/graphql-schema";
 
 const GET_QUESTION = gql`
-  query ($uuid: ID!) {
-    question (uuid: $uuid) {
+  query($uuid: ID!) {
+    question(uuid: $uuid) {
       id
       uuid
       instruction
@@ -51,13 +55,15 @@ const GET_QUESTION = gql`
       createdAt
     }
   }
-`
+`;
 
 export const Edit = () => {
-  const { id: uuid } = useParams<any>()
-  const history = useHistory()
-  const [question, setQuestion] = useState<Question>()
-  if (!uuid) history.push("/")
+  const { id: uuid } = useParams<any>();
+  const history = useHistory();
+  const [question, setQuestion] = useState<Question>();
+  const [pageSaved, setPageSaved] = useState(false);
+
+  if (!uuid) history.push("/");
 
   const { loading } = useQuery<Query>(GET_QUESTION, {
     variables: {
@@ -70,10 +76,14 @@ export const Edit = () => {
 
   return (
     <div>
-      <Navigator home needsConfirmation />
+      <Navigator home needsConfirmation={!pageSaved} />
       <div className="bg-gray-100 w-full my-2">
         <main>
-          <SteppedForm questionId={question.id} status={question.status as Status}>
+          <SteppedForm
+            questionId={question.id}
+            status={question.status as Status}
+            setPageSaved={setPageSaved}
+          >
             <Step step={0}>
               <EnunciadoForm question={question} />
             </Step>
