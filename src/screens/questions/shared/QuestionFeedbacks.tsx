@@ -21,7 +21,7 @@ type Porps = {
 }
 
 export const QuestionFeedback: FC<Porps> = ({ feedbacks }) => (
-  <Card title="Revisões">
+  <Card title="Histórico de Pareceres">
     {feedbacks.length ? (
       <List>
         {feedbacks.map((feedback, index) => {

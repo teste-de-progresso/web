@@ -82,12 +82,12 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                   </h2>
                   <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
                     <span>
-                      Registrado em:
+                      Registrada em:
                     {" "}
                       {formatDate(question.createdAt)}
                     </span>
                     <span>
-                      Atualizado em:
+                      Atualizada em:
                     {" "}
                       {formatDate(question.updatedAt)}
                     </span>

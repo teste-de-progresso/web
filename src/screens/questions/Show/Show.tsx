@@ -129,7 +129,7 @@ export const Show: FC = () => {
       window.location.href = '/'
     } else {
       setAlert({
-        text: 'Algo inesperado aconteceu ao tentar descartar a questão.',
+        text: 'Algo inesperado aconteceu ao tentar excluir a questão.',
         severity: 'error',
       })
       setConfirmDestroy(false)
@@ -144,12 +144,12 @@ export const Show: FC = () => {
     },
     register: {
       icon: <MdSave className="my-auto" />,
-      label: "Registrar",
+      label: "Confirmar",
       action: () => setConfirmRegister(true),
     },
     destroy: {
       icon: <MdDeleteForever className="my-auto" />,
-      label: 'Descartar',
+      label: 'Excluir',
       action: () => setConfirmDestroy(true),
     }
   }
@@ -168,10 +168,10 @@ export const Show: FC = () => {
   return (
     <>
       <Dialog open={confirmDestroy} onClose={() => setConfirmDestroy(false)}>
-        <DialogTitle>Confirmação de Descarte</DialogTitle>
+        <DialogTitle>Confirmação de Exclusão</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            A ação de descarte é irreversível. Deseja confirmar essa ação?
+            Após a exclusão, a questão não poderá ser recuperada. Deseja continuar?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -187,7 +187,7 @@ export const Show: FC = () => {
         <DialogTitle>Confrimação de Registro</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Registrar uma questão irá disponibiza-lá para uso em uma prova. Deseja confirma essa ação?
+            Após o registro, a questão estará disponível para uso e não poderá mais ser editada ou excluída. Deseja continuar?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
