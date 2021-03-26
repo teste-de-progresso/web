@@ -27,7 +27,7 @@ export const SubjectSelect: FC<Props> = ({ subjectId }) => {
   return (
     <div className="flex flex-col h-full">
       <div>
-        <h2>Assunto</h2>
+        <h2>Assunto:</h2>
         <select
           ref={formContext.register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -45,7 +45,7 @@ export const SubjectSelect: FC<Props> = ({ subjectId }) => {
       </div>
 
       <span className="mt-4">
-        Eixo de Formação
+        Eixo de Formação:
         <input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled
@@ -53,7 +53,7 @@ export const SubjectSelect: FC<Props> = ({ subjectId }) => {
         />
       </span>
       <span className="mt-4">
-        Categoria
+        Categoria:
         <input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled

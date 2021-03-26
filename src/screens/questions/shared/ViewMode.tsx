@@ -49,39 +49,39 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
       <Card className="mb-3" title="Características">
         <div className="grid grid-cols-2">
           <div>
-            <span className="text-gray-700">Grau de Dificuldade </span>
+            <span className="text-gray-700">Grau de Dificuldade: </span>
             {questionData.difficulty ? difficulty[questionData.difficulty] : ''}
           </div>
           <div>
-            <span className="text-gray-700">Habilidade Cognitiva </span>
+            <span className="text-gray-700">Habilidade Cognitiva: </span>
             {questionData.bloomTaxonomy ? bloomTaxonomy[questionData.bloomTaxonomy] : ''}
           </div>
           <div>
-            <span className="text-gray-700">Ano </span>
+            <span className="text-gray-700">Ano: </span>
             {questionData.authorshipYear}
           </div>
           <div>
-            <span className="text-gray-700">Autoria </span>
+            <span className="text-gray-700">Autoria: </span>
             {questionData.source === "UNIFESO" ? "Própria" : "Terceiros"}
           </div>
           <div>
-            <span className="text-gray-700">Atualizada em </span>
-            {formatDate(questionData.updatedAt)}
+            <span className="text-gray-700">Atualizada em: </span>
+            {formatDate(questionData.updatedAt)}:
           </div>
           <div>
-            <span className="text-gray-700">Registrada em </span>
+            <span className="text-gray-700">Registrada em: </span>
             {formatDate(questionData.createdAt)}
           </div>
           <div>
-            <span className="text-gray-700">Assunto </span>
+            <span className="text-gray-700">Assunto: </span>
             {questionData.subject?.name}
           </div>
           <div>
-            <span className="text-gray-700">Categoria </span>
+            <span className="text-gray-700">Categoria: </span>
             {questionData.subject?.category?.name}
           </div>
           <div>
-            <span className="text-gray-700">Eixo de Formação </span>
+            <span className="text-gray-700">Eixo de Formação: </span>
             {questionData.subject?.axis?.name}
           </div>
         </div>
