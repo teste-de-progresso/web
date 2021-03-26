@@ -137,7 +137,7 @@ type FeedbackFormProps = {
 }
 
 const FeedbackForm: FC<FeedbackFormProps> = ({ handleSubmit, formSubmit, register }) => (
-  <Card title="Enviar revisão" className="max-w-screen-md mx-auto">
+  <Card title="Parecer" className="max-w-screen-md mx-auto">
     <form onSubmit={handleSubmit(formSubmit)}>
       <textarea
         className="w-full h-32 p-2 border-solid border-2 border-gray-700 rounded-md"
@@ -165,7 +165,7 @@ const FeedbackForm: FC<FeedbackFormProps> = ({ handleSubmit, formSubmit, registe
         </div>
       ))}
       <Button type="submit" className="mt-4">
-        Submeter Feedback
+        Enviar Parecer
       </Button>
     </form>
   </Card>

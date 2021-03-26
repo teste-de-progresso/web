@@ -45,7 +45,7 @@ export const SubjectSelect: FC<Props> = ({ subjectId }) => {
       </div>
 
       <span className="mt-4">
-        Eixo de formação
+        Eixo de Formação
         <input
           className="block rounded p-1 w-full border-gray-400 border shadow-sm"
           disabled

@@ -9,8 +9,8 @@ export const QuestionsPainel: FC = () => {
 
   return (
     <>
-      <QuestionsWaitingQuery title="Aguardando sua revisão" />
-      <QuestionsQuery title="Aguardando parecer do revisor" where={where} status='pending' />
+      <QuestionsWaitingQuery title="Aguardando seu Parecer" />
+      <QuestionsQuery title="Em Revisão" where={where} status='pending' />
       <QuestionsQuery title="Rascunhos" where={where} status='draft' />
       <QuestionsQuery title="Aprovadas" where={where} status='approved' />
       <QuestionsQuery title="Regristradas" where={where} status='finished' />

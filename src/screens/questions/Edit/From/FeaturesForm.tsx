@@ -137,7 +137,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
               </select>
             </div>
             <div className="w-full">
-              <h2>Habilidade (Taxonomia de Bloom)</h2>
+              <h2>Habilidade Cognitiva</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"

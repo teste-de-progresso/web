@@ -269,7 +269,7 @@ export const SteppedForm: FC<Props> = ({
               Retornar
             </Button>
             {(status === "draft" || status === undefined) && (
-              <Button onClick={() => saveDraft()}>Salvar rascunho</Button>
+              <Button onClick={() => saveDraft()}>Salvar Rascunho</Button>
             )}
             <Button
               onClick={() => handleNext()}

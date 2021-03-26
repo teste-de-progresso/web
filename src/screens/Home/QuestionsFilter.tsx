@@ -116,7 +116,7 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
         <DialogContent>
           <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-2">
             <FilterGroup
-              title="Tipo de Questão"
+              title="Tipo"
               register={register}
               options={CHECK_TYPE}
               selecteds={(checkType ?? []) as Check[]}
@@ -130,7 +130,7 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
               setChanged={setChanged}
             />
             <FilterGroup
-              title="Dificuldade"
+              title="Grau de Dificuldade"
               register={register}
               options={DIFFICULTY}
               selecteds={(difficulty ?? []) as Difficulty[]}
@@ -142,9 +142,8 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
         <DialogButton>
           {window.screen.width < 640 ? (
             <Button
-              className={`mx-3 gray-100 mb-4 sm:mb-0 mt-2 sm:mt-0 ${
-                changed ? "block" : "hidden"
-              }`}
+              className={`mx-3 gray-100 mb-4 sm:mb-0 mt-2 sm:mt-0 ${changed ? "block" : "hidden"
+                }`}
               secondary
               onClick={() => handleClean()}
             >
