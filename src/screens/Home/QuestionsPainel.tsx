@@ -13,7 +13,7 @@ export const QuestionsPainel: FC = () => {
       <QuestionsQuery title="Em Revisão" where={where} status='pending' />
       <QuestionsQuery title="Rascunhos" where={where} status='draft' />
       <QuestionsQuery title="Aprovadas" where={where} status='approved' />
-      <QuestionsQuery title="Regristradas" where={where} status='finished' />
+      <QuestionsQuery title="Registradas" where={where} status='finished' />
     </>
   )
 }

@@ -105,7 +105,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
         <div className="grid grid-cols-2 col-gap-2 mt-3">
           <div className="w-full grid grid-cols-1 row-gap-4">
             <div className="flex flex-col">
-              <h2>Grau de Dificuldade:</h2>
+              <h2>Grau de Dificuldade</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -121,7 +121,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
               </select>
             </div>
             <div className="w-full">
-              <h2>Tipo:</h2>
+              <h2>Tipo</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -137,7 +137,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
               </select>
             </div>
             <div className="w-full">
-              <h2>Habilidade Cognitiva:</h2>
+              <h2>Habilidade Cognitiva</h2>
               <select
                 ref={formContext.register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
@@ -158,7 +158,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
           </div>
         </div>
         <div className="flex flex-col mt-4">
-          <h2>Revisor:</h2>
+          <h2>Revisor</h2>
           <ReviewerSelect reviewer={reviewer || { id: "", name: "" } as User} />
         </div>
       </Card>
