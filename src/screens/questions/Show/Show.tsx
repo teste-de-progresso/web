@@ -179,12 +179,12 @@ export const Show: FC = () => {
             Cancelar
           </Button>
           <Button onClick={() => handleDestroyQuestion()}>
-            Excluir
+            Confirmar
           </Button>
         </DialogActions>
       </Dialog>
       <Dialog open={confirmRegister} onClose={() => setConfirmRegister(false)}>
-        <DialogTitle>Confrimação de Registro</DialogTitle>
+        <DialogTitle>Confirmação de Registro</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Após o registro, a questão estará disponível para uso e não poderá mais ser editada ou excluída. Deseja continuar?
@@ -195,7 +195,7 @@ export const Show: FC = () => {
             Cancelar
           </Button>
           <Button onClick={() => handleRegisterQuestion()}>
-            Registar
+            Confirmar
           </Button>
         </DialogActions>
       </Dialog>
