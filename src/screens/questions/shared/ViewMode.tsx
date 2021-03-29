@@ -3,21 +3,7 @@ import React, { FC } from "react";
 import { Card } from "../../../components";
 import { Question } from "../../../graphql/__generated__/graphql-schema";
 import { loadWIRISplugin } from "../../../utils";
-
-const bloomTaxonomy = {
-  remember: "Recordar",
-  understand: "Compreender",
-  apply: "Aplicar",
-  analyze: "Analisar",
-  evaluate: "Avaliar",
-  create: "Criar",
-};
-
-const difficulty = {
-  easy: "Fácil",
-  medium: "Moderada",
-  hard: "Difícil",
-};
+import { BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
 
 type Props = {
   questionData?: Question
@@ -42,6 +28,9 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
 
   const { instruction, support, body } = questionData;
 
+  const difficulty = DIFFICULTY.find((item) => questionData.difficulty === item.value)?.label
+  const bloomTaxonomy = BLOOM_TAXONOMY.find((item) => questionData.bloomTaxonomy === item.value)?.label
+
   loadWIRISplugin()
 
   return (
@@ -50,11 +39,11 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
         <div className="grid grid-cols-2">
           <div>
             <span className="text-gray-700">Grau de Dificuldade: </span>
-            {questionData.difficulty ? difficulty[questionData.difficulty] : ''}
+            {difficulty ?? ''}
           </div>
           <div>
             <span className="text-gray-700">Habilidade Cognitiva: </span>
-            {questionData.bloomTaxonomy ? bloomTaxonomy[questionData.bloomTaxonomy] : ''}
+            {bloomTaxonomy ?? ''}
           </div>
           <div>
             <span className="text-gray-700">Ano: </span>
@@ -66,7 +55,7 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
           </div>
           <div>
             <span className="text-gray-700">Atualizada em: </span>
-            {formatDate(questionData.updatedAt)}:
+            {formatDate(questionData.updatedAt)}
           </div>
           <div>
             <span className="text-gray-700">Registrada em: </span>
