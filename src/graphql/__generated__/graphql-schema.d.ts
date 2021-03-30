@@ -211,6 +211,8 @@ export type QuestionWhereInput = {
   readonly difficulty?: Maybe<ReadonlyArray<Difficulty>>;
   readonly bloomTaxonomy?: Maybe<ReadonlyArray<BloomTaxonomy>>;
   readonly authorshipYear?: Maybe<ReadonlyArray<Scalars['String']>>;
+  readonly source?: Maybe<Scalars['String']>;
+  readonly subjectId?: Maybe<Scalars['ID']>;
   readonly userId?: Maybe<Scalars['ID']>;
 };
 

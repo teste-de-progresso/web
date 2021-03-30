@@ -24,6 +24,7 @@ import {
   Status,
 } from "../../graphql/__generated__/graphql-schema";
 import { AlertSeverity, AlertV2 } from "../../components/AlertV2";
+import { useHistory } from "react-router";
 
 type FormContextProps = {
   register?: any;
@@ -48,7 +49,7 @@ const SAVE_QUESTION_MUTATION = gql`
   mutation($input: SaveInput!) {
     saveQuestion(input: $input) {
       payload {
-        id
+        uuid
       }
     }
   }
@@ -58,7 +59,7 @@ const SAVE_DRAFT_QUESTION_MUTATION = gql`
   mutation($input: SaveDraftInput!) {
     saveQuestionDraft(input: $input) {
       payload {
-        id
+        uuid
       }
     }
   }
@@ -83,6 +84,7 @@ export const SteppedForm: FC<Props> = ({
     severity: AlertSeverity;
     text: string;
   }>({ state: false, severity: "error", text: "" });
+  const history = useHistory();
 
   const handleNext = () => {
     setCurrentStep(Math.min(currentStep + 1, maxStep));
@@ -120,13 +122,14 @@ export const SteppedForm: FC<Props> = ({
     const inputValues = formatInput(getValues());
 
     try {
-      await saveDraftMutation({
+      const { data } = await saveDraftMutation({
         variables: {
           input: {
             question: inputValues,
           },
         },
       });
+
       setAlert({
         state: true,
         severity: "success",
@@ -136,7 +139,13 @@ export const SteppedForm: FC<Props> = ({
       setPageSaved(true)
 
       setTimeout(
-        () => setAlert({ state: false, severity: "error", text: "" }),
+        () => {
+          if (!formatedInputs().id) {
+            history.push(`/question/${data?.saveQuestionDraft?.payload?.uuid}/edit`)
+          }
+
+          setAlert({ state: false, severity: "error", text: "" })
+        },
         2000
       );
     } catch (e) {
