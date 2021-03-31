@@ -144,7 +144,7 @@ export const Show: FC = () => {
     },
     register: {
       icon: <MdSave className="my-auto" />,
-      label: "Confirmar",
+      label: "Registrar",
       action: () => setConfirmRegister(true),
     },
     destroy: {
