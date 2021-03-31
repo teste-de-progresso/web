@@ -1,4 +1,4 @@
-const host = process.env.REACT_APP_BACKEND_URL || "http://localhost:3001";
+const host = process.env.REACT_APP_BACKEND_URL || "http://localhost:3000";
 
 export const authentication = {
   login: async (email: string, password: string) => {

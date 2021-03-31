@@ -15,7 +15,7 @@ type Props = {
 export const ApolloContext: FC<Props> = ({ children }) => {
   const { token } = useAuth();
   const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:3001",
+    uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:3000",
   });
 
   const authLink = setContext((_, { headers }) => ({
