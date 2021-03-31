@@ -164,9 +164,11 @@ const FeedbackForm: FC<FeedbackFormProps> = ({ handleSubmit, formSubmit, registe
           </label>
         </div>
       ))}
-      <Button type="submit" className="mt-4">
-        Enviar Parecer
-      </Button>
+      <div className="justify-end flex">
+        <Button type="submit" className="mt-4">
+          Enviar Parecer
+        </Button>
+      </div>
     </form>
   </Card>
 );
