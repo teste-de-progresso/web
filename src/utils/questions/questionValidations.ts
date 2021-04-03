@@ -1,6 +1,6 @@
 import {
   Question,
-  SaveDraftQuestionInput,
+  QuestionCreateInput,
 } from "../../graphql/__generated__/graphql-schema";
 
 export type QuestionEditForm = Question & {
@@ -8,7 +8,7 @@ export type QuestionEditForm = Question & {
   reviewerId: string;
 };
 
-export const validateQuestionInputs = (inputs: SaveDraftQuestionInput) => {
+export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
   /**
    * transform string with lenght 0 to undefined
    */
@@ -20,7 +20,7 @@ export const validateQuestionInputs = (inputs: SaveDraftQuestionInput) => {
     tempValues[key] = value === "" ? undefined : value;
   });
 
-  const values = tempValues as SaveDraftQuestionInput;
+  const values = tempValues as QuestionCreateInput;
 
   const errors = [];
 
@@ -35,7 +35,6 @@ export const validateQuestionInputs = (inputs: SaveDraftQuestionInput) => {
     checkType,
     subjectId,
     source,
-    reviewerId,
   } = values;
 
   if (!body || body.length <= 5) {
@@ -85,10 +84,6 @@ export const validateQuestionInputs = (inputs: SaveDraftQuestionInput) => {
 
   if (!bloomTaxonomy) {
     errors.push(`"Habilidade" não preenchida.`);
-  }
-
-  if (!reviewerId) {
-    errors.push(`"Revisor" não preenchido.`);
   }
 
   return errors;

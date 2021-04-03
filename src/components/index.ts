@@ -1,4 +1,5 @@
 export * from "./Alert";
+export * from "./AlertV2";
 export * from "./Button";
 export * from "./Card";
 export * from "./CardGrid";
@@ -7,6 +8,4 @@ export * from "./AvatarEditor";
 export * from "./Navegator";
 export * from "./Navbar";
 export * from "./Avatar";
-export * from "./SteppedForm";
 export * from "./Dialog";
-export * from "./AlertV2";

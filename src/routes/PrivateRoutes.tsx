@@ -6,7 +6,7 @@ import {
 import { AppBar } from "../components";
 import { Home, UserProfile } from "../screens";
 import {
-  New, Edit, Show, Review,
+  New, Show, Review, Edit,
 } from "../screens/questions";
 
 export const PrivateRoutes = () => (
@@ -15,9 +15,9 @@ export const PrivateRoutes = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/question/new" component={New} />
-      <Route exact path="/question/:id" component={Show} />
-      <Route exact path="/question/:id/edit" component={Edit} />
-      <Route exact path="/question/:id/review" component={Review} />
+      <Route exact path="/question/:uuid" component={Show} />
+      <Route exact path="/question/:uuid/edit" component={Edit} />
+      <Route exact path="/question/:uuid/review" component={Review} />
       <Route exact path="/user/profile" component={UserProfile} />
     </Switch>
   </Router>

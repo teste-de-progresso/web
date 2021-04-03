@@ -1,13 +1,12 @@
 import React, { FC } from "react";
+
 import { Card } from "../../../../components/Card/Card";
-import { Question } from "../../../../graphql/__generated__/graphql-schema";
-import { TextEditor } from "./TextEditor";
+import { TextEditor } from "../components/TextEditor";
+import { useFormProvider } from '../FormContext'
 
-type Props = {
-  question?: Question
-}
+export const AnswerFormStep: FC = () => {
+  const { question } = useFormProvider()
 
-export const AnswerForm: FC<Props> = ({ question }) => {
   const alternativesMaped = question?.alternatives || [
     { text: "", correct: true },
   ];

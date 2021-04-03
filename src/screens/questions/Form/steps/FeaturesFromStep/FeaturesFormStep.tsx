@@ -1,17 +1,16 @@
-import React, { FC, useContext, useState } from "react";
-import { Card, FormContext } from "../../../../components";
+import React, { FC, useState } from "react";
+
+import { Card } from "../../../../../components";
 import { SubjectSelect } from "./SubjectSelect";
-import { ReviewerSelect } from "./ReviewerSelect";
+import { ReviewerSelect } from "./ReviewSelect";
+import { useFormProvider } from '../../FormContext'
 
-import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../utils/types";
-import { Question, User } from "../../../../graphql/__generated__/graphql-schema";
+import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../../utils/types";
+import { Question } from "../../../../../graphql/__generated__/graphql-schema";
 
-type Props = {
-  question?: Question
-}
+export const FeaturesFormStep: FC = () => {
+  const { setValue, register, question } = useFormProvider();
 
-export const FeaturesForm: FC<Props> = ({ question }) => {
-  const formContext = useContext(FormContext);
   const currentYear = new Date().getFullYear();
 
   const {
@@ -20,20 +19,19 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
     difficulty,
     bloomTaxonomy,
     checkType,
-    subject,
-    reviewer } = question || {} as Question
+  } = question || {} as Question
 
   const [ownQuestion, setOwnQuestion] = useState<boolean>(source === "UNIFESO" || source === undefined || source === null);
 
   const handleOwnCheck = (value: string) => {
     if (value === 'UNIFESO') {
       setOwnQuestion(true)
-      formContext.setValue("source", "UNIFESO");
-      formContext.setValue("authorshipYear", String(new Date().getFullYear()));
+      setValue("source", "UNIFESO");
+      setValue("authorshipYear", String(new Date().getFullYear()));
     } else {
       setOwnQuestion(false)
-      formContext.setValue("source", "");
-      formContext.setValue("authorshipYear", "");
+      setValue("source", "");
+      setValue("authorshipYear", "");
     }
   };
 
@@ -51,8 +49,9 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
                 type="radio"
                 id="source-own"
                 checked={!!ownQuestion}
-                ref={formContext.register}
+                ref={register}
                 onChange={() => handleOwnCheck("UNIFESO")}
+                name="__nonused"
               />
               <label htmlFor="source-own" className="ml-1">Própria</label>
             </div>
@@ -62,8 +61,9 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
                 type="radio"
                 id="source-third"
                 checked={!ownQuestion}
-                ref={formContext.register}
+                ref={register}
                 onChange={() => handleOwnCheck("")}
+                name="__nonused"
               />
               <label htmlFor="source-third" className="ml-1">Outro</label>
             </div>
@@ -75,7 +75,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
                 <div style={{ maxWidth: "194px" }}>
                   <input
                     className="block rounded p-1 w-full border-gray-400 border shadow-sm"
-                    ref={formContext.register}
+                    ref={register}
                     name="source"
                     defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
                     readOnly={!!ownQuestion}
@@ -88,7 +88,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
               <div style={{ maxWidth: "62px" }}>
                 <input
                   className="w-full rounded p-1 border-gray-400 border shadow-sm"
-                  ref={formContext.register}
+                  ref={register}
                   type="number"
                   min="1999"
                   max={currentYear}
@@ -107,7 +107,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
             <div className="flex flex-col">
               <h2>Grau de Dificuldade</h2>
               <select
-                ref={formContext.register}
+                ref={register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name="difficulty"
                 defaultValue={difficulty ?? ""}
@@ -123,7 +123,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
             <div className="w-full">
               <h2>Tipo</h2>
               <select
-                ref={formContext.register}
+                ref={register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name="checkType"
                 defaultValue={checkType ?? ""}
@@ -139,7 +139,7 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
             <div className="w-full">
               <h2>Habilidade Cognitiva</h2>
               <select
-                ref={formContext.register}
+                ref={register}
                 className="w-full rounded p-1 border-gray-400 border shadow-sm"
                 name="bloomTaxonomy"
                 defaultValue={bloomTaxonomy ?? ""}
@@ -154,12 +154,12 @@ export const FeaturesForm: FC<Props> = ({ question }) => {
             </div>
           </div>
           <div className="w-full">
-            <SubjectSelect subjectId={subject?.id} />
+            <SubjectSelect />
           </div>
         </div>
         <div className="flex flex-col mt-4">
           <h2>Revisor</h2>
-          <ReviewerSelect reviewer={reviewer || { id: "", name: "" } as User} />
+          <ReviewerSelect />
         </div>
       </Card>
     </>

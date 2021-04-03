@@ -28,12 +28,6 @@ export const useFiltersProvider = () => {
   return context
 }
 
-export const useOrderForm = () => {
-  const context = useFiltersProvider()
-
-  return context.setWhere as QuestionWhereInput
-}
-
 export const FiltersProvider: FC = ({ children }) => {
   const [where, setWhere] = useState<QuestionWhereInput>({})
 

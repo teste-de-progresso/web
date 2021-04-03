@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { MdDone, MdError, MdInfo, MdWarning } from 'react-icons/md'
 
-export type AlertSeverity = 'error' | 'warning' | 'info' | 'success'
+type AlertSeverity = 'error' | 'warning' | 'info' | 'success'
 
 const ICONS = {
   error: <MdError />,
@@ -17,7 +17,7 @@ const COLOR_CLASSES = {
   success: 'bg-green-300 border-green-600 text-green-800',
 }
 
-type Props = {
+export type Props = {
   severity?: AlertSeverity
   text?: string
 }

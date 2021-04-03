@@ -1,19 +1,33 @@
-import React, { FC, useContext, useState } from "react";
-import { useQuery } from "@apollo/client";
-import { loader } from "graphql.macro";
+import React, { FC, useState } from "react";
+import { useQuery, gql } from "@apollo/client";
 
-import { FormContext } from "../../../../components";
-import { Query } from "../../../../graphql/__generated__/graphql-schema";
+import { Query } from "../../../../../graphql/__generated__/graphql-schema";
+import { useFormProvider } from '../../FormContext'
 
 type Props = {
   subjectId?: string
 }
 
-export const SubjectSelect: FC<Props> = ({ subjectId }) => {
-  const GET_SUBJECTS = loader("../../../../graphql/query/getSubjects.gql");
-  const [selectedId, setSelectedId] = useState(subjectId);
-  const formContext = useContext(FormContext);
-  const { loading, data } = useQuery<Query>(GET_SUBJECTS);
+const SUBJECTS_QUERY = gql`
+  query {
+    subjects {
+      id
+      name
+      axis {
+        name
+      }
+      category {
+        name
+      }
+    }
+  }
+`
+
+export const SubjectSelect: FC<Props> = () => {
+  const { register, question } = useFormProvider()
+  const [selectedId, setSelectedId] = useState(question?.subject?.id);
+
+  const { loading, data } = useQuery<Query>(SUBJECTS_QUERY);
 
   if (loading) return null;
 
@@ -29,10 +43,10 @@ export const SubjectSelect: FC<Props> = ({ subjectId }) => {
       <div>
         <h2>Assunto</h2>
         <select
-          ref={formContext.register}
+          ref={register}
           className="w-full rounded p-1 border-gray-400 border shadow-sm"
           name="subjectId"
-          defaultValue={subjectId ?? ""}
+          defaultValue={question?.subject?.id ?? ""}
           onChange={(e) => setSelectedId(e.target.value)}
         >
           <option value="" />
