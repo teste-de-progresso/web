@@ -11,7 +11,8 @@ export const formatInput = (inputs: any) => ({
   checkType: inputs.checkType === "" ? undefined : inputs.checkType,
   authorshipYear: inputs.authorshipYear ?? "",
   subjectId: inputs.subjectId === "" ? undefined : inputs.subjectId,
-  reviewerUserId: inputs.reviewerUserId === "" ? undefined : inputs.checkType,
+  reviewerUserId:
+    inputs.reviewerUserId === "" ? undefined : inputs.reviewerUserId,
   alternatives: [
     {
       correct: true,
