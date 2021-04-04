@@ -9,7 +9,7 @@ import {
 import { ViewMode, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
 import { Mutation, Query, Question } from "../../../graphql/__generated__/graphql-schema";
-import { AlertSeverity, AlertV2 } from "../../../components/AlertV2";
+import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
 
 const GET_QUESTION = gql`
   query ($uuid: ID!) {
@@ -83,13 +83,18 @@ const DESTROY_QUESTION = gql`
     )
   }
 `
+
+type Params = {
+  uuid: string
+}
+
 export const Show: FC = () => {
-  const { id: uuid } = useParams<any>();
+  const { uuid } = useParams<Params>();
   const history = useHistory();
   const [confirmEditDialog, setConfirmEditDialog] = useState(false);
   const [confirmRegister, setConfirmRegister] = useState(false);
   const [confirmDestroy, setConfirmDestroy] = useState(false);
-  const [alert, setAlert] = useState<{ text: string, severity: AlertSeverity }>()
+  const [alert, setAlert] = useState<AlertV2Props>()
   const [question, setQuestion] = useState<Question>();
 
   const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION, { variables: { id: question?.id } });

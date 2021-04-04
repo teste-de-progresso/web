@@ -1,13 +1,12 @@
 import React, { FC } from "react";
+
 import { Card } from "../../../../components";
-import { Question } from "../../../../graphql/__generated__/graphql-schema";
-import { TextEditor } from "./TextEditor";
+import { TextEditor } from '../components/TextEditor'
+import { useFormProvider } from '../FormContext'
 
-type Props = {
-  question?: Question
-}
+export const EnunciationFormStep: FC = () => {
+  const { question } = useFormProvider()
 
-export const EnunciadoForm: FC<Props> = ({ question }) => {
   return (
     <>
       <Card className="h-full mb-3" title="Instrução (opcional)">

@@ -1,7 +1,0 @@
-query {
-  reviewers {
-    id
-    name
-    email
-  }
-}

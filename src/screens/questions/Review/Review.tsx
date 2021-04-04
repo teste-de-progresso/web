@@ -74,9 +74,13 @@ const SUBMIT_REVIEW_MUTATION = gql`
   }
 `
 
+type Params = {
+  uuid: string
+}
+
 export const Review: FC = () => {
   const [question, setQuestion] = useState<Question>()
-  const { id: uuid } = useParams<any>();
+  const { uuid } = useParams<Params>();
   const history = useHistory();
 
   if (!uuid) history.push("/");

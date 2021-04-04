@@ -1,8 +1,8 @@
-import React, { FC, useContext } from "react";
+import React, { FC } from "react";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import { Controller } from "react-hook-form";
 import * as ClassicEditor from "ckeditor5-mathtype/build/ckeditor";
-import { FormContext } from "../../../../components";
+import { useFormProvider } from '../FormContext'
 
 const toolbarOptions = [
   "bold",
@@ -29,11 +29,11 @@ type Props = {
 }
 
 export const TextEditor: FC<Props> = ({ name, defaultValue }) => {
-  const formContext = useContext(FormContext);
+  const { control } = useFormProvider()
 
   return (
     <Controller
-      control={formContext.control}
+      control={control}
       name={name}
       defaultValue={defaultValue}
       render={({ onChange, value }) => (

@@ -1,13 +1,12 @@
 import React, { FC } from "react";
+
 import { Card } from "../../../../components";
-import { Question } from "../../../../graphql/__generated__/graphql-schema";
-import { TextEditor } from "./TextEditor";
+import { TextEditor } from "../components/TextEditor";
+import { useFormProvider } from '../FormContext'
 
-type Props = {
-  question?: Question
-}
+export const DistractorsFormStep: FC = () => {
+  const { question } = useFormProvider()
 
-export const DistractorsForm: FC<Props> = ({ question }) => {
   const incorrectAnswers = question?.alternatives?.filter(
     (alternative) => alternative.correct === false,
   ) || [
