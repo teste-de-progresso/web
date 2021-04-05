@@ -63,8 +63,12 @@ type Params = {
 }
 
 export const Edit: FC = () => {
-  const [pageSaved, setPageSaved] = useState(false)
+  const [pageSaved, setPageSaved] = useState(true)
   const [alert, setAlert] = useState<AlertV2Props>()
+
+  document.onkeypress = function () {
+    setPageSaved(false)
+  }
 
   const params = useParams<Params>()
 
@@ -112,7 +116,6 @@ export const Edit: FC = () => {
         },
       }
     }).then(() => {
-      setPageSaved(true)
       setAlert({
         severity: "success",
         text: "Rascunho atualizado com sucesso",
@@ -145,6 +148,7 @@ export const Edit: FC = () => {
             onSubmit={onSubmit}
             onDraftSubmit={onDraftSubmit}
             alert={alert}
+            setPageSaved={setPageSaved}
           />
         </main>
       </div>

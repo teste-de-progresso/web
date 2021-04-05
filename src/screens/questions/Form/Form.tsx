@@ -17,9 +17,10 @@ type Props = {
   onSubmit?: (inputs: any) => void
   onDraftSubmit?: (inputs: any) => void
   alert?: AlertV2Props
+  setPageSaved?: Function
 }
 
-export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) => {
+export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert, setPageSaved }) => {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [confirmFinishModalOpen, setConfirmFinishModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -60,6 +61,9 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
 
   const handleDraftSave = () => {
     if (onDraftSubmit) {
+      if (setPageSaved) {
+        setPageSaved(true)
+      }
       onDraftSubmit({ status: 'draft', ...getFormatedValues() } as QuestionCreateInput)
     }
   }
@@ -138,11 +142,9 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
             Retornar
           </Button>
           {(question?.status === "draft" || question?.status === undefined) &&
-            <Button
-              onClick={handleDraftSave}
-            >
+            <Button onClick={handleDraftSave}>
               Salvar Rascunho
-              </Button>
+            </Button>
           }
           <Button
             className={onLastStep ? "hidden" : ""}
@@ -151,9 +153,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
             Prosseguir
           </Button>
           {onLastStep &&
-            <Button
-              onClick={() => setConfirmFinishModalOpen(true)}
-            >
+            <Button onClick={() => setConfirmFinishModalOpen(true)}>
               Finalizar
             </Button>
           }
