@@ -164,7 +164,7 @@ export const Show: FC = () => {
       case 'finished':
         return ([]);
       case 'approved':
-        return ([ACTIONS.edit, ACTIONS.register])
+        return ([ACTIONS.edit, ACTIONS.register, ACTIONS.destroy])
       default:
         return ([ACTIONS.edit, ACTIONS.destroy])
     }
