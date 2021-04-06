@@ -35,18 +35,18 @@ export const BLOOM_TAXONOMY = [
 
 export const REVIEW_FEEDBACK = [
   {
-    label: "Comentário",
-    description: "Envie um feedback geral sem aprovação explícita.",
+    label: "Aprovada com Alterações",
+    description: "O autor deve efetuar as alterações solicitadas, mas não é necessário reenviar a questão ao revisor.",
     value: "comment",
   },
   {
-    label: "Aprovação",
-    description: "Enviar feedback e aprovar o uso em provas.",
+    label: "Aprovada sem Alterações",
+    description: "A questão está pronta para registro e não deve mais ser alterada.",
     value: "approve",
   },
   {
-    label: "Requisitar alterações",
-    description: "Envie feedback que deve ser abordado antes do uso em provas.",
+    label: "Pendente de Alterações",
+    description: "O autor deve efetuar as alterações solicitadas e reenviar a questão ao revisor.",
     value: "request_change",
   },
 ];
