@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
 import { Mutation, Query } from '../../../graphql/__generated__/graphql-schema';
 import { AlertV2Props, Navigator } from '../../../components';
 import { Form } from '../Form'
+import { turnOff } from '../../../store/ducks/unsavedChanges';
 
 const GET_QUESTION = gql`
   query($uuid: ID!) {
@@ -63,19 +65,16 @@ type Params = {
 }
 
 export const Edit: FC = () => {
-  const [pageSaved, setPageSaved] = useState(true)
+  const dispatch = useDispatch()
   const [alert, setAlert] = useState<AlertV2Props>()
 
   document.onkeypress = function () {
-    setPageSaved(false)
+    dispatch(turnOff())
   }
 
   const params = useParams<Params>()
-
   const [updateQuestion] = useMutation<Mutation>(UPDATE_QUESTION_MUTATOIN)
-
   const { loading, data } = useQuery<Query>(GET_QUESTION, { variables: { uuid: params.uuid } })
-
   const question = data?.question
 
   if (loading || !question) return null
@@ -100,7 +99,7 @@ export const Edit: FC = () => {
 
       setTimeout(
         () => setAlert({ severity: "error", text: "" }),
-        8000
+        3000
       );
     })
   }
@@ -140,7 +139,7 @@ export const Edit: FC = () => {
 
   return (
     <>
-      <Navigator home needsConfirmation={!pageSaved} />
+      <Navigator home />
       <div className="bg-gray-100 w-full my-2">
         <main>
           <Form
@@ -148,7 +147,6 @@ export const Edit: FC = () => {
             onSubmit={onSubmit}
             onDraftSubmit={onDraftSubmit}
             alert={alert}
-            setPageSaved={setPageSaved}
           />
         </main>
       </div>

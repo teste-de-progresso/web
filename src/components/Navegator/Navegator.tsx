@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { FaHome, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
@@ -7,26 +8,27 @@ import {
 } from "@material-ui/core";
 
 import { Button } from "../Button";
+import { turnOff } from "../../store/ducks/unsavedChanges";
 
 const HorizontalMenu = styled.ul`
-margin: 0;
-padding: 0;
-list-style: none;
-width: 100%;
-display: flex;
-& > li {
-  display: inline;
-  cursor: pointer;
-}
-& > li {
-  display: inline;
-}
-& > li > div {
-  cursor: pointer;
-  display: inline-flex;
-  flex-direction: row;
-  margin-right: 2rem;
-}
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 100%;
+  display: flex;
+  & > li {
+    display: inline;
+    cursor: pointer;
+  }
+  & > li {
+    display: inline;
+  }
+  & > li > div {
+    cursor: pointer;
+    display: inline-flex;
+    flex-direction: row;
+    margin-right: 2rem;
+  }
 `;
 
 type ItemProps = {
@@ -41,24 +43,26 @@ const Item: FC<ItemProps> = ({ children, className }) => (
 );
 
 type Props = {
-  needsConfirmation?: boolean
   home?: boolean
   newQuestion?: boolean
   children?: any
 }
 
 export const Navigator: FC<Props> = ({
-  needsConfirmation = false, home = false, newQuestion = false, children,
+  home = false, newQuestion = false, children,
 }) => {
-  const history = useHistory();
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
+  const unsavedChanges = useSelector((state: any) => state.unsavedChanges)
+  const dispatch = useDispatch()
+  const history = useHistory();
 
   const confirmLeave = () => {
+    dispatch(turnOff());
     history.push("/");
   };
 
   const goHome = () => {
-    if (needsConfirmation) {
+    if (unsavedChanges) {
       setConfirmLeaveDialog(true);
     } else {
       confirmLeave();
