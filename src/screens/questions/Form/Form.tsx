@@ -17,10 +17,9 @@ type Props = {
   onSubmit?: (inputs: any) => void
   onDraftSubmit?: (inputs: any) => void
   alert?: AlertV2Props
-  setPageSaved?: Function
 }
 
-export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert, setPageSaved }) => {
+export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) => {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [confirmFinishModalOpen, setConfirmFinishModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -61,9 +60,6 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert, setP
 
   const handleDraftSave = () => {
     if (onDraftSubmit) {
-      if (setPageSaved) {
-        setPageSaved(true)
-      }
       onDraftSubmit({ status: 'draft', ...getFormatedValues() } as QuestionCreateInput)
     }
   }

@@ -8,7 +8,7 @@ import { loadAuthentication } from "./store/ducks/auth/actions";
 import { PrivateRoutes, PublicRoutes } from "./routes";
 
 function App() {
-  const authenticationState = useSelector((state) => state.auth);
+  const authenticationState = useSelector((state: any) => state.auth);
 
   useEffect(() => {
     store.dispatch(loadAuthentication());

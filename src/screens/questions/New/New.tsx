@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useHistory } from "react-router";
 import { gql, useMutation } from "@apollo/client";
 
 import { AlertV2Props, Navigator } from "../../../components";
 import { Form } from '../Form'
 import { Mutation } from "../../../graphql/__generated__/graphql-schema";
+import { useDispatch } from "react-redux";
+import { turnOff, turnOn } from "../../../store/ducks/unsavedChanges";
 
 const CREATE_QUESTION_MUTATION = gql`
   mutation($input: CreateQuestionInput!) {
@@ -17,13 +19,15 @@ const CREATE_QUESTION_MUTATION = gql`
 `
 
 export const New = () => {
-  const [pageSaved, setPageSaved] = useState(true)
-  const [alert, setAlert] = useState<AlertV2Props>();
+  const dispatch = useDispatch()
+
+  useMemo(() => { dispatch(turnOff()) }, [dispatch])
 
   document.onkeypress = function () {
-    setPageSaved(false)
+    dispatch(turnOn())
   }
 
+  const [alert, setAlert] = useState<AlertV2Props>();
   const [createQuestion] = useMutation<Mutation>(CREATE_QUESTION_MUTATION)
   const history = useHistory()
 
@@ -34,7 +38,7 @@ export const New = () => {
           question: inputs,
         },
       },
-    }).then(({ data }) => {
+    }).then(() => {
       window.location.href = '/'
     }).catch((error: string) => {
       setAlert({
@@ -82,7 +86,7 @@ export const New = () => {
 
   return (
     <>
-      <Navigator home needsConfirmation={!pageSaved} />
+      <Navigator home={true} />
       <div className="bg-gray-100 w-full my-2">
         <main>
           <Form onSubmit={onSubmit} onDraftSubmit={onDraftSubmit} alert={alert} />
