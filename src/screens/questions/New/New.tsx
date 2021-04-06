@@ -17,7 +17,12 @@ const CREATE_QUESTION_MUTATION = gql`
 `
 
 export const New = () => {
+  const [pageSaved, setPageSaved] = useState(true)
   const [alert, setAlert] = useState<AlertV2Props>();
+
+  document.onkeypress = function () {
+    setPageSaved(false)
+  }
 
   const [createQuestion] = useMutation<Mutation>(CREATE_QUESTION_MUTATION)
   const history = useHistory()
@@ -77,7 +82,7 @@ export const New = () => {
 
   return (
     <>
-      <Navigator home needsConfirmation={true} />
+      <Navigator home needsConfirmation={!pageSaved} />
       <div className="bg-gray-100 w-full my-2">
         <main>
           <Form onSubmit={onSubmit} onDraftSubmit={onDraftSubmit} alert={alert} />
