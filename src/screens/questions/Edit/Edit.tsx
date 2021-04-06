@@ -6,7 +6,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Mutation, Query } from '../../../graphql/__generated__/graphql-schema';
 import { AlertV2Props, Navigator } from '../../../components';
 import { Form } from '../Form'
-import { turnOff } from '../../../store/ducks/unsavedChanges';
+import { turnOn } from '../../../store/ducks/unsavedChanges';
 
 const GET_QUESTION = gql`
   query($uuid: ID!) {
@@ -69,7 +69,7 @@ export const Edit: FC = () => {
   const [alert, setAlert] = useState<AlertV2Props>()
 
   document.onkeypress = function () {
-    dispatch(turnOff())
+    dispatch(turnOn())
   }
 
   const params = useParams<Params>()

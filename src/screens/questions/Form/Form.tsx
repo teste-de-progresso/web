@@ -1,7 +1,9 @@
 import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText, Dialog as DialogMaterial, DialogTitle, DialogContent as DialogMaterialContent, DialogContentText, DialogActions, } from '@material-ui/core';
 import { MdError } from 'react-icons/md';
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { EnunciationFormStep, AnswerFormStep, DistractorsFormStep, FeaturesFormStep } from './steps'
 import { SteppedForm, Step } from './SteppedForm'
@@ -23,6 +25,9 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [confirmFinishModalOpen, setConfirmFinishModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
+  const history = useHistory();
+  const unsavedChanges = useSelector((state: any) => state.unsavedChanges)
 
   const minStep = 0;
   const maxStep = 3;
@@ -58,6 +63,14 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
     }
   }
 
+  const confirmLeave = () => {
+    if (unsavedChanges && !confirmLeaveDialog) {
+      setConfirmLeaveDialog(true);
+    } else {
+      history.push('/')
+    }
+  };
+
   const handleDraftSave = () => {
     if (onDraftSubmit) {
       onDraftSubmit({ status: 'draft', ...getFormatedValues() } as QuestionCreateInput)
@@ -69,6 +82,22 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
       {alert && (
         <AlertV2 severity={alert.severity} text={alert.text}></AlertV2>
       )}
+      <DialogMaterial open={confirmLeaveDialog} onClose={() => setConfirmLeaveDialog(false)}>
+        <DialogTitle>Modificações não Salvas</DialogTitle>
+        <DialogMaterialContent>
+          <DialogContentText>
+            Todas as alterações serão descartadas. Deseja continuar?
+          </DialogContentText>
+        </DialogMaterialContent>
+        <DialogActions>
+          <Button secondary onClick={() => setConfirmLeaveDialog(false)}>
+            Cancelar
+          </Button>
+          <Button onClick={() => confirmLeave()}>
+            Confirmar
+          </Button>
+        </DialogActions>
+      </DialogMaterial>
       <Dialog
         open={!!validationErrors.length}
         onClose={() => setValidationErrors([])}
@@ -133,6 +162,12 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
         </SteppedForm>
 
         <div className="flex justify-end space-x-2">
+          <Button
+            onClick={() => confirmLeave()}
+            secondary
+          >
+            Cancelar
+          </Button>
           <Button
             className={onFirstStep ? "hidden" : ""}
             onClick={() => handlePreviousStep()}
