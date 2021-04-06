@@ -1,11 +1,12 @@
 import React, { FC } from "react";
+import { Controller } from "react-hook-form";
 
 import { Card } from "../../../../components/Card/Card";
 import { TextEditor } from "../components/TextEditor";
 import { useFormProvider } from '../FormContext'
 
 export const AnswerFormStep: FC = () => {
-  const { question } = useFormProvider()
+  const { question, control } = useFormProvider()
 
   const alternativesMaped = question?.alternatives || [
     { text: "", correct: true },
@@ -21,8 +22,14 @@ export const AnswerFormStep: FC = () => {
         <div className="flex flex-col">
           <div className="w-full">
             <TextEditor
-              name="correctAlternative"
+              name={`alternatives[0].text`}
               defaultValue={correctAlternative?.text ?? ''}
+            />
+            <Controller
+              name={`alternatives[0].correct`}
+              control={control}
+              defaultValue={true}
+              render={() => (<></>)}
             />
           </div>
           <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">

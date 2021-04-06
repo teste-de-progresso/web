@@ -1,11 +1,12 @@
 import React, { FC } from "react";
+import { Controller } from "react-hook-form";
 
 import { Card } from "../../../../components";
 import { TextEditor } from "../components/TextEditor";
 import { useFormProvider } from '../FormContext'
 
 export const DistractorsFormStep: FC = () => {
-  const { question } = useFormProvider()
+  const { question, control } = useFormProvider()
 
   const incorrectAnswers = question?.alternatives?.filter(
     (alternative) => alternative.correct === false,
@@ -24,8 +25,14 @@ export const DistractorsFormStep: FC = () => {
             {incorrectAnswers.map(({ text }, index) => (
               <div className="w-full mb-3" key={index}>
                 <TextEditor
-                  name={`incorrectAlternative${index + 1}`}
+                  name={`alternatives[${index + 1}].text`}
                   defaultValue={text ?? ""}
+                />
+                <Controller
+                  name={`alternatives[${index + 1}].correct`}
+                  control={control}
+                  defaultValue={false}
+                  render={() => (<></>)}
                 />
               </div>
             ))}

@@ -93,7 +93,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert, setP
         <DialogButton>
           <Button
             onClick={() => setValidationErrors([])}
-            className="ml-auto"
+            className="ml-auto mx-2"
           >
             Sair
           </Button>
@@ -109,10 +109,12 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert, setP
           revisá-la. Deseja continuar?
         </DialogContent>
         <DialogButton>
-          <Button secondary onClick={() => setConfirmFinishModalOpen(false)}>
+          <Button className="mx-2 ml-auto" secondary onClick={() => setConfirmFinishModalOpen(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => handleSave()}>Finalizar</Button>
+          <Button className="mx-2" onClick={() => handleSave()}>
+            Finalizar
+          </Button>
         </DialogButton>
       </Dialog>
       <form className="m-auto max-w-screen-md">
