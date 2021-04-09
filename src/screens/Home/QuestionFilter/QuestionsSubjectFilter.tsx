@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 import { gql, useQuery } from '@apollo/client'
 
 import { Query } from '../../../graphql/__generated__/graphql-schema'
@@ -15,9 +15,10 @@ const SUBJECTS_QUERY = gql`
 
 type Props = {
   register: any
+  setChanged: Dispatch<SetStateAction<boolean>>
 }
 
-export const QuestionsSubjectFilter: FC<Props> = ({ register }) => {
+export const QuestionsSubjectFilter: FC<Props> = ({ register, setChanged }) => {
   const { where } = useFiltersProvider();
   const { loading, data } = useQuery<Query>(SUBJECTS_QUERY)
 
@@ -30,6 +31,7 @@ export const QuestionsSubjectFilter: FC<Props> = ({ register }) => {
         className="w-full rounded p-1 border-gray-400 border shadow-sm"
         name="subjectId"
         defaultValue={where.subjectId ?? ""}
+        onClick={() => setChanged(true)}
       >
         <option value="" />
         {data?.subjects?.map((subject) => (
