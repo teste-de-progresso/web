@@ -8,8 +8,7 @@ import React, {
   SetStateAction,
 } from 'react'
 
-import { QuestionWhereInput } from '../../graphql/__generated__/graphql-schema'
-
+import { QuestionWhereInput } from '../../../graphql/__generated__/graphql-schema'
 
 type ProviderValue = {
   where: QuestionWhereInput

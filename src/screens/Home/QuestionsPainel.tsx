@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import { QuestionsQuery } from './QuestionsQuery'
 import { QuestionsWaitingQuery } from './QuestionsWaitingReviewQuery'
-import { useFiltersProvider } from './QuestionsFilterProvider'
+import { useFiltersProvider } from './QuestionFilter/QuestionsFilterProvider'
 
 export const QuestionsPainel: FC = () => {
   const { where } = useFiltersProvider()

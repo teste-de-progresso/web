@@ -51,7 +51,10 @@ export const SubjectSelect: FC<Props> = () => {
         >
           <option value="" />
           {subjects?.map(({ label, value }) => (
-            <option key={`${label}-${value}`} value={value}>
+            <option
+              key={`${label}-${value}`}
+              value={value}
+            >
               {label}
             </option>
           ))}

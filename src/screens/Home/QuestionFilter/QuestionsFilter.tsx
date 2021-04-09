@@ -5,11 +5,12 @@ import {
   BloomTaxonomy,
   Check,
   Difficulty,
-} from "../../graphql/__generated__/graphql-schema";
-import { CHECK_TYPE, BLOOM_TAXONOMY, DIFFICULTY } from "../../utils/types";
+} from "../../../graphql/__generated__/graphql-schema";
+import { CHECK_TYPE, BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
 
-import { Button, Dialog, DialogButton, DialogContent } from "../../components";
+import { Button, Dialog, DialogButton, DialogContent } from "../../../components";
 import { useFiltersProvider } from "./QuestionsFilterProvider";
+import { QuestionsSubjectFilter } from './QuestionsSubjectFilter'
 
 type FilterGroupProps = {
   title: string;
@@ -89,8 +90,8 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
       return obj;
     };
 
-    setWhere(
-      removeKeysWithUndefiend({
+    setWhere({
+      ...removeKeysWithUndefiend({
         checkType: valuesFromCheckType.length ? valuesFromCheckType : undefined,
         bloomTaxonomy: valuesFromBloomTaxonomy.length
           ? valuesFromBloomTaxonomy
@@ -98,8 +99,10 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
         difficulty: valuesFromDifficulty.length
           ? valuesFromDifficulty
           : undefined,
-      })
-    );
+        subjectId: inputs.subjectId === "" ? undefined : inputs.subjectId,
+      }),
+    });
+
     setChanged(false);
     onClose();
   };
@@ -136,31 +139,28 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
               selecteds={(difficulty ?? []) as Difficulty[]}
               setChanged={setChanged}
             />
+            <div className="mt-2 sm:mt-0 flex flex-col">
+              <h3 className="font-bold mb-1">Assunto</h3>
+              <div
+                className="grid grid-cols-2 sm:flex sm:flex-col"
+                key={'filter-group-subject'}
+              >
+                <QuestionsSubjectFilter register={register} />
+              </div>
+            </div>
           </div>
         </DialogContent>
-
         <DialogButton>
-          {window.screen.width < 640 ? (
-            <Button
-              className={`mx-3 gray-100 mb-4 sm:mb-0 mt-2 sm:mt-0 ${changed ? "block" : "hidden"
-                }`}
-              secondary
-              onClick={() => handleClean()}
-            >
-              Limpar
-            </Button>
-          ) : (
-            <Button
-              style={{
-                visibility: changed ? "visible" : "hidden",
-              }}
-              className="mx-3 gray-100 mb-4 sm:mb-0 mt-2 sm:mt-0"
-              secondary
-              onClick={() => handleClean()}
-            >
-              Limpar
-            </Button>
-          )}
+          {
+            (window.screen.width > 640) && <div className="ml-auto" />
+          }
+          <Button
+            className={`mx-3 gray-100 mb-4 sm:mb-0 ${changed ? "block" : "hidden"}`}
+            secondary
+            onClick={() => handleClean()}
+          >
+            Limpar
+          </Button>
           <Button
             className="mx-3 gray-100 mb-4 sm:mb-0"
             secondary

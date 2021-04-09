@@ -2,9 +2,9 @@ import React, { FC, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 
 import { Navigator } from "../../components";
-import { QuestionsFilter } from "./QuestionsFilter";
+import { QuestionsFilter } from "./QuestionFilter";
 import { QuestionsPainel } from "./QuestionsPainel";
-import { FiltersProvider } from './QuestionsFilterProvider'
+import { FiltersProvider } from './QuestionFilter/QuestionsFilterProvider'
 
 export const Home: FC = () => {
   const [filterOpen, setFilterOpen] = useState(false);
