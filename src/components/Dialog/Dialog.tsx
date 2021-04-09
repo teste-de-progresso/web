@@ -39,7 +39,7 @@ export const DialogContent: FC = ({ children }) => (
 );
 
 export const DialogButton: FC = ({ children }) => (
-  <div className="mt-6 sm:mt-0 sm:py-4 mx-8 sm:mx-0 sm:px-2 sm:flex sm:justify-between sm:flex-row flex flex-col">
+  <div className="mt-6 sm:mt-0 sm:py-4 mx-8 sm:mx-0 sm:px-2 sm:flex sm:justify-between sm:flex-row flex flex-col-reverse">
     {children}
   </div>
 );
