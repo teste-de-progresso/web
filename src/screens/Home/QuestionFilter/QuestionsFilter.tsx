@@ -11,6 +11,7 @@ import { CHECK_TYPE, BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
 import { Button, Dialog, DialogButton, DialogContent } from "../../../components";
 import { useFiltersProvider } from "./QuestionsFilterProvider";
 import { QuestionsSubjectFilter } from './QuestionsSubjectFilter'
+import { QuestionsAuthorshipTypeFilter } from "./QuestionsAuthorshipTypeFilter";
 
 type FilterGroupProps = {
   title: string;
@@ -100,6 +101,7 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
           ? valuesFromDifficulty
           : undefined,
         subjectId: inputs.subjectId === "" ? undefined : inputs.subjectId,
+        authorshipYear: inputs.authorshipYear === "" ? undefined : [inputs.authorshipYear]
       }),
     });
 
@@ -118,6 +120,18 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <div className="grid grid-cols-1 gap-4 sm:gap-8 lg:grid-cols-2">
+            <div className="mt-2 sm:mt-0 flex flex-col">
+              <h3 className="font-bold mb-1">Assunto</h3>
+              <div className="grid grid-cols-2 sm:flex sm:flex-col">
+                <QuestionsSubjectFilter register={register} setChanged={setChanged} />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-0 flex flex-col">
+              <h3 className="font-bold mb-1">Ano de Autoria</h3>
+              <div className="grid grid-cols-2 sm:flex sm:flex-col">
+                <QuestionsAuthorshipTypeFilter register={register} setChanged={setChanged} />
+              </div>
+            </div>
             <FilterGroup
               title="Tipo"
               register={register}
@@ -139,15 +153,6 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
               selecteds={(difficulty ?? []) as Difficulty[]}
               setChanged={setChanged}
             />
-            <div className="mt-2 sm:mt-0 flex flex-col">
-              <h3 className="font-bold mb-1">Assunto</h3>
-              <div
-                className="grid grid-cols-2 sm:flex sm:flex-col"
-                key={'filter-group-subject'}
-              >
-                <QuestionsSubjectFilter register={register} />
-              </div>
-            </div>
           </div>
         </DialogContent>
         <DialogButton>

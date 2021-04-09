@@ -27,7 +27,7 @@ export const FeaturesFormStep: FC = () => {
     if (value === 'UNIFESO') {
       setOwnQuestion(true)
       setValue("source", "UNIFESO");
-      setValue("authorshipYear", String(new Date().getFullYear()));
+      setValue("authorshipYear", currentYear.toString());
     } else {
       setOwnQuestion(false)
       setValue("source", "");
