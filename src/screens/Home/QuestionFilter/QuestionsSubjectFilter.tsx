@@ -7,8 +7,10 @@ import { useFiltersProvider } from './QuestionsFilterProvider'
 const SUBJECTS_QUERY = gql`
   query {
     subjects {
-      id
-      name
+      nodes {
+        id
+        name
+      }
     }
   }
 `
@@ -24,6 +26,8 @@ export const QuestionsSubjectFilter: FC<Props> = ({ register, setChanged }) => {
 
   if (loading) return null
 
+  const subjects = data?.subjects.nodes
+
   return (
     <div>
       <select
@@ -34,12 +38,12 @@ export const QuestionsSubjectFilter: FC<Props> = ({ register, setChanged }) => {
         onClick={() => setChanged(true)}
       >
         <option value="" />
-        {data?.subjects?.map((subject) => (
+        {subjects?.map((subject) => (
           <option
-            key={`${subject.name}-${subject.id}`}
-            value={subject.id}
+            key={`${subject?.name}-${subject?.id}`}
+            value={subject?.id}
           >
-            {subject.name}
+            {subject?.name}
           </option>
         ))}
       </select>

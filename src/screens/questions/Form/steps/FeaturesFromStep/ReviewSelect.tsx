@@ -7,9 +7,11 @@ import { Query, User } from "../../../../../graphql/__generated__/graphql-schema
 const REVIEWERS_QUERY = gql`
   query {
     reviewers {
-      id
-      name
-      email
+      nodes {
+        id
+        name
+        email
+      }
     }
   }
 `
@@ -25,10 +27,7 @@ export const ReviewerSelect: FC<Props> = () => {
 
   if (loading) return null;
 
-  const reviewers = data?.reviewers.map(({ id, name }) => ({
-    value: id,
-    label: name,
-  }));
+  const reviewers = data?.reviewers.nodes
 
   return (
     <select
@@ -38,9 +37,9 @@ export const ReviewerSelect: FC<Props> = () => {
       defaultValue={question?.reviewer?.id}
     >
       {(question?.status === undefined || question?.status === "draft") && <option />}
-      {reviewers?.map((item, index) => (
-        <option key={index} value={item.value}>
-          {item.label}
+      {reviewers?.map((review, index) => (
+        <option key={index} value={review?.id}>
+          {review?.name}
         </option>
       ))}
     </select>
