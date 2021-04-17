@@ -11,13 +11,15 @@ type Props = {
 const SUBJECTS_QUERY = gql`
   query {
     subjects {
-      id
-      name
-      axis {
+      nodes {
+        id
         name
-      }
-      category {
-        name
+        axis {
+          name
+        }
+        category {
+          name
+        }
       }
     }
   }
@@ -31,12 +33,9 @@ export const SubjectSelect: FC<Props> = () => {
 
   if (loading) return null;
 
-  const subjects = data?.subjects.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
+  const subjects = data?.subjects.nodes
 
-  const selectedSubject = data?.subjects.find((item) => item.id === selectedId);
+  const selectedSubject = data?.subjects.nodes?.find((subject) => subject?.id === selectedId);
 
   return (
     <div className="flex flex-col h-full">
@@ -50,12 +49,12 @@ export const SubjectSelect: FC<Props> = () => {
           onChange={(e) => setSelectedId(e.target.value)}
         >
           <option value="" />
-          {subjects?.map(({ label, value }) => (
+          {subjects?.map((subject) => (
             <option
-              key={`${label}-${value}`}
-              value={value}
+              key={`${subject?.name}-${subject?.id}`}
+              value={subject?.id}
             >
-              {label}
+              {subject?.name}
             </option>
           ))}
         </select>
