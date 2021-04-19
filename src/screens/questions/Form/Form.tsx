@@ -161,32 +161,33 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
           </Step>
         </SteppedForm>
 
-        <div className="flex justify-end space-x-2">
+        <div className="mx-3 sm:mx-0 flex justify-items-center flex-col-reverse sm:flex-row justify-end space-x-0 sm:space-x-2">
           <Button
+            className={"mb-3 sm:mb-0"}
             onClick={() => confirmLeave()}
             secondary
           >
             Cancelar
           </Button>
           <Button
-            className={onFirstStep ? "hidden" : ""}
+            className={`mb-3 sm:mb-0 ${onFirstStep ? "hidden" : ""}`}
             onClick={() => handlePreviousStep()}
           >
             Retornar
           </Button>
           {(question?.status === "draft" || question?.status === undefined) &&
-            <Button onClick={handleDraftSave}>
+            <Button className={"mb-3 sm:mb-0"} onClick={handleDraftSave}>
               Salvar Rascunho
             </Button>
           }
           <Button
-            className={onLastStep ? "hidden" : ""}
+            className={`mb-3 sm:mb-0 ${onLastStep ? "hidden" : ""}`}
             onClick={() => handleNextStep()}
           >
             Prosseguir
           </Button>
           {onLastStep &&
-            <Button onClick={() => setConfirmFinishModalOpen(true)}>
+            <Button className={"mb-3 sm:mb-0"} onClick={() => setConfirmFinishModalOpen(true)}>
               Finalizar
             </Button>
           }
