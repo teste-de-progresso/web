@@ -53,9 +53,10 @@ const GET_QUESTION = gql`
 const UPDATE_QUESTION_MUTATOIN = gql`
   mutation($input: UpdateQuestionInput!) {
     updateQuestion(input: $input) {
-      payload {
+      question {
         uuid
       }
+      errors
     }
   }
 `

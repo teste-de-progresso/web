@@ -11,7 +11,7 @@ import { turnOff, turnOn } from "../../../store/ducks/unsavedChanges";
 const CREATE_QUESTION_MUTATION = gql`
   mutation($input: CreateQuestionInput!) {
     createQuestion(input: $input) {
-      payload {
+      question {
         uuid
       }
     }
@@ -67,7 +67,7 @@ export const New = () => {
       });
 
       setTimeout(() => {
-        const uuid = data?.createQuestion?.payload?.uuid
+        const uuid = data?.createQuestion?.question?.uuid
 
         history.push(`/question/${uuid}/edit`)
       }, 3000);

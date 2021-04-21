@@ -56,9 +56,9 @@ const GET_QUESTION = gql`
   }
 `
 
-const SUBMIT_REVIEW_MUTATION = gql`
+const CREATE_FEEDBACK_MUTATION = gql`
   mutation($questionId: ID!, $status: FeedbackStatus!, $comment: String) {
-    sendFeedback(
+    createFeedback(
       input: {
         feedback: {
           questionId: $questionId
@@ -67,9 +67,10 @@ const SUBMIT_REVIEW_MUTATION = gql`
         }
       }
     ) {
-      payload {
+      feedback {
         id
       }
+      errors
     }
   }
 `
@@ -94,7 +95,7 @@ export const Review: FC = () => {
     }
   });
 
-  const [sendFeedback] = useMutation(SUBMIT_REVIEW_MUTATION);
+  const [sendFeedback] = useMutation(CREATE_FEEDBACK_MUTATION);
   const { register, handleSubmit } = useForm();
 
   if (loading || !question) return null;

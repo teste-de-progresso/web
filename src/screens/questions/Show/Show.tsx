@@ -66,10 +66,11 @@ const FINISH_QUESTION = gql`
         questionId: $id
       }
     ) {
-      payload {
+      question {
         id
         status
       }
+      errors
     }
   }
 `
@@ -80,7 +81,10 @@ const DESTROY_QUESTION = gql`
       input: {
         questionId: $id
       }
-    )
+    ) {
+      deletedQuestionId
+      errors
+    }
   }
 `
 
@@ -130,7 +134,7 @@ export const Show: FC = () => {
   const handleDestroyQuestion = async () => {
     const { data } = await destroyQuestion()
 
-    if (data?.destroyQuestion) {
+    if (data?.destroyQuestion?.deletedQuestionId) {
       window.location.href = '/'
     } else {
       setAlert({
