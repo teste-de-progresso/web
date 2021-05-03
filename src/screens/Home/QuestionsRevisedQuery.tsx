@@ -5,10 +5,10 @@ import { gql, useQuery } from '@apollo/client';
 import { QuestionsList } from './QuestionsList'
 
 const QUESTIONS_QUERY = gql`
-  query QuestionsWaitingReviewQuery($first: Int!, $after: String) {
+  query QuestionsRevisedQuery($first: Int!, $after: String) {
     currentUser {
       id
-      activeReviewRequests(
+      inactiveReviewRequests(
         first: $first,
         after: $after
       ) {
@@ -35,17 +35,17 @@ type Props = {
   title: string
 }
 
-export const QuestionsWaitingReviewQuery: FC<Props> = ({ title }) => {
+export const QuestionsRevisedQuery: FC<Props> = ({ title }) => {
   const [questions, setQuestions] = useState<Question[]>([])
   const [pageInfo, setPageInfo] = useState<PageInfo | undefined>()
 
   const updateQuestions = (queryResult: Query) => {
     const { currentUser } = queryResult
-    const { activeReviewRequests } = currentUser as User
-    const reviewRequests = activeReviewRequests.nodes as ReviewRequest[]
+    const { inactiveReviewRequests } = currentUser as User
+    const reviewRequests = inactiveReviewRequests.nodes as ReviewRequest[]
 
     setQuestions(reviewRequests.map(item => item.question))
-    setPageInfo(activeReviewRequests.pageInfo)
+    setPageInfo(inactiveReviewRequests.pageInfo)
   }
 
   const { fetchMore } = useQuery<Query>(QUESTIONS_QUERY, {

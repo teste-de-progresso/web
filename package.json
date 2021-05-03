@@ -10,9 +10,9 @@
     "lint": "eslint --ext .jsx,.js src",
     "lint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src",
     "build-styles": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css",
-    "graphql:clean": "rimraf -g src/graphql/__generated__/**/*.ts",
     "graphql:download-schema:json": "apollo schema:download ./src/graphql/__generated__/graphql-schema.json --endpoint=http://localhost:3000",
-    "graphql:codegen": "yarn graphql:download-schema:json && yarn graphql:clean && graphql-codegen -c graphql-codegen.yml"
+    "codegen:clean": "rimraf -g src/graphql/__generated__/**/*.ts",
+    "codegen": "yarn graphql:download-schema:json && yarn codegen:clean && graphql-codegen"
   },
   "husky": {
     "hooks": {}
