@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dialog } from "@material-ui/core";
 
-import { useUserContext } from "../../utils";
+import { useUserContext } from "../../contexts";
 import { AvatarEditor, Navigator, Avatar } from "../../components";
 
 export const UserProfile = () => {

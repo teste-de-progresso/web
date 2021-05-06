@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../store/ducks/auth/actions";
-import { useUserContext } from "../../utils";
+import { useUserContext } from "../../contexts";
 import { Avatar } from "../Avatar";
 import { Dialog, DialogContent, DialogButton } from '../Dialog'
 

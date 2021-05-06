@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Question } from '../../graphql/__generated__/graphql-schema'
-import { useAuth } from '../../utils/contexts';
+import { useUserContext } from '../../contexts';
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -24,7 +24,7 @@ type Props = {
 }
 
 export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
-  const { user } = useAuth()
+  const { user } = useUserContext()
   const [pageCount, setPageCount] = useState(1)
 
   const formatDate = (stringDate: string) => new Date(stringDate).toLocaleDateString()
@@ -75,7 +75,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
               >
                 <Link
                   className="flex flex-col w-full px-3 py-2"
-                  to={`/question/${question.uuid}/${(question.user.id === user?.user_id.toString() ? '' : 'review')}`}
+                  to={`/question/${question.uuid}/${(question.user.id === user?.id ? '' : 'review')}`}
                 >
                   <h2>
                     {`# ${question.id}`}
@@ -93,7 +93,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                     </span>
                   </div>
                 </Link>
-                {(question.user.id === user?.user_id.toString() && question.status !== 'finished') &&
+                {(question.user.id === user?.id && question.status !== 'finished') &&
                   <div
                     className="flex flex-col relative flex-grow justify-center"
                   >

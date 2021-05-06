@@ -2,11 +2,11 @@ import React, { FC, useState } from "react";
 import axios from "axios";
 import { DialogContent, DialogActions } from "@material-ui/core";
 
-import { useAuth } from "../../utils/contexts";
 import { Alert } from "../Alert";
 import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
-import { useUserContext } from "../../utils";
+import { useUserContext } from "../../contexts";
+import { useSelector } from "react-redux";
 
 type Props = {
   setAvatarEditorExhibition: (value: boolean) => void;
@@ -15,7 +15,7 @@ type Props = {
 export const AvatarEditor: FC<Props> = ({
   setAvatarEditorExhibition,
 }) => {
-  const { token } = useAuth()
+  const { token } = useSelector((state: any) => state.auth)
   const [croppedImage, setCroppedImage] = useState<any>()
   const [alert, setAlert] = useState<boolean>()
   const { refetch } = useUserContext()

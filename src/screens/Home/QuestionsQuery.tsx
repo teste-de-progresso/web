@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 import { PageInfo, Query, Question, QuestionWhereInput, Status } from '../../graphql/__generated__/graphql-schema';
 import { gql, useQuery } from '@apollo/client';
 import { QuestionsList } from './QuestionsList'
-import { useAuth } from '../../utils/contexts';
+import { useUserContext } from '../../contexts';
 
 const QUESTIONS_QUERY = gql`
   query QuestionsQuery($first: Int!, $after: String, $before: String, $where: QuestionWhereInput) {
@@ -41,7 +41,7 @@ type Props = {
 }
 
 export const QuestionsQuery: FC<Props> = ({ title, where, status }) => {
-  const auth = useAuth()
+  const { user } = useUserContext()
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [pageInfo, setPageInfo] = useState<PageInfo | undefined>()
@@ -55,7 +55,7 @@ export const QuestionsQuery: FC<Props> = ({ title, where, status }) => {
 
   const whereInput = {
     status,
-    userId: auth?.user?.user_id,
+    userId: user?.id,
     ...where
   }
 

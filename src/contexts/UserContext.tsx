@@ -39,7 +39,7 @@ type Props = {
   children: any
 }
 
-export const UserContextProvider: FC<Props> = ({ children }) => {
+export const UserContext: FC<Props> = ({ children }) => {
   const [user, setUser] = useState<Query['currentUser']>();
 
   const { refetch: refetchUserQuery } = useQuery<Query>(CurrentUserQuery, {

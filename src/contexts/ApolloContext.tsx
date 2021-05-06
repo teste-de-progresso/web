@@ -6,36 +6,28 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { useAuth } from "./contexts";
 
 type Props = {
   children?: any
+  authToken: string
 }
 
-export const ApolloContext: FC<Props> = ({ children }) => {
-  const { token } = useAuth();
-  const httpLink = createHttpLink({
-    uri: process.env.REACT_APP_BACKEND_URL || "http://localhost:3000",
-  });
+export const ApolloContext: FC<Props> = ({ children, authToken }) => {
+  const httpLink = createHttpLink({ uri: process.env.REACT_APP_BACKEND_URL })
 
   const authLink = setContext((_, { headers }) => ({
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: `Bearer ${authToken}`,
     },
-  }));
+  }))
 
-  const credentialsType = () => {
-    if (process.env.NODE_ENV === "development") {
-      return "same-origin";
-    }
-    return "include";
-  };
+  const credentialsType = process.env.NODE_ENV === "development" ? "same-origin" : "include"
 
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
-    credentials: credentialsType(),
+    credentials: credentialsType,
   });
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

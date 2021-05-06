@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { store } from "./store";
-import { ApolloContext, UserContextProvider } from "./utils";
-import { AuthenticationContext } from "./utils/contexts";
+import { ApolloContext, UserContext } from "./contexts";
 import { loadAuthentication } from "./store/ducks/auth/actions";
 import { PrivateRoutes, PublicRoutes } from "./routes";
 
@@ -17,13 +16,11 @@ function App() {
   if (!authenticationState.isLoggedIn) return <PublicRoutes />;
 
   return (
-    <AuthenticationContext.Provider value={authenticationState}>
-      <ApolloContext>
-        <UserContextProvider>
-          <PrivateRoutes />
-        </UserContextProvider>
-      </ApolloContext>
-    </AuthenticationContext.Provider>
+    <ApolloContext authToken={authenticationState.token as string}>
+      <UserContext>
+        <PrivateRoutes />
+      </UserContext>
+    </ApolloContext>
   );
 }
 

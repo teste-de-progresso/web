@@ -1,7 +1,7 @@
-import * as jwt from "jsonwebtoken";
 import {
   AUTHENTICATION_FAILURE,
-  AUTHENTICATION_LOAD, AUTHENTICATION_LOAD_FAILURE,
+  AUTHENTICATION_LOAD,
+  AUTHENTICATION_LOAD_FAILURE,
   AUTHENTICATION_REQUEST,
   AUTHENTICATION_SUCCESS,
   LOGOUT,
@@ -9,27 +9,17 @@ import {
 
 const initialState = {
   token: undefined,
-  user: undefined,
   isLoggedIn: false,
   error: undefined,
   isLoading: false,
-  isTeacher() {
-    if (this.isLoggedIn && this.user.roles) {
-      return this.user.roles.includes("teacher");
-    }
-    return false;
-  },
 };
 
 export const reducer = (state = initialState, action) => {
-  const guid = process.env.REACT_APP_JWT_SECRET_KEY || "1cb26f40-498b-4f72-a00a-e8633abc5957";
-
   switch (action.type) {
     case AUTHENTICATION_REQUEST:
       return {
         ...state,
         token: undefined,
-        user: undefined,
         isLoggedIn: false,
         error: undefined,
         isLoading: true,
@@ -38,7 +28,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload.token,
-        user: jwt.verify(action.payload.token, guid), // TODO: PARSE JWT
         isLoggedIn: true,
         error: undefined,
         isLoading: false,
@@ -47,7 +36,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: undefined,
-        user: undefined,
         isLoggedIn: false,
         error: action.payload.error,
         isLoading: false,
@@ -67,7 +55,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         token: undefined,
-        user: undefined,
         isLoggedIn: false,
         error: undefined,
         isLoading: false,
