@@ -1,11 +1,18 @@
 import React, {
-  createContext, useContext, useState, FC,
+  createContext, useContext, useState, FC
 } from "react";
 import { useQuery, gql } from "@apollo/client";
 
-import { Query, User } from "../graphql/__generated__/graphql-schema";
+import { Query } from "../graphql/__generated__/graphql-schema";
 
-const Context = createContext<User | undefined>(undefined);
+type UserContext = {
+  user?: Query['currentUser']
+  refetch: () => void
+}
+
+const Context = createContext<UserContext>({
+  refetch: () => { },
+})
 
 export const useUserContext = () => {
   const context = useContext(Context);
@@ -17,8 +24,8 @@ export const useUserContext = () => {
   return context;
 };
 
-const MY_USER = gql`
-  query {
+const CurrentUserQuery = gql`
+  query CurrentUserQuery {
     currentUser {
       id
       name
@@ -33,16 +40,21 @@ type Props = {
 }
 
 export const UserContextProvider: FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Query['currentUser']>();
 
-  useQuery<Query>(MY_USER, {
+  const { refetch: refetchUserQuery } = useQuery<Query>(CurrentUserQuery, {
     onCompleted: ({ currentUser }) => {
-      setUser(currentUser as User);
-    },
-  });
+      setUser(currentUser)
+    }
+  })
+
+  const refetch = async () => {
+    const { data: { currentUser } } = await refetchUserQuery()
+    setUser(currentUser)
+  }
 
   return (
-    <Context.Provider value={user}>
+    <Context.Provider value={{ user, refetch }}>
       {user && children}
     </Context.Provider>
   );

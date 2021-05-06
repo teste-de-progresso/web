@@ -6,6 +6,7 @@ import { useAuth } from "../../utils/contexts";
 import { Alert } from "../Alert";
 import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
+import { useUserContext } from "../../utils";
 
 type Props = {
   setAvatarEditorExhibition: (value: boolean) => void;
@@ -14,9 +15,10 @@ type Props = {
 export const AvatarEditor: FC<Props> = ({
   setAvatarEditorExhibition,
 }) => {
-  const { token } = useAuth();
-  const [croppedImage, setCroppedImage] = useState<any>();
-  const [alert, setAlert] = useState<boolean>();
+  const { token } = useAuth()
+  const [croppedImage, setCroppedImage] = useState<any>()
+  const [alert, setAlert] = useState<boolean>()
+  const { refetch } = useUserContext()
 
   const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -31,8 +33,8 @@ export const AvatarEditor: FC<Props> = ({
       })
       .then((res) => {
         if (res.status === 200) {
-          setAvatarEditorExhibition(false);
-          window.location.href = "/user/profile";
+          setAvatarEditorExhibition(false)
+          refetch()
         } else {
           setAlert(true);
         }

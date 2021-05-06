@@ -6,8 +6,7 @@ import { AvatarEditor, Navigator, Avatar } from "../../components";
 
 export const UserProfile = () => {
   const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
-  const userContextData = useUserContext();
-  const user = userContextData;
+  const { user } = useUserContext();
 
   return (
     <>
