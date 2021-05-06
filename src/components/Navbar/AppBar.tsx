@@ -15,7 +15,7 @@ export const AppBar = () => {
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch();
-  const user = useUserContext();
+  const { user } = useUserContext();
   const history = useHistory();
   const unsavedChanges = useSelector((state: any) => state.unsavedChanges)
 
