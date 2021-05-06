@@ -9,7 +9,7 @@ import {
 } from "../../components";
 import { requestAuthentication } from "../../store/ducks/auth/actions";
 
-import unifesoLogo from "../../img/unifeso-logo-branco.svg";
+import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 
 const Layout = styled.div`
   display: grid;

@@ -7,8 +7,8 @@ import { useUserContext } from "../../contexts";
 import { Avatar } from "../Avatar";
 import { Dialog, DialogContent, DialogButton } from '../Dialog'
 
-import unifesoLogo from "../../img/unifeso-logo-branco.svg";
-import logoImgUnifeso from "../../img/logoImgUnifeso.png";
+import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
+import logoImgUnifeso from "../../assets/images/logoImgUnifeso.png";
 import { Button } from "../Button";
 
 export const AppBar = () => {

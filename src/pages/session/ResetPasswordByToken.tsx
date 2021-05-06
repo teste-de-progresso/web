@@ -13,7 +13,7 @@ import {
 import { authentication } from "../../services/api";
 import { Card, Button, InputGroup } from "../../components";
 
-import unifesoLogo from "../../img/unifeso-logo-branco.svg";
+import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 
 const Layout = styled.div`
   display: grid;

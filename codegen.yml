@@ -1,6 +1,6 @@
-schema: "src/graphql/__generated__/graphql-schema.json"
+schema: "src/__generated__/graphql-schema.json"
 generates:
-  src/graphql/__generated__/graphql-schema.d.ts:
+  src/__generated__/graphql-schema.d.ts:
     plugins:
       - typescript
     config:

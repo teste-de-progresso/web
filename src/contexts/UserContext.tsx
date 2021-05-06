@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import { useQuery, gql } from "@apollo/client";
 
-import { Query } from "../graphql/__generated__/graphql-schema";
+import { Query } from "../__generated__/graphql-schema";
 
 type UserContext = {
   user?: Query['currentUser']
