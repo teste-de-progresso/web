@@ -1,18 +1,20 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
-import { Mutation, Query } from '../../../__generated__/graphql-schema';
+import { Mutation, Query, Question } from '../../../__generated__/graphql-schema';
 import { AlertV2Props, Navigator } from '../../../components';
 import { Form } from '../Form'
-import { turnOn } from '../../../services/store/unsavedChanges';
+import { turnOn, turnOff } from '../../../services/store/unsavedChanges';
+import { NodeId } from '../../../utils/graphql';
 
 const GET_QUESTION = gql`
-  query($uuid: ID!) {
-    question(uuid: $uuid) {
+query Question ($id: ID!) {
+  node (id: $id) {
+    __typename
+    ...on Question {
       id
-      uuid
       instruction
       support
       body
@@ -48,13 +50,14 @@ const GET_QUESTION = gql`
       createdAt
     }
   }
+}
 `;
 
 const UPDATE_QUESTION_MUTATOIN = gql`
   mutation($input: UpdateQuestionInput!) {
     updateQuestion(input: $input) {
       question {
-        uuid
+        id
       }
       errors
     }
@@ -62,23 +65,27 @@ const UPDATE_QUESTION_MUTATOIN = gql`
 `
 
 type Params = {
-  uuid: string
+  id: string
 }
 
 export const Edit: FC = () => {
+  const history = useHistory()
   const dispatch = useDispatch()
-  const [alert, setAlert] = useState<AlertV2Props>()
 
-  document.onkeypress = function () {
+  useMemo(() => { dispatch(turnOff()) }, [dispatch])
+  document.onkeypress = () => {
     dispatch(turnOn())
   }
 
+  const [alert, setAlert] = useState<AlertV2Props>()
   const params = useParams<Params>()
   const [updateQuestion] = useMutation<Mutation>(UPDATE_QUESTION_MUTATOIN)
-  const { loading, data } = useQuery<Query>(GET_QUESTION, { variables: { uuid: params.uuid } })
-  const question = data?.question
+  const { loading, data } = useQuery<Query>(GET_QUESTION, { variables: { id: params.id } })
+  const question = data?.node as Question | null
 
   if (loading || !question) return null
+
+  const recordId = NodeId.decode(question.id).id
 
   const onSubmit = (inputs: any) => {
     updateQuestion({
@@ -86,12 +93,12 @@ export const Edit: FC = () => {
         input: {
           question: {
             ...inputs,
-            id: question?.id,
+            id: recordId,
           },
         },
       },
     }).then(() => {
-      window.location.href = '/'
+      history.push('/')
     }).catch((error: string) => {
       setAlert({
         severity: "error",
@@ -111,11 +118,13 @@ export const Edit: FC = () => {
         input: {
           question: {
             ...inputs,
-            id: question?.id,
+            id: recordId,
           },
         },
       }
     }).then(() => {
+      dispatch(turnOff())
+
       setAlert({
         severity: "success",
         text: "Rascunho atualizado com sucesso",

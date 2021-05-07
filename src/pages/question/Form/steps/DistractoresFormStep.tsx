@@ -6,7 +6,7 @@ import { TextEditor } from "../components/TextEditor";
 import { useFormProvider } from '../FormContext'
 
 export const DistractorsFormStep: FC = () => {
-  const { question, control } = useFormProvider()
+  const { question, hooks: { control } } = useFormProvider()
 
   const incorrectAnswers = question?.alternatives?.filter(
     (alternative) => alternative.correct === false,

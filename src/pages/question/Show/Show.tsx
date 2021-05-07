@@ -10,12 +10,14 @@ import { ViewMode, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
 import { Mutation, Query, Question } from "../../../__generated__/graphql-schema";
 import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
+import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
-  query ($uuid: ID!) {
-    question (uuid: $uuid) {
+query Question($id: ID!) {
+  node(id: $id) {
+    __typename
+    ... on Question {
       id
-      uuid
       instruction
       support
       body
@@ -57,6 +59,7 @@ const GET_QUESTION = gql`
       createdAt
     }
   }
+}
 `
 
 const FINISH_QUESTION = gql`
@@ -89,34 +92,31 @@ const DESTROY_QUESTION = gql`
 `
 
 type Params = {
-  uuid: string
+  id: string
 }
 
 export const Show: FC = () => {
-  const { uuid } = useParams<Params>();
   const history = useHistory();
-  const [confirmEditDialog, setConfirmEditDialog] = useState(false);
-  const [confirmRegister, setConfirmRegister] = useState(false);
-  const [confirmDestroy, setConfirmDestroy] = useState(false);
+  const { id } = useParams<Params>();
+  const [confirmEditDialog, setConfirmEditDialog] = useState(false)
+  const [confirmRegister, setConfirmRegister] = useState(false)
+  const [confirmDestroy, setConfirmDestroy] = useState(false)
   const [alert, setAlert] = useState<AlertV2Props>()
-  const [question, setQuestion] = useState<Question>();
-
-  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION, { variables: { id: question?.id } });
-  const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION, { variables: { id: question?.id } });
-
-  if (!uuid) history.push("/");
-
-  const { loading } = useQuery<Query>(GET_QUESTION, {
+  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION)
+  const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION)
+  const { loading, data } = useQuery<Query>(GET_QUESTION, {
     variables: {
-      uuid,
+      id,
     },
-    onCompleted: ({ question }) => setQuestion(question as Question),
   });
+  const question = data?.node as Question | null
 
   if (loading || !question) return null;
 
+  const recordId = NodeId.decode(question.id).id
+
   const confirmEditQuestion = () => {
-    history.push(`/question/${uuid}/edit`);
+    history.push(`/questions/${id}/edit`);
   };
 
   const handleEditQuestion = () => {
@@ -128,14 +128,14 @@ export const Show: FC = () => {
   };
 
   const handleRegisterQuestion = async () => {
-    await finishQuestion()
+    await finishQuestion({ variables: { id: recordId } })
   };
 
   const handleDestroyQuestion = async () => {
-    const { data } = await destroyQuestion()
+    const { data } = await destroyQuestion({ variables: { id: recordId } })
 
     if (data?.destroyQuestion?.deletedQuestionId) {
-      window.location.href = '/'
+      history.push('/')
     } else {
       setAlert({
         text: 'Algo inesperado aconteceu ao tentar excluir a questão.',

@@ -102,7 +102,7 @@ export const Navigator: FC<Props> = ({
           {
             (newQuestion) ? (
               <Item>
-                <Link to="/question/new" className="flex">
+                <Link to="/questions/new" className="flex">
                   <FaPlus className="my-auto" />
                   <span className="pl-3">Nova Questão</span>
                 </Link>

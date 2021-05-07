@@ -927,6 +927,40 @@
         "possibleTypes": null
       },
       {
+        "kind": "INTERFACE",
+        "name": "Node",
+        "description": "An object with an ID.",
+        "specifiedByUrl": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": "ID of the object.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "Question",
+            "ofType": null
+          }
+        ]
+      },
+      {
         "kind": "OBJECT",
         "name": "PageInfo",
         "description": "Information about pagination in a connection.",
@@ -1013,12 +1047,12 @@
             "deprecationReason": null
           },
           {
-            "name": "question",
-            "description": null,
+            "name": "node",
+            "description": "Fetches an object given its ID.",
             "args": [
               {
-                "name": "uuid",
-                "description": null,
+                "name": "id",
+                "description": "ID of the object.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -1034,9 +1068,54 @@
               }
             ],
             "type": {
-              "kind": "OBJECT",
-              "name": "Question",
+              "kind": "INTERFACE",
+              "name": "Node",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "nodes",
+            "description": "Fetches a list of objects given a list of IDs.",
+            "args": [
+              {
+                "name": "ids",
+                "description": "IDs of the objects.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "ID",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "INTERFACE",
+                  "name": "Node",
+                  "ofType": null
+                }
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1563,26 +1642,16 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
-          },
-          {
-            "name": "uuid",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
           }
         ],
         "inputFields": null,
-        "interfaces": [],
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Node",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },

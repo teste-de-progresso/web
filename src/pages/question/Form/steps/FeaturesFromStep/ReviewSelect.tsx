@@ -5,7 +5,7 @@ import { useFormProvider } from '../../FormContext'
 import { Query, User } from "../../../../../__generated__/graphql-schema";
 
 const REVIEWERS_QUERY = gql`
-  query {
+  query ReviwersQuery {
     reviewers {
       nodes {
         id
@@ -18,11 +18,10 @@ const REVIEWERS_QUERY = gql`
 
 type Props = {
   reviewer?: User
-
 }
 
 export const ReviewerSelect: FC<Props> = () => {
-  const { register, question } = useFormProvider()
+  const { question, hooks: { register } } = useFormProvider()
   const { loading, data } = useQuery<Query>(REVIEWERS_QUERY);
 
   if (loading) return null;

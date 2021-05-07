@@ -29,7 +29,6 @@ export const SignIn = () => {
 
   const handleLogin = async (inputs: FormInputs) => {
     const response = await authentication.login(inputs)
-    console.log(response)
     if (response.token) {
       dispatch(updateSession(response.token));
     } else {

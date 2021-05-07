@@ -2,9 +2,10 @@ import React, { FC, useState } from 'react'
 
 import { PageInfo, Query, Question, ReviewRequest, User } from '../../../__generated__/graphql-schema';
 import { gql, useQuery } from '@apollo/client';
-import { QuestionsList } from './QuestionsList'
+import { QuestionsList, QuestionsListFragments } from './QuestionsList'
 
 const QUESTIONS_QUERY = gql`
+  ${QuestionsListFragments}
   query QuestionsRevisedQuery($first: Int!, $after: String) {
     currentUser {
       id
@@ -15,14 +16,7 @@ const QUESTIONS_QUERY = gql`
         nodes {
           id
           question {
-            id
-            uuid
-            status
-            user {
-              id
-            }
-            updatedAt
-            createdAt
+            ... QuestionFields
           }
         }
       }

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const counterSlice = createSlice({
+const slice = createSlice({
   name: "unsavedChanges",
   initialState: false,
   reducers: {
@@ -15,6 +15,6 @@ const counterSlice = createSlice({
   },
 });
 
-export const { turnOff, turnOn } = counterSlice.actions;
+export const { turnOff, turnOn } = slice.actions;
 
-export const reducer = counterSlice.reducer;
+export const reducer = slice.reducer;

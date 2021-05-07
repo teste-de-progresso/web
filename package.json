@@ -10,7 +10,7 @@
     "lint": "eslint --ext .jsx,.js src",
     "lint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src",
     "build-styles": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css",
-    "graphql:download-schema:json": "apollo schema:download ./src/__generated__/graphql-schema.json --endpoint=http://localhost:3000",
+    "graphql:download-schema:json": "apollo schema:download ./src/__generated__/graphql-schema.json --endpoint=http://localhost:3000/graphql",
     "codegen:clean": "rimraf -g src/__generated__/**/*.ts",
     "codegen": "yarn graphql:download-schema:json && yarn codegen:clean && graphql-codegen"
   },
@@ -53,8 +53,6 @@
     "ckeditor5-mathtype": "^1.0.4",
     "fontsource-roboto": "^3.0.3",
     "graphql": "^15.3.0",
-    "graphql.macro": "^1.4.2",
-    "jsonwebtoken": "^8.5.1",
     "react": "^17.0.1",
     "react-aria-modal": "^4.0.0",
     "react-avatar-edit": "^0.8.3",

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { Card } from "../../../components";
 import { Question } from "../../../__generated__/graphql-schema";
-import { loadWIRISplugin } from "../../../utils";
+import { loadWIRISplugin } from "../../../utils/plugins";
 import { BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
 
 type Props = {

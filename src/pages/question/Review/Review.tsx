@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { gql, useMutation, useQuery } from "@apollo/client";
@@ -7,12 +7,14 @@ import { ViewMode, QuestionFeedback } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 import { FeedbackStatus, Query, Question } from "../../../__generated__/graphql-schema";
+import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
-  query ($uuid: ID!) {
-    question (uuid: $uuid) {
+query Question ($id: ID!) {
+  node (id: $id) {
+    __typename
+    ...on Question {
       id
-      uuid
       instruction
       support
       body
@@ -54,6 +56,7 @@ const GET_QUESTION = gql`
       createdAt
     }
   }
+}
 `
 
 const CREATE_FEEDBACK_MUTATION = gql`
@@ -76,27 +79,20 @@ const CREATE_FEEDBACK_MUTATION = gql`
 `
 
 type Params = {
-  uuid: string
+  id: string
 }
 
 export const Review: FC = () => {
-  const [question, setQuestion] = useState<Question>()
-  const { uuid } = useParams<Params>();
-  const history = useHistory();
-
-  if (!uuid) history.push("/");
-
-  const { loading } = useQuery<Query>(GET_QUESTION, {
+  const history = useHistory()
+  const { id } = useParams<Params>()
+  const { register, handleSubmit } = useForm()
+  const [sendFeedback] = useMutation(CREATE_FEEDBACK_MUTATION)
+  const { loading, data } = useQuery<Query>(GET_QUESTION, {
     variables: {
-      uuid,
-    },
-    onCompleted: ({ question }) => {
-      setQuestion(question as Question)
+      id,
     }
-  });
-
-  const [sendFeedback] = useMutation(CREATE_FEEDBACK_MUTATION);
-  const { register, handleSubmit } = useForm();
+  })
+  const question = data?.node as Question | null
 
   if (loading || !question) return null;
 
@@ -108,12 +104,12 @@ export const Review: FC = () => {
   const formSubmit = async (inputs: FormInputs) => {
     await sendFeedback({
       variables: {
-        questionId: question.id,
         ...inputs,
+        questionId: NodeId.decode(question.id).id,
       },
     });
 
-    window.location.href = "/";
+    history.push('/')
   };
 
   return (

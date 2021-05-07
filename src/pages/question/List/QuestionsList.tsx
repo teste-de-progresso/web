@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import { Question } from '../../../__generated__/graphql-schema'
 import { useUserContext } from '../../../contexts';
+import { NodeId } from '../../../utils/graphql';
+import { gql } from '@apollo/client';
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -22,6 +24,18 @@ type Props = {
     onPreviousPageClick: () => void
   }
 }
+
+export const QuestionsListFragments = gql`
+  fragment QuestionFields on Question {
+    id
+    status
+    user {
+      id
+    }
+    updatedAt
+    createdAt
+  }
+`
 
 export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
   const { user } = useUserContext()
@@ -70,15 +84,15 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
           ? <div className="flex-col w-full sm:grid sm:gap-4 sm:col-gap-8 sm:grid-cols-4">
             {questions.map((question) => (
               <div
-                key={`question-${question.uuid}`}
+                key={`question-${question.id}`}
                 className="mx-1 sm:mx-0 mb-4 sm:mb-0 border-l-8 border-primary-light flex bg-white hover:bg-unifeso-50 rounded shadow hover:shadow-md cursor-pointer group transition-all duration-500"
               >
                 <Link
                   className="flex flex-col w-full px-3 py-2"
-                  to={`/question/${question.uuid}/${(question.user.id === user?.id ? '' : 'review')}`}
+                  to={`/questions/${question.id}/${(question.user.id === user?.id ? '' : 'review')}`}
                 >
                   <h2>
-                    {`# ${question.id}`}
+                    {`# ${NodeId.decode(question.id).id}`}
                   </h2>
                   <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
                     <span>
@@ -100,7 +114,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                     <Link
                       className="group-hover:block absolute bg-gray-300 hover:bg-primary-normal text-gray-500 hover:text-gray-100 hover:shadow-lg rounded-full p-2 cursor-pointer shadow-inner transition-all duration-500"
                       style={{ left: '-1.5rem' }}
-                      to={`/question/${question.uuid}/edit`}
+                      to={`/questions/${question.id}/edit`}
                     >
                       <EditIcon />
                     </Link>

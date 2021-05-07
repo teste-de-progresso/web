@@ -22,7 +22,7 @@ export const AppBar = () => {
 
   const doLogout = () => dispatch(deleteSession());
   const openProfile = () => {
-    history.push("/user/profile");
+    history.push("/my_user");
   };
 
   const handleClick = () => setOpen(!open)

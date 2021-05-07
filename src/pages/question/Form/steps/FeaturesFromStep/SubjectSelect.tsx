@@ -9,7 +9,7 @@ type Props = {
 }
 
 const SUBJECTS_QUERY = gql`
-  query {
+  query SubjectQuery {
     subjects {
       nodes {
         id
@@ -26,7 +26,7 @@ const SUBJECTS_QUERY = gql`
 `
 
 export const SubjectSelect: FC<Props> = () => {
-  const { register, question } = useFormProvider()
+  const { question, hooks: { register } } = useFormProvider()
   const [selectedId, setSelectedId] = useState(question?.subject?.id);
 
   const { loading, data } = useQuery<Query>(SUBJECTS_QUERY);

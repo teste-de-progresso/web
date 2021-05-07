@@ -9,7 +9,7 @@ import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../../utils/typ
 import { Question } from "../../../../../__generated__/graphql-schema";
 
 export const FeaturesFormStep: FC = () => {
-  const { setValue, register, question } = useFormProvider();
+  const { question, hooks: { setValue, register } } = useFormProvider();
 
   const currentYear = new Date().getFullYear();
 
