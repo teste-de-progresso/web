@@ -6,7 +6,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Mutation, Query } from '../../../__generated__/graphql-schema';
 import { AlertV2Props, Navigator } from '../../../components';
 import { Form } from '../Form'
-import { turnOn } from '../../../store/ducks/unsavedChanges';
+import { turnOn } from '../../../services/store/unsavedChanges';
 
 const GET_QUESTION = gql`
   query($uuid: ID!) {

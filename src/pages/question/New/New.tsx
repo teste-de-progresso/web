@@ -6,7 +6,7 @@ import { AlertV2Props, Navigator } from "../../../components";
 import { Form } from '../Form'
 import { Mutation } from "../../../__generated__/graphql-schema";
 import { useDispatch } from "react-redux";
-import { turnOff, turnOn } from "../../../store/ducks/unsavedChanges";
+import { turnOff, turnOn } from "../../../services/store/unsavedChanges";
 
 const CREATE_QUESTION_MUTATION = gql`
   mutation($input: CreateQuestionInput!) {

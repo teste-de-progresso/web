@@ -8,7 +8,8 @@ import {
 } from "@material-ui/core";
 
 import { Button } from "../Button";
-import { turnOff } from "../../store/ducks/unsavedChanges";
+import { turnOff } from "../../services/store/unsavedChanges";
+import { RootState } from "../../services/store";
 
 const HorizontalMenu = styled.ul`
   margin: 0;
@@ -52,7 +53,7 @@ export const Navigator: FC<Props> = ({
   home = false, newQuestion = false, children,
 }) => {
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
-  const unsavedChanges = useSelector((state: any) => state.unsavedChanges)
+  const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
   const dispatch = useDispatch()
   const history = useHistory();
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { logout } from "../../store/ducks/auth/actions";
+import { deleteSession } from "../../services/store/auth";
 import { useUserContext } from "../../contexts";
 import { Avatar } from "../Avatar";
 import { Dialog, DialogContent, DialogButton } from '../Dialog'
@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogButton } from '../Dialog'
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 import logoImgUnifeso from "../../assets/images/logoImgUnifeso.png";
 import { Button } from "../Button";
+import { RootState } from "../../services/store";
 
 export const AppBar = () => {
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false)
@@ -17,9 +18,9 @@ export const AppBar = () => {
   const dispatch = useDispatch();
   const { user } = useUserContext();
   const history = useHistory();
-  const unsavedChanges = useSelector((state: any) => state.unsavedChanges)
+  const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
 
-  const doLogout = () => dispatch(logout());
+  const doLogout = () => dispatch(deleteSession());
   const openProfile = () => {
     history.push("/user/profile");
   };

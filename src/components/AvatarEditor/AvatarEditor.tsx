@@ -7,6 +7,7 @@ import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 import { useUserContext } from "../../contexts";
 import { useSelector } from "react-redux";
+import { RootState } from "../../services/store";
 
 type Props = {
   setAvatarEditorExhibition: (value: boolean) => void;
@@ -15,7 +16,7 @@ type Props = {
 export const AvatarEditor: FC<Props> = ({
   setAvatarEditorExhibition,
 }) => {
-  const { token } = useSelector((state: any) => state.auth)
+  const { token } = useSelector((state: RootState) => state.auth)
   const [croppedImage, setCroppedImage] = useState<any>()
   const [alert, setAlert] = useState<boolean>()
   const { refetch } = useUserContext()

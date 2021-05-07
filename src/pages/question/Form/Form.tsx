@@ -13,6 +13,7 @@ import { Button, Dialog, DialogContent, DialogButton, AlertV2Props, AlertV2 } fr
 import { Question, QuestionCreateInput } from '../../../__generated__/graphql-schema';
 import { formatInput } from '../formatInputs';
 import { validateQuestionInputs } from '../../../utils/questions/questionValidations';
+import { RootState } from '../../../services/store';
 
 type Props = {
   question?: Question
@@ -27,7 +28,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
   const [currentStep, setCurrentStep] = useState(0);
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
   const history = useHistory();
-  const unsavedChanges = useSelector((state: any) => state.unsavedChanges)
+  const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
 
   const minStep = 0;
   const maxStep = 3;

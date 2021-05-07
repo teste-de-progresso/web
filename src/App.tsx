@@ -1,22 +1,23 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { store } from "./store";
+import { RootState } from "./services/store";
 import { ApolloContext, UserContext } from "./contexts";
-import { loadAuthentication } from "./store/ducks/auth/actions";
 import { PrivateRoutes, PublicRoutes } from "./Routes";
+import { loadSession } from "./services/store/auth";
 
 export const App = () => {
-  const authenticationState = useSelector((state: any) => state.auth);
+  const auth = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    store.dispatch(loadAuthentication());
-  }, []);
+    dispatch(loadSession())
+  }, [dispatch]);
 
-  if (!authenticationState.isLoggedIn) return <PublicRoutes />;
+  if (!auth.token) return <PublicRoutes />;
 
   return (
-    <ApolloContext authToken={authenticationState.token as string}>
+    <ApolloContext authToken={auth.token}>
       <UserContext>
         <PrivateRoutes />
       </UserContext>

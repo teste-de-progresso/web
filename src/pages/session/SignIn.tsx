@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   Card, Button, InputGroup, Alert,
 } from "../../components";
-import { requestAuthentication } from "../../store/ducks/auth/actions";
-
+import { updateSession } from '../../services/store/auth'
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
+import { authentication } from "../../services/api";
 
 const Layout = styled.div`
   display: grid;
@@ -18,7 +18,7 @@ const Layout = styled.div`
 
 export const SignIn = () => {
   const { register, handleSubmit } = useForm();
-  const state = useSelector(({ auth }: any) => auth);
+  const [error, setError] = useState<string>()
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -27,8 +27,14 @@ export const SignIn = () => {
     password: string
   }
 
-  const handleLogin = (inputs: FormInputs) => {
-    dispatch(requestAuthentication(inputs.email, inputs.password));
+  const handleLogin = async (inputs: FormInputs) => {
+    const response = await authentication.login(inputs)
+    console.log(response)
+    if (response.token) {
+      dispatch(updateSession(response.token));
+    } else {
+      setError(response.error)
+    }
   };
 
   return (
@@ -44,7 +50,7 @@ export const SignIn = () => {
             onSubmit={handleSubmit(handleLogin)}
             className="w-full h-full md:max-w-xl md:h-auto"
           >
-            {state.error ? <Alert>{state.error}</Alert> : null}
+            {error ? <Alert>{error}</Alert> : null}
             <InputGroup>
               <label>Email</label>
               <input
