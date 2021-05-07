@@ -13,10 +13,11 @@ import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
 import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
-  query ($uuid: ID!) {
-    question (uuid: $uuid) {
+query Question($id: ID!) {
+  node(id: $id) {
+    __typename
+    ... on Question {
       id
-      uuid
       instruction
       support
       body
@@ -58,6 +59,7 @@ const GET_QUESTION = gql`
       createdAt
     }
   }
+}
 `
 
 const FINISH_QUESTION = gql`
@@ -90,35 +92,31 @@ const DESTROY_QUESTION = gql`
 `
 
 type Params = {
-  uuid: string
+  id: string
 }
 
 export const Show: FC = () => {
   const history = useHistory();
-  const { uuid } = useParams<Params>();
-
+  const { id } = useParams<Params>();
   const [confirmEditDialog, setConfirmEditDialog] = useState(false)
   const [confirmRegister, setConfirmRegister] = useState(false)
   const [confirmDestroy, setConfirmDestroy] = useState(false)
   const [alert, setAlert] = useState<AlertV2Props>()
-  const [question, setQuestion] = useState<Query['question']>()
-
   const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION)
   const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION)
-
-  const { loading } = useQuery<Query>(GET_QUESTION, {
+  const { loading, data } = useQuery<Query>(GET_QUESTION, {
     variables: {
-      uuid,
+      id,
     },
-    onCompleted: ({ question }) => setQuestion(question as Question),
   });
+  const question = data?.node as Question | null
 
   if (loading || !question) return null;
 
   const recordId = NodeId.decode(question.id).id
 
   const confirmEditQuestion = () => {
-    history.push(`/question/${uuid}/edit`);
+    history.push(`/questions/${id}/edit`);
   };
 
   const handleEditQuestion = () => {
@@ -137,7 +135,7 @@ export const Show: FC = () => {
     const { data } = await destroyQuestion({ variables: { id: recordId } })
 
     if (data?.destroyQuestion?.deletedQuestionId) {
-      window.location.href = '/'
+      history.push('/')
     } else {
       setAlert({
         text: 'Algo inesperado aconteceu ao tentar excluir a questão.',

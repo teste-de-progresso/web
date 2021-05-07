@@ -4,7 +4,7 @@ const initialState: { token: string | null } = {
   token: null,
 };
 
-const sessionSlice = createSlice({
+const slice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -29,10 +29,6 @@ const sessionSlice = createSlice({
   },
 });
 
-export const {
-  updateSession,
-  deleteSession,
-  loadSession,
-} = sessionSlice.actions;
+export const { updateSession, deleteSession, loadSession } = slice.actions;
 
-export const reducer = sessionSlice.reducer;
+export const reducer = slice.reducer;

@@ -12,24 +12,23 @@ const CREATE_QUESTION_MUTATION = gql`
   mutation($input: CreateQuestionInput!) {
     createQuestion(input: $input) {
       question {
-        uuid
+        id
       }
     }
   }
 `
 
 export const New = () => {
+  const history = useHistory()
   const dispatch = useDispatch()
 
   useMemo(() => { dispatch(turnOff()) }, [dispatch])
-
   document.onkeypress = function () {
     dispatch(turnOn())
   }
 
   const [alert, setAlert] = useState<AlertV2Props>();
   const [createQuestion] = useMutation<Mutation>(CREATE_QUESTION_MUTATION)
-  const history = useHistory()
 
   const onSubmit = (inputs: any) => {
     createQuestion({
@@ -39,7 +38,8 @@ export const New = () => {
         },
       },
     }).then(() => {
-      window.location.href = '/'
+      dispatch(turnOff())
+      history.push('/')
     }).catch((error: string) => {
       setAlert({
         severity: "error",
@@ -67,9 +67,9 @@ export const New = () => {
       });
 
       setTimeout(() => {
-        const uuid = data?.createQuestion?.question?.uuid
+        const id = data?.createQuestion?.question?.id
 
-        history.push(`/question/${uuid}/edit`)
+        history.push(`/questions/${id}/edit`)
       }, 3000);
     }).catch((error: string) => {
       setAlert({

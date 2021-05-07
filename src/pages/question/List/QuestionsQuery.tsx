@@ -2,10 +2,11 @@ import React, { FC, useState } from 'react'
 
 import { PageInfo, Query, Question, QuestionWhereInput, Status } from '../../../__generated__/graphql-schema';
 import { gql, useQuery } from '@apollo/client';
-import { QuestionsList } from './QuestionsList'
+import { QuestionsList, QuestionsListFragments } from './QuestionsList'
 import { useUserContext } from '../../../contexts';
 
 const QUESTIONS_QUERY = gql`
+  ${QuestionsListFragments}
   query QuestionsQuery($first: Int!, $after: String, $before: String, $where: QuestionWhereInput) {
     questions (
         first: $first,
@@ -14,20 +15,7 @@ const QUESTIONS_QUERY = gql`
         where: $where
     ) {
       nodes {
-        id
-        uuid
-        status
-        user {
-          id
-        }
-        updatedAt
-        createdAt
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-        hasPreviousPage
-        startCursor
+        ... QuestionFields
       }
     }
   }
@@ -67,6 +55,7 @@ export const QuestionsQuery: FC<Props> = ({ title, where, status }) => {
       first: PAGE_SIZE,
       where: whereInput,
     },
+    fetchPolicy: "network-only",
   })
 
   const onNextPageClick = () => {

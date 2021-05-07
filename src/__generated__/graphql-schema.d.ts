@@ -186,7 +186,6 @@ export type Query = {
   readonly node?: Maybe<Node>;
   /** Fetches a list of objects given a list of IDs. */
   readonly nodes: ReadonlyArray<Maybe<Node>>;
-  readonly question?: Maybe<Question>;
   readonly questions: QuestionConnection;
   readonly reviewers: UserConnection;
   readonly subjects: SubjectConnection;
@@ -200,11 +199,6 @@ export type QueryNodeArgs = {
 
 export type QueryNodesArgs = {
   ids: ReadonlyArray<Scalars['ID']>;
-};
-
-
-export type QueryQuestionArgs = {
-  uuid: Scalars['ID'];
 };
 
 
@@ -255,7 +249,6 @@ export type Question = Node & {
   readonly support?: Maybe<Scalars['String']>;
   readonly updatedAt: Scalars['ISO8601DateTime'];
   readonly user: User;
-  readonly uuid: Scalars['ID'];
 };
 
 export type QuestionAlternative = {
