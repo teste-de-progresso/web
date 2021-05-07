@@ -7,8 +7,8 @@ import "./styles/global.css";
 import "./styles/main.css";
 import "./styles/ckeditor-content-styles.css";
 
-import App from "./App";
-import { store } from "./store";
+import { App } from "./App";
+import { store } from "./services/store";
 
 ReactDOM.render(
   <React.StrictMode>

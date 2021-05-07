@@ -10,8 +10,8 @@
     "lint": "eslint --ext .jsx,.js src",
     "lint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src",
     "build-styles": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css",
-    "graphql:download-schema:json": "apollo schema:download ./src/graphql/__generated__/graphql-schema.json --endpoint=http://localhost:3000",
-    "codegen:clean": "rimraf -g src/graphql/__generated__/**/*.ts",
+    "graphql:download-schema:json": "apollo schema:download ./src/__generated__/graphql-schema.json --endpoint=http://localhost:3000",
+    "codegen:clean": "rimraf -g src/__generated__/**/*.ts",
     "codegen": "yarn graphql:download-schema:json && yarn codegen:clean && graphql-codegen"
   },
   "husky": {
@@ -41,7 +41,6 @@
     "@ckeditor/ckeditor5-react": "^2.1.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@redux-saga/core": "^1.1.3",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^9.3.2",
@@ -67,7 +66,6 @@
     "react-scripts": "3.4.1",
     "react-select": "^3.1.0",
     "redux": "^4.0.5",
-    "redux-saga": "^1.1.3",
     "styled-components": "^5",
     "typescript": "^4.1.2"
   },

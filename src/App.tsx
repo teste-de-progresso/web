@@ -1,29 +1,27 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { store } from "./store";
-import { ApolloContext, UserContextProvider } from "./utils";
-import { AuthenticationContext } from "./utils/contexts";
-import { loadAuthentication } from "./store/ducks/auth/actions";
-import { PrivateRoutes, PublicRoutes } from "./routes";
+import { RootState } from "./services/store";
+import { ApolloContext, UserContext } from "./contexts";
+import { PrivateRoutes, PublicRoutes } from "./Routes";
+import { loadSession } from "./services/store/auth";
 
-function App() {
-  const authenticationState = useSelector((state: any) => state.auth);
+export const App = () => {
+  const auth = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    store.dispatch(loadAuthentication());
-  }, []);
+    dispatch(loadSession())
+  }, [dispatch]);
 
-  if (!authenticationState.isLoggedIn) return <PublicRoutes />;
+  if (!auth.token) return <PublicRoutes />;
 
   return (
-    <AuthenticationContext.Provider value={authenticationState}>
-      <ApolloContext>
-        <UserContextProvider>
-          <PrivateRoutes />
-        </UserContextProvider>
-      </ApolloContext>
-    </AuthenticationContext.Provider>
+    <ApolloContext authToken={auth.token}>
+      <UserContext>
+        <PrivateRoutes />
+      </UserContext>
+    </ApolloContext>
   );
 }
 
