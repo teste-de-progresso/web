@@ -16,11 +16,11 @@ export const PrivateRoutes = () => (
     <AppBar />
     <Switch>
       <Route exact path="/" component={List} />
+      <Route exact path="/user/profile" component={Profile} />
       <Route exact path="/question/new" component={New} />
       <Route exact path="/question/:uuid" component={Show} />
       <Route exact path="/question/:uuid/edit" component={Edit} />
       <Route exact path="/question/:uuid/review" component={Review} />
-      <Route exact path="/user/profile" component={Profile} />
     </Switch>
   </Router>
 );

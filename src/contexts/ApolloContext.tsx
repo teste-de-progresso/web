@@ -13,7 +13,9 @@ type Props = {
 }
 
 export const ApolloContext: FC<Props> = ({ children, authToken }) => {
-  const httpLink = createHttpLink({ uri: process.env.REACT_APP_BACKEND_URL })
+  const httpLink = createHttpLink({
+    uri: `${process.env.REACT_APP_BACKEND_URL}/graphql`
+  })
 
   const authLink = setContext((_, { headers }) => ({
     headers: {

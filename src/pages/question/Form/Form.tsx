@@ -79,7 +79,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
   }
 
   return (
-    <FormProvider formHooks={{ register, control, setValue, question }}>
+    <FormProvider props={{ question, hooks: { register, control, setValue } }}>
       {alert && (
         <AlertV2 severity={alert.severity} text={alert.text}></AlertV2>
       )}

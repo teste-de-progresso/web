@@ -30,7 +30,7 @@ type Props = {
 }
 
 export const TextEditor: FC<Props> = ({ name, defaultValue }) => {
-  const { control } = useFormProvider()
+  const { hooks: { control } } = useFormProvider()
 
   return (
     <Controller
@@ -44,7 +44,7 @@ export const TextEditor: FC<Props> = ({ name, defaultValue }) => {
           config={{
             toolbar: toolbarOptions,
             ckfinder: {
-              uploadUrl: `${process.env.REACT_APP_BACKEND_URL}/picture/upload`,
+              uploadUrl: `${process.env.REACT_APP_BACKEND_URL}/upload`,
             },
           }}
           onChange={(_: any, editor: any) => onChange(editor.getData())}

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { Question } from '../../../__generated__/graphql-schema'
 import { useUserContext } from '../../../contexts';
+import { NodeId } from '../../../utils/graphql';
 
 const EditIcon = styled(MdModeEdit)`
   margin: auto;
@@ -78,7 +79,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                   to={`/question/${question.uuid}/${(question.user.id === user?.id ? '' : 'review')}`}
                 >
                   <h2>
-                    {`# ${question.id}`}
+                    {`# ${NodeId.decode(question.id).id}`}
                   </h2>
                   <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
                     <span>

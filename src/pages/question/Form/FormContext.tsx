@@ -1,10 +1,15 @@
 import React, { FC, useContext } from 'react'
+import { Control, FieldValues } from 'react-hook-form';
 import { Question } from '../../../__generated__/graphql-schema';
 
+type FormContextHooks = {
+  register: any
+  setValue: Function
+  control: Control<FieldValues>
+}
+
 type FormContextProps = {
-  register?: any
-  control?: any
-  setValue?: any
+  hooks: FormContextHooks
   question?: Question
 }
 
@@ -22,12 +27,12 @@ export const useFormProvider = () => {
 
 type Props = {
   children?: any
-  formHooks: FormContextProps
+  props: FormContextProps
 }
 
-export const FormProvider: FC<Props> = ({ children, formHooks }) => {
+export const FormProvider: FC<Props> = ({ children, props }) => {
   return (
-    <FormContext.Provider value={formHooks}>
+    <FormContext.Provider value={props}>
       {children}
     </FormContext.Provider>
   )

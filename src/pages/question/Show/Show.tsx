@@ -10,6 +10,7 @@ import { ViewMode, QuestionFeedback } from "../shared";
 import { Navigator, Button } from "../../../components";
 import { Mutation, Query, Question } from "../../../__generated__/graphql-schema";
 import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
+import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
   query ($uuid: ID!) {
@@ -93,18 +94,17 @@ type Params = {
 }
 
 export const Show: FC = () => {
-  const { uuid } = useParams<Params>();
   const history = useHistory();
-  const [confirmEditDialog, setConfirmEditDialog] = useState(false);
-  const [confirmRegister, setConfirmRegister] = useState(false);
-  const [confirmDestroy, setConfirmDestroy] = useState(false);
+  const { uuid } = useParams<Params>();
+
+  const [confirmEditDialog, setConfirmEditDialog] = useState(false)
+  const [confirmRegister, setConfirmRegister] = useState(false)
+  const [confirmDestroy, setConfirmDestroy] = useState(false)
   const [alert, setAlert] = useState<AlertV2Props>()
-  const [question, setQuestion] = useState<Question>();
+  const [question, setQuestion] = useState<Query['question']>()
 
-  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION, { variables: { id: question?.id } });
-  const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION, { variables: { id: question?.id } });
-
-  if (!uuid) history.push("/");
+  const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION)
+  const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION)
 
   const { loading } = useQuery<Query>(GET_QUESTION, {
     variables: {
@@ -114,6 +114,8 @@ export const Show: FC = () => {
   });
 
   if (loading || !question) return null;
+
+  const recordId = NodeId.decode(question.id).id
 
   const confirmEditQuestion = () => {
     history.push(`/question/${uuid}/edit`);
@@ -128,11 +130,11 @@ export const Show: FC = () => {
   };
 
   const handleRegisterQuestion = async () => {
-    await finishQuestion()
+    await finishQuestion({ variables: { id: recordId } })
   };
 
   const handleDestroyQuestion = async () => {
-    const { data } = await destroyQuestion()
+    const { data } = await destroyQuestion({ variables: { id: recordId } })
 
     if (data?.destroyQuestion?.deletedQuestionId) {
       window.location.href = '/'

@@ -6,7 +6,7 @@ import { TextEditor } from "../components/TextEditor";
 import { useFormProvider } from '../FormContext'
 
 export const AnswerFormStep: FC = () => {
-  const { question, control } = useFormProvider()
+  const { question, hooks: { control } } = useFormProvider()
 
   const alternativesMaped = question?.alternatives || [
     { text: "", correct: true },

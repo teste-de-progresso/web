@@ -160,6 +160,12 @@ export type MutationUpdateQuestionArgs = {
   input: UpdateQuestionInput;
 };
 
+/** An object with an ID. */
+export type Node = {
+  /** ID of the object. */
+  readonly id: Scalars['ID'];
+};
+
 /** Information about pagination in a connection. */
 export type PageInfo = {
   readonly __typename?: 'PageInfo';
@@ -176,10 +182,24 @@ export type PageInfo = {
 export type Query = {
   readonly __typename?: 'Query';
   readonly currentUser?: Maybe<User>;
+  /** Fetches an object given its ID. */
+  readonly node?: Maybe<Node>;
+  /** Fetches a list of objects given a list of IDs. */
+  readonly nodes: ReadonlyArray<Maybe<Node>>;
   readonly question?: Maybe<Question>;
   readonly questions: QuestionConnection;
   readonly reviewers: UserConnection;
   readonly subjects: SubjectConnection;
+};
+
+
+export type QueryNodeArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryNodesArgs = {
+  ids: ReadonlyArray<Scalars['ID']>;
 };
 
 
@@ -212,7 +232,7 @@ export type QuerySubjectsArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export type Question = {
+export type Question = Node & {
   readonly __typename?: 'Question';
   readonly alternatives: ReadonlyArray<QuestionAlternative>;
   readonly authorshipYear?: Maybe<Scalars['String']>;

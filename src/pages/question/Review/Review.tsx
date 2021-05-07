@@ -7,6 +7,7 @@ import { ViewMode, QuestionFeedback } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 import { FeedbackStatus, Query, Question } from "../../../__generated__/graphql-schema";
+import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
   query ($uuid: ID!) {
@@ -108,8 +109,8 @@ export const Review: FC = () => {
   const formSubmit = async (inputs: FormInputs) => {
     await sendFeedback({
       variables: {
-        questionId: question.id,
         ...inputs,
+        questionId: NodeId.decode(question.id).id,
       },
     });
 

@@ -7,6 +7,7 @@ import { Mutation, Query } from '../../../__generated__/graphql-schema';
 import { AlertV2Props, Navigator } from '../../../components';
 import { Form } from '../Form'
 import { turnOn } from '../../../services/store/unsavedChanges';
+import { NodeId } from '../../../utils/graphql';
 
 const GET_QUESTION = gql`
   query($uuid: ID!) {
@@ -80,13 +81,15 @@ export const Edit: FC = () => {
 
   if (loading || !question) return null
 
+  const recordId = NodeId.decode(question?.id).id
+
   const onSubmit = (inputs: any) => {
     updateQuestion({
       variables: {
         input: {
           question: {
             ...inputs,
-            id: question?.id,
+            id: recordId,
           },
         },
       },
@@ -111,7 +114,7 @@ export const Edit: FC = () => {
         input: {
           question: {
             ...inputs,
-            id: question?.id,
+            id: recordId,
           },
         },
       }
