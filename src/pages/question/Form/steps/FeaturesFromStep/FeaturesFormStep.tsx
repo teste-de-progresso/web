@@ -1,12 +1,27 @@
 import React, { FC, useState } from "react";
+import { gql } from "@apollo/client";
 
 import { Card } from "../../../../../components";
-import { SubjectSelect } from "./SubjectSelect";
-import { ReviewerSelect } from "./ReviewSelect";
+import { SubjectSelect, SubjectFragment } from "./SubjectSelect";
+import { ReviewerSelect, ReviewerFragment } from "./ReviewSelect";
 import { useFormProvider } from '../../FormContext'
 
 import { BLOOM_TAXONOMY, CHECK_TYPE, DIFFICULTY } from "../../../../../utils/types";
 import { Question } from "../../../../../__generated__/graphql-schema";
+
+export const FeaturesFragment = gql`
+  ${ReviewerFragment}
+  ${SubjectFragment}
+  fragment FeaturesFields on Question {
+    ... ReviewerFields
+    ... SubjectFields
+    source
+    authorshipYear
+    difficulty
+    checkType
+    bloomTaxonomy
+  }
+`
 
 export const FeaturesFormStep: FC = () => {
   const { question, hooks: { setValue, register } } = useFormProvider();

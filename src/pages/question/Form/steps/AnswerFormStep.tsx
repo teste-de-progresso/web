@@ -1,9 +1,21 @@
+import { gql } from "@apollo/client";
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
 
 import { Card } from "../../../../components/Card/Card";
 import { TextEditor } from "../components/TextEditor";
 import { useFormProvider } from '../FormContext'
+
+export const AnswerFragment = gql`
+  fragment AnswerFields on Question {
+    alternatives {
+      correct
+      text
+    }
+    explanation
+    references
+  }
+`
 
 export const AnswerFormStep: FC = () => {
   const { question, hooks: { control } } = useFormProvider()

@@ -4,16 +4,40 @@ import { List, ListItem, ListItemIcon, ListItemText, Dialog as DialogMaterial, D
 import { MdError } from 'react-icons/md';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-
-import { EnunciationFormStep, AnswerFormStep, DistractorsFormStep, FeaturesFormStep } from './steps'
-import { SteppedForm, Step } from './SteppedForm'
-import { FormProvider } from './FormContext'
-import { Button, Dialog, DialogContent, DialogButton, AlertV2Props, AlertV2 } from '../../../components';
+import { gql } from '@apollo/client';
 
 import { Question, QuestionCreateInput } from '../../../__generated__/graphql-schema';
 import { formatInput } from '../formatInputs';
 import { validateQuestionInputs } from '../../../utils/questions/questionValidations';
 import { RootState } from '../../../services/store';
+
+import { FormProvider } from './FormContext'
+import { SteppedForm, Step } from './SteppedForm'
+import {
+  EnunciationFormStep,
+  EnunciationFragment,
+  AnswerFormStep,
+  AnswerFragment,
+  DistractorsFormStep,
+  DistractorsFragment,
+  FeaturesFormStep,
+  FeaturesFragment
+} from './steps'
+import { Button, Dialog, DialogContent, DialogButton, AlertV2Props, AlertV2 } from '../../../components';
+
+export const FormFragments = gql`
+  ${EnunciationFragment}
+  ${AnswerFragment}
+  ${DistractorsFragment}
+  ${FeaturesFragment}
+  fragment FormFields on Question {
+    ...EnunciationFields
+    ...AnswerFields
+    ...DistractorsFields
+    ...FeaturesFields
+    status
+  }
+`
 
 type Props = {
   question?: Question
