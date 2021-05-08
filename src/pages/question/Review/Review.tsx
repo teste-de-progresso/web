@@ -3,60 +3,27 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
-import { ViewMode, QuestionFeedback } from "../shared";
+import { ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments } from "../shared";
 import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 import { FeedbackStatus, Query, Question } from "../../../__generated__/graphql-schema";
 import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
-query Question ($id: ID!) {
-  node (id: $id) {
-    __typename
-    ...on Question {
-      id
-      instruction
-      support
-      body
-      alternatives {
-        correct
-        text
-      }
-      explanation
-      references
-      source
-      authorshipYear
-      difficulty
-      checkType
-      bloomTaxonomy
-      subject {
-        name
-        axis {
-          name
-        }
-        category {
-          name
-        }
-      }
-      status
-      reviewer {
+  ${ViewModeFragments}
+  ${FeedbacksFragments}
+  query Question($id: ID!) {
+    node(id: $id) {
+      __typename
+      ... on Question {
         id
-        name
-      }
-      reviewFeedbacks {
-        id
-        status
-        comment
-        user {
-          name
-          avatarUrl
+        ... QuestionFields
+        reviewFeedbacks {
+          ... FeedbackFields
         }
       }
-      updatedAt
-      createdAt
     }
   }
-}
 `
 
 const CREATE_FEEDBACK_MUTATION = gql`
@@ -123,7 +90,7 @@ export const Review: FC = () => {
           <div className="w-2/5 ml-3">
             <FeedbackForm handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} />
             <div className="my-3" />
-            <QuestionFeedback feedbacks={question.reviewFeedbacks} />
+            <Feedbacks feedbacks={question.reviewFeedbacks} />
           </div>
         </main>
       </div>

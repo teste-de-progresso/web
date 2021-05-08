@@ -4,6 +4,14 @@ import { gql, useQuery } from "@apollo/client";
 import { useFormProvider } from '../../FormContext'
 import { Query, User } from "../../../../../__generated__/graphql-schema";
 
+export const ReviewerFragment = gql`
+  fragment ReviewerFields on Question {
+    reviewer {
+      id
+    }
+  }
+`
+
 const REVIEWERS_QUERY = gql`
   query ReviwersQuery {
     reviewers {

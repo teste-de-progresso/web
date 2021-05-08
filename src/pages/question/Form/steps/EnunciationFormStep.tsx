@@ -1,8 +1,17 @@
+import { gql } from "@apollo/client";
 import React, { FC } from "react";
 
 import { Card } from "../../../../components";
 import { TextEditor } from '../components/TextEditor'
 import { useFormProvider } from '../FormContext'
+
+export const EnunciationFragment = gql`
+  fragment EnunciationFields on Question {
+    instruction
+    support
+    body
+  }
+`
 
 export const EnunciationFormStep: FC = () => {
   const { question } = useFormProvider()

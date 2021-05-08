@@ -8,6 +8,14 @@ type Props = {
   subjectId?: string
 }
 
+export const SubjectFragment = gql`
+  fragment SubjectFields on Question {
+    subject {
+      id
+    }
+  }
+`
+
 const SUBJECTS_QUERY = gql`
   query SubjectQuery {
     subjects {

@@ -5,52 +5,21 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 
 import { Mutation, Query, Question } from '../../../__generated__/graphql-schema';
 import { AlertV2Props, Navigator } from '../../../components';
-import { Form } from '../Form'
+import { Form, FormFragments } from '../Form'
 import { turnOn, turnOff } from '../../../services/store/unsavedChanges';
 import { NodeId } from '../../../utils/graphql';
 
 const GET_QUESTION = gql`
-query Question ($id: ID!) {
-  node (id: $id) {
-    __typename
-    ...on Question {
-      id
-      instruction
-      support
-      body
-      alternatives {
-        correct
-        text
-      }
-      explanation
-      references
-      source
-      authorshipYear
-      difficulty
-      checkType
-      bloomTaxonomy
-      subject {
+  ${FormFragments}
+  query Question ($id: ID!) {
+    node (id: $id) {
+      __typename
+      ...on Question {
         id
+        ...FormFields
       }
-      status
-      reviewer {
-        id
-        name
-      }
-      reviewFeedbacks {
-        id
-        status
-        comment
-        user {
-          name
-          avatarUrl
-        }
-      }
-      updatedAt
-      createdAt
     }
   }
-}
 `;
 
 const UPDATE_QUESTION_MUTATOIN = gql`

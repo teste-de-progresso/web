@@ -1,9 +1,19 @@
 import React, { FC } from "react";
 import { Controller } from "react-hook-form";
+import { gql } from "@apollo/client";
 
 import { Card } from "../../../../components";
 import { TextEditor } from "../components/TextEditor";
 import { useFormProvider } from '../FormContext'
+
+export const DistractorsFragment = gql`
+  fragment DistractorsFields on Question {
+    alternatives {
+      correct
+      text
+    }
+  }
+`
 
 export const DistractorsFormStep: FC = () => {
   const { question, hooks: { control } } = useFormProvider()
