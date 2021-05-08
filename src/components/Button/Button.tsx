@@ -1,57 +1,60 @@
-import React, { CSSProperties, FC } from "react";
+import React from 'react'
 
-type Props = {
-  children?: string
-  onClick?: () => void
-  className?: string
-  type?: 'button' | 'submit'
-  secondary?: boolean
-  disabled?: boolean
-  style?: CSSProperties
+const styleClasses = {
+  primary: "bg-primary-normal hover:bg-primary-dark text-white",
+  secondary: "bg-gray-200 hover:bg-gray-400 text-gray-800",
+  disabled: "bg-gray-200 text-gray-600 cursor-not-allowed shadow-none hover:shadow-none",
 }
 
-export const Button: FC<Props> = ({
-  children,
-  onClick,
-  className,
-  type = "button",
-  secondary,
-  disabled,
-  style,
-}) => {
-  const handleClick = () => {
-    if (onClick) {
-      onClick();
+export type ButtonProps = {
+  type?: 'default' | 'primary';
+  className?: string;
+  children?: string;
+  htmlType?: 'submit' | 'button' | 'reset';
+  onClick?: React.MouseEventHandler<HTMLElement>;
+  disabled?: boolean
+}
+
+const ButtonBase: React.ForwardRefRenderFunction<unknown, ButtonProps> = (props, ref) => {
+  const {
+    type = 'default',
+    className = '',
+    htmlType = 'button',
+    onClick,
+    disabled,
+    children,
+    ...rest
+  } = props
+  const buttonRef = (ref as any) || React.createRef<HTMLElement>()
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => {
+    if (htmlType !== 'submit') {
+      e.preventDefault()
     }
-  };
 
-  const styleClasses = {
-    secondary: "bg-gray-200 hover:bg-gray-400 text-gray-800",
-    primary: "bg-primary-normal hover:bg-primary-dark text-white",
-    disabled: "bg-gray-200 text-gray-600 cursor-not-allowed shadow-none hover:shadow-none",
-    default: "`transition duration-300 ease-in-out block text-center cursor-pointer p-2 px-8 rounded shadow-lg hover:shadow-lg w-full",
-  };
+    if (disabled || !onClick) return
 
-  let additionalClasses = "";
-
-  if (disabled) {
-    additionalClasses = additionalClasses.concat(" ", styleClasses.disabled);
-  } else if (secondary) {
-    additionalClasses = additionalClasses.concat(" ", styleClasses.secondary);
-  } else {
-    additionalClasses = additionalClasses.concat(" ", styleClasses.primary);
+    onClick(e)
   }
 
-  return (
-    <div className={className} style={style}>
-      <button
-        type={type}
-        disabled={disabled}
-        className={styleClasses.default + additionalClasses}
-        onClick={() => handleClick()}
-      >
-        {children}
-      </button>
-    </div>
-  );
-};
+  const extraClasses = () => {
+    if (disabled) return styleClasses.disabled
+
+    if (type === 'primary') return styleClasses.primary
+
+    return styleClasses.secondary
+  }
+
+  return <button
+    {...rest}
+    type={htmlType}
+    disabled={disabled}
+    className={`transition duration-300 ease-in-out block text-center cursor-pointer p-2 px-8 rounded shadow-lg hover:shadow-lg ${extraClasses()} ${className}`}
+    onClick={handleClick}
+    ref={buttonRef}
+  >
+    {children}
+  </button>
+}
+
+export const Button = React.forwardRef<unknown, ButtonProps>(ButtonBase)

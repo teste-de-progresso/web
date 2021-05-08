@@ -71,10 +71,9 @@ export const SignIn = () => {
               />
             </InputGroup>
             <InputGroup>
-              <Button type="submit">Login</Button>
+              <Button type="primary" htmlType="submit">Login</Button>
             </InputGroup>
           </form>
-
           <div
             className="mt-3 w-full text-center"
           >

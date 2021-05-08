@@ -159,21 +159,18 @@ export const QuestionsFilter: FC<Props> = ({ open, onClose }) => {
           {
             (window.screen.width > 640) && <div className="ml-auto" />
           }
-          <Button
-            className={`mx-3 gray-100 mb-4 sm:mb-0 ${changed ? "block" : "hidden"}`}
-            secondary
-            onClick={() => handleClean()}
-          >
-            Limpar
-          </Button>
+          {
+            changed && <Button className={`mx-3 gray-100 mb-4 sm:mb-0`} onClick={() => handleClean()}>
+              Limpar
+            </Button>
+          }
           <Button
             className="mx-3 gray-100 mb-4 sm:mb-0"
-            secondary
             onClick={onClose}
           >
             Cancelar
           </Button>
-          <Button className="mx-3 mb-4 sm:mb-0" type="submit">
+          <Button type="primary" className="mx-3 mb-4 sm:mb-0" htmlType="submit">
             Aplicar
           </Button>
         </DialogButton>

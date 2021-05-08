@@ -46,10 +46,10 @@ export const AppBar = () => {
           Todas as alterações serão descartadas. Deseja continuar?
         </DialogContent>
         <DialogButton>
-          <Button secondary onClick={() => setConfirmLeaveDialog(false)}>
+          <Button onClick={() => setConfirmLeaveDialog(false)}>
             Cancelar
           </Button>
-          <Button onClick={handleLogout}>
+          <Button type="primary" onClick={handleLogout}>
             Confirmar
           </Button>
         </DialogButton>

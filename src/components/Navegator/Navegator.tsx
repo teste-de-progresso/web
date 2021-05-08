@@ -80,10 +80,10 @@ export const Navigator: FC<Props> = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmLeaveDialog(false)}>
+          <Button onClick={() => setConfirmLeaveDialog(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => confirmLeave()}>
+          <Button type="primary" onClick={() => confirmLeave()}>
             Confirmar
           </Button>
         </DialogActions>
