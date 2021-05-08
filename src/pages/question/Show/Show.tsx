@@ -6,60 +6,27 @@ import {
   Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from "@material-ui/core";
 
-import { ViewMode, QuestionFeedback } from "../shared";
+import { ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments } from "../shared";
 import { Navigator, Button } from "../../../components";
 import { Mutation, Query, Question } from "../../../__generated__/graphql-schema";
 import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
 import { NodeId } from "../../../utils/graphql";
 
 const GET_QUESTION = gql`
-query Question($id: ID!) {
-  node(id: $id) {
-    __typename
-    ... on Question {
-      id
-      instruction
-      support
-      body
-      alternatives {
-        correct
-        text
-      }
-      explanation
-      references
-      source
-      authorshipYear
-      difficulty
-      checkType
-      bloomTaxonomy
-      subject {
-        name
-        axis {
-          name
-        }
-        category {
-          name
-        }
-      }
-      status
-      reviewer {
+  ${ViewModeFragments}
+  ${FeedbacksFragments}
+  query Question($id: ID!) {
+    node(id: $id) {
+      __typename
+      ... on Question {
         id
-        name
-      }
-      reviewFeedbacks {
-        id
-        status
-        comment
-        user {
-          name
-          avatarUrl
+        ... QuestionFields
+        reviewFeedbacks {
+          ... FeedbackFields
         }
       }
-      updatedAt
-      createdAt
     }
   }
-}
 `
 
 const FINISH_QUESTION = gql`
@@ -244,7 +211,7 @@ export const Show: FC = () => {
               <ViewMode questionData={question} />
             </div>
             <div className="w-2/5 ml-3">
-              <QuestionFeedback feedbacks={question.reviewFeedbacks} />
+              <Feedbacks feedbacks={question.reviewFeedbacks} />
             </div>
           </div>
         </main>

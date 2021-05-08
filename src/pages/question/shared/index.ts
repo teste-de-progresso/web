@@ -1,2 +1,2 @@
 export * from "./ViewMode";
-export * from "./QuestionFeedbacks";
+export * from "./Feedbacks";

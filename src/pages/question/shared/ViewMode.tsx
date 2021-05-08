@@ -1,9 +1,45 @@
 import React, { FC } from "react";
+import { gql } from "@apollo/client";
 
 import { Card } from "../../../components";
 import { Question } from "../../../__generated__/graphql-schema";
 import { loadWIRISplugin } from "../../../utils/plugins";
 import { BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
+
+export const ViewModeFragments = gql`
+  fragment QuestionFields on Question {
+    instruction
+    support
+    body
+    alternatives {
+      correct
+      text
+    }
+    explanation
+    references
+    source
+    authorshipYear
+    difficulty
+    checkType
+    bloomTaxonomy
+    subject {
+      name
+      axis {
+        name
+      }
+      category {
+        name
+      }
+    }
+    status
+    reviewer {
+      id
+      name
+    }
+    updatedAt
+    createdAt
+  }
+`
 
 type Props = {
   questionData?: Question

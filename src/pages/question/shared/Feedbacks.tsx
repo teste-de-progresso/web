@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { gql } from "@apollo/client";
 import {
   List,
   ListItem,
@@ -10,17 +11,28 @@ import {
   ListItemSecondaryAction,
   Icon,
 } from "@material-ui/core";
-
 import { MdComment, MdDone, MdWarning } from "react-icons/md";
 
 import { Card } from "../../../components";
 import { ReviewFeedback } from "../../../__generated__/graphql-schema";
 
+export const FeedbacksFragments = gql`
+  fragment FeedbackFields on ReviewFeedback {
+    id
+    status
+    comment
+    user {
+      name
+      avatarUrl
+    }
+  }
+`
+
 type Porps = {
   feedbacks: readonly ReviewFeedback[]
 }
 
-export const QuestionFeedback: FC<Porps> = ({ feedbacks }) => (
+export const Feedbacks: FC<Porps> = ({ feedbacks }) => (
   <Card title="Histórico de Pareceres">
     {feedbacks.length ? (
       <List>
