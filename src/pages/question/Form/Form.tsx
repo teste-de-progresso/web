@@ -115,10 +115,10 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
           </DialogContentText>
         </DialogMaterialContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmLeaveDialog(false)}>
+          <Button onClick={() => setConfirmLeaveDialog(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => confirmLeave()}>
+          <Button type="primary" onClick={() => confirmLeave()}>
             Confirmar
           </Button>
         </DialogActions>
@@ -159,10 +159,10 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
           revisá-la. Deseja continuar?
         </DialogContent>
         <DialogButton>
-          <Button className="mx-2 ml-auto" secondary onClick={() => setConfirmFinishModalOpen(false)}>
+          <Button className="mx-2 ml-auto" onClick={() => setConfirmFinishModalOpen(false)}>
             Cancelar
           </Button>
-          <Button className="mx-2" onClick={() => handleSave()}>
+          <Button type="primary" className="mx-2" onClick={() => handleSave()}>
             Finalizar
           </Button>
         </DialogButton>
@@ -190,7 +190,6 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
           <Button
             className={"mb-3 sm:mb-0"}
             onClick={() => confirmLeave()}
-            secondary
           >
             Cancelar
           </Button>
@@ -206,13 +205,18 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
             </Button>
           }
           <Button
+            type="primary"
             className={`mb-3 sm:mb-0 ${onLastStep ? "hidden" : ""}`}
             onClick={() => handleNextStep()}
           >
             Prosseguir
           </Button>
           {onLastStep &&
-            <Button className={"mb-3 sm:mb-0"} onClick={() => setConfirmFinishModalOpen(true)}>
+            <Button
+              type="primary"
+              className="mb-3 sm:mb-0"
+              onClick={() => setConfirmFinishModalOpen(true)}
+            >
               Finalizar
             </Button>
           }

@@ -151,10 +151,10 @@ export const Show: FC = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmDestroy(false)}>
+          <Button onClick={() => setConfirmDestroy(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => handleDestroyQuestion()}>
+          <Button type="primary" onClick={() => handleDestroyQuestion()}>
             Confirmar
           </Button>
         </DialogActions>
@@ -167,10 +167,10 @@ export const Show: FC = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmRegister(false)}>
+          <Button onClick={() => setConfirmRegister(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => handleRegisterQuestion()}>
+          <Button type="primary" onClick={() => handleRegisterQuestion()}>
             Confirmar
           </Button>
         </DialogActions>
@@ -183,10 +183,10 @@ export const Show: FC = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button secondary onClick={() => setConfirmEditDialog(false)}>
+          <Button onClick={() => setConfirmEditDialog(false)}>
             Cancelar
           </Button>
-          <Button onClick={() => confirmEditQuestion()}>
+          <Button type="primary" onClick={() => confirmEditQuestion()}>
             Editar
           </Button>
         </DialogActions>

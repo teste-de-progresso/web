@@ -52,10 +52,10 @@ export const AvatarEditor: FC<Props> = ({
         <PhotoCrop callback={setCroppedImage} />
       </DialogContent>
       <DialogActions>
-        <Button secondary onClick={() => setAvatarEditorExhibition(false)}>
+        <Button onClick={() => setAvatarEditorExhibition(false)}>
           Cancelar
         </Button>
-        <Button onClick={() => onSubmit()}>Salvar</Button>
+        <Button type="primary" onClick={() => onSubmit()}>Salvar</Button>
       </DialogActions>
     </>
   );

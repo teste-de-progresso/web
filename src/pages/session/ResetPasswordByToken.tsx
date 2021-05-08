@@ -124,7 +124,7 @@ export const ResetPasswordByToken = () => {
               />
             </InputGroup>
             <InputGroup>
-              <Button type="submit">Login</Button>
+              <Button type="primary" htmlType="submit">Login</Button>
             </InputGroup>
           </form>
         </Card>
