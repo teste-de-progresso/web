@@ -5,12 +5,11 @@ import { Menu, Transition } from '@headlessui/react'
 import unifesoLogoCompact from "../../assets/images/logoImgUnifeso.png";
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 
-import { Dialog, DialogContent, DialogButton } from '../Dialog'
+import { Dialog } from '../Dialog'
 import { useDispatch, useSelector } from 'react-redux';
 import { useUserContext } from '../../contexts';
 import { deleteSession } from '../../services/store/auth';
 import { RootState } from '../../services/store';
-import { Button } from '../Button';
 import { Avatar } from '../Avatar'
 import { classNames } from '../../utils';
 
@@ -38,22 +37,12 @@ const UserMenu = () => {
   return (
     <>
       <Dialog
-        open={confirmLeaveDialog}
-        onClose={() => setConfirmLeaveDialog(false)}
+        isOpen={confirmLeaveDialog}
+        setIsOpen={setConfirmLeaveDialog}
+        onConfirmation={handleLogout}
         title="Modificações não Salvas"
-      >
-        <DialogContent>
-          Todas as alterações serão descartadas. Deseja continuar?
-        </DialogContent>
-        <DialogButton>
-          <Button onClick={() => setConfirmLeaveDialog(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" onClick={handleLogout}>
-            Confirmar
-          </Button>
-        </DialogButton>
-      </Dialog>
+        text="Todas as alterações serão descartadas. Deseja continuar?"
+      />
       <Menu as="div" className="ml-3 relative">
         {({ open }) => (
           <>

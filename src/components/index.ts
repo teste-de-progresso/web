@@ -9,3 +9,4 @@ export * from "./Navegator";
 export * from "./Avatar";
 export * from "./Dialog";
 export * from "./Appbar";
+export * from "./Modal";
