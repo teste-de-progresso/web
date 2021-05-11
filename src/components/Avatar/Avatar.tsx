@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 
 type Props = {
-  src: string
+  src?: string
   className?: string
 }
 

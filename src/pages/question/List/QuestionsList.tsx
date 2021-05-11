@@ -81,7 +81,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
       <hr className="border-t border-gray-400 m-px" />
       <div className="p-2 text-sm">
         {questions.length
-          ? <div className="flex-col w-full sm:grid sm:gap-4 sm:col-gap-8 sm:grid-cols-4">
+          ? <div className="flex-col w-full sm:grid gap-4 sm:col-gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {questions.map((question) => (
               <div
                 key={`question-${question.id}`}

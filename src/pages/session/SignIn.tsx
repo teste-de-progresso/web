@@ -71,7 +71,7 @@ export const SignIn = () => {
               />
             </InputGroup>
             <InputGroup>
-              <Button type="primary" htmlType="submit">Login</Button>
+              <Button className="w-full" type="primary" htmlType="submit">Login</Button>
             </InputGroup>
           </form>
           <div

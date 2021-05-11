@@ -7,7 +7,7 @@ import { loadWIRISplugin } from "../../../utils/plugins";
 import { BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
 
 export const ViewModeFragments = gql`
-  fragment QuestionFields on Question {
+  fragment QuestionReadOnlyFields on Question {
     instruction
     support
     body
