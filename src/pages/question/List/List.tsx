@@ -20,8 +20,8 @@ export const List: FC = () => {
         </li>
       </Navigator>
       <QuestionsFilter
-        open={filterOpen}
-        onClose={() => setFilterOpen(false)}
+        isOpen={filterOpen}
+        setIsOpen={setFilterOpen}
       />
       <div className="bg-gray-100 w-full">
         <main className="sm:px-8 rounded-t-xlg">

@@ -6,6 +6,7 @@ export * from "./CardGrid";
 export * from "./InputGroup";
 export * from "./AvatarEditor";
 export * from "./Navegator";
-export * from "./AppBar";
 export * from "./Avatar";
 export * from "./Dialog";
+export * from "./Appbar";
+export * from "./Modal";

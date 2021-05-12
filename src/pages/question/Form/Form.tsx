@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { List, ListItem, ListItemIcon, ListItemText, Dialog as DialogMaterial, DialogTitle, DialogContent as DialogMaterialContent, DialogContentText, DialogActions, } from '@material-ui/core';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { MdError } from 'react-icons/md';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -23,7 +23,7 @@ import {
   FeaturesFormStep,
   FeaturesFragment
 } from './steps'
-import { Button, Dialog, DialogContent, DialogButton, AlertV2Props, AlertV2 } from '../../../components';
+import { Button, Dialog, AlertV2Props, AlertV2 } from '../../../components';
 
 export const FormFragments = gql`
   ${EnunciationFragment}
@@ -48,9 +48,10 @@ type Props = {
 
 export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) => {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  const [confirmFinishModalOpen, setConfirmFinishModalOpen] = useState(false);
+  const [confirmSaveDialogIsOpen, setConfirmFinishDialogIsOpen] = useState(false);
+  const [leaveDialogIsOpen, setLeaveDialogIsOpen] = useState(false);
+
   const [currentStep, setCurrentStep] = useState(0);
-  const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false);
   const history = useHistory();
   const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
 
@@ -79,7 +80,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
     const inputs = { status: 'pending', ...getFormatedValues() } as QuestionCreateInput
     const errors = validateQuestionInputs(inputs)
 
-    setConfirmFinishModalOpen(false)
+    setConfirmFinishDialogIsOpen(false)
 
     if (onSubmit && !errors.length) {
       onSubmit(inputs)
@@ -88,9 +89,9 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
     }
   }
 
-  const confirmLeave = () => {
-    if (unsavedChanges && !confirmLeaveDialog) {
-      setConfirmLeaveDialog(true);
+  const handleCancel = () => {
+    if (unsavedChanges && !leaveDialogIsOpen) {
+      setLeaveDialogIsOpen(true);
     } else {
       history.push('/')
     }
@@ -107,66 +108,40 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
       {alert && (
         <AlertV2 severity={alert.severity} text={alert.text}></AlertV2>
       )}
-      <DialogMaterial open={confirmLeaveDialog} onClose={() => setConfirmLeaveDialog(false)}>
-        <DialogTitle>Modificações não Salvas</DialogTitle>
-        <DialogMaterialContent>
-          <DialogContentText>
-            Todas as alterações serão descartadas. Deseja continuar?
-          </DialogContentText>
-        </DialogMaterialContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmLeaveDialog(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" onClick={() => confirmLeave()}>
-            Confirmar
-          </Button>
-        </DialogActions>
-      </DialogMaterial>
       <Dialog
-        open={!!validationErrors.length}
-        onClose={() => setValidationErrors([])}
+        isOpen={leaveDialogIsOpen}
+        setIsOpen={setLeaveDialogIsOpen}
+        onConfirmation={handleCancel}
+        title="Modificações não Salvas"
+        text="Todas as alterações serão descartadas. Deseja continuar?"
+      />
+      <Dialog
+        isOpen={confirmSaveDialogIsOpen}
+        setIsOpen={setConfirmFinishDialogIsOpen}
+        onConfirmation={handleSave}
+        title="Modificações não Salvas"
+        text="Ao finalizar a questão, o revisor receberá uma notificação para revisá-la. Deseja continuar?"
+      />
+      <Dialog
+        isOpen={!!validationErrors.length}
+        setIsOpen={(_) => setValidationErrors([])}
+        onConfirmation={() => setValidationErrors([])}
         title="Falha de Validação"
-      >
-        <DialogContent>
-          <List>
-            {validationErrors?.map((errorMessage) => (
-              <ListItem key={errorMessage}>
-                <ListItemIcon>
-                  <MdError />
-                </ListItemIcon>
-                <ListItemText primary={errorMessage} />
-              </ListItem>
-            ))}
-          </List>
-        </DialogContent>
-        <DialogButton>
-          <Button
-            onClick={() => setValidationErrors([])}
-            className="ml-auto mx-2"
-          >
-            Sair
-          </Button>
-        </DialogButton>
-      </Dialog>
-      <Dialog
-        open={confirmFinishModalOpen}
-        onClose={() => setConfirmFinishModalOpen(false)}
-        title="Finalização de Questão"
-      >
-        <DialogContent>
-          Ao finalizar a questão, o revisor receberá uma notificação para
-          revisá-la. Deseja continuar?
-        </DialogContent>
-        <DialogButton>
-          <Button className="mx-2 ml-auto" onClick={() => setConfirmFinishModalOpen(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" className="mx-2" onClick={() => handleSave()}>
-            Finalizar
-          </Button>
-        </DialogButton>
-      </Dialog>
+        text={
+          <>
+            <List>
+              {validationErrors?.map((errorMessage) => (
+                <ListItem key={errorMessage}>
+                  <ListItemIcon>
+                    <MdError />
+                  </ListItemIcon>
+                  <ListItemText primary={errorMessage} />
+                </ListItem>
+              ))}
+            </List>
+          </>
+        }
+      />
       <form className="m-auto max-w-screen-md">
         <SteppedForm
           currentStep={currentStep}
@@ -189,13 +164,13 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
         <div className="mx-3 sm:mx-0 flex justify-items-center flex-col-reverse sm:flex-row justify-end space-x-0 sm:space-x-2">
           <Button
             className={"mb-3 sm:mb-0"}
-            onClick={() => confirmLeave()}
+            onClick={handleCancel}
           >
             Cancelar
           </Button>
           <Button
             className={`mb-3 sm:mb-0 ${onFirstStep ? "hidden" : ""}`}
-            onClick={() => handlePreviousStep()}
+            onClick={handlePreviousStep}
           >
             Retornar
           </Button>
@@ -207,7 +182,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
           <Button
             type="primary"
             className={`mb-3 sm:mb-0 ${onLastStep ? "hidden" : ""}`}
-            onClick={() => handleNextStep()}
+            onClick={handleNextStep}
           >
             Prosseguir
           </Button>
@@ -215,7 +190,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
             <Button
               type="primary"
               className="mb-3 sm:mb-0"
-              onClick={() => setConfirmFinishModalOpen(true)}
+              onClick={handleSave}
             >
               Finalizar
             </Button>

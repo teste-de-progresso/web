@@ -17,7 +17,7 @@ const GET_QUESTION = gql`
       __typename
       ... on Question {
         id
-        ... QuestionFields
+        ... QuestionReadOnlyFields
         reviewFeedbacks {
           ... FeedbackFields
         }

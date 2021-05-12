@@ -108,7 +108,7 @@ export const RequestPasswordResetMail = () => {
               />
             </InputGroup>
             <InputGroup>
-              <Button type="primary" htmlType="submit" disabled={disableButton}>
+              <Button className="w-full" type="primary" htmlType="submit" disabled={disableButton}>
                 Enviar e-mail de redefinição
               </Button>
             </InputGroup>

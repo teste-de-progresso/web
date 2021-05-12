@@ -1,45 +1,41 @@
-import React, { FC } from "react";
-import AriaModal from "react-aria-modal";
+import React, { FC } from "react"
+import { Button } from "../Button"
+import { Modal } from '../Modal'
 
 type Props = {
-  title?: string;
-  open?: boolean;
-  hidden?: boolean;
-  onClose?: () => void;
+  title: string
+  isOpen?: boolean
+  hidden?: boolean
+  text?: any
+  setIsOpen: (state: boolean) => void
+  onConfirmation: () => void
 };
 
 export const Dialog: FC<Props> = ({
-  title = "",
-  open = false,
-  onClose,
-  children,
+  title,
+  isOpen: open = false,
+  setIsOpen,
+  onConfirmation,
+  text,
 }) => {
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
-    }
-  };
-
-  if (!open) return null;
-
   return (
-    <AriaModal titleText="modal" onExit={handleClose}>
-      <div className="h-screen grid place-items-stretch sm:place-items-center">
-        <div className="bg-white pb-0 sm:pb-2 rounded-md">
-          {title && <div className="py-4 px-6 text-xl">{title}</div>}
-          {children}
-        </div>
-      </div>
-    </AriaModal>
-  );
+    <Modal
+      title={title}
+      isOpen={open}
+      setIsOpen={setIsOpen}
+      buttons={
+        <>
+          <Button onClick={() => setIsOpen(false)}>
+            Cancelar
+          </Button>
+          <Button type="primary" onClick={onConfirmation}>
+            Confirmar
+          </Button>
+        </>
+      }
+    >
+      {text}
+    </Modal>
+  )
 };
 
-export const DialogContent: FC = ({ children }) => (
-  <div className="px-4 sm:px-6">{children}</div>
-);
-
-export const DialogButton: FC = ({ children }) => (
-  <div className="mt-6 sm:mt-0 sm:py-4 mx-8 sm:mx-0 sm:px-2 sm:flex sm:justify-between sm:flex-row flex flex-col-reverse">
-    {children}
-  </div>
-);
