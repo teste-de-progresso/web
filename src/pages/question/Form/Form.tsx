@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { MdError } from 'react-icons/md';
+import { ExclamationCircleIcon } from '@heroicons/react/outline';
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { gql } from '@apollo/client';
@@ -10,7 +9,6 @@ import { Question, QuestionCreateInput } from '../../../__generated__/graphql-sc
 import { formatInput } from '../formatInputs';
 import { validateQuestionInputs } from '../../../utils/questions/questionValidations';
 import { RootState } from '../../../services/store';
-
 import { FormProvider } from './FormContext'
 import { SteppedForm, Step } from './SteppedForm'
 import {
@@ -21,9 +19,16 @@ import {
   DistractorsFormStep,
   DistractorsFragment,
   FeaturesFormStep,
-  FeaturesFragment
+  FeaturesFragment,
 } from './steps'
-import { Button, Dialog, AlertV2Props, AlertV2 } from '../../../components';
+import {
+  Button,
+  Dialog,
+  AlertV2Props,
+  AlertV2,
+  List,
+  ListItem,
+} from '../../../components';
 
 export const FormFragments = gql`
   ${EnunciationFragment}
@@ -124,19 +129,18 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
       />
       <Dialog
         isOpen={!!validationErrors.length}
-        setIsOpen={(_) => setValidationErrors([])}
+        setIsOpen={() => setValidationErrors([])}
         onConfirmation={() => setValidationErrors([])}
         title="Falha de Validação"
         text={
           <>
             <List>
               {validationErrors?.map((errorMessage) => (
-                <ListItem key={errorMessage}>
-                  <ListItemIcon>
-                    <MdError />
-                  </ListItemIcon>
-                  <ListItemText primary={errorMessage} />
-                </ListItem>
+                <ListItem
+                  key={errorMessage}
+                  icon={<ExclamationCircleIcon className="w-5 text-gray-800" />}
+                  text={errorMessage}
+                />
               ))}
             </List>
           </>
