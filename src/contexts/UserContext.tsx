@@ -1,9 +1,11 @@
 import React, {
   createContext, useContext, useState, FC
 } from "react";
+import { useDispatch } from "react-redux";
 import { useQuery, gql } from "@apollo/client";
 
 import { Query } from "../__generated__/graphql-schema";
+import { deleteSession } from "../services/store/auth"
 
 type UserContext = {
   user?: Query['currentUser']
@@ -41,10 +43,15 @@ type Props = {
 
 export const UserContext: FC<Props> = ({ children }) => {
   const [user, setUser] = useState<Query['currentUser']>();
+  const dispatch = useDispatch()
 
   const { refetch: refetchUserQuery } = useQuery<Query>(CurrentUserQuery, {
     onCompleted: ({ currentUser }) => {
       setUser(currentUser)
+    },
+    onError: ({ message }) => {
+      console.error('token error:', message)
+      dispatch(deleteSession())
     }
   })
 

@@ -3,13 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { FaHome, FaPlus } from "react-icons/fa";
 import styled from "styled-components";
-import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
-} from "@material-ui/core";
 
-import { Button } from "../Button";
 import { turnOff } from "../../services/store/unsavedChanges";
 import { RootState } from "../../services/store";
+import { Dialog } from "../Dialog";
 
 const HorizontalMenu = styled.ul`
   margin: 0;
@@ -72,22 +69,13 @@ export const Navigator: FC<Props> = ({
 
   return (
     <>
-      <Dialog open={confirmLeaveDialog} onClose={() => setConfirmLeaveDialog(false)}>
-        <DialogTitle>Modificações não Salvas</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Todas as alterações serão descartadas. Deseja continuar?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmLeaveDialog(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" onClick={() => confirmLeave()}>
-            Confirmar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog
+        isOpen={confirmLeaveDialog}
+        setIsOpen={(value) => setConfirmLeaveDialog(value)}
+        onConfirmation={confirmLeave}
+        title="Modificações não Salvas"
+        text="Todas as alterações serão descartadas. Deseja continuar?"
+      />
       <div className="flex p-1 text-md px-2 sm:px-8 text-gray-400 bg-primary-dark shadow-md" style={{ maxHeight: "34.4px" }}>
         <HorizontalMenu className="list-none">
           {home

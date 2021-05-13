@@ -55,7 +55,6 @@ export const QuestionsQuery: FC<Props> = ({ title, where, status }) => {
       first: PAGE_SIZE,
       where: whereInput,
     },
-    fetchPolicy: "network-only",
   })
 
   const onNextPageClick = () => {

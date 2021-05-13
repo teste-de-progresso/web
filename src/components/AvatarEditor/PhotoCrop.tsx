@@ -1,16 +1,20 @@
 import React, { FC, useState } from "react";
-import Avatar from "react-avatar-edit";
-import { Snackbar } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-
+import PhotoCropper from "react-avatar-edit";
 
 type Props = {
   callback: (value: any) => void
 }
 
+const borderStyle: React.CSSProperties = {
+  textAlign: 'center',
+  margin: 'auto',
+  borderStyle: 'dotted',
+  borderWidth: '0.3rem',
+  borderRadius: '0.3rem',
+}
+
 export const PhotoCrop: FC<Props> = ({ callback }) => {
   const [result, setResult] = useState<any>();
-  const [fileSizeIsBig, setFileSizeBig] = useState(false);
   const onCrop = (cropped: any) => {
     setResult(cropped);
     callback(result);
@@ -23,29 +27,23 @@ export const PhotoCrop: FC<Props> = ({ callback }) => {
   const onBeforeFileLoad = (elem: any) => {
     if (elem.target.files[0].size > 180000) {
       elem.target.value = "";
-      setFileSizeBig(true);
+      alert("A imagem selecionada é grande de mais!")
     }
   };
 
   const dimention = 300;
 
   return (
-    <>
-      <Snackbar open={fileSizeIsBig} onClose={() => setFileSizeBig(false)} autoHideDuration={6000}>
-        <Alert severity="error">
-          A imagem selecionada é grande de mais!
-        </Alert>
-      </Snackbar>
-      <Avatar
-        label="Escolha uma imagem"
-        width={dimention}
-        height={dimention}
-        imageWidth={dimention}
-        imageHeight={dimention}
-        onCrop={(e) => onCrop(e)}
-        onClose={() => onClose()}
-        onBeforeFileLoad={onBeforeFileLoad}
-      />
-    </>
+    <PhotoCropper
+      borderStyle={borderStyle}
+      label="Escolha uma imagem"
+      width={dimention}
+      height={dimention}
+      imageWidth={dimention}
+      imageHeight={dimention}
+      onCrop={(e) => onCrop(e)}
+      onClose={() => onClose()}
+      onBeforeFileLoad={onBeforeFileLoad}
+    />
   );
 };

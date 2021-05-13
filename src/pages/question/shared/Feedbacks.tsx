@@ -1,20 +1,32 @@
 import React, { FC } from "react";
 import { gql } from "@apollo/client";
 import {
-  List,
-  ListItem,
-  Divider,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Typography,
-  ListItemSecondaryAction,
-  Icon,
-} from "@material-ui/core";
-import { MdComment, MdDone, MdWarning } from "react-icons/md";
+  AnnotationIcon,
+  CheckCircleIcon,
+  DocumentRemoveIcon,
+} from '@heroicons/react/outline'
 
-import { Card } from "../../../components";
+import { Card, Disclosures } from "../../../components";
 import { ReviewFeedback } from "../../../__generated__/graphql-schema";
+
+const feedbackIcon = {
+  comment: <AnnotationIcon className="w-5" />,
+  approve: <CheckCircleIcon className="w-5 text-green-800" />,
+  request_change: <DocumentRemoveIcon className="w-5 text-red-800" />,
+};
+
+type FeedbackTitleProps = {
+  feedback: ReviewFeedback
+}
+
+const FeedbackTitle: FC<FeedbackTitleProps> = ({ feedback }) => (
+  <p>
+    {feedback.user.name}{' '} - {' '}
+    <span className="text-gray-700">
+      {new Date(feedback.createdAt).toLocaleString()}
+    </span>
+  </p>
+)
 
 export const FeedbacksFragments = gql`
   fragment FeedbackFields on ReviewFeedback {
@@ -25,6 +37,7 @@ export const FeedbacksFragments = gql`
       name
       avatarUrl
     }
+    createdAt
   }
 `
 
@@ -34,63 +47,12 @@ type Porps = {
 
 export const Feedbacks: FC<Porps> = ({ feedbacks }) => (
   <Card title="Histórico de Pareceres">
-    {feedbacks.length ? (
-      <List>
-        {feedbacks.map((feedback, index) => {
-          const isLast = feedbacks.length - 1 === index;
-          return (
-            <Feedback
-              feedback={feedback}
-              key={`feedback-${feedback.id}`}
-              isLast={isLast}
-            />
-          );
-        })}
-      </List>
-    ) : (
-      <div>Ainda não foi feita nenhuma revisão</div>
-    )}
+    <Disclosures
+      items={feedbacks.map((item) => ({
+        title: <FeedbackTitle feedback={item} />,
+        body: item.comment ?? '',
+        icon: feedbackIcon[item.status]
+      }))}
+    />
   </Card>
 );
-
-type FeedbackProps = {
-  feedback: ReviewFeedback
-  isLast: boolean
-}
-
-const FEEDBACK_ICON = {
-  comment: <MdComment color="#586069" />,
-  approve: <MdDone color="#22863a" />,
-  request_change: <MdWarning color="#cb2431" />,
-};
-
-const Feedback: FC<FeedbackProps> = ({ feedback, isLast }) => {
-  const { user } = feedback;
-  const avatarUrl = process.env.REACT_APP_BACKEND_URL ?? "" + user?.avatarUrl ?? "";
-
-  return (
-    <>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar alt={user.name ?? ""} src={avatarUrl} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={user.name}
-          secondary={(
-            <>
-              <Typography component="span" variant="body2" color="textPrimary">
-                {feedback.comment}
-              </Typography>
-            </>
-          )}
-        />
-        <ListItemSecondaryAction>
-          <Icon aria-label="comments">
-            {FEEDBACK_ICON[feedback.status]}
-          </Icon>
-        </ListItemSecondaryAction>
-      </ListItem>
-      {!isLast && <Divider />}
-    </>
-  );
-};

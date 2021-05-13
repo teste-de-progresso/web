@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Dialog } from "@material-ui/core";
 
 import { useUserContext } from "../../contexts";
 import { AvatarEditor, Navigator, Avatar } from "../../components";
 
 export const Profile = () => {
-  const [avatarEditorExhibit, setAvatarEditorExhibition] = useState(false);
+  const [avatarEditorIsOpen, setAvatarEditorIsOpen] = useState(false);
   const { user } = useUserContext();
 
   return (
     <>
-      <Dialog open={avatarEditorExhibit} onClose={() => setAvatarEditorExhibition(false)}>
-        <AvatarEditor setAvatarEditorExhibition={setAvatarEditorExhibition} />
-      </Dialog>
+      <AvatarEditor
+        isOpen={avatarEditorIsOpen}
+        setIsOpen={setAvatarEditorIsOpen}
+      />
       <Navigator home />
       <div className="bg-gray-100 w-full my-3">
         <main>
@@ -21,7 +21,7 @@ export const Profile = () => {
               <div
                 className="w-20 absolute cursor-pointer"
                 style={{ top: "-3.10rem" }}
-                onClick={() => setAvatarEditorExhibition(!avatarEditorExhibit)}
+                onClick={() => setAvatarEditorIsOpen(true)}
               >
                 <Avatar src={user?.avatarUrl ?? ''} />
               </div>

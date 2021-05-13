@@ -30,6 +30,11 @@ export const ApolloContext: FC<Props> = ({ children, authToken }) => {
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
     credentials: credentialsType,
+    defaultOptions: {
+      query: {
+        fetchPolicy: 'network-only'
+      }
+    }
   });
 
   return <ApolloProvider client={client}>{children}</ApolloProvider>;

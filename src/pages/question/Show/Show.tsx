@@ -2,12 +2,9 @@ import React, { FC, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { MdDeleteForever, MdEdit, MdSave } from "react-icons/md";
 import { useQuery, useMutation, gql } from "@apollo/client";
-import {
-  Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
-} from "@material-ui/core";
 
 import { ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments } from "../shared";
-import { Navigator, Button } from "../../../components";
+import { Navigator, Dialog } from "../../../components";
 import { Mutation, Query, Question } from "../../../__generated__/graphql-schema";
 import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
 import { NodeId } from "../../../utils/graphql";
@@ -143,54 +140,27 @@ export const Show: FC = () => {
 
   return (
     <>
-      <Dialog open={confirmDestroy} onClose={() => setConfirmDestroy(false)}>
-        <DialogTitle>Confirmação de Exclusão</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Após a exclusão, a questão não poderá ser recuperada. Deseja continuar?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmDestroy(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" onClick={() => handleDestroyQuestion()}>
-            Confirmar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={confirmRegister} onClose={() => setConfirmRegister(false)}>
-        <DialogTitle>Confirmação de Registro</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Após o registro, a questão estará disponível para uso e não poderá mais ser editada ou excluída. Deseja continuar?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmRegister(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" onClick={() => handleRegisterQuestion()}>
-            Confirmar
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={confirmEditDialog} onClose={() => setConfirmEditDialog(false)}>
-        <DialogTitle>Confirmação de Edição</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Alterar uma questão registrada irá requerir uma nova revisão do seu par. Deseja ir para tela de edição?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmEditDialog(false)}>
-            Cancelar
-          </Button>
-          <Button type="primary" onClick={() => confirmEditQuestion()}>
-            Editar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog
+        isOpen={confirmDestroy}
+        setIsOpen={(value) => setConfirmDestroy(value)}
+        title="Confirmação de Exclusão"
+        text="Após a exclusão, a questão não poderá ser recuperada. Deseja continuar?"
+        onConfirmation={handleDestroyQuestion}
+      />
+      <Dialog
+        isOpen={confirmRegister}
+        setIsOpen={(value) => setConfirmRegister(value)}
+        title="Confirmação de Registro"
+        text="Após o registro, a questão estará disponível para uso e não poderá mais ser editada ou excluída. Deseja continuar?"
+        onConfirmation={handleRegisterQuestion}
+      />
+      <Dialog
+        isOpen={confirmEditDialog}
+        setIsOpen={(value) => setConfirmEditDialog(value)}
+        title="Confirmação de Edição"
+        text="Alterar uma questão registrada irá requerir uma nova revisão do seu par. Deseja ir para tela de edição?"
+        onConfirmation={confirmEditQuestion}
+      />
       <Navigator home>
         {options().map((option, index) => (
           <div key={`navigation-item-${index}`} className={`hover:text-white ${index === 0 ? "ml-auto" : ""}`}>
