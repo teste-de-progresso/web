@@ -2,15 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
 
-import { Card, Button, InputGroup } from "../../components";
+import { Card, Button, InputGroup, Dialog } from "../../components";
 import { authentication } from "../../services/api";
 
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
@@ -77,15 +70,14 @@ export const RequestPasswordResetMail = () => {
 
   return (
     <Layout className="w-screen h-screen bg-primary-normal">
-      <Dialog open={modalOpen} onClose={() => confirmModal()}>
-        <DialogTitle id="form-dialog-title">{response.header}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{response.body}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => confirmModal()}>Vou checar</Button>
-        </DialogActions>
-      </Dialog>
+      <Dialog
+        type='notice'
+        isOpen={modalOpen}
+        setIsOpen={() => confirmModal()}
+        title={response.header}
+        text={response.body}
+        onConfirmation={confirmModal}
+      />
       <div>
         <img
           alt="Logo do Unifeso"
