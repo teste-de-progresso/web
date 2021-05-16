@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "./services/store";
 import { ApolloContext, UserContext } from "./contexts";
-import { PrivateRoutes, PublicRoutes } from "./Routes";
+import { PrivateRoutes, PublicRoutes } from "./routes";
 import { loadSession } from "./services/store/auth";
 import { Appbar } from "./components";
 
