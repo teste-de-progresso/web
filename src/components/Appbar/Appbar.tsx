@@ -119,7 +119,7 @@ const Links: FC = () => {
     if (!newPath) return
 
     dispatch(turnOff())
-    setNewPath(false)
+    setNewPath(undefined)
     history.push(newPath)
   }
 
