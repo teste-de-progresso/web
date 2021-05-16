@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from 'react'
-import { useHistory } from 'react-router';
+import React, { FC, Fragment, useState } from 'react'
+import { useHistory, useLocation } from 'react-router';
 import { Menu, Transition } from '@headlessui/react'
+import { ChartBarIcon, ClipboardListIcon } from '@heroicons/react/outline'
 
 import unifesoLogoCompact from "../../assets/images/logoImgUnifeso.png";
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
@@ -12,8 +13,10 @@ import { deleteSession } from '../../services/store/auth';
 import { RootState } from '../../services/store';
 import { Avatar } from '../Avatar'
 import { classNames } from '../../utils';
+import { DashboardRoutePaths, QuestionRoutePaths } from '../../routes'
+import { turnOff } from '../../services/store/unsavedChanges';
 
-const UserMenu = () => {
+const UserMenu: FC = () => {
   const { user } = useUserContext();
   const history = useHistory();
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false)
@@ -43,17 +46,19 @@ const UserMenu = () => {
         title="Modificações não Salvas"
         text="Todas as alterações serão descartadas. Deseja continuar?"
       />
-      <Menu as="div" className="ml-3 relative">
+      <Menu as="div" className="relative h-full">
         {({ open }) => (
           <>
-            <Menu.Button className="flex hover:bg-primary-dark text-gray-100 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-              <div className="flex flex-row items-center space-x-2 p-1">
-                <span className="hidden md:block">{user?.name}</span>
-                <Avatar
-                  className="h-10 w-10 rounded-full"
-                  src={user?.avatarUrl as string}
-                />
-              </div>
+            <Menu.Button
+              className="h-full flex flex-row px-2 items-center hover:bg-primary-dark text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+            >
+              <span className="hidden md:block pr-2">
+                {user?.name}
+              </span>
+              <Avatar
+                className="h-10 w-10 rounded-full"
+                src={user?.avatarUrl as string | undefined}
+              />
             </Menu.Button>
             <Transition
               show={open}
@@ -102,28 +107,94 @@ const UserMenu = () => {
   )
 }
 
+const Links: FC = () => {
+  const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const history = useHistory()
+
+  const [newPath, setNewPath] = useState<string>()
+
+  const handleForcedRedirect = () => {
+    if (!newPath) return
+
+    dispatch(turnOff())
+    setNewPath(false)
+    history.push(newPath)
+  }
+
+  const handleLinkClick = (pathname: string) => {
+    if (unsavedChanges) {
+      setNewPath(pathname)
+    } else {
+      history.push(pathname)
+    }
+  }
+
+
+  const links = [{
+    icon: <ChartBarIcon className="w-6" />,
+    tabel: 'Dashboard',
+    pathname: DashboardRoutePaths.index,
+    isCurrent: location.pathname.includes('dashboard'),
+  },
+  {
+    icon: <ClipboardListIcon className="w-6" />,
+    tabel: 'Questões',
+    pathname: QuestionRoutePaths.index,
+    isCurrent: location.pathname.includes('question'),
+  }]
+
+  return (
+    <>
+      <Dialog
+        isOpen={!!newPath}
+        setIsOpen={(value) => setNewPath(value ? newPath : undefined)}
+        onConfirmation={handleForcedRedirect}
+        title="Modificações não Salvas"
+        text="Todas as alterações serão descartadas. Deseja continuar?"
+      />
+      <div className="h-full flex items-center pl-4">
+        {links.map((link) => (
+          <button
+            className={`h-full flex items-center px-2 mx-2 text-gray-300 hover:bg-primary-dark ${link.isCurrent ? 'underline bg-primary-dark' : ''}`}
+            key={`navbar-link-${link.pathname}`}
+            onClick={() => handleLinkClick(link.pathname)}
+          >
+            <span className="pr-2 ">
+              {link.icon}
+            </span>
+            {link.tabel}
+          </button>
+        ))}
+      </div>
+    </>
+  )
+}
+
+const Logo: FC = () => (
+  <div className="h-full grid place-items-center">
+    <img
+      alt="Símbolo do Unifeso"
+      className="hidden md:block h-12 w-auto"
+      src={unifesoLogo}
+    />
+    <img
+      alt="Logotipo do Unifeso"
+      className="md:hidden h-12 w-auto"
+      src={unifesoLogoCompact}
+    />
+  </div>
+)
+
 export const Appbar = () => {
   return (
-    <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 bg-primary-normal">
-      <div className="relative flex items-center justify-between h-16">
-        <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-          <div className="flex-shrink-0 flex items-center">
-            <img
-              alt="Símbolo do Unifeso"
-              className="hidden md:block h-12 w-auto"
-              src={unifesoLogo}
-            />
-            <img
-              alt="Logotipo do Unifeso"
-              className="md:hidden h-12 w-auto"
-              src={unifesoLogoCompact}
-            />
-          </div>
-        </div>
-        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-          <UserMenu />
-        </div>
+    <div className="px-4 bg-primary-normal flex items-center justify-between h-16">
+      <div className="flex h-full">
+        <Logo />
+        <Links />
       </div>
+      <UserMenu />
     </div>
   )
 }
