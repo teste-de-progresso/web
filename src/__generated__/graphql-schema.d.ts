@@ -271,6 +271,7 @@ export type QuestionConnection = {
   readonly nodes?: Maybe<ReadonlyArray<Maybe<Question>>>;
   /** Information to aid in pagination. */
   readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
 };
 
 export type QuestionCreateInput = {
@@ -356,6 +357,7 @@ export type ReviewRequestConnection = {
   readonly nodes?: Maybe<ReadonlyArray<Maybe<ReviewRequest>>>;
   /** Information to aid in pagination. */
   readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
 };
 
 /** An edge in a connection. */
@@ -385,7 +387,15 @@ export type Subject = {
   readonly category: Category;
   readonly id: Scalars['ID'];
   readonly name: Scalars['String'];
-  readonly questions: ReadonlyArray<Question>;
+  readonly questions: QuestionConnection;
+};
+
+
+export type SubjectQuestionsArgs = {
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
 /** The connection type for Subject. */
@@ -397,6 +407,7 @@ export type SubjectConnection = {
   readonly nodes?: Maybe<ReadonlyArray<Maybe<Subject>>>;
   /** Information to aid in pagination. */
   readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
 };
 
 /** An edge in a connection. */
@@ -461,6 +472,7 @@ export type UserConnection = {
   readonly nodes?: Maybe<ReadonlyArray<Maybe<User>>>;
   /** Information to aid in pagination. */
   readonly pageInfo: PageInfo;
+  readonly totalCount: Scalars['Int'];
 };
 
 /** An edge in a connection. */
