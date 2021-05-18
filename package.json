@@ -4,12 +4,12 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false react-scripts build",
+    "build": "CI=false build-styles && react-scripts build",
+    "build-styles": "postcss ./src/assets/styles/tailwind.css -o ./src/assets/styles/main.css",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .jsx,.js src",
     "lint:fix": "eslint --fix --ext .jsx,.js,.tsx,.ts src",
-    "build-styles": "postcss ./src/styles/tailwind.css -o ./src/styles/main.css",
     "graphql:download-schema:json": "apollo schema:download ./src/__generated__/graphql-schema.json --endpoint=http://localhost:3000/graphql",
     "codegen:clean": "rimraf -g src/__generated__/**/*.ts",
     "codegen": "yarn graphql:download-schema:json && yarn codegen:clean && graphql-codegen"
