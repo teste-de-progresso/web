@@ -28,7 +28,7 @@ export const AvatarEditor: FC<Props> = ({ isOpen, setIsOpen }) => {
 
   const onSubmit = () => {
     instance
-      .post("/update_user_avatar", {
+      .post("/update_avatar", {
         upload: croppedImage,
       })
       .then((res) => {
