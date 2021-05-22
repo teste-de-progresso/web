@@ -1480,18 +1480,6 @@
             "deprecationReason": null
           },
           {
-            "name": "introduction",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "references",
             "description": null,
             "args": [],
@@ -2994,6 +2982,18 @@
                 "type": {
                   "kind": "SCALAR",
                   "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "QuestionWhereInput",
                   "ofType": null
                 },
                 "defaultValue": null,

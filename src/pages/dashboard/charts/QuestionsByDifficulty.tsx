@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import React, {FC} from 'react'
+import {gql, useQuery} from '@apollo/client'
 
-import { Query } from '../../../__generated__/graphql-schema'
-import { Pie } from '../components/charts'
+import {Query} from '../../../__generated__/graphql-schema'
+import {Pie} from '../components/charts'
+import {useDashboardContext} from "../DashboardContext";
 
 type ResponsivePieData = {
   id: string
@@ -10,36 +11,42 @@ type ResponsivePieData = {
   value: number
 }[]
 
-type QuestionsByDifficultyQueryResponse = {
+type QuestionsByDifficultyCountQuery = {
   easy: Query['questions']
   medium: Query['questions']
   hard: Query['questions']
 }
 
-const QuestionsByDifficultyQuery = gql`
-  query QuestionsByDifficultyQuery {
-    easy: questions (where: { difficulty: [ easy ] }) {
-      totalCount
+const QuestionsByDifficultyCount = gql`
+    query QuestionsByDifficultyCount(
+        $easyWhere: QuestionWhereInput!,
+        $mediumWhere: QuestionWhereInput!,
+        $hardWhere: QuestionWhereInput!,
+    ) {
+        easy: questions(where: $easyWhere) {
+            totalCount
+        }
+        medium: questions(where: $mediumWhere) {
+            totalCount
+        }
+        hard: questions(where: $hardWhere) {
+            totalCount
+        }
     }
-    medium: questions (where: { difficulty: [ medium ] }) {
-      totalCount
-    }
-    hard: questions (where: { difficulty: [ hard ] }) {
-      totalCount
-    }
-  }
 `
 
 export const QuestionsByDifficulty: FC = () => {
-  const { loading, data } = useQuery<QuestionsByDifficultyQueryResponse>(
-    QuestionsByDifficultyQuery, {
-    onError: (error) => {
-      console.log(error)
-    }
-  })
+  const {where} = useDashboardContext()
+  const {loading, data} = useQuery<QuestionsByDifficultyCountQuery>(
+    QuestionsByDifficultyCount, {
+      variables: {
+        easyWhere: { difficulty: ['easy'], ...where },
+        mediumWhere: { difficulty: ['medium'], ...where },
+        hardWhere: { difficulty: ['hard'], ...where },
+      },
+    })
 
   if (loading || !data) return null
-
 
   const mappedData: ResponsivePieData = [
     {
@@ -61,6 +68,6 @@ export const QuestionsByDifficulty: FC = () => {
   const filteredData = mappedData.filter(item => item.value)
 
   return (
-    <Pie title="Questões por Dificuldade" data={filteredData} />
+    <Pie title="Questões por Dificuldade" data={filteredData}/>
   )
 }

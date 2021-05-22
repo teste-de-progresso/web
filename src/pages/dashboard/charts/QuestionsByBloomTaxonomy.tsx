@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import React, {FC} from 'react'
+import {gql, useQuery} from '@apollo/client'
 
-import { Query } from '../../../__generated__/graphql-schema'
-import { Pie } from '../components/charts'
+import {Query} from '../../../__generated__/graphql-schema'
+import {Pie} from '../components/charts'
+import {useDashboardContext} from "../DashboardContext";
 
 type ResponsivePieData = {
   id: string
@@ -10,7 +11,7 @@ type ResponsivePieData = {
   value: number
 }[]
 
-type QuestionsByBloomTaxonomyQueryResponse = {
+type QuestionsByBloomTaxonomyCountQuery = {
   remember: Query['questions']
   understand: Query['questions']
   apply: Query['questions']
@@ -19,41 +20,53 @@ type QuestionsByBloomTaxonomyQueryResponse = {
   create: Query['questions']
 }
 
-const QuestionsByBloomTaxonomyQuery = gql`
-  query QuestionByBloomTaxonomyQuery {
-    remember: questions (where: { bloomTaxonomy: [ remember ] }) {
-      totalCount
+const QuestionsByBloomTaxonomyCount = gql`
+    query QuestionsByBloomTaxonomyCount (
+        $rememberWhere: QuestionWhereInput!,
+        $understandWhere: QuestionWhereInput!,
+        $applyWhere: QuestionWhereInput!,
+        $analyzeWhere: QuestionWhereInput!,
+        $evaluateWhere: QuestionWhereInput!,
+        $createWhere: QuestionWhereInput!,
+    ) {
+        remember: questions(where: $rememberWhere) {
+            totalCount
+        }
+        understand: questions(where: $understandWhere) {
+            totalCount
+        }
+        apply: questions(where: $applyWhere) {
+            totalCount
+        }
+        analyze: questions(where: $analyzeWhere) {
+            totalCount
+        }
+        evaluate: questions(where: $evaluateWhere) {
+            totalCount
+        }
+        create: questions(where: $createWhere) {
+            totalCount
+        }
     }
-    understand: questions (where: { bloomTaxonomy: [ understand ] }) {
-      totalCount
-    }
-    apply: questions (where: { bloomTaxonomy: [ apply ] }) {
-      totalCount
-    }
-    analyze: questions (where: { bloomTaxonomy: [ analyze ] }) {
-      totalCount
-    }
-    evaluate: questions (where: { bloomTaxonomy: [ evaluate ] }) {
-      totalCount
-    }
-    create: questions (where: { bloomTaxonomy: [ create ] }) {
-      totalCount
-    }
-  }
 `
 
 export const QuestionByBloomTaxonomy: FC = () => {
-  const { loading, data } = useQuery<QuestionsByBloomTaxonomyQueryResponse>(
-    QuestionsByBloomTaxonomyQuery, {
-    onError: (error) => {
-      console.log(error)
-    }
-  })
+  const {where} = useDashboardContext()
+  const {loading, data} = useQuery<QuestionsByBloomTaxonomyCountQuery>(
+    QuestionsByBloomTaxonomyCount, {
+      variables: {
+        rememberWhere: {bloomTaxonomy: ['remember'], ...where},
+        understandWhere: {bloomTaxonomy: ['understand'], ...where},
+        applyWhere: {bloomTaxonomy: ['apply'], ...where},
+        analyzeWhere: {bloomTaxonomy: ['analyze'], ...where},
+        evaluateWhere: {bloomTaxonomy: ['evaluate'], ...where},
+        createWhere: {bloomTaxonomy: ['create'], ...where},
+      }
+    })
 
   if (loading || !data) return null
 
-
-  const mappeddata: ResponsivePieData = [
+  const mappedData: ResponsivePieData = [
     {
       id: "Recordar",
       label: "Recordar",
@@ -85,9 +98,9 @@ export const QuestionByBloomTaxonomy: FC = () => {
       value: data.create.totalCount ?? 0
     },
   ]
-  const filteredData = mappeddata.filter(item => item.value)
+  const filteredData = mappedData.filter(item => item.value)
 
   return (
-    <Pie title="Questões por Habilidade Cognitiva" data={filteredData} />
+    <Pie title="Questões por Habilidade Cognitiva" data={filteredData}/>
   )
 }

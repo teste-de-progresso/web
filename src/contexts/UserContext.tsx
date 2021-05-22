@@ -1,19 +1,22 @@
 import React, {
   createContext, useContext, useState, FC
 } from "react";
-import { useDispatch } from "react-redux";
-import { useQuery, gql } from "@apollo/client";
+import {useDispatch} from "react-redux";
+import {useQuery, gql} from "@apollo/client";
 
-import { Query } from "../__generated__/graphql-schema";
-import { deleteSession } from "../services/store/auth"
+import {Query} from "../__generated__/graphql-schema";
+import {deleteSession} from "../services/store/auth"
 
 type UserContext = {
   user?: Query['currentUser']
   refetch: () => void
+  isOnlyTeacher: boolean
 }
 
 const Context = createContext<UserContext>({
-  refetch: () => { },
+  refetch: () => {
+  },
+  isOnlyTeacher: false
 })
 
 export const useUserContext = () => {
@@ -27,41 +30,43 @@ export const useUserContext = () => {
 };
 
 const CurrentUserQuery = gql`
-  query CurrentUserQuery {
-    currentUser {
-      id
-      name
-      email
-      avatarUrl
+    query CurrentUserQuery {
+        currentUser {
+            id
+            name
+            email
+            avatarUrl
+            roles
+        }
     }
-  }
 `;
 
 type Props = {
   children: any
 }
 
-export const UserContext: FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<Query['currentUser']>();
+export const UserContext: FC<Props> = ({children}) => {
   const dispatch = useDispatch()
+  const [user, setUser] = useState<Query['currentUser']>();
+  const isOnlyTeacher = !!(user?.roles.includes('teacher') && user?.roles.length === 1)
 
-  const { refetch: refetchUserQuery } = useQuery<Query>(CurrentUserQuery, {
-    onCompleted: ({ currentUser }) => {
+  const {refetch: refetchUserQuery} = useQuery<Query>(CurrentUserQuery, {
+    onCompleted: ({currentUser}) => {
       setUser(currentUser)
     },
-    onError: ({ message }) => {
+    onError: ({message}) => {
       console.error('token error:', message)
       dispatch(deleteSession())
     }
   })
 
   const refetch = async () => {
-    const { data: { currentUser } } = await refetchUserQuery()
+    const {data: {currentUser}} = await refetchUserQuery()
     setUser(currentUser)
   }
 
   return (
-    <Context.Provider value={{ user, refetch }}>
+    <Context.Provider value={{user, refetch, isOnlyTeacher}}>
       {user && children}
     </Context.Provider>
   );

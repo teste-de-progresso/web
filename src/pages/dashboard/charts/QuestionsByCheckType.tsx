@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import React, {FC} from 'react'
+import {gql, useQuery} from '@apollo/client'
 
-import { Query } from '../../../__generated__/graphql-schema'
-import { Pie } from '../components/charts'
+import {Query} from '../../../__generated__/graphql-schema'
+import {Pie} from '../components/charts'
+import {useDashboardContext} from "../DashboardContext";
 
 type ResponsivePieData = {
   id: string
@@ -10,7 +11,7 @@ type ResponsivePieData = {
   value: number
 }[]
 
-type QuestionsByCheckTypeQueryResponse = {
+type QuestionsByCheckTypeCountQuery = {
   uniqueAnswer: Query['questions']
   incompleteAffirmation: Query['questions']
   multipleAnswer: Query['questions']
@@ -23,48 +24,72 @@ type QuestionsByCheckTypeQueryResponse = {
   constantAlternatives: Query['questions']
 }
 
-const QuestionsByCheckTypeQuery = gql`
-  query QuestionsByCheckTypeQuery {
-    uniqueAnswer: questions (where: { checkType: [ unique_answer ] }) {
-      totalCount
+const QuestionsByCheckTypeCount = gql`
+    query QuestionsByCheckTypeCount(
+        $uniqueAnswer: QuestionWhereInput!,
+        $incompleteAffirmation: QuestionWhereInput!,
+        $multipleAnswer: QuestionWhereInput!,
+        $negativeFocus: QuestionWhereInput!,
+        $assertionAndReason: QuestionWhereInput!,
+        $gap: QuestionWhereInput!,
+        $interpretation: QuestionWhereInput!,
+        $association: QuestionWhereInput!,
+        $orderingOrRanking: QuestionWhereInput!,
+        $constantAlternatives: QuestionWhereInput!,
+    ) {
+        uniqueAnswer: questions(where: $uniqueAnswer) {
+            totalCount
+        }
+        incompleteAffirmation: questions(where: $incompleteAffirmation) {
+            totalCount
+        }
+        multipleAnswer: questions(where: $multipleAnswer) {
+            totalCount
+        }
+        negativeFocus: questions(where: $negativeFocus) {
+            totalCount
+        }
+        assertionAndReason: questions(where: $assertionAndReason) {
+            totalCount
+        }
+        gap: questions(where: $gap) {
+            totalCount
+        }
+        interpretation: questions(where: $interpretation) {
+            totalCount
+        }
+        association: questions(where: $association) {
+            totalCount
+        }
+        orderingOrRanking: questions(where: $orderingOrRanking) {
+            totalCount
+        }
+        constantAlternatives: questions(where: $constantAlternatives) {
+            totalCount
+        }
     }
-    incompleteAffirmation: questions (where: { checkType: [ incomplete_affirmation ] }) {
-      totalCount
-    }
-    multipleAnswer: questions (where: { checkType: [ multiple_answer ] }) {
-      totalCount
-    }
-    negativeFocus: questions (where: { checkType: [ negative_focus ] }) {
-      totalCount
-    }
-    assertionAndReason: questions (where: { checkType: [ assertion_and_reason ] }) {
-      totalCount
-    }
-    gap: questions (where: { checkType: [ gap ] }) {
-      totalCount
-    }
-    interpretation: questions (where: { checkType: [ interpretation ] }) {
-      totalCount
-    }
-    association: questions (where: { checkType: [ association ] }) {
-      totalCount
-    }
-    orderingOrRanking: questions (where: { checkType: [ ordering_or_ranking ] }) {
-      totalCount
-    }
-    constantAlternatives: questions (where: { checkType: [ constant_alternatives ] }) {
-      totalCount
-    }
-  }
 `
 
 export const QuestionByCheckType: FC = () => {
-  const { loading, data } = useQuery<QuestionsByCheckTypeQueryResponse>(
-    QuestionsByCheckTypeQuery, {
-    onError: (error) => {
-      console.log(error)
-    }
-  })
+  const {where} = useDashboardContext()
+  const {loading, data} = useQuery<QuestionsByCheckTypeCountQuery>(
+    QuestionsByCheckTypeCount, {
+      variables: {
+        uniqueAnswer: { checkType: ['unique_answer'], ...where},
+        incompleteAffirmation: { checkType: ['incomplete_affirmation'], ...where},
+        multipleAnswer: { checkType: ['multiple_answer'], ...where},
+        negativeFocus: { checkType: ['negative_focus'], ...where},
+        assertionAndReason: { checkType: ['assertion_and_reason'], ...where},
+        gap: { checkType: ['gap'], ...where},
+        interpretation: { checkType: ['interpretation'], ...where},
+        association: { checkType: ['association'], ...where},
+        orderingOrRanking: { checkType: ['ordering_or_ranking'], ...where},
+        constantAlternatives: { checkType: ['constant_alternatives'], ...where},
+      },
+      onError: (err) => {
+        console.log(err)
+      }
+    })
 
   if (loading || !data) return null
 
@@ -123,6 +148,6 @@ export const QuestionByCheckType: FC = () => {
   const filteredData = mappedData.filter(item => item.value)
 
   return (
-    <Pie title="Questões por Tipo" data={filteredData} />
+    <Pie title="Questões por Tipo" data={filteredData}/>
   )
 }

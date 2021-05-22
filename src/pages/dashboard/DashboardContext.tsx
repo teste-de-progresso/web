@@ -7,7 +7,8 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
-import { QuestionWhereInput } from '../../__generated__/graphql-schema'
+import {QuestionWhereInput} from '../../__generated__/graphql-schema'
+import {useUserContext} from "../../contexts";
 
 type ProviderValue = {
   where: QuestionWhereInput
@@ -16,7 +17,7 @@ type ProviderValue = {
 
 const DashboardContext = createContext<ProviderValue | null>(null)
 
-export const useDashboardProvider = () => {
+export const useDashboardContext = () => {
   const context = useContext(DashboardContext)
 
   if (context === null) {
@@ -26,10 +27,10 @@ export const useDashboardProvider = () => {
   return context
 }
 
-export const DashboardProvider: FC = ({ children }) => {
-  const [where, setWhere] = useState<QuestionWhereInput>({})
-
-  const providerValue = useMemo(() => ({ where, setWhere }), [
+export const DashboardProvider: FC = ({children}) => {
+  const {user, isOnlyTeacher} = useUserContext()
+  const [where, setWhere] = useState<QuestionWhereInput>(isOnlyTeacher ? {userId: user?.id} : {})
+  const providerValue = useMemo(() => ({where, setWhere}), [
     where,
     setWhere,
   ])

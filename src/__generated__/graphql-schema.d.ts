@@ -238,7 +238,6 @@ export type Question = Node & {
   readonly explanation?: Maybe<Scalars['String']>;
   readonly id: Scalars['ID'];
   readonly instruction?: Maybe<Scalars['String']>;
-  readonly introduction?: Maybe<Scalars['String']>;
   readonly references?: Maybe<Scalars['String']>;
   readonly reviewFeedbacks: ReadonlyArray<ReviewFeedback>;
   readonly reviewRequests: ReadonlyArray<ReviewRequest>;
@@ -396,6 +395,7 @@ export type SubjectQuestionsArgs = {
   before?: Maybe<Scalars['String']>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+  where?: Maybe<QuestionWhereInput>;
 };
 
 /** The connection type for Subject. */

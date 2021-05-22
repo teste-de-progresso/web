@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
-import { gql, useQuery } from '@apollo/client'
+import React, {FC} from 'react'
+import {gql, useQuery} from '@apollo/client'
 
-import { Query } from '../../../__generated__/graphql-schema'
-import { Pie } from '../components/charts'
+import {Query} from '../../../__generated__/graphql-schema'
+import {Pie} from '../components/charts'
+import {useDashboardContext} from "../DashboardContext";
 
 type ResponsivePieData = {
   id: string
@@ -10,22 +11,27 @@ type ResponsivePieData = {
   value: number
 }[]
 
-const SubjectsQuestionsTotalCountQuery = gql`
-  query SubjectQuestionsTotalCountQuery {
-    subjects {
-      nodes {
-        id
-        name
-        questions {
-          totalCount
+const QuestionsBySubjectCount = gql`
+    query QuestionsBySubjectCount($where: QuestionWhereInput!) {
+        subjects {
+            nodes {
+                id
+                name
+                questions(where: $where) {
+                    totalCount
+                }
+            }
         }
-      }
     }
-  }
 `
 
 export const QuestionsBySubject: FC = () => {
-  const { loading, data } = useQuery<Query>(SubjectsQuestionsTotalCountQuery)
+  const {where} = useDashboardContext()
+  const {loading, data} = useQuery<Query>(QuestionsBySubjectCount, {
+    variables: {
+      where,
+    },
+  })
 
   if (loading) return null
 
@@ -41,6 +47,6 @@ export const QuestionsBySubject: FC = () => {
   const filteredData = mappedData.filter(item => item.value)
 
   return (
-    <Pie title="Questões por Assunto" data={filteredData} />
+    <Pie title="Questões por Assunto" data={filteredData}/>
   )
 }

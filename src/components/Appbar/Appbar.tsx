@@ -189,7 +189,7 @@ const Logo: FC = () => (
 
 export const Appbar = () => {
   return (
-    <div className="px-4 bg-primary-normal flex items-center justify-between h-16">
+    <div className="px-4 bg-primary-normal flex items-center justify-between h-16 shadow-md">
       <div className="flex h-full">
         <Logo />
         <Links />
