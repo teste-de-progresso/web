@@ -7,6 +7,7 @@ import { authentication } from "../../services/api";
 import { Card, Button, InputGroup, Dialog } from "../../components";
 
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
+import {SessionRoutePaths} from "../../routes";
 
 const Layout = styled.div`
   display: grid;
@@ -68,9 +69,9 @@ export const ResetPasswordByToken = () => {
 
   const confirmModal = () => {
     if (response.success) {
-      history.push("/");
+      history.push(SessionRoutePaths.signIn);
     } else {
-      history.push("/password/new");
+      history.push(SessionRoutePaths.newPassword);
     }
   };
 

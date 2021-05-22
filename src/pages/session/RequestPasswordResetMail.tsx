@@ -7,6 +7,7 @@ import { Card, Button, InputGroup, Dialog } from "../../components";
 import { authentication } from "../../services/api";
 
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
+import {SessionRoutePaths} from "../../routes";
 
 const Layout = styled.div`
   display: grid;
@@ -62,7 +63,7 @@ export const RequestPasswordResetMail = () => {
 
   const confirmModal = () => {
     if (response.success) {
-      history.push("/");
+      history.push(SessionRoutePaths.signIn);
     } else {
       setModalOpen(false);
     }
@@ -108,7 +109,7 @@ export const RequestPasswordResetMail = () => {
 
           <div className="mt-3 w-full text-center">
             <button
-              onClick={() => history.push("/")}
+              onClick={() => history.push(SessionRoutePaths.signIn)}
               className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"
             >
               Voltar

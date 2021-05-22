@@ -7,6 +7,7 @@ import { Form } from '../Form'
 import { Mutation } from "../../../__generated__/graphql-schema";
 import { useDispatch } from "react-redux";
 import { turnOff, turnOn } from "../../../services/store/unsavedChanges";
+import {QuestionRoutePaths} from "../../../routes";
 
 const CREATE_QUESTION_MUTATION = gql`
   mutation($input: CreateQuestionInput!) {
@@ -39,7 +40,7 @@ export const New = () => {
       },
     }).then(() => {
       dispatch(turnOff())
-      history.push('/')
+      history.push(QuestionRoutePaths.index)
     }).catch((error: string) => {
       setAlert({
         severity: "error",
@@ -69,7 +70,7 @@ export const New = () => {
       setTimeout(() => {
         const id = data?.createQuestion?.question?.id
 
-        history.push(`/questions/${id}/edit`)
+        history.push(QuestionRoutePaths.edit.replace(':id', id ?? ''))
       }, 3000);
     }).catch((error: string) => {
       setAlert({

@@ -8,6 +8,7 @@ import { Navigator, Dialog } from "../../../components";
 import { Mutation, Query, Question } from "../../../__generated__/graphql-schema";
 import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
 import { NodeId } from "../../../utils/graphql";
+import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
   ${ViewModeFragments}
@@ -99,7 +100,7 @@ export const Show: FC = () => {
     const { data } = await destroyQuestion({ variables: { id: recordId } })
 
     if (data?.destroyQuestion?.deletedQuestionId) {
-      history.push('/')
+      history.push(QuestionRoutePaths.index)
     } else {
       setAlert({
         text: 'Algo inesperado aconteceu ao tentar excluir a questão.',

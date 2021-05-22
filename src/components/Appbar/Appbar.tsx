@@ -13,7 +13,7 @@ import { deleteSession } from '../../services/store/auth';
 import { RootState } from '../../services/store';
 import { Avatar } from '../Avatar'
 import { classNames } from '../../utils';
-import { DashboardRoutePaths, QuestionRoutePaths } from '../../routes'
+import {DashboardRoutePaths, QuestionRoutePaths, SessionRoutePaths} from '../../routes'
 import { turnOff } from '../../services/store/unsavedChanges';
 
 const UserMenu: FC = () => {
@@ -34,7 +34,7 @@ const UserMenu: FC = () => {
   }
 
   const openProfile = () => {
-    history.push("/my_user");
+    history.push(SessionRoutePaths.show);
   };
 
   return (
@@ -72,7 +72,7 @@ const UserMenu: FC = () => {
             >
               <Menu.Items
                 static
-                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
+                className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
               >
                 <Menu.Item onClick={openProfile}>
                   {({ active }) => (

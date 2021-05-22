@@ -8,6 +8,7 @@ import { AlertV2Props, Navigator } from '../../../components';
 import { Form, FormFragments } from '../Form'
 import { turnOn, turnOff } from '../../../services/store/unsavedChanges';
 import { NodeId } from '../../../utils/graphql';
+import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
   ${FormFragments}
@@ -67,7 +68,7 @@ export const Edit: FC = () => {
         },
       },
     }).then(() => {
-      history.push('/')
+      history.push(QuestionRoutePaths.index)
     }).catch((error: string) => {
       setAlert({
         severity: "error",
