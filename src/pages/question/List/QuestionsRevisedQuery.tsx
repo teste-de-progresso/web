@@ -49,6 +49,7 @@ export const QuestionsRevisedQuery: FC<Props> = ({ title }) => {
     variables: {
       first: PAGE_SIZE,
     },
+    fetchPolicy: "network-only"
   })
 
   const onNextPageClick = () => {

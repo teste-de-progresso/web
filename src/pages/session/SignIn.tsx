@@ -10,6 +10,7 @@ import {
 import { updateSession } from '../../services/store/auth'
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 import { authentication } from "../../services/api";
+import {SessionRoutePaths} from "../../routes";
 
 const Layout = styled.div`
   display: grid;
@@ -78,7 +79,7 @@ export const SignIn = () => {
             className="mt-3 w-full text-center"
           >
             <button
-              onClick={() => history.push("/password/new")}
+              onClick={() => history.push(SessionRoutePaths.newPassword)}
               className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"
             >
               Esqueceu sua senha?

@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { turnOff } from "../../services/store/unsavedChanges";
 import { RootState } from "../../services/store";
 import { Dialog } from "../Dialog";
+import {QuestionRoutePaths} from "../../routes";
 
 const HorizontalMenu = styled.ul`
   margin: 0;
@@ -56,7 +57,7 @@ export const Navigator: FC<Props> = ({
 
   const confirmLeave = () => {
     dispatch(turnOff());
-    history.push("/");
+    history.push(QuestionRoutePaths.index);
   };
 
   const goHome = () => {

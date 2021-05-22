@@ -49,6 +49,7 @@ export const QuestionsWaitingReviewQuery: FC<Props> = ({ title }) => {
     variables: {
       first: PAGE_SIZE,
     },
+    fetchPolicy: "network-only"
   })
 
   const onNextPageClick = () => {

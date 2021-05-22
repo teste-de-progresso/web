@@ -29,6 +29,7 @@ import {
   List,
   ListItem,
 } from '../../../components';
+import {QuestionRoutePaths} from "../../../routes";
 
 export const FormFragments = gql`
   ${EnunciationFragment}
@@ -98,7 +99,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
     if (unsavedChanges && !leaveDialogIsOpen) {
       setLeaveDialogIsOpen(true);
     } else {
-      history.push('/')
+      history.push(QuestionRoutePaths.index)
     }
   };
 

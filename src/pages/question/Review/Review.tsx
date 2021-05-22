@@ -8,6 +8,7 @@ import { Card, Button, Navigator } from "../../../components";
 import { REVIEW_FEEDBACK } from "../../../utils/types";
 import { FeedbackStatus, Query, Question } from "../../../__generated__/graphql-schema";
 import { NodeId } from "../../../utils/graphql";
+import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
   ${ViewModeFragments}
@@ -76,7 +77,7 @@ export const Review: FC = () => {
       },
     });
 
-    history.push('/')
+    history.push(QuestionRoutePaths.index)
   };
 
   return (
