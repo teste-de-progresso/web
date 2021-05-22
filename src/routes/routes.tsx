@@ -23,7 +23,7 @@ export const PrivateRoutes = () => (
 
 export const PublicRoutes = () => (
   <Switch>
-    <Route exact path={SessionRoutePaths.signIn} component={SignIn} />
+    <Route path={SessionRoutePaths.signIn} component={SignIn} />
     <Route exact path={SessionRoutePaths.newPassword} component={RequestPasswordResetMail} />
     <Route exact path={SessionRoutePaths.editPassword} component={ResetPasswordByToken} />
   </Switch>
