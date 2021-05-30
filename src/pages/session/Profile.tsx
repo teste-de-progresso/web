@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useUserContext } from "../../contexts";
-import { AvatarEditor, Navigator, Avatar } from "../../components";
+import { AvatarEditor, Navigator, CurrentUserAvatar } from "../../components";
 
 export const Profile = () => {
   const [avatarEditorIsOpen, setAvatarEditorIsOpen] = useState(false);
@@ -23,7 +23,7 @@ export const Profile = () => {
                 style={{ top: "-3.10rem" }}
                 onClick={() => setAvatarEditorIsOpen(true)}
               >
-                <Avatar src={user?.avatarUrl ?? ''} />
+                <CurrentUserAvatar />
               </div>
               <div className="mt-8 text-center">
                 <h2 className="font-bold">{user?.name || user?.email}</h2>

@@ -16,7 +16,6 @@ module.exports = {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
-
       black: '#000',
       white: '#fff',
       primary: {
@@ -167,6 +166,15 @@ module.exports = {
       '48': '12rem',
       '56': '14rem',
       '64': '16rem',
+      '-0': '-0',
+      '-1': '-0.25rem',
+      '-2': '-0.5rem',
+      '-3': '-0.75rem',
+      '-4': '-1rem',
+      '-5': '-1.25rem',
+      '-6': '-1.5rem',
+      '-8': '-2rem',
+      '-10': '-2.5rem',
     },
     backgroundColor: theme => theme('colors'),
     backgroundOpacity: theme => theme('opacity'),
