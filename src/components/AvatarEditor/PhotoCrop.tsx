@@ -25,7 +25,7 @@ export const PhotoCrop: FC<Props> = ({ callback }) => {
   };
 
   const onBeforeFileLoad = (elem: any) => {
-    if (elem.target.files[0].size > 180000) {
+    if (elem.target.files[0].size > 1000000) {
       elem.target.value = "";
       alert("A imagem selecionada é grande de mais!")
     }

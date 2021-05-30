@@ -1,59 +1,59 @@
-import React, { FC, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { MdDeleteForever, MdEdit, MdSave } from "react-icons/md";
-import { useQuery, useMutation, gql } from "@apollo/client";
+import React, {FC, useState} from "react";
+import {useParams, useHistory} from "react-router-dom";
+import {MdDeleteForever, MdEdit, MdSave} from "react-icons/md";
+import {useQuery, useMutation, gql} from "@apollo/client";
 
-import { ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments } from "../shared";
-import { Navigator, Dialog } from "../../../components";
-import { Mutation, Query, Question } from "../../../__generated__/graphql-schema";
-import { AlertV2Props, AlertV2 } from "../../../components/AlertV2";
-import { NodeId } from "../../../utils/graphql";
+import {ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments} from "../shared";
+import {Navigator, Dialog} from "../../../components";
+import {Mutation, Query, Question} from "../../../__generated__/graphql-schema";
+import {AlertV2Props, AlertV2} from "../../../components/AlertV2";
+import {NodeId} from "../../../utils/graphql";
 import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
-  ${ViewModeFragments}
-  ${FeedbacksFragments}
-  query Question($id: ID!) {
-    node(id: $id) {
-      __typename
-      ... on Question {
-        id
-        ... QuestionReadOnlyFields
-        reviewFeedbacks {
-          ... FeedbackFields
+    ${ViewModeFragments}
+    ${FeedbacksFragments}
+    query Question($id: ID!) {
+        node(id: $id) {
+            __typename
+            ... on Question {
+                id
+                ... QuestionReadOnlyFields
+                reviewFeedbacks {
+                    ... FeedbackFields
+                }
+            }
         }
-      }
     }
-  }
 `
 
 const FINISH_QUESTION = gql`
-  mutation ($id: ID!) {
-    finishQuestion (
-      input: {
-        questionId: $id
-      }
-    ) {
-      question {
-        id
-        status
-      }
-      errors
+    mutation ($id: ID!) {
+        finishQuestion (
+            input: {
+                questionId: $id
+            }
+        ) {
+            question {
+                id
+                status
+            }
+            errors
+        }
     }
-  }
 `
 
 const DESTROY_QUESTION = gql`
-  mutation ($id: ID!) {
-    destroyQuestion(
-      input: {
-        questionId: $id
-      }
-    ) {
-      deletedQuestionId
-      errors
+    mutation ($id: ID!) {
+        destroyQuestion(
+            input: {
+                questionId: $id
+            }
+        ) {
+            deletedQuestionId
+            errors
+        }
     }
-  }
 `
 
 type Params = {
@@ -62,17 +62,18 @@ type Params = {
 
 export const Show: FC = () => {
   const history = useHistory();
-  const { id } = useParams<Params>();
+  const {id} = useParams<Params>();
   const [confirmEditDialog, setConfirmEditDialog] = useState(false)
   const [confirmRegister, setConfirmRegister] = useState(false)
   const [confirmDestroy, setConfirmDestroy] = useState(false)
   const [alert, setAlert] = useState<AlertV2Props>()
   const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION)
   const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION)
-  const { loading, data } = useQuery<Query>(GET_QUESTION, {
+  const {loading, data} = useQuery<Query>(GET_QUESTION, {
     variables: {
       id,
     },
+    fetchPolicy: "network-only",
   });
   const question = data?.node as Question | null
 
@@ -93,11 +94,11 @@ export const Show: FC = () => {
   };
 
   const handleRegisterQuestion = async () => {
-    await finishQuestion({ variables: { id: recordId } })
+    await finishQuestion({variables: {id: recordId}})
   };
 
   const handleDestroyQuestion = async () => {
-    const { data } = await destroyQuestion({ variables: { id: recordId } })
+    const {data} = await destroyQuestion({variables: {id: recordId}})
 
     if (data?.destroyQuestion?.deletedQuestionId) {
       history.push(QuestionRoutePaths.index)
@@ -112,17 +113,17 @@ export const Show: FC = () => {
 
   const ACTIONS = {
     edit: {
-      icon: <MdEdit className="my-auto" />,
+      icon: <MdEdit className="my-auto"/>,
       label: "Editar",
       action: handleEditQuestion,
     },
     register: {
-      icon: <MdSave className="my-auto" />,
+      icon: <MdSave className="my-auto"/>,
       label: "Registrar",
       action: () => setConfirmRegister(true),
     },
     destroy: {
-      icon: <MdDeleteForever className="my-auto" />,
+      icon: <MdDeleteForever className="my-auto"/>,
       label: 'Excluir',
       action: () => setConfirmDestroy(true),
     }
@@ -175,14 +176,14 @@ export const Show: FC = () => {
       <div className="bg-gray-100 w-full my-2">
         <main className="max-w-screen-xl m-auto">
           <div className="flex">
-            {alert && <AlertV2 severity={alert.severity} text={alert.text} />}
+            {alert && <AlertV2 severity={alert.severity} text={alert.text}/>}
           </div>
           <div className="flex px-5">
             <div className="w-3/5">
-              <ViewMode questionData={question} />
+              <ViewMode questionData={question}/>
             </div>
             <div className="w-2/5 ml-3">
-              <Feedbacks feedbacks={question.reviewFeedbacks} />
+              <Feedbacks feedbacks={question.reviewFeedbacks}/>
             </div>
           </div>
         </main>

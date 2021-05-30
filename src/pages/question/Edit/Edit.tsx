@@ -1,37 +1,37 @@
-import React, { FC, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import React, {FC, useMemo, useState} from 'react'
+import {useDispatch} from 'react-redux';
+import {useHistory, useParams} from 'react-router';
+import {gql, useMutation, useQuery} from '@apollo/client';
 
-import { Mutation, Query, Question } from '../../../__generated__/graphql-schema';
-import { AlertV2Props, Navigator } from '../../../components';
-import { Form, FormFragments } from '../Form'
-import { turnOn, turnOff } from '../../../services/store/unsavedChanges';
-import { NodeId } from '../../../utils/graphql';
+import {Mutation, Query, Question} from '../../../__generated__/graphql-schema';
+import {AlertV2Props, Navigator} from '../../../components';
+import {Form, FormFragments} from '../Form'
+import {turnOn, turnOff} from '../../../services/store/unsavedChanges';
+import {NodeId} from '../../../utils/graphql';
 import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
-  ${FormFragments}
-  query Question ($id: ID!) {
-    node (id: $id) {
-      __typename
-      ...on Question {
-        id
-        ...FormFields
-      }
+    ${FormFragments}
+    query Question ($id: ID!) {
+        node (id: $id) {
+            __typename
+            ...on Question {
+                id
+                ...FormFields
+            }
+        }
     }
-  }
 `;
 
 const UPDATE_QUESTION_MUTATOIN = gql`
-  mutation($input: UpdateQuestionInput!) {
-    updateQuestion(input: $input) {
-      question {
-        id
-      }
-      errors
+    mutation($input: UpdateQuestionInput!) {
+        updateQuestion(input: $input) {
+            question {
+                id
+            }
+            errors
+        }
     }
-  }
 `
 
 type Params = {
@@ -42,7 +42,9 @@ export const Edit: FC = () => {
   const history = useHistory()
   const dispatch = useDispatch()
 
-  useMemo(() => { dispatch(turnOff()) }, [dispatch])
+  useMemo(() => {
+    dispatch(turnOff())
+  }, [dispatch])
   document.onkeypress = () => {
     dispatch(turnOn())
   }
@@ -50,7 +52,14 @@ export const Edit: FC = () => {
   const [alert, setAlert] = useState<AlertV2Props>()
   const params = useParams<Params>()
   const [updateQuestion] = useMutation<Mutation>(UPDATE_QUESTION_MUTATOIN)
-  const { loading, data } = useQuery<Query>(GET_QUESTION, { variables: { id: params.id } })
+  const {loading, data} = useQuery<Query>(
+    GET_QUESTION, {
+      variables: {
+        id: params.id,
+        fetchPolicy: "network-only"
+      }
+    }
+  )
   const question = data?.node as Question | null
 
   if (loading || !question) return null
@@ -76,7 +85,7 @@ export const Edit: FC = () => {
       });
 
       setTimeout(
-        () => setAlert({ severity: "error", text: "" }),
+        () => setAlert({severity: "error", text: ""}),
         3000
       );
     })
@@ -119,7 +128,7 @@ export const Edit: FC = () => {
 
   return (
     <>
-      <Navigator home />
+      <Navigator home/>
       <div className="bg-gray-100 w-full my-2">
         <main>
           <Form
