@@ -1,8 +1,8 @@
 schema: "src/__generated__/graphql-schema.json"
 generates:
-  src/__generated__/graphql-schema.d.ts:
+  src/__generated__/graphql-schema.ts:
     plugins:
       - typescript
-    config:
-      immutableTypes: true
-      enumsAsTypes: true
+    # config:
+      # immutableTypes: true
+      # enumsAsTypes: true
