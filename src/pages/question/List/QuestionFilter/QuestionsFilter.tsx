@@ -2,9 +2,9 @@ import React, { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import {
-  BloomTaxonomy,
-  Check,
-  Difficulty,
+  QuestionBloomTaxonomy,
+  QuestionCheckType,
+  QuestionDifficulty,
 } from "../../../../__generated__/graphql-schema";
 import { CHECK_TYPE, BLOOM_TAXONOMY, DIFFICULTY } from "../../../../utils/types";
 
@@ -73,15 +73,15 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
   const onSubmit = (inputs: any) => {
     const valuesFromCheckType = CHECK_TYPE.filter(
       ({ value }) => inputs[value]
-    ).map(({ value }) => value) as Check[];
+    ).map(({ value }) => value) as QuestionCheckType[];
 
     const valuesFromBloomTaxonomy = BLOOM_TAXONOMY.filter(
       ({ value }) => inputs[value]
-    ).map(({ value }) => value) as BloomTaxonomy[];
+    ).map(({ value }) => value) as QuestionBloomTaxonomy[];
 
     const valuesFromDifficulty = DIFFICULTY.filter(
       ({ value }) => inputs[value]
-    ).map(({ value }) => value) as Difficulty[];
+    ).map(({ value }) => value) as QuestionDifficulty[];
 
     const removeKeysWithUndefiend = (obj: any) => {
       for (var propName in obj) {
@@ -157,21 +157,21 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
             title="Tipo"
             register={register}
             options={CHECK_TYPE}
-            selecteds={(checkType ?? []) as Check[]}
+            selecteds={(checkType ?? []) as QuestionCheckType[]}
             setChanged={setChanged}
           />
           <FilterGroup
             title="Habilidade Cognitiva"
             register={register}
             options={BLOOM_TAXONOMY}
-            selecteds={(bloomTaxonomy ?? []) as BloomTaxonomy[]}
+            selecteds={(bloomTaxonomy ?? []) as QuestionBloomTaxonomy[]}
             setChanged={setChanged}
           />
           <FilterGroup
             title="Grau de Dificuldade"
             register={register}
             options={DIFFICULTY}
-            selecteds={(difficulty ?? []) as Difficulty[]}
+            selecteds={(difficulty ?? []) as QuestionDifficulty[]}
             setChanged={setChanged}
           />
           <input hidden type="submit" ref={submitRef as any} />

@@ -13,3 +13,4 @@ export * from "./Modal";
 export * from "./List";
 export * from "./Disclosures";
 export * from './CurrentUserAvatar'
+export * from './Input'

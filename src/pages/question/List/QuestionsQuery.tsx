@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 
-import { PageInfo, Query, Question, QuestionWhereInput, Status } from '../../../__generated__/graphql-schema';
+import { PageInfo, Query, Question, QuestionWhereInput, QuestionStatus } from '../../../__generated__/graphql-schema';
 import { gql, useQuery } from '@apollo/client';
 import { QuestionsList, QuestionsListFragments } from './QuestionsList'
 import { useUserContext } from '../../../contexts';
@@ -25,7 +25,7 @@ const PAGE_SIZE = 4
 type Props = {
   title: string
   where?: QuestionWhereInput
-  status?: Status
+  status?: QuestionStatus
 }
 
 export const QuestionsQuery: FC<Props> = ({ title, where, status }) => {
