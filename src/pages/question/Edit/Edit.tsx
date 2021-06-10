@@ -1,12 +1,10 @@
-import React, {FC, useMemo, useState} from 'react'
-import {useDispatch} from 'react-redux';
+import React, {FC, useState} from 'react'
 import {useHistory, useParams} from 'react-router';
 import {gql, useMutation, useQuery} from '@apollo/client';
 
 import {Mutation, Query, Question} from '../../../__generated__/graphql-schema';
 import {AlertV2Props, Navigator} from '../../../components';
 import {Form, FormFragments} from '../Form'
-import {turnOn, turnOff} from '../../../services/store/unsavedChanges';
 import {NodeId} from '../../../utils/graphql';
 import {QuestionRoutePaths} from "../../../routes";
 
@@ -40,15 +38,6 @@ type Params = {
 
 export const Edit: FC = () => {
   const history = useHistory()
-  const dispatch = useDispatch()
-
-  useMemo(() => {
-    dispatch(turnOff())
-  }, [dispatch])
-  document.onkeypress = () => {
-    dispatch(turnOn())
-  }
-
   const [alert, setAlert] = useState<AlertV2Props>()
   const params = useParams<Params>()
   const [updateQuestion] = useMutation<Mutation>(UPDATE_QUESTION_MUTATOIN)
@@ -102,8 +91,6 @@ export const Edit: FC = () => {
         },
       }
     }).then(() => {
-      dispatch(turnOff())
-
       setAlert({
         severity: "success",
         text: "Rascunho atualizado com sucesso",
