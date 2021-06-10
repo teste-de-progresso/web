@@ -1,16 +1,16 @@
-import React, { FC, useState } from 'react'
-import { useForm } from 'react-hook-form';
-import { ExclamationCircleIcon } from '@heroicons/react/outline';
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { gql } from '@apollo/client';
+import React, {FC, useState} from 'react'
+import {useForm} from 'react-hook-form';
+import {ExclamationCircleIcon} from '@heroicons/react/outline';
+import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {gql} from '@apollo/client';
 
-import { Question, QuestionCreateInput } from '../../../__generated__/graphql-schema';
-import { formatInput } from '../formatInputs';
-import { validateQuestionInputs } from '../../../utils/questions/questionValidations';
-import { RootState } from '../../../services/store';
-import { FormProvider } from './FormContext'
-import { SteppedForm, Step } from './SteppedForm'
+import {Question, QuestionCreateInput} from '../../../__generated__/graphql-schema';
+import {formatInput} from '../formatInputs';
+import {validateQuestionInputs} from '../../../utils/questions/questionValidations';
+import {RootState} from '../../../services/store';
+import {FormProvider} from './FormContext'
+import {SteppedForm, Step} from './SteppedForm'
 import {
   EnunciationFormStep,
   EnunciationFragment,
@@ -30,19 +30,20 @@ import {
   ListItem,
 } from '../../../components';
 import {QuestionRoutePaths} from "../../../routes";
+import {turnOff, turnOn} from "../../../services/store/unsavedChanges";
 
 export const FormFragments = gql`
-  ${EnunciationFragment}
-  ${AnswerFragment}
-  ${DistractorsFragment}
-  ${FeaturesFragment}
-  fragment FormFields on Question {
-    ...EnunciationFields
-    ...AnswerFields
-    ...DistractorsFields
-    ...FeaturesFields
-    status
-  }
+    ${EnunciationFragment}
+    ${AnswerFragment}
+    ${DistractorsFragment}
+    ${FeaturesFragment}
+    fragment FormFields on Question {
+        ...EnunciationFields
+        ...AnswerFields
+        ...DistractorsFields
+        ...FeaturesFields
+        status
+    }
 `
 
 type Props = {
@@ -52,19 +53,24 @@ type Props = {
   alert?: AlertV2Props
 }
 
-export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) => {
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  const [confirmSaveDialogIsOpen, setConfirmFinishDialogIsOpen] = useState(false);
-  const [leaveDialogIsOpen, setLeaveDialogIsOpen] = useState(false);
-
-  const [currentStep, setCurrentStep] = useState(0);
-  const history = useHistory();
+export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
+  const [validationErrors, setValidationErrors] = useState<string[]>([])
+  const [confirmSaveDialogIsOpen, setConfirmFinishDialogIsOpen] = useState(false)
+  const [leaveDialogIsOpen, setLeaveDialogIsOpen] = useState(false)
+  const {register, control, setValue, getValues, reset, formState} = useForm()
+  const [currentStep, setCurrentStep] = useState(0)
   const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
+  const history = useHistory()
+  const dispatch = useDispatch()
 
-  const minStep = 0;
-  const maxStep = 3;
-  const onFirstStep = currentStep === minStep;
-  const onLastStep = currentStep === maxStep;
+  const minStep = 0
+  const maxStep = 3
+  const onFirstStep = currentStep === minStep
+  const onLastStep = currentStep === maxStep
+
+  if (formState.isDirty) {
+    dispatch(turnOn())
+  }
 
   const handleNextStep = () => {
     if (onLastStep) return
@@ -78,39 +84,46 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
     setCurrentStep(currentStep - 1)
   }
 
-  const { register, control, setValue, getValues } = useForm()
+  const getFormattedInputValues = () => formatInput(getValues())
 
-  const getFormatedValues = () => formatInput(getValues())
+  const handleCancel = () => {
+    if (unsavedChanges && !leaveDialogIsOpen) {
+      setLeaveDialogIsOpen(true)
+    } else {
+      history.push(QuestionRoutePaths.index)
+    }
+  }
+
+  const handleDraftSave = () => {
+    if (onDraftSubmit) {
+      onDraftSubmit({status: 'draft', ...getFormattedInputValues()} as QuestionCreateInput)
+      reset(getValues(), {
+        isDirty: false
+      })
+      dispatch(turnOff())
+    }
+  }
 
   const handleSave = () => {
-    const inputs = { status: 'pending', ...getFormatedValues() } as QuestionCreateInput
+    const inputs = {status: 'pending', ...getFormattedInputValues()} as QuestionCreateInput
     const errors = validateQuestionInputs(inputs)
 
     setConfirmFinishDialogIsOpen(false)
 
     if (onSubmit && !errors.length) {
+      dispatch(turnOff())
       onSubmit(inputs)
     } else {
       setValidationErrors(errors)
     }
-  }
 
-  const handleCancel = () => {
-    if (unsavedChanges && !leaveDialogIsOpen) {
-      setLeaveDialogIsOpen(true);
-    } else {
-      history.push(QuestionRoutePaths.index)
-    }
-  };
-
-  const handleDraftSave = () => {
-    if (onDraftSubmit) {
-      onDraftSubmit({ status: 'draft', ...getFormatedValues() } as QuestionCreateInput)
-    }
+    reset(getValues(), {
+      isDirty: false
+    })
   }
 
   return (
-    <FormProvider props={{ question, hooks: { register, control, setValue } }}>
+    <FormProvider props={{question, hooks: {register, control, setValue}}}>
       {alert && (
         <AlertV2 severity={alert.severity} text={alert.text}></AlertV2>
       )}
@@ -139,7 +152,7 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
               {validationErrors?.map((errorMessage) => (
                 <ListItem
                   key={errorMessage}
-                  icon={<ExclamationCircleIcon className="w-5 text-gray-800" />}
+                  icon={<ExclamationCircleIcon className="w-5 text-gray-800"/>}
                   text={errorMessage}
                 />
               ))}
@@ -153,20 +166,21 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
           className="mb-3"
         >
           <Step step={0}>
-            <EnunciationFormStep />
+            <EnunciationFormStep/>
           </Step>
           <Step step={1}>
-            <AnswerFormStep />
+            <AnswerFormStep/>
           </Step>
           <Step step={2}>
-            <DistractorsFormStep />
+            <DistractorsFormStep/>
           </Step>
           <Step step={3}>
-            <FeaturesFormStep />
+            <FeaturesFormStep/>
           </Step>
         </SteppedForm>
 
-        <div className="mx-3 sm:mx-0 flex justify-items-center flex-col-reverse sm:flex-row justify-end space-x-0 sm:space-x-2">
+        <div
+          className="mx-3 sm:mx-0 flex justify-items-center flex-col-reverse sm:flex-row justify-end space-x-0 sm:space-x-2">
           <Button
             className={"mb-3 sm:mb-0"}
             onClick={handleCancel}
@@ -180,9 +194,9 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
             Retornar
           </Button>
           {(question?.status === "draft" || question?.status === undefined) &&
-            <Button className={"mb-3 sm:mb-0"} onClick={handleDraftSave}>
+          <Button className={"mb-3 sm:mb-0"} onClick={handleDraftSave}>
               Salvar Rascunho
-            </Button>
+          </Button>
           }
           <Button
             type="primary"
@@ -192,13 +206,13 @@ export const Form: FC<Props> = ({ question, onSubmit, onDraftSubmit, alert }) =>
             Prosseguir
           </Button>
           {onLastStep &&
-            <Button
+          <Button
               type="primary"
               className="mb-3 sm:mb-0"
               onClick={handleSave}
-            >
+          >
               Finalizar
-            </Button>
+          </Button>
           }
         </div>
       </form>
