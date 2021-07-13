@@ -5,8 +5,6 @@ import { Alert } from "../Alert";
 import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
 import { useUserContext } from "../../contexts";
-import { useSelector } from "react-redux";
-import { RootState } from "../../services/store";
 import { Modal } from "../Modal";
 
 type Props = {
@@ -15,16 +13,15 @@ type Props = {
 };
 
 export const AvatarEditor: FC<Props> = ({ isOpen, setIsOpen }) => {
-  const { token } = useSelector((state: RootState) => state.auth)
   const [croppedImage, setCroppedImage] = useState<any>()
   const [alert, setAlert] = useState<boolean>()
-  const { refetch } = useUserContext()
+  const { refetch, authToken } = useUserContext()
 
   const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,
   });
 
-  instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  instance.defaults.headers.common.Authorization = `Bearer ${authToken}`;
 
   const onSubmit = () => {
     instance

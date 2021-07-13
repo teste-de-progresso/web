@@ -1,29 +1,30 @@
-import React, {FC, Fragment, useState} from 'react'
-import {useHistory, useLocation} from 'react-router';
-import {Menu, Transition} from '@headlessui/react'
-import {ChartBarIcon, ClipboardListIcon} from '@heroicons/react/outline'
+import React, { FC, Fragment, useState } from 'react'
+import { useHistory, useLocation } from 'react-router';
+import { Menu, Transition } from '@headlessui/react'
+import { ChartBarIcon, ClipboardListIcon } from '@heroicons/react/outline'
+import firebase from "firebase";
 
 import unifesoLogoCompact from "../../assets/images/logoImgUnifeso.png";
 import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 
-import {Dialog} from '../Dialog'
-import {useDispatch, useSelector} from 'react-redux';
-import {useUserContext} from '../../contexts';
-import {deleteSession} from '../../services/store/auth';
-import {RootState} from '../../services/store';
-import {classNames} from '../../utils';
-import {DashboardRoutePaths, QuestionRoutePaths, SessionRoutePaths} from '../../routes'
-import {turnOff} from '../../services/store/unsavedChanges';
-import {CurrentUserAvatar} from "../CurrentUserAvatar";
+import { Dialog } from '../Dialog'
+import { useDispatch, useSelector } from 'react-redux';
+import { useUserContext } from '../../contexts';
+import { RootState } from '../../services/store';
+import { classNames } from '../../utils';
+import { DashboardRoutePaths, QuestionRoutePaths, SessionRoutePaths } from '../../routes'
+import { turnOff } from '../../services/store/unsavedChanges';
+import { CurrentUserAvatar } from "../CurrentUserAvatar";
 
 const UserMenu: FC = () => {
-  const {user} = useUserContext();
+  const { user } = useUserContext();
   const history = useHistory();
   const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false)
-  const dispatch = useDispatch();
   const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
 
-  const doLogout = () => dispatch(deleteSession());
+  const doLogout = () => {
+    firebase.auth().signOut()
+  }
 
   const handleLogout = () => {
     if (unsavedChanges && !confirmLeaveDialog) {
@@ -47,7 +48,7 @@ const UserMenu: FC = () => {
         text="Todas as alterações serão descartadas. Deseja continuar?"
       />
       <Menu as="div" className="relative h-full">
-        {({open}) => (
+        {({ open }) => (
           <>
             <Menu.Button
               className="h-full flex flex-row px-2 items-center hover:bg-primary-dark text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
@@ -56,7 +57,7 @@ const UserMenu: FC = () => {
                 {user?.name}
               </span>
               <div className="w-12">
-                <CurrentUserAvatar/>
+                <CurrentUserAvatar />
               </div>
             </Menu.Button>
             <Transition
@@ -74,7 +75,7 @@ const UserMenu: FC = () => {
                 className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
               >
                 <Menu.Item onClick={openProfile}>
-                  {({active}) => (
+                  {({ active }) => (
                     <span
                       className={classNames(
                         active ? 'bg-gray-100' : '',
@@ -86,7 +87,7 @@ const UserMenu: FC = () => {
                   )}
                 </Menu.Item>
                 <Menu.Item onClick={handleLogout}>
-                  {({active}) => (
+                  {({ active }) => (
                     <span
                       className={classNames(
                         active ? 'bg-gray-100' : '',
@@ -132,17 +133,17 @@ const Links: FC = () => {
 
 
   const links = [{
-    icon: <ChartBarIcon className="w-6"/>,
+    icon: <ChartBarIcon className="w-6" />,
     tabel: 'Dashboard',
     pathname: DashboardRoutePaths.index,
     isCurrent: location.pathname.includes('dashboard'),
   },
-    {
-      icon: <ClipboardListIcon className="w-6"/>,
-      tabel: 'Questões',
-      pathname: QuestionRoutePaths.index,
-      isCurrent: location.pathname.includes('question'),
-    }]
+  {
+    icon: <ClipboardListIcon className="w-6" />,
+    tabel: 'Questões',
+    pathname: QuestionRoutePaths.index,
+    isCurrent: location.pathname.includes('question'),
+  }]
 
   return (
     <>
@@ -190,10 +191,10 @@ export const Appbar = () => {
   return (
     <div className="px-4 bg-primary-normal flex items-center justify-between h-16 shadow-md">
       <div className="flex h-full">
-        <Logo/>
-        <Links/>
+        <Logo />
+        <Links />
       </div>
-      <UserMenu/>
+      <UserMenu />
     </div>
   )
 }
