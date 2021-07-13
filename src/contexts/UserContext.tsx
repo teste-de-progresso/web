@@ -1,22 +1,23 @@
 import React, {
   createContext, useContext, useState, FC
 } from "react";
-import { useDispatch } from "react-redux";
 import { useQuery, gql } from "@apollo/client";
+import firebase from "firebase";
 
 import { Query, UserRoles } from "../__generated__/graphql-schema";
-import { deleteSession } from "../services/store/auth"
 
 export type UserContext = {
   user?: Query['currentUser']
   refetch: () => void
   isOnlyTeacher: boolean
+  authToken: string
 }
 
 const Context = createContext<UserContext>({
   refetch: () => {
   },
-  isOnlyTeacher: false
+  isOnlyTeacher: false,
+  authToken: ''
 })
 
 export const useUserContext = (): UserContext => {
@@ -43,10 +44,10 @@ const CurrentUserQuery = gql`
 
 type Props = {
   children: any
+  authToken: string
 }
 
-export const UserContext: FC<Props> = ({ children }) => {
-  const dispatch = useDispatch()
+export const UserContext: FC<Props> = ({ children, authToken }) => {
   const [user, setUser] = useState<Query['currentUser']>();
   const isOnlyTeacher = !!(user?.roles.includes(UserRoles.Teacher) && user?.roles.length === 1)
 
@@ -56,7 +57,7 @@ export const UserContext: FC<Props> = ({ children }) => {
     },
     onError: ({ message }) => {
       console.error('token error:', message)
-      dispatch(deleteSession())
+      firebase.auth().signOut();
     }
   })
 
@@ -66,7 +67,7 @@ export const UserContext: FC<Props> = ({ children }) => {
   }
 
   return (
-    <Context.Provider value={{ user, refetch, isOnlyTeacher }}>
+    <Context.Provider value={{ user, refetch, isOnlyTeacher, authToken }}>
       {user && children}
     </Context.Provider>
   );

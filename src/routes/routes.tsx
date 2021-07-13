@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import { Dashboard } from '../pages/dashboard'
 import { List, New, Show, Review, Edit } from "../pages/question";
-import { Profile, RequestPasswordResetMail, ResetPasswordByToken, SignIn } from "../pages/session";
+import { Profile, SignIn } from "../pages/session";
 import { QuestionRoutePaths, SessionRoutePaths, DashboardRoutePaths } from './paths'
 
 export const PrivateRoutes = () => (
@@ -23,8 +23,6 @@ export const PrivateRoutes = () => (
 
 export const PublicRoutes = () => (
   <Switch>
-    <Route exact path={SessionRoutePaths.newPassword} component={RequestPasswordResetMail} />
-    <Route exact path={SessionRoutePaths.editPassword} component={ResetPasswordByToken} />
     <Route path={SessionRoutePaths.signIn} component={SignIn} />
   </Switch>
 );

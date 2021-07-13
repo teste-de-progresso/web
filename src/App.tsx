@@ -1,29 +1,30 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { FirebaseAuthConsumer } from "@react-firebase/auth";
 
-import { RootState } from "./services/store";
-import { ApolloContext, UserContext } from "./contexts";
+import { ApolloContext, UserContext, FirebaseProvider } from "./contexts";
 import { PrivateRoutes, PublicRoutes } from "./routes";
-import { loadSession } from "./services/store/auth";
 import { Appbar } from "./components";
 
 export const App = () => {
-  const auth = useSelector((state: RootState) => state.auth)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(loadSession())
-  }, [dispatch]);
-
-  if (!auth.token) return <PublicRoutes />;
-
   return (
-    <ApolloContext authToken={auth.token}>
-      <UserContext>
-        <Appbar />
-        <PrivateRoutes />
-      </UserContext>
-    </ApolloContext>
+    <FirebaseProvider>
+      <FirebaseAuthConsumer>
+        {({ isSignedIn, user }) => {
+          if (isSignedIn) {
+            return (
+              <ApolloContext authToken={user.Aa}>
+                <UserContext authToken={user.Aa}>
+                  <Appbar />
+                  <PrivateRoutes />
+                </UserContext>
+              </ApolloContext>
+            )
+          } else {
+            return <PublicRoutes />
+          }
+        }}
+      </FirebaseAuthConsumer>
+    </FirebaseProvider >
   );
 }
 
