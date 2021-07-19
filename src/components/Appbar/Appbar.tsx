@@ -19,30 +19,63 @@ import { CurrentUserAvatar } from "../CurrentUserAvatar";
 const UserMenu: FC = () => {
   const { user } = useUserContext();
   const history = useHistory();
-  const [confirmLeaveDialog, setConfirmLeaveDialog] = useState(false)
+  const [confirmLogout, setConfirmLogout] = useState(false)
   const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)
+  const dispatch = useDispatch()
 
   const doLogout = () => {
     firebase.auth().signOut()
   }
 
   const handleLogout = () => {
-    if (unsavedChanges && !confirmLeaveDialog) {
-      setConfirmLeaveDialog(true)
+    if (unsavedChanges && !confirmLogout) {
+      setConfirmLogout(true)
     } else {
       doLogout()
     }
   }
 
-  const openProfile = () => {
-    history.push(SessionRoutePaths.show);
-  };
+  const [newPath, setNewPath] = useState<string>()
+
+  const handleForcedRedirect = () => {
+    if (!newPath) return
+
+    dispatch(turnOff())
+    setNewPath(undefined)
+    history.push(newPath)
+  }
+
+  const handleLinkClick = (pathname: string) => {
+    if (unsavedChanges) {
+      setNewPath(pathname)
+    } else {
+      history.push(pathname)
+    }
+  }
+
+  const menuItems = [
+    {
+      onClick: () => { handleLinkClick(SessionRoutePaths.show) },
+      label: 'Seu Perfil'
+    },
+    {
+      onClick: handleLogout,
+      label: 'Sair'
+    }
+  ]
 
   return (
     <>
       <Dialog
-        isOpen={confirmLeaveDialog}
-        setIsOpen={setConfirmLeaveDialog}
+        isOpen={!!newPath}
+        setIsOpen={(value) => setNewPath(value ? newPath : undefined)}
+        onConfirmation={handleForcedRedirect}
+        title="Modificações não Salvas"
+        text="Todas as alterações serão descartadas. Deseja continuar?"
+      />
+      <Dialog
+        isOpen={confirmLogout}
+        setIsOpen={setConfirmLogout}
         onConfirmation={handleLogout}
         title="Modificações não Salvas"
         text="Todas as alterações serão descartadas. Deseja continuar?"
@@ -74,30 +107,20 @@ const UserMenu: FC = () => {
                 static
                 className="z-50 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
               >
-                <Menu.Item onClick={openProfile}>
-                  {({ active }) => (
-                    <span
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-900'
-                      )}
-                    >
-                      Seu Perfil
-                    </span>
-                  )}
-                </Menu.Item>
-                <Menu.Item onClick={handleLogout}>
-                  {({ active }) => (
-                    <span
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-900'
-                      )}
-                    >
-                      Sair
-                    </span>
-                  )}
-                </Menu.Item>
+                {menuItems.map((item) => (
+                  <Menu.Item key={`menu-item-${item.label}`} onClick={item.onClick}>
+                    {({ active }) => (
+                      <span
+                        className={classNames(
+                          active ? 'bg-gray-100' : '',
+                          'block px-4 py-2 text-sm text-gray-900'
+                        )}
+                      >
+                        {item.label}
+                      </span>
+                    )}
+                  </Menu.Item>
+                ))}
               </Menu.Items>
             </Transition>
           </>
