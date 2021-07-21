@@ -24,6 +24,9 @@ const UserMenu: FC = () => {
   const dispatch = useDispatch()
 
   const doLogout = () => {
+    setConfirmLogout(false)
+    dispatch(turnOff())
+    history.push('/')
     firebase.auth().signOut()
   }
 
