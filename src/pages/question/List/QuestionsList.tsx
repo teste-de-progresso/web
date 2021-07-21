@@ -126,7 +126,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
           : <div className="grid text-gray-800" style={{ placeItems: 'center' }}>
             <div className="text-center">
               <span className="text-sm sm:text-base">
-                Nenhuma questão registrada.
+                Nenhuma questão.
               </span>
             </div>
           </div>

@@ -59,7 +59,7 @@ const UserMenu: FC = () => {
   const menuItems = [
     {
       onClick: () => { handleLinkClick(SessionRoutePaths.show) },
-      label: 'Seu Perfil'
+      label: 'Perfil'
     },
     {
       onClick: handleLogout,
@@ -160,13 +160,13 @@ const Links: FC = () => {
 
   const links = [{
     icon: <ChartBarIcon className="w-6" />,
-    tabel: 'Dashboard',
+    tabel: 'Painel',
     pathname: DashboardRoutePaths.index,
     isCurrent: location.pathname.includes('dashboard'),
   },
   {
     icon: <ClipboardListIcon className="w-6" />,
-    tabel: 'Questões',
+    tabel: 'Edição',
     pathname: QuestionRoutePaths.index,
     isCurrent: location.pathname.includes('question'),
   }]
