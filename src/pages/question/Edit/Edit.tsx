@@ -45,7 +45,7 @@ export const Edit: FC = () => {
     GET_QUESTION, {
       variables: {
         id: params.id,
-        fetchPolicy: "network-only"
+        fetchPolicy: "no-cache"
       }
     }
   )

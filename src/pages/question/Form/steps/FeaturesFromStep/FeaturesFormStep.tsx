@@ -53,7 +53,7 @@ export const FeaturesFormStep: FC = () => {
   return (
     <>
       <Card title="Características">
-        <div className="flex justify-between">
+        <div className="grid grid-cols-2 col-gap-2">
           <div className="flex">
             <label htmlFor="own" className="mr-3 my-auto">
               Autoria
@@ -85,7 +85,7 @@ export const FeaturesFormStep: FC = () => {
           </div>
           <div className="flex">
             <div className="flex">
-              <h2 className="pr-2 pl-3 my-auto">Fonte</h2>
+              <h2 className="pr-2 my-auto">Fonte</h2>
               <div className="w-full">
                 <div style={{ maxWidth: "194px" }}>
                   <input
@@ -175,6 +175,15 @@ export const FeaturesFormStep: FC = () => {
         <div className="flex flex-col mt-4">
           <h2>Revisor</h2>
           <ReviewerSelect />
+        </div>
+
+        <div className="flex flex-col mt-4">
+          <h2>Conhecimento a Ser Verificado</h2>
+          <input
+            className="block rounded p-1 w-full border-gray-400 border shadow-sm"
+            ref={register}
+            name="targetedKnowledge"
+          />
         </div>
       </Card>
     </>
