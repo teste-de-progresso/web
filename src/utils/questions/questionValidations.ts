@@ -35,6 +35,7 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
     checkType,
     subjectId,
     source,
+    targetedKnowledge,
   } = values;
 
   if (!body || body.length <= 5) {
@@ -84,6 +85,10 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
 
   if (!bloomTaxonomy) {
     errors.push(`"Habilidade" não preenchida.`);
+  }
+
+  if (!targetedKnowledge) {
+    errors.push(`"Conhecimento a Ser Verificado" não preenchido.`);
   }
 
   return errors;
