@@ -1,6 +1,6 @@
 import React, { FC, Fragment } from 'react'
 import { Disclosure, Transition } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/outline'
+import { ChevronDownIcon } from '@heroicons/react/outline'
 
 type Item = {
   title?: string | JSX.Element
@@ -30,7 +30,7 @@ export const Disclosures: FC<Props> = ({
                     <span className="pl-2">
                       {item.title}
                     </span>
-                    <ChevronUpIcon
+                    <ChevronDownIcon
                       className={`${open ? 'transform rotate-180' : ''} w-5 h-5 text-gray-800`}
                     />
                   </button>

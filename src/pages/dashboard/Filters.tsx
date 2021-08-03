@@ -1,6 +1,6 @@
 import React, {FC, Fragment} from 'react'
 import {Disclosure, Transition} from "@headlessui/react"
-import {ChevronUpIcon, XIcon} from "@heroicons/react/outline"
+import {ChevronDownIcon, XIcon} from "@heroicons/react/outline"
 import {useForm} from "react-hook-form"
 
 import {QuestionWhereInput} from "../../__generated__/graphql-schema"
@@ -130,7 +130,7 @@ export const Filters: FC = () => (
               Filtros
             </div>
             <div className={"pr-4"}>
-              <ChevronUpIcon
+              <ChevronDownIcon
                 className={`${open ? 'transform rotate-180' : ''} w-5 h-5 text-gray-800`}
               />
             </div>
