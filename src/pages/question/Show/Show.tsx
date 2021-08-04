@@ -94,7 +94,20 @@ export const Show: FC = () => {
   };
 
   const handleRegisterQuestion = async () => {
-    await finishQuestion({variables: {id: recordId}})
+    try {
+      await finishQuestion({variables: {id: recordId}})
+
+      setAlert({
+        text: 'Questão registrada com sucesso!',
+        severity: 'success',
+      })
+    } catch(error){
+        setAlert({
+          text: 'Algo inesperado aconteceu ao tentar registrar a questão.',
+          severity: 'error',
+        })
+    }
+    setConfirmRegister(false)
   };
 
   const handleDestroyQuestion = async () => {
