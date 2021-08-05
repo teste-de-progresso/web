@@ -230,6 +230,7 @@ export type Question = Node & {
   status?: Maybe<QuestionStatus>;
   subject?: Maybe<Subject>;
   support?: Maybe<Scalars['String']>;
+  intention?: Maybe<Scalars['String']>;
   targetedKnowledge?: Maybe<Scalars['String']>;
   updatedAt: Scalars['ISO8601DateTime'];
   user: User;
@@ -289,6 +290,7 @@ export type QuestionCreateInput = {
   references: Scalars['String'];
   authorshipYear: Scalars['String'];
   source: Scalars['String'];
+  intention?: Maybe<Scalars['String']>;
   targetedKnowledge: Scalars['String'];
   status: QuestionStatus;
   checkType?: Maybe<QuestionCheckType>;
@@ -329,6 +331,7 @@ export type QuestionUpdateInput = {
   references: Scalars['String'];
   authorshipYear: Scalars['String'];
   source: Scalars['String'];
+  intention?: Maybe<Scalars['String']>;
   targetedKnowledge: Scalars['String'];
   status: QuestionStatus;
   checkType?: Maybe<QuestionCheckType>;

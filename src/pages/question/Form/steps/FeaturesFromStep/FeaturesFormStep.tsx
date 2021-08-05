@@ -178,7 +178,15 @@ export const FeaturesFormStep: FC = () => {
         </div>
 
         <div className="flex flex-col mt-4">
-          <h2>Conhecimento a Ser Verificado</h2>
+          <h2>Intenção</h2>
+          <input
+            className="block rounded p-1 w-full border-gray-400 border shadow-sm"
+            ref={register}
+            name="intention"
+          />
+        </div>
+        <div className="flex flex-col mt-4">
+          <h2>Conhecimento a ser verificado</h2>
           <input
             className="block rounded p-1 w-full border-gray-400 border shadow-sm"
             ref={register}

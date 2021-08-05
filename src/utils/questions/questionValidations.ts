@@ -88,7 +88,7 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
   }
 
   if (!targetedKnowledge) {
-    errors.push(`"Conhecimento a Ser Verificado" não preenchido.`);
+    errors.push(`"Conhecimento a ser verificado" não preenchido.`);
   }
 
   return errors;
