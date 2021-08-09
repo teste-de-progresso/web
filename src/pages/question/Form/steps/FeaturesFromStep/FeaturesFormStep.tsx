@@ -20,6 +20,8 @@ export const FeaturesFragment = gql`
     difficulty
     checkType
     bloomTaxonomy
+    targetedKnowledge
+    intention
   }
 `
 
@@ -34,6 +36,8 @@ export const FeaturesFormStep: FC = () => {
     difficulty,
     bloomTaxonomy,
     checkType,
+    targetedKnowledge,
+    intention
   } = question || {} as Question
 
   const [ownQuestion, setOwnQuestion] = useState<boolean>(source === "UNIFESO" || source === undefined || source === null);
@@ -183,6 +187,7 @@ export const FeaturesFormStep: FC = () => {
             className="block rounded p-1 w-full border-gray-400 border shadow-sm"
             ref={register}
             name="intention"
+            defaultValue={intention ?? ""}
           />
         </div>
         <div className="flex flex-col mt-4">
@@ -191,6 +196,7 @@ export const FeaturesFormStep: FC = () => {
             className="block rounded p-1 w-full border-gray-400 border shadow-sm"
             ref={register}
             name="targetedKnowledge"
+            defaultValue={targetedKnowledge ?? ""}
           />
         </div>
       </Card>
