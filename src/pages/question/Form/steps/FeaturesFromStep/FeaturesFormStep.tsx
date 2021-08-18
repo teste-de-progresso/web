@@ -19,6 +19,7 @@ export const FeaturesFragment = gql`
     authorshipYear
     difficulty
     checkType
+    intention
     bloomTaxonomy
   }
 `
@@ -179,10 +180,11 @@ export const FeaturesFormStep: FC = () => {
 
         <div className="flex flex-col mt-4">
           <h2>Conhecimento a Ser Verificado</h2>
-          <input
+          <textarea
             className="block rounded p-1 w-full border-gray-400 border shadow-sm"
             ref={register}
-            name="targetedKnowledge"
+            name="intention"
+            defaultValue={question?.intention ?? ""}
           />
         </div>
       </Card>

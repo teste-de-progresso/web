@@ -222,6 +222,7 @@ export type Question = Node & {
   explanation?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   instruction?: Maybe<Scalars['String']>;
+  intention?: Maybe<Scalars['String']>;
   references?: Maybe<Scalars['String']>;
   reviewFeedbacks: Array<ReviewFeedback>;
   reviewRequests: Array<ReviewRequest>;
@@ -230,7 +231,6 @@ export type Question = Node & {
   status?: Maybe<QuestionStatus>;
   subject?: Maybe<Subject>;
   support?: Maybe<Scalars['String']>;
-  targetedKnowledge?: Maybe<Scalars['String']>;
   updatedAt: Scalars['ISO8601DateTime'];
   user: User;
 };
@@ -289,7 +289,7 @@ export type QuestionCreateInput = {
   references: Scalars['String'];
   authorshipYear: Scalars['String'];
   source: Scalars['String'];
-  targetedKnowledge: Scalars['String'];
+  intention?: Maybe<Scalars['String']>;
   status: QuestionStatus;
   checkType?: Maybe<QuestionCheckType>;
   difficulty?: Maybe<QuestionDifficulty>;
@@ -329,7 +329,7 @@ export type QuestionUpdateInput = {
   references: Scalars['String'];
   authorshipYear: Scalars['String'];
   source: Scalars['String'];
-  targetedKnowledge: Scalars['String'];
+  intention?: Maybe<Scalars['String']>;
   status: QuestionStatus;
   checkType?: Maybe<QuestionCheckType>;
   difficulty?: Maybe<QuestionDifficulty>;

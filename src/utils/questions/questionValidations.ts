@@ -35,7 +35,7 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
     checkType,
     subjectId,
     source,
-    targetedKnowledge,
+    intention,
   } = values;
 
   if (!body || body.length <= 5) {
@@ -87,8 +87,8 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
     errors.push(`"Habilidade" não preenchida.`);
   }
 
-  if (!targetedKnowledge) {
-    errors.push(`"Conhecimento a Ser Verificado" não preenchido.`);
+  if (!intention) {
+    errors.push(`"Intenção" não preenchido.`);
   }
 
   return errors;

@@ -1311,6 +1311,18 @@
               "args": []
             },
             {
+              "name": "intention",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null,
+              "args": []
+            },
+            {
               "name": "references",
               "description": null,
               "type": {
@@ -1420,18 +1432,6 @@
             },
             {
               "name": "support",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null,
-              "args": []
-            },
-            {
-              "name": "targetedKnowledge",
               "description": null,
               "type": {
                 "kind": "SCALAR",
@@ -1870,16 +1870,12 @@
               "defaultValue": null
             },
             {
-              "name": "targetedKnowledge",
+              "name": "intention",
               "description": null,
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "defaultValue": null
             },
@@ -2182,16 +2178,12 @@
               "defaultValue": null
             },
             {
-              "name": "targetedKnowledge",
+              "name": "intention",
               "description": null,
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
               },
               "defaultValue": null
             },
