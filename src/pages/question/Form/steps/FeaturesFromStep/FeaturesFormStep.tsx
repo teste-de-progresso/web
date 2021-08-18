@@ -174,18 +174,17 @@ export const FeaturesFormStep: FC = () => {
           </div>
         </div>
         <div className="flex flex-col mt-4">
-          <h2>Revisor</h2>
-          <ReviewerSelect />
-        </div>
-
-        <div className="flex flex-col mt-4">
-          <h2>Conhecimento a Ser Verificado</h2>
+          <h2>Intenção</h2>
           <textarea
             className="block rounded p-1 w-full border-gray-400 border shadow-sm"
             ref={register}
             name="intention"
             defaultValue={question?.intention ?? ""}
           />
+        </div>
+        <div className="flex flex-col mt-4">
+          <h2>Revisor</h2>
+          <ReviewerSelect />
         </div>
       </Card>
     </>

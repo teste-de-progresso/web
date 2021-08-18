@@ -148,7 +148,7 @@ const FeedbackForm: FC<FeedbackFormProps> = ({handleSubmit, formSubmit, register
           />
           <label
             htmlFor={item.value}
-            className="flex flex-col pl-2 w-full" 
+            className="flex flex-col pl-2 w-full"
           >
             {item.label}
             <p className="text-gray-700 text-sm">{item.description}</p>
