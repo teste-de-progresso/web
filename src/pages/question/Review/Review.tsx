@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import {useHistory, useParams} from "react-router-dom";
 import {gql, useMutation, useQuery} from "@apollo/client";
 
-import {ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments} from "../shared";
+import {ViewMode, ViewModeFragments, ReviewMessages, ReviewMessagesFragments} from "../shared";
 import {Card, Button, Navigator} from "../../../components";
 import {REVIEW_FEEDBACK} from "../../../utils/types";
 import {Query, Question, ReviewMessageFeedbackType} from "../../../__generated__/graphql-schema";
@@ -13,7 +13,7 @@ import { Prompt } from 'react-router'
 
 const GET_QUESTION = gql`
     ${ViewModeFragments}
-    ${FeedbacksFragments}
+    ${ReviewMessagesFragments}
     query Question($id: ID!) {
         node(id: $id) {
             __typename
@@ -98,7 +98,7 @@ export const Review: FC = () => {
           <div className="w-2/5 ml-3">
             <FeedbackForm handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} setIsChangesSaved={setIsChangesSaved}/>
             <div className="my-3"/>
-            <Feedbacks feedbacks={question.reviewMessages}/>
+            <ReviewMessages messages={question.reviewMessages}/>
           </div>
         </main>
       </div>

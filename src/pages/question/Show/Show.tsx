@@ -3,7 +3,7 @@ import {useParams, useHistory} from "react-router-dom";
 import {MdDeleteForever, MdEdit, MdSave} from "react-icons/md";
 import {useQuery, useMutation, gql} from "@apollo/client";
 
-import {ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments} from "../shared";
+import {ViewMode, ViewModeFragments, ReviewMessages, ReviewMessagesFragments} from "../shared";
 import {Navigator, Dialog} from "../../../components";
 import {Mutation, Query, Question} from "../../../__generated__/graphql-schema";
 import {AlertV2Props, AlertV2} from "../../../components/AlertV2";
@@ -12,7 +12,7 @@ import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
     ${ViewModeFragments}
-    ${FeedbacksFragments}
+    ${ReviewMessagesFragments}
     query Question($id: ID!) {
         node(id: $id) {
             __typename
@@ -196,7 +196,7 @@ export const Show: FC = () => {
               <ViewMode questionData={question}/>
             </div>
             <div className="w-2/5 ml-3">
-              <Feedbacks feedbacks={question.reviewMessages}/>
+              <ReviewMessages messages={question.reviewMessages}/>
             </div>
           </div>
         </main>

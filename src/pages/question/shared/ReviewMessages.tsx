@@ -15,7 +15,7 @@ const feedbackIcon = {
   request_changes: <DocumentRemoveIcon className="w-5 text-red-800" />,
 };
 
-const FeedbackTitle: FC<{
+const ReviewMessageTitle: FC<{
   feedback: ReviewMessage
 }> = ({ feedback }) => (
   <p>
@@ -26,7 +26,7 @@ const FeedbackTitle: FC<{
   </p>
 )
 
-export const FeedbacksFragments = gql`
+export const ReviewMessagesFragments = gql`
   fragment ReviewMessagesFields on ReviewMessage {
     id
     feedbackType
@@ -40,14 +40,14 @@ export const FeedbacksFragments = gql`
 `
 
 type Porps = {
-  feedbacks: ReviewMessageConnection
+  messages: ReviewMessageConnection
 }
 
-export const Feedbacks: FC<Porps> = ({ feedbacks }) => (
+export const ReviewMessages: FC<Porps> = ({ messages }) => (
   <Card title="Histórico de Pareceres">
     <Disclosures
-      items={feedbacks.nodes.map((item) => ({
-        title: <FeedbackTitle feedback={item} />,
+      items={messages.nodes.map((item) => ({
+        title: <ReviewMessageTitle feedback={item} />,
         body: item.text ?? '',
         icon: feedbackIcon[item.feedbackType]
       }))}
