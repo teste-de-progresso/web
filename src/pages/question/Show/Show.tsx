@@ -20,7 +20,7 @@ const GET_QUESTION = gql`
                 id
                 ... QuestionReadOnlyFields
                 reviewFeedbacks {
-                    ... FeedbackFields
+                    ... ReviewMessagesFields
                 }
             }
         }
@@ -196,7 +196,7 @@ export const Show: FC = () => {
               <ViewMode questionData={question}/>
             </div>
             <div className="w-2/5 ml-3">
-              <Feedbacks feedbacks={question.reviewFeedbacks}/>
+              <Feedbacks feedbacks={question.reviewMessages}/>
             </div>
           </div>
         </main>

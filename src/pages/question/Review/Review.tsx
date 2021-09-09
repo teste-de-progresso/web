@@ -6,7 +6,7 @@ import {gql, useMutation, useQuery} from "@apollo/client";
 import {ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments} from "../shared";
 import {Card, Button, Navigator} from "../../../components";
 import {REVIEW_FEEDBACK} from "../../../utils/types";
-import {FeedbackStatus, Query, Question} from "../../../__generated__/graphql-schema";
+import {Query, Question, ReviewMessageFeedbackType} from "../../../__generated__/graphql-schema";
 import {NodeId} from "../../../utils/graphql";
 import {QuestionRoutePaths} from "../../../routes";
 import { Prompt } from 'react-router'
@@ -21,7 +21,7 @@ const GET_QUESTION = gql`
                 id
                 ... QuestionReadOnlyFields
                 reviewFeedbacks {
-                    ... FeedbackFields
+                    ... ReviewMessagesFields
                 }
             }
         }
@@ -68,7 +68,7 @@ export const Review: FC = () => {
   if (loading || !question) return null;
 
   type FormInputs = {
-    status: FeedbackStatus
+    status: ReviewMessageFeedbackType
     comment: string
   }
 
@@ -98,7 +98,7 @@ export const Review: FC = () => {
           <div className="w-2/5 ml-3">
             <FeedbackForm handleSubmit={handleSubmit} formSubmit={formSubmit} register={register} setIsChangesSaved={setIsChangesSaved}/>
             <div className="my-3"/>
-            <Feedbacks feedbacks={question.reviewFeedbacks}/>
+            <Feedbacks feedbacks={question.reviewMessages}/>
           </div>
         </main>
       </div>

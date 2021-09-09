@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import { useQuery, gql } from "@apollo/client";
 
-import { Query, UserRoles } from "../__generated__/graphql-schema";
+import { Query, UserRole } from "../__generated__/graphql-schema";
 import { UnauthorizedAccess } from "../pages/session";
 
 export type UserContext = {
@@ -49,7 +49,7 @@ type Props = {
 
 export const UserContext: FC<Props> = ({ children, authToken }) => {
   const [user, setUser] = useState<Query['currentUser']>();
-  const isOnlyTeacher = !!(user?.roles.includes(UserRoles.Teacher) && user?.roles.length === 1)
+  const isOnlyTeacher = !!(user?.roles.includes(UserRole.Teacher) && user?.roles.length === 1)
 
   const { refetch: refetchUserQuery } = useQuery<Query>(CurrentUserQuery, {
     onCompleted: ({ currentUser }) => {
