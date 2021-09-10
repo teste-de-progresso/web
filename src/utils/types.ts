@@ -32,16 +32,3 @@ export const BLOOM_TAXONOMY = [
   { value: "evaluate", label: "Avaliar" },
   { value: "create", label: "Criar" },
 ];
-
-export const REVIEW_FEEDBACK = [
-  {
-    label: "Aprovada",
-    description: "A questão está pronta para registro e não deve mais ser alterada.",
-    value: "approve",
-  },
-  {
-    label: "Pendente de Alterações",
-    description: "O autor deve efetuar as alterações solicitadas e reenviar a questão ao revisor.",
-    value: "request_change",
-  },
-];
