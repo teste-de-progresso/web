@@ -32,14 +32,10 @@ const UPDATE_QUESTION_MUTATOIN = gql`
     }
 `
 
-type Params = {
-  id: string
-}
-
 export const Edit: FC = () => {
   const history = useHistory()
   const [alert, setAlert] = useState<AlertV2Props>()
-  const params = useParams<Params>()
+  const params = useParams<{ id: string }>()
   const [updateQuestion] = useMutation<Mutation>(UPDATE_QUESTION_MUTATOIN)
   const {loading, data} = useQuery<Query>(
     GET_QUESTION, {
@@ -61,6 +57,7 @@ export const Edit: FC = () => {
         input: {
           question: {
             ...inputs,
+            status: question.status,
             id: recordId,
           },
         },

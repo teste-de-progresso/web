@@ -3,7 +3,7 @@ import {useParams, useHistory} from "react-router-dom";
 import {MdDeleteForever, MdEdit, MdSave} from "react-icons/md";
 import {useQuery, useMutation, gql} from "@apollo/client";
 
-import {ViewMode, ViewModeFragments, Feedbacks, FeedbacksFragments} from "../shared";
+import {ViewMode, ViewModeFragments, ReviewMessages, ReviewMessagesFragments} from "../shared";
 import {Navigator, Dialog} from "../../../components";
 import {Mutation, Query, Question} from "../../../__generated__/graphql-schema";
 import {AlertV2Props, AlertV2} from "../../../components/AlertV2";
@@ -12,16 +12,14 @@ import {QuestionRoutePaths} from "../../../routes";
 
 const GET_QUESTION = gql`
     ${ViewModeFragments}
-    ${FeedbacksFragments}
+    ${ReviewMessagesFragments}
     query Question($id: ID!) {
         node(id: $id) {
             __typename
             ... on Question {
                 id
-                ... QuestionReadOnlyFields
-                reviewFeedbacks {
-                    ... FeedbackFields
-                }
+                ...QuestionReadOnlyFields
+                ...ReviewMessages_question
             }
         }
     }
@@ -56,14 +54,9 @@ const DESTROY_QUESTION = gql`
     }
 `
 
-type Params = {
-  id: string
-}
-
 export const Show: FC = () => {
   const history = useHistory();
-  const {id} = useParams<Params>();
-  const [confirmEditDialog, setConfirmEditDialog] = useState(false)
+  const {id} = useParams<{ id: string }>();
   const [confirmRegister, setConfirmRegister] = useState(false)
   const [confirmDestroy, setConfirmDestroy] = useState(false)
   const [alert, setAlert] = useState<AlertV2Props>()
@@ -86,11 +79,7 @@ export const Show: FC = () => {
   };
 
   const handleEditQuestion = () => {
-    if (question.status === "finished" || question.status === "approved") {
-      setConfirmEditDialog(true);
-    } else {
-      confirmEditQuestion();
-    }
+    confirmEditQuestion()
   };
 
   const handleRegisterQuestion = async () => {
@@ -142,7 +131,7 @@ export const Show: FC = () => {
     }
   }
 
-  const options = () => {
+  const options = (() => {
     switch (question.status) {
       case 'finished':
         return ([]);
@@ -151,7 +140,7 @@ export const Show: FC = () => {
       default:
         return ([ACTIONS.edit, ACTIONS.destroy])
     }
-  }
+  })()
 
   return (
     <>
@@ -169,15 +158,8 @@ export const Show: FC = () => {
         text="Após o registro, a questão estará disponível para uso e não poderá mais ser editada ou excluída. Deseja continuar?"
         onConfirmation={handleRegisterQuestion}
       />
-      <Dialog
-        isOpen={confirmEditDialog}
-        setIsOpen={(value) => setConfirmEditDialog(value)}
-        title="Confirmação de Edição"
-        text="Alterar uma questão registrada irá requerir uma nova revisão do seu par. Deseja ir para tela de edição?"
-        onConfirmation={confirmEditQuestion}
-      />
       <Navigator home>
-        {options().map((option, index) => (
+        {options.map((option, index) => (
           <div key={`navigation-item-${index}`} className={`hover:text-white ${index === 0 ? "ml-auto" : ""}`}>
             <button onClick={option.action} className="flex pl-4">
               {option.icon}
@@ -196,7 +178,7 @@ export const Show: FC = () => {
               <ViewMode questionData={question}/>
             </div>
             <div className="w-2/5 ml-3">
-              <Feedbacks feedbacks={question.reviewFeedbacks}/>
+              <ReviewMessages question={question}/>
             </div>
           </div>
         </main>
