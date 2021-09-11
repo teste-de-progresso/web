@@ -6,7 +6,7 @@ import { ViewMode, ViewModeFragments, ReviewMessages, ReviewMessagesFragments } 
 import { Navigator } from "../../../components";
 import { Query, Question } from "../../../__generated__/graphql-schema";
 
-const GET_QUESTION = gql`
+export const GET_QUESTION = gql`
     ${ViewModeFragments}
     ${ReviewMessagesFragments}
     query Question($id: ID!) {

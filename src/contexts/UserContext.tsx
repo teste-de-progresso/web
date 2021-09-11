@@ -5,6 +5,7 @@ import { useQuery, gql } from "@apollo/client";
 
 import { Query, UserRole } from "../__generated__/graphql-schema";
 import { UnauthorizedAccess } from "../pages/session";
+import { Loading } from "../pages/shared";
 
 export type UserContext = {
   user?: Query['currentUser']
@@ -20,7 +21,7 @@ const Context = createContext<UserContext>({
   authToken: ''
 })
 
-export const useUserContext = (): UserContext => {
+export const useCurrentUser = (): UserContext => {
   const context = useContext(Context);
 
   if (context === null) {
@@ -51,7 +52,7 @@ export const UserContext: FC<Props> = ({ children, authToken }) => {
   const [user, setUser] = useState<Query['currentUser']>();
   const isOnlyTeacher = !!(user?.roles.includes(UserRole.Teacher) && user?.roles.length === 1)
 
-  const { refetch: refetchUserQuery } = useQuery<Query>(CurrentUserQuery, {
+  const { refetch: refetchUserQuery, loading } = useQuery<Query>(CurrentUserQuery, {
     onCompleted: ({ currentUser }) => {
       setUser(currentUser)
     }
@@ -62,9 +63,13 @@ export const UserContext: FC<Props> = ({ children, authToken }) => {
     setUser(currentUser)
   }
 
+  if (loading) return <Loading />
+
+  if (!user) return <UnauthorizedAccess />
+
   return (
     <Context.Provider value={{ user, refetch, isOnlyTeacher, authToken }}>
-      {user ? children : <UnauthorizedAccess />}
+      {children}
     </Context.Provider>
   );
 };

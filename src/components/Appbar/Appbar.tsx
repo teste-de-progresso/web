@@ -9,7 +9,7 @@ import unifesoLogo from "../../assets/images/unifeso-logo-branco.svg";
 
 import { Dialog } from '../Dialog'
 import { useDispatch, useSelector } from 'react-redux';
-import { useUserContext } from '../../contexts';
+import { useCurrentUser } from '../../contexts';
 import { RootState } from '../../services/store';
 import { classNames } from '../../utils';
 import { DashboardRoutePaths, QuestionRoutePaths, SessionRoutePaths } from '../../routes'
@@ -17,7 +17,7 @@ import { turnOff } from '../../services/store/unsavedChanges';
 import { CurrentUserAvatar } from "../CurrentUserAvatar";
 
 const UserMenu: FC = () => {
-  const { user } = useUserContext();
+  const { user } = useCurrentUser();
   const history = useHistory();
   const [confirmLogout, setConfirmLogout] = useState(false)
   const unsavedChanges = useSelector((state: RootState) => state.unsavedChanges)

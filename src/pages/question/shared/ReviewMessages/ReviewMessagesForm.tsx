@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { Mutation, Question, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
 import { NodeId } from "../../../../utils/graphql";
 import { Button, Card } from "../../../../components";
-import { useUserContext } from "../../../../contexts";
+import { useCurrentUser } from "../../../../contexts";
 
 export const REVIEW_FEEDBACK = [
   {
@@ -51,7 +51,7 @@ const CREATE_REVIEW_MESSAGE_MUTATION = gql`
 export const ReviewMessageForm: FC<{ question: Question }> = ({ question }) => {
   const [isChangesSaved, setIsChangesSaved] = useState(true)
   const { register, handleSubmit } = useForm()
-  const { user } = useUserContext()
+  const { user } = useCurrentUser()
 
   const [createReviewMessage] = useMutation<Mutation['createReviewMessage']>(CREATE_REVIEW_MESSAGE_MUTATION)
 

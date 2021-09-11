@@ -1,10 +1,10 @@
 import React, {FC} from 'react'
 
-import {useUserContext} from "../../contexts";
+import {useCurrentUser} from "../../contexts";
 import {UserAvatar} from "../UserAvatar";
 
 export const CurrentUserAvatar: FC = () => {
-  const {user} = useUserContext()
+  const {user} = useCurrentUser()
 
   if (!user) return null
 

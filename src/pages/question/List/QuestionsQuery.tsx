@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 import { PageInfo, Query, Question, QuestionWhereInput, QuestionStatus } from '../../../__generated__/graphql-schema';
 import { gql, useQuery } from '@apollo/client';
 import { QuestionsList, QuestionsListFragments } from './QuestionsList'
-import { useUserContext } from '../../../contexts';
+import { useCurrentUser } from '../../../contexts';
 
 const QUESTIONS_QUERY = gql`
   ${QuestionsListFragments}
@@ -29,7 +29,7 @@ type Props = {
 }
 
 export const QuestionsQuery: FC<Props> = ({ title, where, status }) => {
-  const { user } = useUserContext()
+  const { user } = useCurrentUser()
 
   const [questions, setQuestions] = useState<Question[]>([])
   const [pageInfo, setPageInfo] = useState<PageInfo | undefined>()

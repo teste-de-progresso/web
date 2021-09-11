@@ -4,7 +4,7 @@ import axios from "axios";
 import { Alert } from "../Alert";
 import { Button } from "../Button";
 import { PhotoCrop } from "./PhotoCrop";
-import { useUserContext } from "../../contexts";
+import { useCurrentUser } from "../../contexts";
 import { Modal } from "../Modal";
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
 export const AvatarEditor: FC<Props> = ({ isOpen, setIsOpen }) => {
   const [croppedImage, setCroppedImage] = useState<any>()
   const [alert, setAlert] = useState<boolean>()
-  const { refetch, authToken } = useUserContext()
+  const { refetch, authToken } = useCurrentUser()
 
   const instance = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_URL,

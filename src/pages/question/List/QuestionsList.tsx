@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Question } from '../../../__generated__/graphql-schema'
-import { useUserContext } from '../../../contexts';
+import { useCurrentUser } from '../../../contexts';
 import { NodeId } from '../../../utils/graphql';
 import { gql } from '@apollo/client';
 
@@ -38,7 +38,7 @@ export const QuestionsListFragments = gql`
 `
 
 export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
-  const { user } = useUserContext()
+  const { user } = useCurrentUser()
   const [pageCount, setPageCount] = useState(1)
 
   const formatDate = (stringDate: string) => new Date(stringDate).toLocaleDateString()

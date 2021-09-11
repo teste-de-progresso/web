@@ -10,7 +10,7 @@ import {AlertV2Props, AlertV2} from "../../../components/AlertV2";
 import {NodeId} from "../../../utils/graphql";
 import {QuestionRoutePaths} from "../../../routes";
 
-const GET_QUESTION = gql`
+export const GET_QUESTION = gql`
     ${ViewModeFragments}
     ${ReviewMessagesFragments}
     query Question($id: ID!) {

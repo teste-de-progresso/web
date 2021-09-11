@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import { useUserContext } from "../../contexts";
+import { useCurrentUser } from "../../contexts";
 import { AvatarEditor, Navigator, CurrentUserAvatar } from "../../components";
 
 export const Profile = () => {
   const [avatarEditorIsOpen, setAvatarEditorIsOpen] = useState(false);
-  const { user } = useUserContext();
+  const { user } = useCurrentUser();
 
   return (
     <>

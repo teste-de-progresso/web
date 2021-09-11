@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form"
 
 import {QuestionWhereInput} from "../../__generated__/graphql-schema"
 import {useDashboardContext, whereDefaultState} from "./DashboardContext"
-import {useUserContext} from "../../contexts"
+import {useCurrentUser} from "../../contexts"
 import {Button, Input} from "../../components"
 
 type FilterBarForm = {
@@ -40,7 +40,7 @@ const FiltersForm: FC = () => {
     defaultValues: formDefaultValues,
   })
   const {setWhere} = useDashboardContext()
-  const userContext = useUserContext()
+  const userContext = useCurrentUser()
   const {user, isOnlyTeacher} = userContext
 
   const onSubmit = (values: FilterBarForm) => {
