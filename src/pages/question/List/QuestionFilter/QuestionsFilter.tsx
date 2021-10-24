@@ -148,7 +148,7 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
             </div>
           </div>
           <div className="mt-2 sm:mt-0 flex flex-col">
-            <h3 className="font-bold mb-1">Ano de Autoria</h3>
+            <h3 className="font-bold mb-1">Ano</h3>
             <div className="grid grid-cols-2 sm:flex sm:flex-col">
               <QuestionsAuthorshipTypeFilter register={register} setChanged={setChanged} />
             </div>

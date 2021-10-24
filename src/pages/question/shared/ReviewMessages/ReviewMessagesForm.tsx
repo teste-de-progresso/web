@@ -1,5 +1,6 @@
 import { Prompt } from "react-router";
 import React, { FC, useState } from "react";
+import { useHistory } from 'react-router';
 import { ApolloQueryResult, gql, OperationVariables, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { Mutation, Query, Question, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
@@ -10,12 +11,12 @@ import { useCurrentUser } from "../../../../contexts";
 export const REVIEW_FEEDBACK = [
   {
     label: "Aprovada",
-    description: "A questão está pronta para registro e não deve mais ser alterada.",
+    description: "O revisor sugere que as observações enviadas no parecer sejam consideradas.",
     value: "approve",
   },
   {
     label: "Pendente de Alterações",
-    description: "O autor deve efetuar as alterações solicitadas e reenviar a questão ao revisor.",
+    description: "O autor deve efetuar as alterações solicitadas no parecer e reenviar a questão ao revisor.",
     value: "request_changes",
   },
 ];
@@ -53,7 +54,8 @@ export const ReviewMessageForm: FC<{
   refetch: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<Query>>
 }> = ({ question, refetch }) => {
   const [isChangesSaved, setIsChangesSaved] = useState(true)
-  const { register, handleSubmit, reset } = useForm()
+  const { register, handleSubmit } = useForm()
+  const history = useHistory();
   const { user } = useCurrentUser()
 
   const [createReviewMessage] = useMutation<Mutation['createReviewMessage']>(CREATE_REVIEW_MESSAGE_MUTATION)
@@ -87,7 +89,7 @@ export const ReviewMessageForm: FC<{
 
     await refetch()
 
-    reset()
+    history.push('/questions')
   };
 
   if (!hasFeebacks && questionIsFromCurrentUser) return null
