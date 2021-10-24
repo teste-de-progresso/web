@@ -57,7 +57,6 @@ export const Edit: FC = () => {
         input: {
           question: {
             ...inputs,
-            status: question.status,
             id: recordId,
           },
         },
