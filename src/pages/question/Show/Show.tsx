@@ -26,7 +26,7 @@ export const GET_QUESTION = gql`
 `
 
 const FINISH_QUESTION = gql`
-    mutation ($id: ID!) {
+    mutation FinishQuestion($id: ID!) {
         finishQuestion (
             input: {
                 questionId: $id
@@ -42,7 +42,7 @@ const FINISH_QUESTION = gql`
 `
 
 const DESTROY_QUESTION = gql`
-    mutation ($id: ID!) {
+    mutation DestroyQuestion($id: ID!) {
         destroyQuestion(
             input: {
                 questionId: $id
@@ -62,7 +62,7 @@ export const Show: FC = () => {
   const [alert, setAlert] = useState<AlertV2Props>()
   const [finishQuestion] = useMutation<Mutation>(FINISH_QUESTION)
   const [destroyQuestion] = useMutation<Mutation>(DESTROY_QUESTION)
-  const {loading, data} = useQuery<Query>(GET_QUESTION, {
+  const {loading, data, refetch} = useQuery<Query>(GET_QUESTION, {
     variables: {
       id,
     },
@@ -178,7 +178,7 @@ export const Show: FC = () => {
               <ViewMode questionData={question}/>
             </div>
             <div className="w-2/5 ml-3">
-              <ReviewMessages question={question}/>
+              <ReviewMessages question={question} refetch={refetch}/>
             </div>
           </div>
         </main>

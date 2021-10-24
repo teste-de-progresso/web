@@ -1,8 +1,8 @@
 import { Prompt } from "react-router";
 import React, { FC, useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { ApolloQueryResult, gql, OperationVariables, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { Mutation, Question, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
+import { Mutation, Query, Question, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
 import { NodeId } from "../../../../utils/graphql";
 import { Button, Card } from "../../../../components";
 import { useCurrentUser } from "../../../../contexts";
@@ -48,9 +48,12 @@ const CREATE_REVIEW_MESSAGE_MUTATION = gql`
   }
 `
 
-export const ReviewMessageForm: FC<{ question: Question }> = ({ question }) => {
+export const ReviewMessageForm: FC<{
+  question: Question
+  refetch: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<Query>>
+}> = ({ question, refetch }) => {
   const [isChangesSaved, setIsChangesSaved] = useState(true)
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
   const { user } = useCurrentUser()
 
   const [createReviewMessage] = useMutation<Mutation['createReviewMessage']>(CREATE_REVIEW_MESSAGE_MUTATION)
@@ -82,7 +85,9 @@ export const ReviewMessageForm: FC<{ question: Question }> = ({ question }) => {
       },
     });
 
-    window.location.reload()
+    await refetch()
+
+    reset()
   };
 
   if (!hasFeebacks && questionIsFromCurrentUser) return null

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { gql } from "@apollo/client";
+import { ApolloQueryResult, gql, OperationVariables } from "@apollo/client";
 import {
   AnnotationIcon,
   CheckCircleIcon,
@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/outline'
 
 import { Card } from "../../../../components";
-import { Question, ReviewMessage } from "../../../../__generated__/graphql-schema";
+import { Query, Question, ReviewMessage } from "../../../../__generated__/graphql-schema";
 import { ReviewMessageForm, ReviewMessageFormFragments } from "./ReviewMessagesForm";
 
 const feedbackIcon = {
@@ -53,24 +53,26 @@ export const ReviewMessagesFragments = gql`
 
 export const ReviewMessages: FC<{
   question: Question
-}> = ({ question }) => {
+  refetch: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<Query>>
+}> = ({ question, refetch }) => {
   const reviewMessages = question.reviewMessages.nodes
   const hasFeebacks = !!reviewMessages.length
 
   return (
-  <div>
-    <Card className="mb-3" title="Histórico de Pareceres">
-      {hasFeebacks
-        ? reviewMessages.map((item) => (
-          <div key={item.id}>
-            <ReviewMessageTitle feedback={item}/>
-            <p className="p-2">
-              {item.text}
-            </p>
-          </div>
-        ))
-       : 'Essa questão não tem nenhum parecer ainda.'}
-    </Card>
-    <ReviewMessageForm question={question} />
-  </div>
-)};
+    <div>
+      <Card className="mb-3" title="Histórico de Pareceres">
+        {hasFeebacks
+          ? reviewMessages.map((item) => (
+            <div key={item.id}>
+              <ReviewMessageTitle feedback={item} />
+              <p className="p-2">
+                {item.text}
+              </p>
+            </div>
+          ))
+          : 'Essa questão não tem nenhum parecer ainda.'}
+      </Card>
+      <ReviewMessageForm question={question} refetch={refetch} />
+    </div>
+  )
+};

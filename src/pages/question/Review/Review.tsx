@@ -23,7 +23,7 @@ export const GET_QUESTION = gql`
 
 export const Review: FC = () => {
   const { id } = useParams<{ id: string }>()
-  const { loading, data } = useQuery<Query>(GET_QUESTION, {
+  const { loading, data, refetch } = useQuery<Query>(GET_QUESTION, {
     variables: {
       id,
     },
@@ -44,7 +44,7 @@ export const Review: FC = () => {
           </div>
           <div className="w-2/5 ml-3">
             <div className="my-3" />
-            <ReviewMessages question={question}/>
+            <ReviewMessages question={question} refetch={refetch}/>
           </div>
         </main>
       </div>
