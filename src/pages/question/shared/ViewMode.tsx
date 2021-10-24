@@ -8,6 +8,7 @@ import { BLOOM_TAXONOMY, DIFFICULTY } from "../../../utils/types";
 
 export const ViewModeFragments = gql`
   fragment QuestionReadOnlyFields on Question {
+    intention
     instruction
     support
     body
@@ -37,7 +38,6 @@ export const ViewModeFragments = gql`
       name
     }
     updatedAt
-    createdAt
   }
 `
 
@@ -45,10 +45,10 @@ type Props = {
   questionData?: Question
 }
 
-export const ViewMode: FC<Props> = ({ questionData }) => {
-  if (!questionData) return null;
+export const ViewMode: FC<Props> = ({ questionData: question }) => {
+  if (!question) return null;
 
-  const { alternatives } = questionData;
+  const { alternatives } = question;
 
   const correctAlternative = alternatives?.find(
     (alternative) => alternative.correct === true,
@@ -62,10 +62,10 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
     return new Date(stringDate).toLocaleDateString();
   }
 
-  const { instruction, support, body } = questionData;
+  const { instruction, support, body } = question;
 
-  const difficulty = DIFFICULTY.find((item) => questionData.difficulty === item.value)?.label
-  const bloomTaxonomy = BLOOM_TAXONOMY.find((item) => questionData.bloomTaxonomy === item.value)?.label
+  const difficulty = DIFFICULTY.find((item) => question.difficulty === item.value)?.label
+  const bloomTaxonomy = BLOOM_TAXONOMY.find((item) => question.bloomTaxonomy === item.value)?.label
 
   loadWIRISplugin()
 
@@ -83,34 +83,35 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
           </div>
           <div>
             <span className="text-gray-700">Ano: </span>
-            {questionData.authorshipYear}
+            {question.authorshipYear}
           </div>
           <div>
             <span className="text-gray-700">Autoria: </span>
-            {questionData.source === "UNIFESO" ? "Própria" : "Terceiros"}
+            {question.source === "UNIFESO" ? "Própria" : "Terceiros"}
           </div>
           <div>
             <span className="text-gray-700">Atualizada em: </span>
-            {formatDate(questionData.updatedAt)}
-          </div>
-          <div>
-            <span className="text-gray-700">Registrada em: </span>
-            {formatDate(questionData.createdAt)}
+            {formatDate(question.updatedAt)}
           </div>
           <div>
             <span className="text-gray-700">Assunto: </span>
-            {questionData.subject?.name}
+            {question.subject?.name}
           </div>
           <div>
             <span className="text-gray-700">Categoria: </span>
-            {questionData.subject?.category?.name}
+            {question.subject?.category?.name}
           </div>
           <div>
             <span className="text-gray-700">Eixo de Formação: </span>
-            {questionData.subject?.axis?.name}
+            {question.subject?.axis?.name}
           </div>
         </div>
       </Card>
+      {question.intention?.length && (
+        <Card className="mb-3" title="Intenção">
+          <div className="ck-content" dangerouslySetInnerHTML={{ __html: question.intention }} />
+        </Card>
+      )}
       {instruction && (
         <Card className="mb-3" title="Instrução">
           <div className="ck-content" dangerouslySetInnerHTML={{ __html: instruction }} />
@@ -135,7 +136,7 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
             <h2 className="text-xl font-medium">Explicação</h2>
             <div
               className="ck-content"
-              dangerouslySetInnerHTML={{ __html: questionData.explanation ?? '' }}
+              dangerouslySetInnerHTML={{ __html: question.explanation ?? '' }}
             />
           </div>
           <div className="bg-gray-400 w-full my-3" style={{ height: "1px" }} />
@@ -143,7 +144,7 @@ export const ViewMode: FC<Props> = ({ questionData }) => {
             <h2 className="text-xl font-medium">Referências</h2>
             <div
               className="ck-content"
-              dangerouslySetInnerHTML={{ __html: questionData.references ?? '' }}
+              dangerouslySetInnerHTML={{ __html: question.references ?? '' }}
             />
           </div>
         </div>

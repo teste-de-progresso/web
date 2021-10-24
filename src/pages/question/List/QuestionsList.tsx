@@ -33,7 +33,6 @@ export const QuestionsListFragments = gql`
       id
     }
     updatedAt
-    createdAt
   }
 `
 
@@ -95,11 +94,6 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                     {`# ${NodeId.decode(question.id).id}`}
                   </h2>
                   <div className="text-sm text-gray-700 flex flex-col flex-wrap justify-between">
-                    <span>
-                      Registrada em:
-                    {" "}
-                      {formatDate(question.createdAt)}
-                    </span>
                     <span>
                       Atualizada em:
                     {" "}
