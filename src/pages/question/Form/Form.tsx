@@ -146,6 +146,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
         setIsOpen={() => setValidationErrors([])}
         onConfirmation={() => setValidationErrors([])}
         title="Falha de Validação"
+        type="notice"
         text={
           <>
             <List>
