@@ -96,7 +96,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
 
   const handleDraftSave = () => {
     if (onDraftSubmit) {
-      onDraftSubmit({status: 'draft', ...getFormattedInputValues()} as QuestionCreateInput)
+      onDraftSubmit({...getFormattedInputValues(), status: 'draft'} as QuestionCreateInput)
       reset(getValues(), {
         isDirty: false
       })
@@ -105,7 +105,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
   }
 
   const handleSave = () => {
-    const inputs = {status: 'pending', ...getFormattedInputValues()} as QuestionCreateInput
+    const inputs = {...getFormattedInputValues(), status: 'pending'} as QuestionCreateInput
     const errors = validateQuestionInputs(inputs)
 
     setConfirmFinishDialogIsOpen(false)
