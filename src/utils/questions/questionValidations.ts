@@ -36,6 +36,7 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
     subjectId,
     source,
     intention,
+    reviewerUserId,
   } = values;
 
   if (!body || body.length <= 5) {
@@ -89,6 +90,10 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
 
   if (!intention) {
     errors.push(`"Intenção" não preenchido.`);
+  }
+
+  if (!reviewerUserId) {
+    errors.push(`"Revisor" não preenchido.`);
   }
 
   return errors;
