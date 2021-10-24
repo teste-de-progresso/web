@@ -137,17 +137,17 @@ export const ViewMode: FC<Props> = ({ questionData: question }) => {
 
         <div className="flex flex-col w-full border border-gray-300 rounded p-4 mt-4 shadow-sm">
           <div>
-            <h2 className="text-xl font-medium">Explicação</h2>
+            <h2 className="text-base font-medium mb-3">Explicação</h2>
             <div
-              className="ck-content"
+              className="ck-content ml-2"
               dangerouslySetInnerHTML={{ __html: question.explanation ?? '' }}
             />
           </div>
           <div className="bg-gray-400 w-full my-3" style={{ height: "1px" }} />
           <div>
-            <h2 className="text-xl font-medium">Referências</h2>
+            <h2 className="text-base font-medium mb-3">Referências</h2>
             <div
-              className="ck-content"
+              className="ck-content ml-2"
               dangerouslySetInnerHTML={{ __html: question.references ?? '' }}
             />
           </div>
