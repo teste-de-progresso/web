@@ -18,7 +18,7 @@ export const ViewModeFragments = gql`
     }
     explanation
     references
-    source
+    authorship
     authorshipYear
     difficulty
     checkType
@@ -87,7 +87,7 @@ export const ViewMode: FC<Props> = ({ questionData: question }) => {
           </div>
           <div>
             <span className="text-gray-700">Autoria: </span>
-            {question.source === "UNIFESO" ? "Própria" : "Terceiros"}
+            {question.authorship === "UNIFESO" ? "Própria" : `Terceiro - ${question.authorship}`}
           </div>
           <div>
             <span className="text-gray-700">Atualizada em: </span>

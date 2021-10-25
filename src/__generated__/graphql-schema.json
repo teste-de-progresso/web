@@ -1166,6 +1166,18 @@
               "args": []
             },
             {
+              "name": "authorship",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null,
+              "args": []
+            },
+            {
               "name": "authorshipYear",
               "description": null,
               "type": {
@@ -1392,18 +1404,6 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "User",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null,
-              "args": []
-            },
-            {
-              "name": "source",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -1876,7 +1876,7 @@
               "defaultValue": null
             },
             {
-              "name": "source",
+              "name": "authorship",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -2184,7 +2184,7 @@
               "defaultValue": null
             },
             {
-              "name": "source",
+              "name": "authorship",
               "description": null,
               "type": {
                 "kind": "NON_NULL",
@@ -2387,16 +2387,6 @@
               "defaultValue": null
             },
             {
-              "name": "source",
-              "description": null,
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              },
-              "defaultValue": null
-            },
-            {
               "name": "subjectId",
               "description": null,
               "type": {
@@ -2422,6 +2412,16 @@
               "type": {
                 "kind": "INPUT_OBJECT",
                 "name": "DateRangeInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "unifesoAuthorship",
+              "description": null,
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
                 "ofType": null
               },
               "defaultValue": null
