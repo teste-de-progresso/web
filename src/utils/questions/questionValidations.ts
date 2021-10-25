@@ -34,7 +34,7 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
     bloomTaxonomy,
     checkType,
     subjectId,
-    source,
+    authorship,
     intention,
     reviewerUserId,
   } = values;
@@ -64,7 +64,7 @@ export const validateQuestionInputs = (inputs: QuestionCreateInput) => {
     errors.push(`Um ou mais "Distratores" não preenchidos.`);
   }
 
-  if (!source) {
+  if (!authorship) {
     errors.push(`"Fonte" não preenchida.`);
   }
 

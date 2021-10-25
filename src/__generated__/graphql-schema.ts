@@ -207,6 +207,7 @@ export type QuerySubjectsArgs = {
 export type Question = Node & {
   __typename?: 'Question';
   alternatives: Array<QuestionAlternative>;
+  authorship?: Maybe<Scalars['String']>;
   authorshipYear?: Maybe<Scalars['String']>;
   bloomTaxonomy?: Maybe<QuestionBloomTaxonomy>;
   body?: Maybe<Scalars['String']>;
@@ -221,7 +222,6 @@ export type Question = Node & {
   reviewMessages: ReviewMessageConnection;
   reviewRequests: Array<ReviewRequest>;
   reviewer?: Maybe<User>;
-  source?: Maybe<Scalars['String']>;
   status?: Maybe<QuestionStatus>;
   subject?: Maybe<Subject>;
   support?: Maybe<Scalars['String']>;
@@ -290,7 +290,7 @@ export type QuestionCreateInput = {
   explanation: Scalars['String'];
   references: Scalars['String'];
   authorshipYear: Scalars['String'];
-  source: Scalars['String'];
+  authorship: Scalars['String'];
   intention?: Maybe<Scalars['String']>;
   status: QuestionStatus;
   checkType?: Maybe<QuestionCheckType>;
@@ -330,7 +330,7 @@ export type QuestionUpdateInput = {
   explanation: Scalars['String'];
   references: Scalars['String'];
   authorshipYear: Scalars['String'];
-  source: Scalars['String'];
+  authorship: Scalars['String'];
   intention?: Maybe<Scalars['String']>;
   status: QuestionStatus;
   checkType?: Maybe<QuestionCheckType>;
@@ -347,10 +347,10 @@ export type QuestionWhereInput = {
   difficulty?: Maybe<Array<QuestionDifficulty>>;
   bloomTaxonomy?: Maybe<Array<QuestionBloomTaxonomy>>;
   authorshipYear?: Maybe<Array<Scalars['String']>>;
-  source?: Maybe<Scalars['String']>;
   subjectId?: Maybe<Scalars['ID']>;
   userId?: Maybe<Scalars['ID']>;
   createDate?: Maybe<DateRangeInput>;
+  unifesoAuthorship?: Maybe<Scalars['Boolean']>;
 };
 
 export type ReviewMessage = {

@@ -12,6 +12,7 @@ import { Button, Modal } from "../../../../components";
 import { useFiltersProvider } from "./QuestionsFilterProvider";
 import { QuestionsSubjectFilter } from './QuestionsSubjectFilter'
 import { QuestionsAuthorshipTypeFilter } from "./QuestionsAuthorshipTypeFilter";
+import { AuthorshipFilter } from "./AuthorshipFilter";
 
 type FilterGroupProps = {
   title: string;
@@ -70,6 +71,7 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
   const [changed, setChanged] = useState(false);
   const submitRef = useRef<HTMLInputElement>()
 
+  console.log(where)
   const onSubmit = (inputs: any) => {
     const valuesFromCheckType = CHECK_TYPE.filter(
       ({ value }) => inputs[value]
@@ -93,6 +95,7 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
     };
 
     setWhere({
+      unifesoAuthorship: inputs.authorship === 'null' ? null : inputs.authorship === 'true',
       ...removeKeysWithUndefiend({
         checkType: valuesFromCheckType.length ? valuesFromCheckType : undefined,
         bloomTaxonomy: valuesFromBloomTaxonomy.length
@@ -102,7 +105,7 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
           ? valuesFromDifficulty
           : undefined,
         subjectId: inputs.subjectId === "" ? undefined : inputs.subjectId,
-        authorshipYear: inputs.authorshipYear === "" ? undefined : [inputs.authorshipYear]
+        authorshipYear: inputs.authorshipYear === "" ? undefined : [inputs.authorshipYear],
       }),
     });
 
@@ -174,6 +177,7 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
             selecteds={(difficulty ?? []) as QuestionDifficulty[]}
             setChanged={setChanged}
           />
+          <AuthorshipFilter register={register} setChanged={setChanged} />
           <input hidden type="submit" ref={submitRef as any} />
         </div>
       </form>

@@ -15,7 +15,7 @@ export const FeaturesFragment = gql`
   fragment FeaturesFields on Question {
     ... ReviewerFields
     ... SubjectFields
-    source
+    authorship
     authorshipYear
     difficulty
     checkType
@@ -30,23 +30,23 @@ export const FeaturesFormStep: FC = () => {
   const currentYear = new Date().getFullYear();
 
   const {
-    source,
+    authorship,
     authorshipYear,
     difficulty,
     bloomTaxonomy,
     checkType,
   } = question || {} as Question
 
-  const [ownQuestion, setOwnQuestion] = useState<boolean>(source === "UNIFESO" || source === undefined || source === null);
+  const [ownQuestion, setOwnQuestion] = useState<boolean>(authorship === "UNIFESO" || authorship === undefined || authorship === null);
 
   const handleOwnCheck = (value: string) => {
     if (value === 'UNIFESO') {
       setOwnQuestion(true)
-      setValue("source", "UNIFESO");
+      setValue("authorship", "UNIFESO");
       setValue("authorshipYear", currentYear.toString());
     } else {
       setOwnQuestion(false)
-      setValue("source", "");
+      setValue("authorship", "");
       setValue("authorshipYear", "");
     }
   };
@@ -63,25 +63,25 @@ export const FeaturesFormStep: FC = () => {
               <input
                 className="my-auto"
                 type="radio"
-                id="source-own"
+                id="authorship-own"
                 checked={!!ownQuestion}
                 ref={register}
                 onChange={() => handleOwnCheck("UNIFESO")}
                 name="__nonused"
               />
-              <label htmlFor="source-own" className="ml-1">Própria</label>
+              <label htmlFor="authorship-own" className="ml-1">Própria</label>
             </div>
             <div className="my-auto ml-3">
               <input
                 className="my-auto"
                 type="radio"
-                id="source-third"
+                id="authorship-third"
                 checked={!ownQuestion}
                 ref={register}
                 onChange={() => handleOwnCheck("")}
                 name="__nonused"
               />
-              <label htmlFor="source-third" className="ml-1">Outro</label>
+              <label htmlFor="authorship-third" className="ml-1">Outro</label>
             </div>
           </div>
           <div className="flex">
@@ -92,8 +92,8 @@ export const FeaturesFormStep: FC = () => {
                   <input
                     className="block rounded p-1 w-full border-gray-400 border shadow-sm"
                     ref={register}
-                    name="source"
-                    defaultValue={source || (ownQuestion ? "UNIFESO" : "")}
+                    name="authorship"
+                    defaultValue={authorship || (ownQuestion ? "UNIFESO" : "")}
                     readOnly={!!ownQuestion}
                   />
                 </div>
