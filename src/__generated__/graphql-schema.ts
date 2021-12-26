@@ -318,6 +318,7 @@ export type QuestionEdge = {
 export enum QuestionStatus {
   Draft = 'DRAFT',
   WaitingReview = 'WAITING_REVIEW',
+  WithRequestedChanges = 'WITH_REQUESTED_CHANGES',
   Approved = 'APPROVED',
   Registered = 'REGISTERED'
 }
@@ -386,9 +387,8 @@ export type ReviewMessageEdge = {
 };
 
 export enum ReviewMessageFeedbackType {
-  Comment = 'comment',
-  Approve = 'approve',
-  RequestChanges = 'request_changes'
+  WithRequestedChanges = 'WITH_REQUESTED_CHANGES',
+  Approved = 'APPROVED'
 }
 
 export type ReviewMessageInput = {

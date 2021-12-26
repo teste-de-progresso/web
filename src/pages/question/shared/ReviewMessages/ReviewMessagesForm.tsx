@@ -1,23 +1,22 @@
-import { Prompt } from "react-router";
-import React, { FC, useState } from "react";
-import { useHistory } from 'react-router';
 import { ApolloQueryResult, gql, OperationVariables, useMutation } from "@apollo/client";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Mutation, Query, Question, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
-import { NodeId } from "../../../../utils/graphql";
+import { Prompt, useHistory } from "react-router";
 import { Button, Card } from "../../../../components";
 import { useCurrentUser } from "../../../../contexts";
+import { NodeId } from "../../../../utils/graphql";
+import { Mutation, Query, Question, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
 
 export const REVIEW_FEEDBACK = [
   {
     label: "Aprovada",
     description: "O revisor sugere que as observações enviadas no parecer sejam consideradas.",
-    value: "approve",
+    value: ReviewMessageFeedbackType.Approved,
   },
   {
     label: "Pendente de Alterações",
     description: "O autor deve efetuar as alterações solicitadas no parecer e reenviar a questão ao revisor.",
-    value: "request_changes",
+    value: ReviewMessageFeedbackType.WithRequestedChanges,
   },
 ];
 

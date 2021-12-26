@@ -1,17 +1,15 @@
-import React, { FC } from "react";
 import { ApolloQueryResult, gql, OperationVariables } from "@apollo/client";
 import {
-  AnnotationIcon,
   CheckCircleIcon,
-  DocumentRemoveIcon,
-} from '@heroicons/react/outline'
-
+  DocumentRemoveIcon
+} from '@heroicons/react/outline';
+import React, { FC } from "react";
 import { Card } from "../../../../components";
 import { Query, Question, ReviewMessage } from "../../../../__generated__/graphql-schema";
 import { ReviewMessageForm, ReviewMessageFormFragments } from "./ReviewMessagesForm";
 
-const feedbackIcon = {
-  comment: <AnnotationIcon className="w-5" />,
+
+const feedbackIcon: {[ key: string]: JSX.Element } = {
   approve: <CheckCircleIcon className="w-5 text-green-800" />,
   request_changes: <DocumentRemoveIcon className="w-5 text-red-800" />,
 };
