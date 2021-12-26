@@ -316,13 +316,9 @@ export type QuestionEdge = {
 };
 
 export enum QuestionStatus {
-  /** draft */
   Draft = 'DRAFT',
-  /** pending */
   Pending = 'PENDING',
-  /** approved */
   Approved = 'APPROVED',
-  /** registered */
   Registered = 'REGISTERED'
 }
 

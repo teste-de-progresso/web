@@ -111,7 +111,7 @@ export const ViewMode: FC<Props> = ({ questionData: question }) => {
           </div>
         </div>
       </Card>
-      {question.intention?.length && (
+      {!!question.intention?.length && (
         <Card className="mb-3" title="Intenção">
           <div className="ck-content" dangerouslySetInnerHTML={{ __html: question.intention }} />
         </Card>
