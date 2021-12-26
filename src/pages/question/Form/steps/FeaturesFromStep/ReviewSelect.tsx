@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { gql, useQuery } from "@apollo/client";
 
 import { useFormProvider } from '../../FormContext'
-import { Query, User } from "../../../../../__generated__/graphql-schema";
+import { Query, QuestionStatus, User } from "../../../../../__generated__/graphql-schema";
 
 export const ReviewerFragment = gql`
   fragment ReviewerFields on Question {
@@ -43,7 +43,7 @@ export const ReviewerSelect: FC<Props> = () => {
       name="reviewerUserId"
       defaultValue={question?.reviewer?.id}
     >
-      {(question?.status === undefined || question?.status === "draft") && <option />}
+      {(question?.status === undefined || question?.status === QuestionStatus.Draft) && <option />}
       {reviewers?.map((review, index) => (
         <option key={index} value={review?.id}>
           {review?.name}

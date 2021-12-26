@@ -2044,26 +2044,26 @@
           "inputFields": null,
           "enumValues": [
             {
-              "name": "draft",
-              "description": null,
+              "name": "DRAFT",
+              "description": "draft",
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "pending",
-              "description": null,
+              "name": "PENDING",
+              "description": "pending",
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "approved",
-              "description": null,
+              "name": "APPROVED",
+              "description": "approved",
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "finished",
-              "description": null,
+              "name": "REGISTERED",
+              "description": "registered",
               "isDeprecated": false,
               "deprecationReason": null
             }

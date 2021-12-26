@@ -316,10 +316,14 @@ export type QuestionEdge = {
 };
 
 export enum QuestionStatus {
-  Draft = 'draft',
-  Pending = 'pending',
-  Approved = 'approved',
-  Finished = 'finished'
+  /** draft */
+  Draft = 'DRAFT',
+  /** pending */
+  Pending = 'PENDING',
+  /** approved */
+  Approved = 'APPROVED',
+  /** registered */
+  Registered = 'REGISTERED'
 }
 
 export type QuestionUpdateInput = {

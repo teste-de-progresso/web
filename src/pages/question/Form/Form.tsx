@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {gql} from '@apollo/client';
 
-import {Question, QuestionCreateInput} from '../../../__generated__/graphql-schema';
+import {Question, QuestionCreateInput, QuestionStatus} from '../../../__generated__/graphql-schema';
 import {formatInput} from '../formatInputs';
 import {validateQuestionInputs} from '../../../utils/questions/questionValidations';
 import {RootState} from '../../../services/store';
@@ -96,7 +96,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
 
   const handleDraftSave = () => {
     if (onDraftSubmit) {
-      onDraftSubmit({...getFormattedInputValues(), status: 'draft'} as QuestionCreateInput)
+      onDraftSubmit({...getFormattedInputValues(), status: QuestionStatus.Draft} as QuestionCreateInput)
       reset(getValues(), {
         isDirty: false
       })
@@ -105,7 +105,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
   }
 
   const handleSave = () => {
-    const inputs = {...getFormattedInputValues(), status: 'pending'} as QuestionCreateInput
+    const inputs = {...getFormattedInputValues(), status: QuestionStatus.Pending} as QuestionCreateInput
     const errors = validateQuestionInputs(inputs)
 
     setConfirmFinishDialogIsOpen(false)
@@ -194,7 +194,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
           >
             Retornar
           </Button>
-          {(question?.status === "draft" || question?.status === undefined) &&
+          {(question?.status === QuestionStatus.Draft || question?.status === undefined) &&
           <Button className={"mb-3 sm:mb-0"} onClick={handleDraftSave}>
               Salvar Rascunho
           </Button>

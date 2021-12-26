@@ -15,7 +15,7 @@ export const STATUS = [
   { value: "draft", label: "Rascunho" },
   { value: "pending", label: "Pendente" },
   { value: "approved", label: "Aprovada" },
-  { value: "finished", label: "Finalizada" },
+  { value: "registered", label: "Finalizada" },
 ];
 
 export const DIFFICULTY = [

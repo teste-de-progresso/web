@@ -4,7 +4,7 @@ import { MdModeEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Question } from '../../../__generated__/graphql-schema'
+import { Question, QuestionStatus } from '../../../__generated__/graphql-schema'
 import { useCurrentUser } from '../../../contexts';
 import { NodeId } from '../../../utils/graphql';
 import { gql } from '@apollo/client';
@@ -101,7 +101,7 @@ export const QuestionsList: FC<Props> = ({ questions, title, pagination }) => {
                     </span>
                   </div>
                 </Link>
-                {(question.user.id === user?.id && question.status !== 'finished') &&
+                {(question.user.id === user?.id && question.status !== QuestionStatus.Registered) &&
                   <div
                     className="flex flex-col relative flex-grow justify-center"
                   >

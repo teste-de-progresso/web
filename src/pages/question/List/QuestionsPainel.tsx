@@ -14,8 +14,8 @@ export const QuestionsPainel: FC = () => {
       <QuestionsWaitingReviewQuery title="Aguardando seu Parecer" />
       <QuestionsQuery title="Aguardando Parecer do Revisor" where={where} status={QuestionStatus.Pending} />
       <QuestionsQuery title="Rascunhos" where={where} status={QuestionStatus.Draft} />
-      <QuestionsQuery title="Registradas" where={where} status={QuestionStatus.Finished} />
       <QuestionsQuery title="Aprovadas" where={where} status={QuestionStatus.Approved} />
+      <QuestionsQuery title="Registradas" where={where} status={QuestionStatus.Registered} />
       <QuestionsRevisedQuery title="Revisadas por Você" />
     </>
   )

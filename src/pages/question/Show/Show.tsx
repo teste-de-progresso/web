@@ -5,7 +5,7 @@ import {useQuery, useMutation, gql} from "@apollo/client";
 
 import {ViewMode, ViewModeFragments, ReviewMessages, ReviewMessagesFragments} from "../shared";
 import {Navigator, Dialog} from "../../../components";
-import {Mutation, Query, Question} from "../../../__generated__/graphql-schema";
+import {Mutation, Query, Question, QuestionStatus} from "../../../__generated__/graphql-schema";
 import {AlertV2Props, AlertV2} from "../../../components/AlertV2";
 import {NodeId} from "../../../utils/graphql";
 import {QuestionRoutePaths} from "../../../routes";
@@ -100,9 +100,9 @@ export const Show: FC = () => {
   };
 
   const handleDestroyQuestion = async () => {
-    const {data} = await destroyQuestion({variables: {id: recordId}})
+    const {data: questionDestroyData } = await destroyQuestion({variables: {id: recordId}})
 
-    if (data?.destroyQuestion?.deletedQuestionId) {
+    if (questionDestroyData?.destroyQuestion?.deletedQuestionId) {
       history.push(QuestionRoutePaths.index)
     } else {
       setAlert({
@@ -133,9 +133,9 @@ export const Show: FC = () => {
 
   const options = (() => {
     switch (question.status) {
-      case 'finished':
+      case QuestionStatus.Registered:
         return ([]);
-      case 'approved':
+      case QuestionStatus.Approved:
         return ([ACTIONS.edit, ACTIONS.register, ACTIONS.destroy])
       default:
         return ([ACTIONS.edit, ACTIONS.destroy])

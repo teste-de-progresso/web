@@ -37,13 +37,11 @@ export const QuestionsBySubject: FC = () => {
 
   const subjects = data?.subjects.nodes ?? []
   const subjectWithQuestions = subjects.filter(subject => !!subject?.questions.totalCount)
-  const mappedData: ResponsivePieData = subjectWithQuestions.map(subject => {
-    return ({
-      id: subject?.name as string,
-      label: subject?.name as string,
-      value: subject?.questions.totalCount as number,
-    })
-  })
+  const mappedData: ResponsivePieData = subjectWithQuestions.map(subject => ({
+    id: subject.name,
+    label: subject.name,
+    value: subject.questions.totalCount,
+  }))
   const filteredData = mappedData.filter(item => item.value)
 
   return (
