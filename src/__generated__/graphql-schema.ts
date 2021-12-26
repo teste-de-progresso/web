@@ -388,7 +388,8 @@ export type ReviewMessageEdge = {
 
 export enum ReviewMessageFeedbackType {
   WithRequestedChanges = 'WITH_REQUESTED_CHANGES',
-  Approved = 'APPROVED'
+  Approved = 'APPROVED',
+  Answered = 'ANSWERED'
 }
 
 export type ReviewMessageInput = {

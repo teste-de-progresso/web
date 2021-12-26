@@ -5,13 +5,14 @@ import {
 } from '@heroicons/react/outline';
 import React, { FC } from "react";
 import { Card } from "../../../../components";
-import { Query, Question, ReviewMessage } from "../../../../__generated__/graphql-schema";
+import { Query, Question, ReviewMessage, ReviewMessageFeedbackType } from "../../../../__generated__/graphql-schema";
 import { ReviewMessageForm, ReviewMessageFormFragments } from "./ReviewMessagesForm";
 
 
-const feedbackIcon: {[ key: string]: JSX.Element } = {
-  approve: <CheckCircleIcon className="w-5 text-green-800" />,
-  request_changes: <DocumentRemoveIcon className="w-5 text-red-800" />,
+const feedbackIcon = {
+  [ReviewMessageFeedbackType.Answered]: null,
+  [ReviewMessageFeedbackType.Approved]: <CheckCircleIcon className="w-5 text-green-800" />,
+  [ReviewMessageFeedbackType.WithRequestedChanges]: <DocumentRemoveIcon className="w-5 text-red-800" />,
 };
 
 const ReviewMessageTitle: FC<{

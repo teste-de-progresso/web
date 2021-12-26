@@ -81,7 +81,7 @@ export const ReviewMessageForm: FC<{
     await createReviewMessage({
       variables: {
         text: inputs.text,
-        feedbackType: questionIsFromCurrentUser ? 'comment' : inputs.feedbackType,
+        feedbackType: questionIsFromCurrentUser ? ReviewMessageFeedbackType.Answered : inputs.feedbackType,
         questionId: NodeId.decode(question.id).id,
       },
     });

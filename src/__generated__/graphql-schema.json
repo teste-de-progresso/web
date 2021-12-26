@@ -2708,6 +2708,12 @@
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "ANSWERED",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ]
         },

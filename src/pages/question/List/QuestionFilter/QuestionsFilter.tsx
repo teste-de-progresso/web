@@ -71,7 +71,6 @@ export const QuestionsFilter: FC<Props> = ({ isOpen, setIsOpen }) => {
   const [changed, setChanged] = useState(false);
   const submitRef = useRef<HTMLInputElement>()
 
-  console.log(where)
   const onSubmit = (inputs: any) => {
     const valuesFromCheckType = CHECK_TYPE.filter(
       ({ value }) => inputs[value]
