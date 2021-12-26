@@ -2050,7 +2050,7 @@
               "deprecationReason": null
             },
             {
-              "name": "PENDING",
+              "name": "WAITING_REVIEW",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null

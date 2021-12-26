@@ -11,13 +11,6 @@ export const CHECK_TYPE = [
   { value: "constant_alternatives", label: "Alternativas Constantes" },
 ];
 
-export const STATUS = [
-  { value: "draft", label: "Rascunho" },
-  { value: "pending", label: "Pendente" },
-  { value: "approved", label: "Aprovada" },
-  { value: "registered", label: "Finalizada" },
-];
-
 export const DIFFICULTY = [
   { value: "easy", label: "Fácil" },
   { value: "medium", label: "Média" },

@@ -317,7 +317,7 @@ export type QuestionEdge = {
 
 export enum QuestionStatus {
   Draft = 'DRAFT',
-  Pending = 'PENDING',
+  WaitingReview = 'WAITING_REVIEW',
   Approved = 'APPROVED',
   Registered = 'REGISTERED'
 }

@@ -105,7 +105,7 @@ export const Form: FC<Props> = ({question, onSubmit, onDraftSubmit, alert}) => {
   }
 
   const handleSave = () => {
-    const inputs = {...getFormattedInputValues(), status: QuestionStatus.Pending} as QuestionCreateInput
+    const inputs = {...getFormattedInputValues(), status: QuestionStatus.WaitingReview} as QuestionCreateInput
     const errors = validateQuestionInputs(inputs)
 
     setConfirmFinishDialogIsOpen(false)
