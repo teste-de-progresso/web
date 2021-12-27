@@ -2698,19 +2698,19 @@
           "inputFields": null,
           "enumValues": [
             {
-              "name": "WITH_REQUESTED_CHANGES",
+              "name": "REQUEST_CHANGES",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "APPROVED",
+              "name": "APPROVE",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
-              "name": "ANSWERED",
+              "name": "ANSWER",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null

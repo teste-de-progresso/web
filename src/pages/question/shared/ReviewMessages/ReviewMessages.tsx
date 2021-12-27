@@ -10,9 +10,9 @@ import { ReviewMessageForm, ReviewMessageFormFragments } from "./ReviewMessagesF
 
 
 const feedbackIcon = {
-  [ReviewMessageFeedbackType.Answered]: null,
-  [ReviewMessageFeedbackType.Approved]: <CheckCircleIcon className="w-5 text-green-800" />,
-  [ReviewMessageFeedbackType.WithRequestedChanges]: <DocumentRemoveIcon className="w-5 text-red-800" />,
+  [ReviewMessageFeedbackType.Answer]: null,
+  [ReviewMessageFeedbackType.Approve]: <CheckCircleIcon className="w-5 text-green-800" />,
+  [ReviewMessageFeedbackType.RequestChanges]: <DocumentRemoveIcon className="w-5 text-red-800" />,
 };
 
 const ReviewMessageTitle: FC<{

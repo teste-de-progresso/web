@@ -11,12 +11,12 @@ export const REVIEW_FEEDBACK = [
   {
     label: "Aprovada",
     description: "O revisor sugere que as observações enviadas no parecer sejam consideradas.",
-    value: ReviewMessageFeedbackType.Approved,
+    value: ReviewMessageFeedbackType.Approve,
   },
   {
     label: "Pendente de Alterações",
     description: "O autor deve efetuar as alterações solicitadas no parecer e reenviar a questão ao revisor.",
-    value: ReviewMessageFeedbackType.WithRequestedChanges,
+    value: ReviewMessageFeedbackType.RequestChanges,
   },
 ];
 
@@ -81,7 +81,7 @@ export const ReviewMessageForm: FC<{
     await createReviewMessage({
       variables: {
         text: inputs.text,
-        feedbackType: questionIsFromCurrentUser ? ReviewMessageFeedbackType.Answered : inputs.feedbackType,
+        feedbackType: questionIsFromCurrentUser ? ReviewMessageFeedbackType.Answer : inputs.feedbackType,
         questionId: NodeId.decode(question.id).id,
       },
     });
