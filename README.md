@@ -1,12 +1,10 @@
-## Scripts
-### Run
-npm start
+## Requisitos
 
-### Compile Style
-npm run build-styles
+- Nodejs >=14 (https://nodejs.org/en/)
+- Yarn (https://classic.yarnpkg.com/en/docs/getting-started)
 
+## Setup
 
-### Stack
-[react-redux](https://redux.js.org/basics/usage-with-react)
-
-[redux-saga](https://redux-saga.js.org/)
+- `yarn install` - Baixe as bibliotecas necessárias
+- `yarn build-styles` - Compile o css
+- `yarn start` - Inicie a aplicação
